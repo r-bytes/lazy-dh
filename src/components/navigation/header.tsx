@@ -37,9 +37,12 @@ const Header = (props: Props) => {
           {NAVIGATION_LIST.map((item, index, arr) => (
             <li
               key={item.order}
-              className={`font-semibold tracking-wide hover:cursor-pointer hover:text-primary ${index === arr.length - 1 ? "mr-8 rounded-md bg-primary px-3 py-2 text-secondary hover:bg-secondary hover:text-white" : ""}`}
+              className={`font-semibold tracking-wide hover:cursor-pointer hover:text-primary ${index === arr.length - 1 ? "mr-8 rounded-md bg-primary px-3 py-2 text-muted-foreground hover:bg-secondary hover:text-muted-foreground dark:hover:text-primary dark:text-background" : ""}`}
             >
-              <Link className={roboto.className} href={`/${item.title.toLowerCase()}`}>
+              <Link
+                className={roboto.className}
+                href={`/${item.title.toLowerCase() === "acties" ? "promoties" : item.title.toLowerCase()}`}
+              >
                 {item.title}
               </Link>
             </li>
