@@ -21,13 +21,6 @@ export default function Page() {
   const addItem = useCartStore((state) => state.addItem);
 
 
-  useEffect(() => {
-    fetch("/api/products")
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
-  }, []);
-
-
 
   return (
     <div>

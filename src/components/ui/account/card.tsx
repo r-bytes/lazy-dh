@@ -1,3 +1,6 @@
+"use client";
+import { usePathname } from "next/navigation";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { ScrollText, HeartIcon, UserIcon } from "lucide-react";
@@ -7,6 +10,7 @@ type AccountOptions = {
   title: string;
   description: string;
   image: string;
+  slug: string;
 };
 
 type IconProps = {
@@ -18,16 +22,19 @@ const ACCOUNT: AccountOptions[] = [
     title: "Bestellingen",
     description: "Vorige bestellingen weergeven",
     image: "ScrollText",
+    slug: "bestellingen"
   },
   {
     title: "Favorieten",
     description: "Favorieten producten weergeven",
     image: "HeartIcon",
+    slug: "favorieten"
   },
   {
     title: "Wachtwoord reset",
     description: "Wachtwoord veranderen",
     image: "UserIcon",
+    slug: "wachtwoord-reset"
   },
 ];
 
@@ -40,6 +47,7 @@ const iconMap: Record<string, ComponentType<IconProps>> = {
 type CardProps = React.ComponentProps<typeof Card>;
 
 export function AccountCard({ className, ...props }: CardProps) {
+  const pathname = usePathname();
   return (
     <Card className={cn("h-screen w-full", className)} {...props}>
       <CardHeader className="mb-4 text-center">
@@ -48,22 +56,23 @@ export function AccountCard({ className, ...props }: CardProps) {
         {/* Todo: should be dynamic */}
         <CardDescription>Kies een categorie</CardDescription>
       </CardHeader>
-      <CardContent className="mt-12 grid place-content-center gap-4">
+      <CardContent className="mt-12">
         {ACCOUNT.map((item, index) => (
-          <div key={index} className="grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
+          <div key={index} className="flex text-center lg:text-left">
             <a
-              href=""
-              className="group w-screen max-w-5xl rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-              target="_blank"
+              href={`${pathname}/${item.slug}`}
+              className="group w-full rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
               rel="noopener noreferrer"
             >
               <div className="flex items-center">
-                <div className="h-24 mr-6">{createElement(iconMap[item.image], { className: "h-24 w-16 object-contain" })}</div>
+                <div className="hidden h-24 w-24 object-contain sm:block">
+                  {createElement(iconMap[item.image], { className: "h-24 w-16 object-contain" })}
+                </div>
                 <div className="mx-12 flex flex-1 flex-col">
                   <h2 className="mb-3 text-2xl font-semibold">{item.title}</h2>
                   <p className="m-0 max-w-[30ch] text-sm opacity-50">{item.description} producten </p>
                 </div>
-                <span className="inline-block text-3xl transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+                <span className="hidden text-3xl transition-transform group-hover:translate-x-1 motion-reduce:transform-none sm:inline-block">
                   &#x279C;
                 </span>
               </div>

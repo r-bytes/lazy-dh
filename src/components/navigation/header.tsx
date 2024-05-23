@@ -27,29 +27,29 @@ const NAVIGATION_LIST: NavigationItem[] = [
 
 const Header = (props: Props) => {
   return (
-    <div className={"hidden sm:block z-10 mx-auto w-full max-w-7xl items-center justify-between font-mono text-sm lg:flex"}>
-      <div className="before:bg-gradient-radial relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image className="relative dark:invert" src="/logo.svg" alt="Next.js Logo" width={300} height={20} priority />
-      </div>
+    <div className="z-10 mx-auto hidden w-full max-w-7xl items-center justify-between font-mono text-sm sm:flex sm:flex-col lg:flex-row">
+      <Image className="dark:invert" src="/logo.svg" alt="Next.js Logo" width={300} height={20} priority />
 
-      <div className="w-full">
-        <ul className="mr-8 flex items-baseline justify-end space-x-12 py-12">
-          {NAVIGATION_LIST.map((item, index, arr) => (
-            <li
-              key={item.order}
-              className={`font-semibold tracking-wide hover:cursor-pointer hover:text-primary ${index === arr.length - 1 ? "mr-8 rounded-md bg-primary px-3 py-2 text-muted-foreground hover:bg-secondary hover:text-muted-foreground dark:hover:text-primary dark:text-background" : ""}`}
-            >
-              <Link
-                className={roboto.className}
-                href={`/${item.title.toLowerCase() === "acties" ? "promoties" : item.title.toLowerCase()}`}
+      <div className="flex items-center justify-center sm:w-full sm:max-w-2xl mx-auto lg:mr-10">
+        <div className="w-full">
+          <ul className="mr-8 flex items-baseline justify-end space-x-12 py-12">
+            {NAVIGATION_LIST.map((item, index, arr) => (
+              <li
+                key={item.order}
+                className={`font-semibold tracking-wide hover:cursor-pointer hover:text-primary ${index === arr.length - 1 ? "mr-8 rounded-md bg-primary px-3 py-2 text-muted-foreground hover:bg-secondary hover:text-muted-foreground dark:text-background dark:hover:text-primary" : ""}`}
               >
-                {item.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
+                <Link
+                  className={roboto.className}
+                  href={`/${item.title.toLowerCase() === "acties" ? "promoties" : item.title.toLowerCase()}`}
+                >
+                  {item.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <ModeToggle cn="mr-10" />
       </div>
-      <ModeToggle />
     </div>
   );
 };

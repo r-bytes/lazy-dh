@@ -1,41 +1,50 @@
+"use client"
+
+import { usePathname } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { capitalizeFirstLetter, cn } from "@/lib/utils";
 import Image from "next/image";
 import { InputForm } from "./search-input";
 
-type Product = {
+type Category = {
   productCount: number;
   title: string;
   image: string;
+  slug: string;
 };
 
-const ASSORTMENT: Product[] = [
+const ASSORTMENT: Category[] = [
   {
     productCount: 1,
     title: "Aanbiedingen !!!",
     image: "sale-stamp.png",
+    slug: "aanbiedingen",
   },
   {
     productCount: 2,
     title: "Nieuw",
     image: "new-stamp.png",
+    slug: "nieuw"
   },
   {
     productCount: 3,
     title: "Vodka",
     image: "vodka.png",
+    slug: "vodka"
   },
 ];
 
 type CardProps = React.ComponentProps<typeof Card>;
 
 export function AssortmentCard({ className, ...props }: CardProps) {
+  const pathname = usePathname();
+  
   return (
     <>
-      <Card className={cn("m-10 h-screen w-full", className)} {...props}>
+      <Card className={cn("h-screen w-full", className)} {...props}>
         <CardHeader className="mb-4 text-center">
           {/* Todo: should be dynamic */}
-          <CardTitle className="mt-12">Assortiment</CardTitle>
+          <CardTitle className="mt-12">{capitalizeFirstLetter(pathname.replace("/", ""))}</CardTitle>
           {/* Todo: should be dynamic */}
           <CardDescription>Kies een categorie</CardDescription>
         </CardHeader>
@@ -45,9 +54,9 @@ export function AssortmentCard({ className, ...props }: CardProps) {
           {ASSORTMENT.map((item, index) => (
             <div key={index} className="flex text-center lg:text-left">
               <a
-                href=""
+                href={`${pathname}/${item.slug}`}
                 className="group w-full rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-                target="_blank"
+                // target="_blank"
                 rel="noopener noreferrer"
               >
                 <div className="flex items-center">
@@ -60,7 +69,7 @@ export function AssortmentCard({ className, ...props }: CardProps) {
                       height={100}
                     />
                   </div>
-                  <div className="text-left sm:text-center mx-5 flex flex-1 flex-col sm:mx-12">
+                  <div className="mx-5 flex flex-1 flex-col text-left sm:mx-12 sm:text-center">
                     <h2 className="mb-3 text-lg font-semibold sm:text-2xl">{item.title}</h2>
                     <p className="m-0 text-sm opacity-50">{item.productCount} producten </p>
                   </div>
