@@ -27,7 +27,7 @@ const NAVIGATION_LIST: NavigationItem[] = [
 
 const Header = (props: Props) => {
   return (
-    <div className={"z-10 mx-auto w-full max-w-7xl items-center justify-between font-mono text-sm lg:flex"}>
+    <div className={"hidden sm:block z-10 mx-auto w-full max-w-7xl items-center justify-between font-mono text-sm lg:flex"}>
       <div className="before:bg-gradient-radial relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
         <Image className="relative dark:invert" src="/logo.svg" alt="Next.js Logo" width={300} height={20} priority />
       </div>
