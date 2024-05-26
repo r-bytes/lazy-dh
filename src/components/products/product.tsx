@@ -1,46 +1,66 @@
 "use client";
 
 import { Product as ProductType } from "@/lib/definitions";
+import { Heart } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { Button } from "../ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
 
-const Product = ({ product }: { product: ProductType}) => {
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+
+const Product = ({ product: { title, price, image, description, slug } }: { product: ProductType }) => {
   const pathname = usePathname();
   const router = useRouter();
   const backgroundImageStyle = {
-    backgroundImage: `url('/${product.image}')`,
-    backgroundSize: "95%",
-    backgroundPosition: "-70px 200px",
+    backgroundImage: `url('/${image}')`,
+    backgroundSize: "80%",
+    backgroundPosition: "50% 30%",
+  };
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+  const handleToggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
+  const handleOpenDialog = () => {
+    setIsOpen(true);
   };
 
   return (
-    <Card
-      className="max-h-[32rem] w-72 bg-neutral-300/10 bg-no-repeat dark:bg-neutral-800/30"
-      style={backgroundImageStyle}
-    >
-      <CardHeader className="mb-4 flex items-end justify-center text-right">
-        <CardTitle className="mb-4 mt-12">{product.title}</CardTitle>
-        <CardDescription className="h-54 w-36 text-right text-sm">{product.description}</CardDescription>
-      </CardHeader>
-      <CardContent className="mt-12">
-        <div className="flex justify-end text-center">
-          <div className="flex space-x-2">
-            <div className="flex h-24 items-end justify-end space-x-2">
-              <Button className="text-muted-foreground hover:bg-primary/30 hover:text-muted-foreground dark:text-background dark:hover:text-primary">
-                Koop
-              </Button>
-              <Button
-                onClick={() => router.push(`${pathname}/${product.slug}`)}
-                className="font-bold text-muted-foreground hover:bg-primary/30 hover:text-muted-foreground dark:text-background dark:hover:text-primary"
-              >
-                {">"}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+    <>
+      <Dialog isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <DialogTrigger asChild>
+          <Card
+            onClick={handleOpenDialog}
+            className="z-10 relative flex h-[32rem] w-72 flex-col rounded-2xl bg-neutral-300/10 bg-no-repeat dark:bg-neutral-800/30"
+            style={backgroundImageStyle}
+          >
+            <Button
+              onClick={handleToggleFavorite}
+              className="z-50 absolute right-4 top-4 h-12 w-12 rounded-full bg-muted-foreground/10 hover:bg-primary/70"
+            >
+              <Heart color={isFavorite ? "red" : ""} fill={isFavorite ? "red" : "bg-muted-foreground/30"} />
+            </Button>
+            <CardContent className="flex flex-1 flex-col items-center justify-end rounded-2xl">
+              <div className="mb-12 w-full text-center">
+                <CardTitle className="mb-2 flex-1 text-lg">{title}</CardTitle>
+                <CardDescription className="flex-1 text-2xl font-bold"> €{price},-</CardDescription>
+              </div>
+            </CardContent>
+          </Card>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+            <DialogDescription>{description}</DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
