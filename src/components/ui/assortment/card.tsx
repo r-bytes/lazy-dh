@@ -69,9 +69,9 @@ export function AssortmentCard({ className, ...props }: CardProps) {
                       height={100}
                     />
                   </div>
-                  <div className="mx-5 flex flex-1 flex-col text-left sm:mx-12 sm:text-center">
-                    <h2 className="mb-3 text-lg font-semibold sm:text-2xl">{item.title}</h2>
-                    <p className="m-0 text-sm opacity-50">{item.productCount} producten </p>
+                  <div className="mx-12 flex flex-1 flex-col">
+                    <h2 className="mb-3 text-2xl font-semibold">{item.title}</h2>
+                    <p className="m-0 max-w-[30ch] text-sm opacity-50">{item.productCount} producten </p>
                   </div>
                   <span className="inline-block text-3xl transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
                     &#x279C;
