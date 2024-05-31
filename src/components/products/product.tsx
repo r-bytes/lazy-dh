@@ -32,16 +32,17 @@ const Product = ({ product: { title, price, image, description, slug } }: { prod
 
   return (
     <>
-      <Dialog isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      {/* <Dialog isOpen={isOpen} onClose={() => setIsOpen(false)}> */}
+      <Dialog>
         <DialogTrigger asChild>
           <Card
             onClick={handleOpenDialog}
-            className="z-10 relative flex h-[32rem] w-72 flex-col rounded-2xl bg-neutral-300/10 bg-no-repeat dark:bg-neutral-800/30"
+            className="relative z-10 flex h-[32rem] w-72 flex-col rounded-2xl bg-neutral-300/10 bg-no-repeat dark:bg-neutral-800/30"
             style={backgroundImageStyle}
           >
             <Button
               onClick={handleToggleFavorite}
-              className="z-50 absolute right-4 top-4 h-12 w-12 rounded-full bg-muted-foreground/10 hover:bg-primary/70"
+              className="absolute right-4 top-4 z-50 h-12 w-12 rounded-full bg-muted-foreground/10 hover:bg-primary/70"
             >
               <Heart color={isFavorite ? "red" : ""} fill={isFavorite ? "red" : "bg-muted-foreground/30"} />
             </Button>
