@@ -8,8 +8,9 @@ import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
 
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { useCartContext } from "@/context/StateContext";
+import { useCartContext } from "@/context/CartContext";
 import Image from "next/image";
+import { navigateTo } from "@/lib/utils";
 
 const Product = ({ product }: { product: ProductType }) => {
   // Hooks
@@ -46,7 +47,7 @@ const Product = ({ product }: { product: ProductType }) => {
       <DialogTrigger {...(!isHoveredOn ? { asChild: true } : {})}>
         <Card
           onClick={(e) => e.stopPropagation()} // Prevent the dialog from opening immediately upon clicking the card
-          className="relative z-10 flex h-[32rem] w-80 flex-col rounded-2xl bg-neutral-300/10 bg-no-repeat hover:cursor-pointer dark:bg-neutral-800/30 md:w-60"
+          className="z-5 relative flex h-[32rem] w-80 flex-col rounded-2xl bg-neutral-300/10 bg-no-repeat hover:cursor-pointer dark:bg-neutral-800/30 md:w-60"
           style={backgroundImageStyle}
         >
           <Button
@@ -69,9 +70,9 @@ const Product = ({ product }: { product: ProductType }) => {
         {/* Top */}
         <Image className="mx-auto my-8" src={`/${product.image}`} alt={product.name} width={300} height={300} />
         {/* Middle */}
-        <DialogHeader className="mx-[-24px] mb-8 rounded-t-3xl bg-zinc-200/50 p-12 dark:bg-zinc-200">
-          <DialogTitle className="mb-4 text-center text-2xl dark:text-black">{product.name}</DialogTitle>
-          <DialogDescription className="mx-8 mb-4 text-center leading-relaxed tracking-wider dark:text-black">
+        <DialogHeader className="mx-[-24px] mb-8 rounded-t-3xl bg-zinc-200/50 p-12 dark:bg-zinc-800">
+          <DialogTitle className="dark:text-text-muted-foreground mb-4 text-center text-2xl">{product.name}</DialogTitle>
+          <DialogDescription className="mx-8 mb-4 text-center leading-relaxed tracking-wider dark:text-muted-foreground">
             {product.description}
           </DialogDescription>
         </DialogHeader>
@@ -82,7 +83,7 @@ const Product = ({ product }: { product: ProductType }) => {
             <span className="font-bold tracking-wide dark:text-white">{PRICE_TOTAL}</span>
           </div>
           <div className="flex flex-col items-center space-y-4 p-4 pr-6">
-            <div className="quantity flex h-8 w-full items-center justify-center ">
+            <div className="quantity flex h-8 w-full items-center justify-center">
               <h3> Aantal: </h3>
               <p className="quantity-desc ml-12 flex flex-1 justify-center">
                 <span
@@ -100,11 +101,11 @@ const Product = ({ product }: { product: ProductType }) => {
                 </span>
               </p>
             </div>
-            <div className="buttons flex gap-3 w-full items-center justify-end">
+            <div className="buttons flex w-full items-center justify-end gap-3">
               <Button type="button" className="addToCart flex gap-2" onClick={() => onAdd(product, qty)}>
                 Voeg Toe
               </Button>
-              <Button type="button" className="buy-now" onClick={handleBuyNow}>
+              <Button type="button" className="goToCart" onClick={() => navigateTo(router, "/winkelwagen")}>
                 <ShoppingCart />
               </Button>
             </div>

@@ -1,10 +1,12 @@
 "use client";
 
-import { MenuIcon } from "lucide-react";
+import { useCartContext } from "@/context/CartContext";
+import { navigateTo } from "@/lib/utils";
+import { MenuIcon, ShoppingBag } from "lucide-react";
 import { Montserrat, Roboto } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { ModeToggle } from "../ui/toggle-mode";
 
@@ -34,17 +36,22 @@ const NAVIGATION_LIST: NavigationItem[] = [
   { title: "Winkelwagen", order: 3 },
 ];
 
+// Functions
+
 const Header = (props: Props) => {
   // Hooks
   const pathName = usePathname();
+  const { totalPrice, totalQuantities, cartItems, showCart, setShowCart, incQty, decQty, toggleCartItemQuantity, onRemove } = useCartContext();
 
   // States
   const [currentPath, setCurrentPath] = useState();
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const router = useRouter();
+
   return (
     <div className="z-10 mx-auto w-full max-w-7xl items-center justify-between font-mono text-sm sm:flex sm:flex-col lg:flex-row">
-      <div className="flex justify-between items-center mx-8 sm:mx-16 mt-12 w-full">
+      <div className="mx-8 mt-12 flex w-full items-center justify-between sm:mx-16">
         {/* Logo */}
         <Link href={"/"}>
           <Image className="mx-auto dark:invert" src="/logo.svg" alt="Lazy Den Haag Logo" width={300} height={20} priority />
@@ -55,6 +62,7 @@ const Header = (props: Props) => {
           <MenuIcon size={24} /> {/* Use MenuIcon from Lucid */}
         </button>
       </div>
+      
       {/* Mobile Navigation Menu */}
       <div className={`lg:hidden ${menuOpen ? "block" : "hidden"}`}>
         <ul className="flex flex-col items-start space-y-4 p-4">
@@ -89,6 +97,18 @@ const Header = (props: Props) => {
         </div>
         <ModeToggle cn="mr-10" />
       </div>
+      
+      {/* Shopping Cart */}
+      <button
+        type="button"
+        className="cart-icon duration-400 relative cursor-pointer border-none bg-transparent text-6xl text-gray-500 transition-transform ease-in-out"
+        onClick={() => navigateTo(router, "/winkelwagen")}
+      >
+        <ShoppingBag />
+        <span className="absolute right-[-16px] top-[-10px] h-5 w-5 rounded-full bg-red-500 text-center text-xs font-semibold text-gray-300">
+          {totalQuantities}
+        </span>
+      </button>
     </div>
   );
 };
