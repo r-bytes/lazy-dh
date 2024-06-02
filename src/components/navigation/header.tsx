@@ -65,7 +65,7 @@ const Header = (props: Props) => {
   };
   return (
     <div className="z-10 mx-auto w-full max-w-7xl items-center justify-between font-mono text-sm sm:flex sm:flex-col lg:flex-row">
-      <div className="mx-auto mt-12 flex w-full items-center justify-between p-8 sm:mx-16">
+      <div className="mx-auto mt-4 flex w-full items-center justify-between p-8 sm:mx-16">
         {/* Logo */}
         <Link href={"/"}>
           <Image className="mx-auto dark:invert" src="/logo.svg" alt="Lazy Den Haag Logo" width={300} height={20} priority />

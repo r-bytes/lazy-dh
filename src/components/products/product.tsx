@@ -21,6 +21,7 @@ const Product = ({ product }: { product: ProductType }) => {
   // States
   const [isHoveredOn, setIsHoveredOn] = useState<boolean>(false);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
 
   // Variables
   const backgroundImageStyle = {
@@ -44,8 +45,10 @@ const Product = ({ product }: { product: ProductType }) => {
   return (
     <Dialog>
       {/* Conditionally add asChild based on isHoveredOn state */}
-      <DialogTrigger {...(!isHoveredOn ? { asChild: true } : {})}>
+      <DialogTrigger {...(!isHoveredOn || !isFocused ? { asChild: true } : {})}>
         <Card
+          onFocus={() => setIsFocused(true)} // Handle focus event
+          onBlur={() => setIsFocused(false)} // Handle blur event
           onClick={(e) => e.stopPropagation()} // Prevent the dialog from opening immediately upon clicking the card
           className="z-5 relative flex h-[32rem] w-80 flex-col rounded-2xl bg-neutral-300/10 bg-no-repeat hover:cursor-pointer dark:bg-neutral-800/30 md:w-60"
           style={backgroundImageStyle}
@@ -66,25 +69,24 @@ const Product = ({ product }: { product: ProductType }) => {
           </CardContent>
         </Card>
       </DialogTrigger>
-      <DialogContent className="flex flex-col bg-zinc-100 dark:bg-zinc-900">
+      <DialogContent className="flex w-4/5 flex-col rounded-2xl bg-zinc-100 dark:bg-zinc-900">
         {/* Top */}
         <Image className="mx-auto my-8" src={`/${product.image}`} alt={product.name} width={300} height={300} />
         {/* Middle */}
         <DialogHeader className="mx-[-24px] mb-8 rounded-t-3xl bg-zinc-200/50 p-12 dark:bg-zinc-800">
           <DialogTitle className="dark:text-text-muted-foreground mb-4 text-center text-2xl">{product.name}</DialogTitle>
-          <DialogDescription className="mx-8 mb-4 text-center leading-relaxed tracking-wider dark:text-muted-foreground">
+          <DialogDescription className="mb-4 text-center leading-relaxed tracking-wider dark:text-muted-foreground">
             {product.description}
           </DialogDescription>
         </DialogHeader>
         {/* Bottom */}
-        <DialogFooter className="mx-[-24px] mb-[-25px] mt-[-60px] flex h-32 flex-col items-center justify-between rounded-b-lg rounded-t-2xl bg-zinc-100 px-8 dark:bg-zinc-900 md:px-0">
-          <div id="priceTotal" className="flex-1 text-4xl tracking-wide sm:ml-3 md:ml-12">
+        <DialogFooter className="mx-[-24px] mb-[-25px] mt-[-60px] flex h-32 flex-row items-center justify-between rounded-b-lg rounded-t-2xl bg-zinc-100 px-8 dark:bg-zinc-900 md:px-0">
+          <div id="priceTotal" className="flex-1 text-lg tracking-wide sm:ml-3 sm:text-4xl md:ml-12">
             <span className="mr-1 text-xs font-bold dark:text-white">€</span>
             <span className="font-bold tracking-wide dark:text-white">{PRICE_TOTAL}</span>
           </div>
-          <div className="flex flex-col items-center space-y-4 p-4 pr-6">
+          <div className="flex flex-col items-center space-y-4 p-4 pr-0">
             <div className="quantity flex h-8 w-full items-center justify-center">
-              <h3> Aantal: </h3>
               <p className="quantity-desc ml-12 flex flex-1 justify-center">
                 <span
                   className="minus flex w-12 items-center justify-center border border-muted-foreground/40 text-center text-red-700"

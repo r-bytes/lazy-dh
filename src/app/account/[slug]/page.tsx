@@ -1,5 +1,6 @@
 import ProductList from "@/components/products/product-list";
 import { CardHeader } from "@/components/ui/card";
+import Title from "@/components/ui/title";
 import { Product as ProductType } from "@/lib/definitions";
 import { capitalizeFirstLetter } from "@/lib/utils";
 
@@ -65,14 +66,12 @@ const page = ({ params: { slug }, searchParams }: Props) => {
   console.log(slug);
 
   return slug === "bestellingen" ? (
-    <div className="flex justify-center items-center h-screen w-screen flex-col"> bestellingen </div>
+    <div className="flex h-screen w-screen flex-col items-center justify-center"> bestellingen </div>
   ) : slug === "wachtwoord-reset" ? (
-    <div className="flex justify-center items-center h-screen w-screen flex-col"> ww reset</div>
+    <div className="flex h-screen w-screen flex-col items-center justify-center"> ww reset</div>
   ) : (
     <div className="flex h-screen w-screen flex-col">
-      <CardHeader className="mb-10 mt-24 text-center text-2xl font-semibold sm:mt-0">
-        {capitalizeFirstLetter(slug)}
-      </CardHeader>
+      <Title name={capitalizeFirstLetter(slug)} cn="mb-10 mt-24 text-center text-2xl font-semibold sm:mt-0" />
       <ProductList products={PRODUCT_LIST} />
     </div>
   );

@@ -22,12 +22,12 @@ const ShoppingCart = () => {
     <div className="mt-24">
       <Title name="Winkelwagen" />
       {cartItems.length < 1 && (
-        <div className="empty-cart m-10 flex h-96 flex-col items-center justify-center space-y-4 text-center border-4">
+        <div className="empty-cart m-10 flex h-96 flex-col items-center justify-center space-y-4 border-4 text-center">
           <ShoppingBag size={150} />
-          <h3> Your shopping bag is empty </h3>
+          <h3> Uw winkelwagen is leeg </h3>
           <Link href={"/"}>
             <button type="button" onClick={() => setShowCart(false)} className="btn">
-              Continue shopping
+              Ga door met winkelen
             </button>
           </Link>
         </div>
@@ -42,10 +42,10 @@ const ShoppingCart = () => {
                 <Card className="bg-transparent p-3 px-0">
                   <Image src={`/${item.image}`} alt="" width={200} height={200} />
                 </Card>
-                <div className="m-4 item-desc flex w-full flex-col justify-between text-muted-foreground">
+                <div className="item-desc m-4 flex w-full flex-col justify-between text-muted-foreground">
                   <div className="flex justify-between">
-                    <h5 className="text-2xl tracking-wide font-semibold"> {item.name} </h5>
-                    <h4 className="text-lg tracking-wide font-semibold"> € {item.price} </h4>
+                    <h5 className="text-2xl font-semibold tracking-wide"> {item.name} </h5>
+                    <h4 className="text-lg font-semibold tracking-wide"> € {item.price} </h4>
                   </div>
                   <div className="bottom flex justify-between">
                     <div className="quantity">
@@ -85,11 +85,11 @@ const ShoppingCart = () => {
       {cartItems.length >= 1 && (
         <div className="mx-auto w-full max-w-7xl p-8">
           <div className="flex justify-between">
-            <h3> Subtotal: </h3>
+            <h3> Totaal: </h3>
             <Button type="button" className="btn" onClick={handleCheckout}>
               Bestelling Plaatsen
             </Button>
-            <h3> $ {totalPrice} </h3>
+            <h3> € {totalPrice} </h3>
           </div>
           <div className="mx-auto w-96"></div>
         </div>
