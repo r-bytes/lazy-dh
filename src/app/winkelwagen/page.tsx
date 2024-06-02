@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
-import Cart from "@/components/cart/cart";
 import { Product } from "@/lib/definitions";
+import ShoppingCart from "@/components/shopping-cart/shopping-cart";
 
 export default function Page() {
   const [products, setProducts] = useState<Product[]>([
@@ -18,5 +18,5 @@ export default function Page() {
     },
   ]);
 
-  return <Cart />;
+  return <ShoppingCart />;
 }

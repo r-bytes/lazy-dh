@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { usePathname } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { capitalizeFirstLetter, cn } from "@/lib/utils";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { InputForm } from "./search-input";
 
 type Category = {
@@ -24,13 +24,13 @@ const ASSORTMENT: Category[] = [
     productCount: 2,
     title: "Nieuw",
     image: "new-stamp.png",
-    slug: "nieuw"
+    slug: "nieuw",
   },
   {
     productCount: 3,
     title: "Vodka",
     image: "vodka.png",
-    slug: "vodka"
+    slug: "vodka",
   },
 ];
 
@@ -38,7 +38,7 @@ type CardProps = React.ComponentProps<typeof Card>;
 
 export function AssortmentCard({ className, ...props }: CardProps) {
   const pathname = usePathname();
-  
+
   return (
     <>
       <Card className={cn("h-screen w-full", className)} {...props}>
@@ -50,7 +50,7 @@ export function AssortmentCard({ className, ...props }: CardProps) {
         </CardHeader>
         {/* Search bar */}
         <InputForm />
-        <CardContent className="mt-12">
+        <CardContent className="mt-12 p-0 flex flex-col justify-center">
           {ASSORTMENT.map((item, index) => (
             <div key={index} className="flex text-center lg:text-left">
               <a
@@ -59,21 +59,15 @@ export function AssortmentCard({ className, ...props }: CardProps) {
                 // target="_blank"
                 rel="noopener noreferrer"
               >
-                <div className="flex items-center">
-                  <div className="h-24">
-                    <Image
-                      className="hidden h-24 w-24 object-contain sm:block"
-                      src={`/${item.image}`}
-                      alt=""
-                      width={100}
-                      height={100}
-                    />
+                <div className="flex items-center justify-start">
+                  <div>
+                    <Image className="hidden h-24 w-24 object-contain sm:block" src={`/${item.image}`} alt="" width={100} height={100} />
                   </div>
-                  <div className="mx-12 flex flex-1 flex-col">
-                    <h2 className="mb-3 text-2xl font-semibold">{item.title}</h2>
-                    <p className="m-0 max-w-[30ch] text-sm opacity-50">{item.productCount} producten </p>
+                  <div className="mx-12 flex flex-1 flex-col text-left sm:text-center">
+                    <h2 className="mb-3 text-md sm:text-lg md:text-2xl font-semibold">{item.title}</h2>
+                    <p className="m-0 text-sm opacity-50">{item.productCount} producten </p>
                   </div>
-                  <span className="inline-block text-3xl transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+                  <span className="inline-block text-lg sm:text-3xl transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
                     &#x279C;
                   </span>
                 </div>

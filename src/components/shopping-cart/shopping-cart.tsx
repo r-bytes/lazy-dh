@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import Title from "../ui/title";
 
-const Cart = () => {
+const ShoppingCart = () => {
   // Hooks
   const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuantity, onRemove, incQty } = useCartContext();
 
@@ -22,7 +22,7 @@ const Cart = () => {
     <div className="mt-24">
       <Title name="Winkelwagen" />
       {cartItems.length < 1 && (
-        <div className="empty-cart m-10 flex h-full flex-col items-center justify-center space-y-4 text-center">
+        <div className="empty-cart m-10 flex h-96 flex-col items-center justify-center space-y-4 text-center border-4">
           <ShoppingBag size={150} />
           <h3> Your shopping bag is empty </h3>
           <Link href={"/"}>
@@ -42,10 +42,10 @@ const Cart = () => {
                 <Card className="bg-transparent p-3 px-0">
                   <Image src={`/${item.image}`} alt="" width={200} height={200} />
                 </Card>
-                <div className="item-desc flex w-full flex-col justify-between text-gray-700">
+                <div className="m-4 item-desc flex w-full flex-col justify-between text-muted-foreground">
                   <div className="flex justify-between">
-                    <h5 className="text-lg font-semibold"> {item.name} </h5>
-                    <h4 className="text-lg font-semibold"> €{item.price} </h4>
+                    <h5 className="text-2xl tracking-wide font-semibold"> {item.name} </h5>
+                    <h4 className="text-lg tracking-wide font-semibold"> € {item.price} </h4>
                   </div>
                   <div className="bottom flex justify-between">
                     <div className="quantity">
@@ -98,4 +98,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default ShoppingCart;
