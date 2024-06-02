@@ -24,11 +24,17 @@ export default function RootLayout({
         {/* Ensure body takes up full height */}
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Header />
-          <main className="flex-grow overflow-auto">
+          {/* mobile nav */}
+          {/* <main className="flex-grow overflow-auto"> */}
+          <main>
+            {/* mobile nav */}
             {/* Make main content scrollable */}
             {children}
           </main>
-          <MobileNavbar cn={`fixed bottom-0 h-16 bg-black w-full sm:hidden sm:h-auto`} />{" "}
+          {/* mobile nav */}
+          {/* <MobileNavbar cn={`fixed bottom-0 h-16 bg-black w-full sm:hidden sm:h-auto`} />{" "} */}
+          
+          {/* mobile nav */}
           {/* Stick to bottom on small screens, otherwise behave normally */}
         </ThemeProvider>
       </body>
