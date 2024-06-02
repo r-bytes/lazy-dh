@@ -44,10 +44,10 @@ const ShoppingCart = () => {
                 </Card>
                 <div className="item-desc m-4 flex w-full flex-col justify-between text-muted-foreground">
                   <div className="flex justify-between">
-                    <h5 className="text-2xl font-semibold tracking-wide"> {item.name} </h5>
+                    <h5 className="text-lg font-semibold tracking-wide sm:text-2xl"> {item.name} </h5>
                     <h4 className="text-lg font-semibold tracking-wide"> € {item.price} </h4>
                   </div>
-                  <div className="bottom flex justify-between">
+                  <div className="bottom mt-8 flex items-center justify-between">
                     <div className="quantity">
                       <p className="quantity-desc flex">
                         <span
@@ -69,7 +69,7 @@ const ShoppingCart = () => {
                     </div>
                     <button
                       type="button"
-                      className="remove-item cursor-pointer border-none bg-transparent text-xl text-red-500 hover:bg-transparent hover:text-xl"
+                      className="remove-item ml-4 cursor-pointer border-none bg-transparent text-xl text-red-500 hover:bg-transparent hover:text-xl"
                       onClick={() => onRemove(item)}
                     >
                       <CircleX />
@@ -83,15 +83,16 @@ const ShoppingCart = () => {
       </div>
 
       {cartItems.length >= 1 && (
-        <div className="mx-auto w-full max-w-7xl p-8">
+        <div className="mt-[-80px] mx-auto w-full max-w-7xl p-8">
           <div className="flex justify-between">
             <h3> Totaal: </h3>
+            <h3> € {totalPrice} </h3>
+          </div>
+          <div className="mx-auto w-full mt-16 flex justify-center items-center">
             <Button type="button" className="btn" onClick={handleCheckout}>
               Bestelling Plaatsen
             </Button>
-            <h3> € {totalPrice} </h3>
           </div>
-          <div className="mx-auto w-96"></div>
         </div>
       )}
     </div>

@@ -3,20 +3,20 @@
 import { Product as ProductType } from "@/lib/definitions";
 import { Heart, Minus, Plus, ShoppingCart } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
 
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useCartContext } from "@/context/CartContext";
-import Image from "next/image";
 import { navigateTo } from "@/lib/utils";
+import Image from "next/image";
 
 const Product = ({ product }: { product: ProductType }) => {
   // Hooks
   const pathname = usePathname();
   const router = useRouter();
-  const { decQty, incQty, qty, onAdd, setShowCart } = useCartContext();  
+  const { decQty, incQty, qty, onAdd, setShowCart } = useCartContext();
 
   // States
   const [isHoveredOn, setIsHoveredOn] = useState<boolean>(false);
@@ -53,14 +53,6 @@ const Product = ({ product }: { product: ProductType }) => {
           className="z-5 relative flex h-[32rem] w-80 flex-col rounded-2xl bg-neutral-300/10 bg-no-repeat hover:cursor-pointer dark:bg-neutral-800/30 md:w-60"
           style={backgroundImageStyle}
         >
-          <Button
-            onClick={handleToggleFavorite}
-            onMouseEnter={() => setIsHoveredOn(true)}
-            onMouseLeave={() => setIsHoveredOn(false)}
-            className="ml-[75%] mt-4 h-12 w-12 rounded-full bg-muted-foreground/10 hover:bg-primary/70"
-          >
-            <Heart color={isFavorite ? "red" : ""} fill={isFavorite ? "red" : "bg-muted-foreground/30"} />
-          </Button>
           <CardContent className="flex flex-1 flex-col items-center justify-end rounded-2xl">
             <div className="mb-12 w-full text-center">
               <CardTitle className="mb-2 flex-1 text-lg">{product.name}</CardTitle>
@@ -70,6 +62,14 @@ const Product = ({ product }: { product: ProductType }) => {
         </Card>
       </DialogTrigger>
       <DialogContent className="flex w-4/5 flex-col rounded-2xl bg-zinc-100 dark:bg-zinc-900">
+        <Button
+          onClick={handleToggleFavorite}
+          onMouseEnter={() => setIsHoveredOn(true)}
+          onMouseLeave={() => setIsHoveredOn(false)}
+          className="ml-[75%] mt-4 h-12 w-12 rounded-full bg-muted-foreground/10 hover:bg-primary/70 outline-none"
+        >
+          <Heart color={isFavorite ? "red" : ""} fill={isFavorite ? "red" : "bg-muted-foreground/30"} />
+        </Button>
         {/* Top */}
         <Image className="mx-auto my-8" src={`/${product.image}`} alt={product.name} width={300} height={300} />
         {/* Middle */}
