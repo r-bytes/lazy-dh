@@ -1,36 +1,31 @@
 "use client";
 
-import { useCartStore } from "@/components/store/store";
 import { useEffect, useState } from "react";
 
 import axios from "axios";
 import Image from "next/image";
-
-type Product = {
-  id: string;
-  title: string;
-  price: number;
-  image: string;
-  quantity: number;
-}[];
+import { Product } from "@/lib/definitions";
 
 export default function Page() {
-  const [products, setProducts] = useState<Product>([]);
-  const [cart, setCart] = useState([]);
-
-  const addItem = useCartStore((state) => state.addItem);
-
-
+  const [products, setProducts] = useState<Product[]>([{
+    _id: 2,
+    description: "Product",
+    image: "next/image",
+    name: "Product",
+    price: 11,
+    quantity: 1,
+    slug: "next",
+  }]);
 
   return (
     <div>
       <h1>Shop</h1>
       <div>
         {products.map((product) => (
-          <div key={product.id}>
-            <Image src={product.image} alt={product.title} width={200} height={200} />
-            <h2>{product.title}</h2>
-            <button onClick={() => addItem(product)}>Add to Cart</button>
+          <div key={product._id}>
+            <Image src={product.image} alt={product.name} width={200} height={200} />
+            <h2>{product.name}</h2>
+            {/* <button onClick={() => addItem(product)}>Add to Cart</button> */}
           </div>
         ))}
       </div>

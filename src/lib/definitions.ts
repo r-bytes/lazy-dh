@@ -87,8 +87,8 @@ export type InvoiceForm = {
 };
 
 export type Product = {
-  id: number;
-  title: string;
+  _id: number;
+  name: string;
   description: string;
   price: number;
   image: string;

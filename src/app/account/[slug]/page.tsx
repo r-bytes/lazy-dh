@@ -10,8 +10,8 @@ type Props = {
 
 const PRODUCT_LIST: ProductType[] = [
   {
-    id: 1,
-    title: "Ouzo Paralia",
+    _id: 1,
+    name: "Ouzo Paralia",
     description:
       "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
     price: 15.0,
@@ -20,8 +20,8 @@ const PRODUCT_LIST: ProductType[] = [
     quantity: 1000,
   },
   {
-    id: 2,
-    title: "Ouzo Paralia",
+    _id: 2,
+    name: "Ouzo Paralia",
     description:
       "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
     price: 15.0,
@@ -30,8 +30,8 @@ const PRODUCT_LIST: ProductType[] = [
     quantity: 1000,
   },
   {
-    id: 3,
-    title: "Ouzo Paralia",
+    _id: 3,
+    name: "Ouzo Paralia",
     description:
       "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
     price: 15.0,
@@ -40,8 +40,8 @@ const PRODUCT_LIST: ProductType[] = [
     quantity: 1000,
   },
   {
-    id: 4,
-    title: "Ouzo Paralia",
+    _id: 4,
+    name: "Ouzo Paralia",
     description:
       "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
     price: 15.0,
@@ -50,8 +50,8 @@ const PRODUCT_LIST: ProductType[] = [
     quantity: 1000,
   },
   {
-    id: 4,
-    title: "Ouzo Paralia",
+    _id: 4,
+    name: "Ouzo Paralia",
     description:
       "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
     price: 15.0,
