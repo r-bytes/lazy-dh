@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -29,4 +30,8 @@ export const formatDateToLocal = (dateStr: string, locale: string = "en-US") => 
 
 export const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+export const navigateTo = (navigation: AppRouterInstance, value: string) => {
+  navigation.push(value);
 };

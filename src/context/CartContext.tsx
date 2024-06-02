@@ -58,7 +58,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       price: 15.0,
       image: "ouzo-paralia.png",
       slug: "ouzo-paralia",
-      quantity: 1000,
+      quantity: 0,
     },
     {
       _id: 2,
@@ -68,7 +68,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       price: 15.0,
       image: "ouzo-paralia.png",
       slug: "ouzo-paralia",
-      quantity: 1000,
+      quantity: 0,
     },
   ]);
 
