@@ -64,11 +64,11 @@ export function AccountCard({ className, ...props }: CardProps) {
               className="group w-full rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
               rel="noopener noreferrer"
             >
-              <div className="flex items-center">
+              <div className="flex items-center p-4">
                 <div className="hidden h-24 w-24 object-contain sm:block">
                   {createElement(iconMap[item.image], { className: "h-24 w-16 object-contain" })}
                 </div>
-                <div className="mx-12 flex flex-1 flex-col text-left sm:text-center">
+                <div className="flex flex-1 flex-col text-left sm:text-center">
                   <h2 className="text-md mb-3 font-semibold sm:text-lg md:text-2xl">{item.title}</h2>
                   <p className="m-0 text-sm opacity-50">{item.description} producten </p>
                 </div>
