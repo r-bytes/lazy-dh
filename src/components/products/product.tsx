@@ -73,6 +73,11 @@ const Product = ({ product }: { product: ProductType }) => {
     );
   };
 
+  function handleCheckout(): void {
+    onAdd(product, qty);
+    navigateTo(router, "/winkelwagen");
+  }
+
   return (
     <Dialog>
       {/* Conditionally add asChild based on isHoveredOn state */}
@@ -129,8 +134,7 @@ const Product = ({ product }: { product: ProductType }) => {
           <Button type="button" className="addToCart flex-1" onClick={() => onAdd(product, qty)}>
             Voeg Toe
           </Button>
-          <Button type="button" className="goToCart flex-1" onClick={() => navigateTo(router, "/winkelwagen")}>
-            {/* <ShoppingCart /> */}
+          <Button type="button" className="goToCart flex-1" onClick={handleCheckout}>
             Check uit
           </Button>
         </DialogFooter>

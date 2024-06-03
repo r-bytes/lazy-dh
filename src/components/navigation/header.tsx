@@ -75,12 +75,12 @@ const Header = (props: Props) => {
           <MenuIcon size={24} /> {/* Use MenuIcon from Lucid */}
         </button>
         {/* Shopping Cart */}
-        <ShoppingCart cn={""} />
+        <ShoppingCart cn={"lg:hidden"} />
       </div>
 
       {/* Mobile Navigation Menu */}
       <div className={`lg:hidden ${menuOpen ? "fixed inset-0 z-50 bg-zinc-100 dark:bg-black" : "hidden"}`}>
-        <div className="flex flex-col gap-4 h-screen justify-between items-center">
+        <div className="flex h-screen flex-col items-center justify-between gap-4">
           <CircleX
             onClick={() => setMenuOpen(false)}
             className="h-12 w-full border p-2 text-right text-muted-foreground hover:cursor-pointer hover:bg-secondary"
@@ -88,7 +88,11 @@ const Header = (props: Props) => {
           <ul>
             {NAVIGATION_LIST.map((item, index, arr) => (
               <li key={item.order} className={`hover:text-primary} font-semibold tracking-wide hover:cursor-pointer`}>
-                <Link className={roboto.className} onClick={() => setMenuOpen(false)} href={`/${item.title.toLowerCase() === "acties" ? "promoties" : item.title.toLowerCase()}`}>
+                <Link
+                  className={roboto.className}
+                  onClick={() => setMenuOpen(false)}
+                  href={`/${item.title.toLowerCase() === "acties" ? "promoties" : item.title.toLowerCase()}`}
+                >
                   <Title name={item.title} />
                 </Link>
               </li>

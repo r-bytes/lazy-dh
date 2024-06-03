@@ -59,7 +59,7 @@ export function AssortmentCard({ className, ...props }: CardProps) {
                 // target="_blank"
                 rel="noopener noreferrer"
               >
-                <div className="flex items-center justify-center border-4 px-4">
+                <div className="flex items-center justify-center px-4">
                   <Image className="hidden h-24 w-24 object-contain sm:block" src={`/${item.image}`} alt="" width={100} height={100} />
                   <div className="sm:mx-12 flex flex-1 flex-col text-left sm:text-center">
                     <h2 className="text-md mb-3 font-semibold sm:text-lg md:text-2xl">{item.title}</h2>
