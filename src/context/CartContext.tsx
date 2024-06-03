@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
 type Product = {
@@ -72,12 +72,22 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     },
   ]);
 
+  useEffect(() => {
+    removeZeroQuantityItems();
+  }, []);
+  
+
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalQuantities, setTotalQuantities] = useState<number>(0);
   const [qty, setQty] = useState<number>(1);
 
   let foundProduct: Product | undefined;
   let index: number;
+
+  const removeZeroQuantityItems = () => {
+    const filteredItems = cartItems.filter((item) => item.quantity !== 0);
+    setCartItems(filteredItems); // Update the state with the filtered items
+  };
 
   const onAdd = (product: Product, quantity: number) => {
     const checkProductInCard = cartItems.find((item) => item._id === product._id);
