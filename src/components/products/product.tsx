@@ -92,17 +92,25 @@ const Product = ({ product }: { product: ProductType }) => {
           </CardContent>
         </Card>
       </DialogTrigger>
-      <DialogContent className="flex h-4/5 w-4/5 flex-col justify-center rounded-2xl bg-zinc-100 p-0 dark:bg-zinc-900">
-        <Button
+      <DialogContent className="max-h-4/5 flex w-4/5 flex-col justify-center rounded-2xl bg-zinc-100 p-0 dark:bg-zinc-900">
+        {/* <Button
+          variant={"secondary"}
           onClick={handleToggleFavorite}
           onMouseEnter={() => setIsHoveredOn(true)}
           onMouseLeave={() => setIsHoveredOn(false)}
-          className="ml-[3%] h-12 w-12 mt-[-50px] rounded-full bg-muted-foreground/10 outline-none hover:bg-primary/70"
-        >
-          <Heart color={isFavorite ? "red" : ""} fill={isFavorite ? "red" : "bg-muted-foreground/30"} />
-        </Button>
+          className="m-4 h-12 w-12 rounded-full bg-muted-foreground/10 outline-none hover:bg-primary/70"
+        > */}
+        {/* <button type="button"> */}
+          <Heart
+            className="m-4 h-4 w-4 hover:cursor-pointer"
+            onClick={handleToggleFavorite}
+            color={isFavorite ? "red" : ""}
+            fill={isFavorite ? "red" : "bg-muted-foreground/30"}
+          />
+        {/* </button> */}
+        {/* </Button> */}
         {/* Top */}
-        <Image className="mt-[-10px] h-60 w-full object-cover" src={`/${product.image}`} alt={product.name} width={300} height={300} />
+        <Image className="mt-4 h-60 w-full object-contain" src={`/${product.image}`} alt={product.name} width={300} height={300} />
         {/* Middle */}
         <DialogHeader className="flex flex-col items-center justify-between rounded-t-3xl bg-zinc-200/50 p-4 dark:bg-zinc-800">
           <div className="">
@@ -117,7 +125,7 @@ const Product = ({ product }: { product: ProductType }) => {
           </div>
         </DialogHeader>
         {/* Bottom */}
-        <DialogFooter className="flex flex-row items-center justify-between gap-4 rounded-b-lg rounded-t-2xl bg-zinc-100 px-4 pt-2 dark:bg-zinc-900">
+        <DialogFooter className="mt-2 flex h-16 flex-row justify-between gap-4 rounded-b-lg rounded-t-2xl bg-zinc-100 px-4 dark:bg-zinc-900">
           <Button type="button" className="addToCart flex-1" onClick={() => onAdd(product, qty)}>
             Voeg Toe
           </Button>
