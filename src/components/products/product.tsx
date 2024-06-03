@@ -97,7 +97,7 @@ const Product = ({ product }: { product: ProductType }) => {
           onClick={handleToggleFavorite}
           onMouseEnter={() => setIsHoveredOn(true)}
           onMouseLeave={() => setIsHoveredOn(false)}
-          className="ml-[10%] mt-4 h-12 w-12 rounded-full bg-muted-foreground/10 outline-none hover:bg-primary/70"
+          className="ml-[3%] h-12 w-12 mt-[-50px] rounded-full bg-muted-foreground/10 outline-none hover:bg-primary/70"
         >
           <Heart color={isFavorite ? "red" : ""} fill={isFavorite ? "red" : "bg-muted-foreground/30"} />
         </Button>
