@@ -52,7 +52,7 @@ export function AccountCard({ className, ...props }: CardProps) {
     <Card className={cn("h-screen w-full", className)} {...props}>
       <CardHeader className="mb-4 text-center">
         {/* Todo: should be dynamic */}
-        <CardTitle className="mt-12">Account</CardTitle>
+        <CardTitle className="mt-12 text-3xl">Account</CardTitle>
         {/* Todo: should be dynamic */}
         <CardDescription>Kies een categorie</CardDescription>
       </CardHeader>
@@ -68,8 +68,8 @@ export function AccountCard({ className, ...props }: CardProps) {
                 <div className="hidden h-24 w-24 object-contain sm:block">
                   {createElement(iconMap[item.image], { className: "h-24 w-16 object-contain" })}
                 </div>
-                <div className="mx-12 flex flex-1 flex-col">
-                  <h2 className="mb-3 text-2xl font-semibold">{item.title}</h2>
+                <div className="mx-12 flex flex-1 flex-col text-left sm:text-center">
+                  <h2 className="text-md mb-3 font-semibold sm:text-lg md:text-2xl">{item.title}</h2>
                   <p className="m-0 text-sm opacity-50">{item.description} producten </p>
                 </div>
                 <span className="inline-block text-3xl transition-transform group-hover:translate-x-1 motion-reduce:transform-none">&#x279C;</span>

@@ -65,7 +65,7 @@ const Header = (props: Props) => {
   };
   return (
     <div className="z-10 mx-auto w-full max-w-7xl items-center justify-between font-mono text-sm sm:flex sm:flex-col lg:flex-row">
-      <div className="mx-auto mt-4 flex w-full items-center justify-between p-8 sm:mx-16">
+      <div className="mx-auto mt-0 flex w-full items-center justify-between p-8 sm:mx-16">
         {/* Logo */}
         <Link href={"/"}>
           <Image className="mx-auto dark:invert" src="/logo.svg" alt="Lazy Den Haag Logo" width={300} height={20} priority />
@@ -80,7 +80,7 @@ const Header = (props: Props) => {
 
       {/* Mobile Navigation Menu */}
       <div className={`lg:hidden ${menuOpen ? "fixed inset-0 z-50 bg-zinc-100 dark:bg-black" : "hidden"}`}>
-        <div className="flex flex-col gap-4 h-screen border-4 justify-between items-center">
+        <div className="flex flex-col gap-4 h-screen justify-between items-center">
           <CircleX
             onClick={() => setMenuOpen(false)}
             className="h-12 w-full border p-2 text-right text-muted-foreground hover:cursor-pointer hover:bg-secondary"

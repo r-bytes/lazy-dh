@@ -44,7 +44,7 @@ export function AssortmentCard({ className, ...props }: CardProps) {
       <Card className={cn("h-screen w-full", className)} {...props}>
         <CardHeader className="mb-4 text-center">
           {/* Todo: should be dynamic */}
-          <CardTitle className="mt-12">{capitalizeFirstLetter(pathname.replace("/", ""))}</CardTitle>
+          <CardTitle className="mt-12 text-3xl">{capitalizeFirstLetter(pathname.replace("/", ""))}</CardTitle>
           {/* Todo: should be dynamic */}
           <CardDescription>Kies een categorie</CardDescription>
         </CardHeader>

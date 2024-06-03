@@ -1,7 +1,7 @@
 "use client";
 
 import { Product as ProductType } from "@/lib/definitions";
-import { Heart, Minus, Plus, ShoppingCart } from "lucide-react";
+import { Heart, Minus, Plus } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "../ui/button";
@@ -42,6 +42,37 @@ const Product = ({ product }: { product: ProductType }) => {
     setShowCart(true);
   };
 
+  const CounterDiv = () => {
+    return (
+      <div className="quantity ml-2 flex h-8 items-center justify-center">
+        <p className="quantity-desc ml-0 flex flex-1 justify-center">
+          <span
+            className="minus flex h-8 w-12 items-center justify-center border border-muted-foreground/40 text-center text-red-700 hover:cursor-pointer"
+            onClick={decQty}
+          >
+            <Minus className="hover:cursor-pointer " />
+          </span>
+          <span className="num flex w-8 items-center justify-center border border-muted-foreground/40 text-center "> {qty} </span>
+          <span
+            className="plus flex w-12 items-center justify-center border border-muted-foreground/40 text-center text-green-700 hover:cursor-pointer"
+            onClick={incQty}
+          >
+            <Plus className="hover:cursor-pointer " />
+          </span>
+        </p>
+      </div>
+    );
+  };
+
+  const PriceDiv = () => {
+    return (
+      <div id="priceTotal" className="mr-2 flex-1 text-right text-3xl tracking-wide sm:ml-3 sm:text-4xl">
+        <span className="mr-1 text-xs font-bold dark:text-white">€</span>
+        <span className="font-bold tracking-wide dark:text-white">{PRICE_TOTAL}</span>
+      </div>
+    );
+  };
+
   return (
     <Dialog>
       {/* Conditionally add asChild based on isHoveredOn state */}
@@ -61,57 +92,39 @@ const Product = ({ product }: { product: ProductType }) => {
           </CardContent>
         </Card>
       </DialogTrigger>
-      <DialogContent className="flex w-4/5 flex-col rounded-2xl bg-zinc-100 dark:bg-zinc-900">
+      <DialogContent className="flex h-4/5 w-4/5 flex-col justify-center rounded-2xl bg-zinc-100 p-0 dark:bg-zinc-900">
         <Button
           onClick={handleToggleFavorite}
           onMouseEnter={() => setIsHoveredOn(true)}
           onMouseLeave={() => setIsHoveredOn(false)}
-          className="ml-[75%] mt-4 h-12 w-12 rounded-full bg-muted-foreground/10 hover:bg-primary/70 outline-none"
+          className="ml-[10%] mt-4 h-12 w-12 rounded-full bg-muted-foreground/10 outline-none hover:bg-primary/70"
         >
           <Heart color={isFavorite ? "red" : ""} fill={isFavorite ? "red" : "bg-muted-foreground/30"} />
         </Button>
         {/* Top */}
-        <Image className="mx-auto my-8" src={`/${product.image}`} alt={product.name} width={300} height={300} />
+        <Image className="mt-[-10px] h-60 w-full object-cover" src={`/${product.image}`} alt={product.name} width={300} height={300} />
         {/* Middle */}
-        <DialogHeader className="mx-[-24px] mb-8 rounded-t-3xl bg-zinc-200/50 p-12 dark:bg-zinc-800">
-          <DialogTitle className="dark:text-text-muted-foreground mb-4 text-center text-2xl">{product.name}</DialogTitle>
-          <DialogDescription className="mb-4 text-center leading-relaxed tracking-wider dark:text-muted-foreground">
-            {product.description}
-          </DialogDescription>
+        <DialogHeader className="flex flex-col items-center justify-between rounded-t-3xl bg-zinc-200/50 p-4 dark:bg-zinc-800">
+          <div className="">
+            <DialogTitle className="dark:text-text-muted-foreground tx-lg mb-4 mt-4 text-center sm:text-2xl">{product.name}</DialogTitle>
+            <DialogDescription className="pb-8 text-center text-xs leading-relaxed tracking-wider dark:text-muted-foreground sm:text-sm">
+              {product.description}
+            </DialogDescription>
+          </div>
+          <div className="flex w-full items-center justify-between">
+            <CounterDiv />
+            <PriceDiv />
+          </div>
         </DialogHeader>
         {/* Bottom */}
-        <DialogFooter className="mx-[-24px] mb-[-25px] mt-[-60px] flex h-32 flex-row items-center justify-between rounded-b-lg rounded-t-2xl bg-zinc-100 px-8 dark:bg-zinc-900 md:px-0">
-          <div id="priceTotal" className="flex-1 text-lg tracking-wide sm:ml-3 sm:text-4xl md:ml-12">
-            <span className="mr-1 text-xs font-bold dark:text-white">€</span>
-            <span className="font-bold tracking-wide dark:text-white">{PRICE_TOTAL}</span>
-          </div>
-          <div className="flex flex-col items-center space-y-4 p-4 pr-0">
-            <div className="quantity flex h-8 w-full items-center justify-center">
-              <p className="quantity-desc ml-12 flex flex-1 justify-center">
-                <span
-                  className="minus flex w-12 items-center justify-center border border-muted-foreground/40 text-center text-red-700"
-                  onClick={decQty}
-                >
-                  <Minus />
-                </span>
-                <span className="num flex w-8 items-center justify-center border border-muted-foreground/40 text-center "> {qty} </span>
-                <span
-                  className="plus flex w-12 items-center justify-center border border-muted-foreground/40 text-center text-green-700"
-                  onClick={incQty}
-                >
-                  <Plus />
-                </span>
-              </p>
-            </div>
-            <div className="buttons flex w-full items-center justify-end gap-3">
-              <Button type="button" className="addToCart flex gap-2" onClick={() => onAdd(product, qty)}>
-                Voeg Toe
-              </Button>
-              <Button type="button" className="goToCart" onClick={() => navigateTo(router, "/winkelwagen")}>
-                <ShoppingCart />
-              </Button>
-            </div>
-          </div>
+        <DialogFooter className="flex flex-row items-center justify-between gap-4 rounded-b-lg rounded-t-2xl bg-zinc-100 px-4 pt-2 dark:bg-zinc-900">
+          <Button type="button" className="addToCart flex-1" onClick={() => onAdd(product, qty)}>
+            Voeg Toe
+          </Button>
+          <Button type="button" className="goToCart flex-1" onClick={() => navigateTo(router, "/winkelwagen")}>
+            {/* <ShoppingCart /> */}
+            Check uit
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

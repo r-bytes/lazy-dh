@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import Title from "../ui/title";
+import { useEffect } from "react";
 
 const ShoppingCart = () => {
   // Hooks
@@ -16,19 +17,19 @@ const ShoppingCart = () => {
     toast.loading("Redirecting...");
   };
 
-  const HorizontalRule = () => <hr className="my-12" />;
+  const HorizontalRule = () => <hr className="my-12" />;  
 
   return (
     <div className="mt-24">
       <Title name="Winkelwagen" />
       {cartItems.length < 1 && (
-        <div className="empty-cart m-10 flex h-96 flex-col items-center justify-center space-y-4 border-4 text-center">
+        <div className="empty-cart m-10 flex h-96 flex-col items-center justify-center space-y-4 text-center">
           <ShoppingBag size={150} />
           <h3> Uw winkelwagen is leeg </h3>
           <Link href={"/"}>
-            <button type="button" onClick={() => setShowCart(false)} className="btn">
+            <Button type="button" onClick={() => setShowCart(false)} className="mt-16">
               Ga door met winkelen
-            </button>
+            </Button>
           </Link>
         </div>
       )}

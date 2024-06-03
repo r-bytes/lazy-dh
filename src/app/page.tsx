@@ -64,8 +64,8 @@ export default function Home() {
   const navigate = useRouter();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-background py-24">
-      <section id="acties">
+    <main className="flex min-h-screen flex-col items-center justify-between bg-background">
+      <section id="acties" className="py-4">
         <Title name={"Aanbiedingen"} />
         <MaxWidthWrapper>
           <ProductList products={AANBIEDINGEN.slice(0, 4)} />
