@@ -10,3 +10,10 @@ export const signUpSchema = z.object({
     message: "Passwords do not match",
     path: ["confirmPassword"]
 });
+
+export const signInSchema = z.object({
+  username: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }).max(50),
+  password: z.string().min(2, { message: "Password must be at least 2 characters" }),
+})

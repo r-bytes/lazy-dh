@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-
-import { UserAuthForm } from "@/components/ui/sign-up/user-auth-form";
+import { UserSignUpForm } from "@/components/ui/sign-up/user-sign-up-form";
 
 
 export const metadata: Metadata = {
@@ -22,7 +21,7 @@ export default function AuthenticationPage() {
                 Enter your email below to create your account
               </p>
             </div>
-            <UserAuthForm />
+            <UserSignUpForm />
             <p className="px-8 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{" "}
               <Link

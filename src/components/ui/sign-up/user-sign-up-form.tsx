@@ -1,42 +1,52 @@
-"use client"
+"use client";
 
+import { signUp } from "@/actions/auth.actions";
+import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { signUpSchema } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { toast } from "react-hot-toast";
+import { navigateTo } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
-export function UserAuthForm() { 
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+export function UserSignUpForm() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const form = useForm<z.infer<typeof signUpSchema>>({
+  const router = useRouter()
+
+  const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       username: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
     },
-  })
+  });
 
-  const onSubmit = (values: z.infer<typeof signUpSchema>) => {
-    setIsLoading(true)
-
-    setTimeout(() => {
-    setIsLoading(false)
-    }, 3000)
-
-    console.log(values)
+  const handleSuccess = () => {
+    toast.success("successvol geregistreerd!");
+    navigateTo(router, "/");
+    setIsLoading(false);
   }
+  
+  const handleFailure = (error: any) => {
+    toast.error(error);
+    setIsLoading(false)
+  }
+
+  const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
+    setIsLoading(true);
+    const signUpResponse = await signUp(values);
+
+    if (signUpResponse) {      
+      signUpResponse.success ? handleSuccess() : signUpResponse.error ? handleFailure(signUpResponse.error) : null;
+    }
+  };
 
   return (
     <Form {...form}>
@@ -48,7 +58,7 @@ export function UserAuthForm() {
             <FormItem>
               <FormLabel> Email </FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="username" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -80,19 +90,11 @@ export function UserAuthForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button variant="outline" type="submit" disabled={isLoading}>
+          {isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.logo className="mr-2 h-4 w-4" />}
+          Submit
+        </Button>
       </form>
     </Form>
-  )
+  );
 }
-
-
-
-
-
-
-
-
-
-
-
