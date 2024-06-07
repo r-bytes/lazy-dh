@@ -1,5 +1,6 @@
 import Header from "@/components/navigation/header";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
@@ -19,13 +20,16 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" suppressHydrationWarning>
       <body className={`${montserrat.className} flex min-h-screen flex-col`}>
         {/* Ensure body takes up full height */}
-        <CartProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-            <Toaster />
-            <Header />
-            <main>{children}</main>
-          </ThemeProvider>
-        </CartProvider>
+        {/* Todo: delete later? */}
+        <AuthProvider>
+          <CartProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+              <Toaster />
+              <Header />
+              <main>{children}</main>
+            </ThemeProvider>
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );
