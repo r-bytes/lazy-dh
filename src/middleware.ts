@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest) {
 //       return NextResponse.rewrite(url);
 //     }
 //   }, 1000);
-// }
+}
 
 export const config = {
   matcher: "/",
