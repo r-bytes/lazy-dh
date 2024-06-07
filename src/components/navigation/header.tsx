@@ -1,12 +1,12 @@
 "use client";
-
+import { useAuthContext } from "@/context/AuthContext";
 import { useCartContext } from "@/context/CartContext";
 import { navigateTo } from "@/lib/utils";
 import { CircleX, MenuIcon, ShoppingBag } from "lucide-react";
 import { Montserrat, Roboto } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Title from "../ui/title";
 import { ModeToggle } from "../ui/toggle-mode";
@@ -39,8 +39,8 @@ const NAVIGATION_LIST: NavigationItem[] = [
 
 const Header = (props: Props) => {
   // Hooks
-  const pathName = usePathname();
   const { totalPrice, totalQuantities, cartItems, showCart, setShowCart, incQty, decQty, toggleCartItemQuantity, onRemove } = useCartContext();
+  const { user } = useAuthContext();
 
   // States
   const [currentPath, setCurrentPath] = useState();
@@ -63,6 +63,9 @@ const Header = (props: Props) => {
       </button>
     );
   };
+
+  if (!user) return;
+
   return (
     <div className="z-10 mx-auto w-full max-w-7xl items-center justify-between font-mono text-sm sm:flex sm:flex-col lg:flex-row">
       <div className="mx-auto mt-0 flex w-full items-center justify-between p-8 sm:mx-16">
