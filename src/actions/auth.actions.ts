@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { validateRequest } from "@/lib/db/auth";
 import { lucia } from "@/lib/db/lucia";
 import { userTable } from "@/lib/db/schema";
-import { signInSchema, signUpSchema } from "@/types";
+import { signInSchema, signUpSchema } from "@/lib/types/signin";
 import argon2 from "argon2";
 import { eq } from "drizzle-orm";
 import { generateId } from "lucia";
@@ -132,6 +132,6 @@ export const signOut = async () => {
   } catch (error: any) {
     return {
       error: error.message,
-    }
+    };
   }
 };

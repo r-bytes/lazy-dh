@@ -1,11 +1,17 @@
 import { validateRequest } from "@/lib/db/auth";
-import { User } from "lucia";
 import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
 
-export const GET = async (req: NextApiRequest) => {
+type Data = {
+  isAuthenticated?: boolean;
+  session?: string;
+  error?: string;
+};
+
+export const GET = async (req: NextApiRequest): Promise<NextResponse<Data>> => {
   try {
-    const { user } = await validateRequest();
+    const { user, session } = await validateRequest();
+
     if (user) {
       return NextResponse.json({ isAuthenticated: true });
     } else {

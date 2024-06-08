@@ -1,18 +1,18 @@
 "use client";
 
-import { signIn, signUp } from "@/actions/auth.actions";
+import { signIn } from "@/actions/auth.actions";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { signInSchema } from "@/types";
+import { signInSchema } from "@/lib/types/signin";
+import { navigateTo } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { toast } from "react-hot-toast";
-import { navigateTo } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { z } from "zod";
 
 export function UserSignInForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);

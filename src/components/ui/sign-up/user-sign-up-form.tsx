@@ -5,19 +5,19 @@ import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { signUpSchema } from "@/types";
+import { signUpSchema } from "@/lib/types/signin";
+import { navigateTo } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { toast } from "react-hot-toast";
-import { navigateTo } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { z } from "zod";
 
 export function UserSignUpForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const router = useRouter()
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
@@ -32,18 +32,18 @@ export function UserSignUpForm() {
     toast.success("successvol geregistreerd!");
     navigateTo(router, "/");
     setIsLoading(false);
-  }
-  
+  };
+
   const handleFailure = (error: any) => {
     toast.error(error);
-    setIsLoading(false)
-  }
+    setIsLoading(false);
+  };
 
   const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
     setIsLoading(true);
     const signUpResponse = await signUp(values);
 
-    if (signUpResponse) {      
+    if (signUpResponse) {
       signUpResponse.success ? handleSuccess() : signUpResponse.error ? handleFailure(signUpResponse.error) : null;
     }
   };
