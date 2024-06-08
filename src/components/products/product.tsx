@@ -1,9 +1,9 @@
 "use client";
 
-import { Product as ProductType } from "@/lib/definitions";
+import { Product as ProductType } from "@/lib/types/product";
 import { Heart, Minus, Plus } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
 
@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { useCartContext } from "@/context/CartContext";
 import { navigateTo } from "@/lib/utils";
 import Image from "next/image";
+import { urlFor } from "../../../sanity";
 
 const Product = ({ product }: { product: ProductType }) => {
   // Hooks
@@ -25,7 +26,7 @@ const Product = ({ product }: { product: ProductType }) => {
 
   // Variables
   const backgroundImageStyle = {
-    backgroundImage: `url('/${product.image}')`,
+    backgroundImage: `url(${urlFor(product.image).url()})`,
     backgroundSize: "80%",
     backgroundPosition: "50% 30%",
   };
@@ -98,24 +99,16 @@ const Product = ({ product }: { product: ProductType }) => {
         </Card>
       </DialogTrigger>
       <DialogContent className="max-h-4/5 flex w-4/5 flex-col justify-center rounded-2xl bg-zinc-100 p-0 dark:bg-zinc-900">
-        {/* <Button
-          variant={"secondary"}
+        <Heart
+          className="m-4 h-4 w-4 hover:cursor-pointer"
           onClick={handleToggleFavorite}
-          onMouseEnter={() => setIsHoveredOn(true)}
-          onMouseLeave={() => setIsHoveredOn(false)}
-          className="m-4 h-12 w-12 rounded-full bg-muted-foreground/10 outline-none hover:bg-primary/70"
-        > */}
-        {/* <button type="button"> */}
-          <Heart
-            className="m-4 h-4 w-4 hover:cursor-pointer"
-            onClick={handleToggleFavorite}
-            color={isFavorite ? "red" : ""}
-            fill={isFavorite ? "red" : "bg-muted-foreground/30"}
-          />
+          color={isFavorite ? "red" : ""}
+          fill={isFavorite ? "red" : "bg-muted-foreground/30"}
+        />
         {/* </button> */}
         {/* </Button> */}
         {/* Top */}
-        <Image className="mt-4 h-60 w-full object-contain" src={`/${product.image}`} alt={product.name} width={300} height={300} />
+        <Image className="mt-4 h-60 w-full object-contain" src={urlFor(product.image).url()} alt={product.name} width={300} height={300} />
         {/* Middle */}
         <DialogHeader className="flex flex-col items-center justify-between rounded-t-3xl bg-zinc-200/50 p-4 dark:bg-zinc-800">
           <div className="">
