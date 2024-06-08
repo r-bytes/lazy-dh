@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
-import { Product } from "@/lib/definitions";
 import ShoppingCart from "@/components/shopping-cart/shopping-cart";
+import { Product } from "@/lib/types/product";
 
 export default function Page() {
   const [products, setProducts] = useState<Product[]>([

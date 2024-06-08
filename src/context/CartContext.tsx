@@ -1,17 +1,8 @@
 "use client";
 
+import Product from "@/lib/types/product";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-
-type Product = {
-  _id: number;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  quantity: number;
-  slug: string;
-};
 
 type ContextProps = {
   showCart: boolean;
@@ -51,7 +42,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [showCart, setShowCart] = useState<boolean>(false);
   const [cartItems, setCartItems] = useState<Product[]>([
     {
-      _id: 1,
+      // _id: 1,
       name: "Ouzo Paralia",
       description:
         "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
@@ -61,7 +52,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       quantity: 0,
     },
     {
-      _id: 2,
+      // _id: 2,
       name: "Ouzo Paralia",
       description:
         "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",

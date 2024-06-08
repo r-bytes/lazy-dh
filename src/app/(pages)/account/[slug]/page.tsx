@@ -1,7 +1,6 @@
 import ProductList from "@/components/products/product-list";
-import { CardHeader } from "@/components/ui/card";
 import Title from "@/components/ui/title";
-import { Product as ProductType } from "@/lib/definitions";
+import { Product as ProductType } from "@/lib/types/product";
 import { capitalizeFirstLetter } from "@/lib/utils";
 
 type Props = {
@@ -9,58 +8,59 @@ type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-const PRODUCT_LIST: ProductType[] = [
-  {
-    _id: 1,
-    name: "Ouzo Paralia",
-    description:
-      "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
-    price: 15.0,
-    image: "ouzo-paralia.png",
-    slug: "ouzo-paralia",
-    quantity: 1000,
-  },
-  {
-    _id: 2,
-    name: "Ouzo Paralia",
-    description:
-      "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
-    price: 15.0,
-    image: "ouzo-paralia.png",
-    slug: "ouzo-paralia",
-    quantity: 1000,
-  },
-  {
-    _id: 3,
-    name: "Ouzo Paralia",
-    description:
-      "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
-    price: 15.0,
-    image: "ouzo-paralia.png",
-    slug: "ouzo-paralia",
-    quantity: 1000,
-  },
-  {
-    _id: 4,
-    name: "Ouzo Paralia",
-    description:
-      "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
-    price: 15.0,
-    image: "ouzo-paralia.png",
-    slug: "ouzo-paralia",
-    quantity: 1000,
-  },
-  {
-    _id: 4,
-    name: "Ouzo Paralia",
-    description:
-      "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
-    price: 15.0,
-    image: "ouzo-paralia.png",
-    slug: "ouzo-paralia",
-    quantity: 1000,
-  },
-];
+const PRODUCT_LIST: ProductType[] = []
+// [
+//   {
+//     _id: 1,
+//     name: "Ouzo Paralia",
+//     description:
+//       "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
+//     price: 15.0,
+//     image: "ouzo-paralia.png",
+//     slug: "ouzo-paralia",
+//     quantity: 1000,
+//   },
+//   {
+//     _id: 2,
+//     name: "Ouzo Paralia",
+//     description:
+//       "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
+//     price: 15.0,
+//     image: "ouzo-paralia.png",
+//     slug: "ouzo-paralia",
+//     quantity: 1000,
+//   },
+//   {
+//     _id: 3,
+//     name: "Ouzo Paralia",
+//     description:
+//       "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
+//     price: 15.0,
+//     image: "ouzo-paralia.png",
+//     slug: "ouzo-paralia",
+//     quantity: 1000,
+//   },
+//   {
+//     _id: 4,
+//     name: "Ouzo Paralia",
+//     description:
+//       "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
+//     price: 15.0,
+//     image: "ouzo-paralia.png",
+//     slug: "ouzo-paralia",
+//     quantity: 1000,
+//   },
+//   {
+//     _id: 4,
+//     name: "Ouzo Paralia",
+//     description:
+//       "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
+//     price: 15.0,
+//     image: "ouzo-paralia.png",
+//     slug: "ouzo-paralia",
+//     quantity: 1000,
+//   },
+// ];
 
 const page = ({ params: { slug }, searchParams }: Props) => {
   console.log(slug);
