@@ -13,6 +13,7 @@ type Category = {
   slug: string;
 };
 
+// Todo: need to come from sanity
 const ASSORTMENT: Category[] = [
   {
     productCount: 1,

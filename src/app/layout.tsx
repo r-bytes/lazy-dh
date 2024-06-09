@@ -2,6 +2,7 @@ import Header from "@/components/navigation/header";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
+import { ProductProvider } from "@/context/ProductContext";
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import { Toaster } from "react-hot-toast";
@@ -23,11 +24,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* Todo: delete later? */}
         <AuthProvider>
           <CartProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-              <Toaster />
-              <Header />
-              <main>{children}</main>
-            </ThemeProvider>
+            <ProductProvider>
+              <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+                <Toaster />
+                <Header />
+                <main>{children}</main>
+              </ThemeProvider>
+            </ProductProvider>
           </CartProvider>
         </AuthProvider>
       </body>

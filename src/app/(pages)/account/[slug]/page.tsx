@@ -1,14 +1,16 @@
 import ProductList from "@/components/products/product-list";
 import Title from "@/components/ui/title";
-import { Product as ProductType } from "@/lib/types/product";
+import Product, { Product as ProductType } from "@/lib/types/product";
 import { capitalizeFirstLetter } from "@/lib/utils";
+import product from "../../../../../sanity/lazo-dh/schemas/product";
 
 type Props = {
   params: { slug: string };
   searchParams: { [key: string]: string | string[] | undefined };
+  products: Product[];
 };
 
-const PRODUCT_LIST: ProductType[] = []
+// const PRODUCT_LIST: ProductType[] = [];
 // [
 //   {
 //     _id: 1,
@@ -62,7 +64,7 @@ const PRODUCT_LIST: ProductType[] = []
 //   },
 // ];
 
-const page = ({ params: { slug }, searchParams }: Props) => {
+const page = ({ params: { slug }, searchParams, products }: Props) => {
   console.log(slug);
 
   return slug === "bestellingen" ? (
@@ -72,7 +74,7 @@ const page = ({ params: { slug }, searchParams }: Props) => {
   ) : (
     <div className="flex h-screen w-screen flex-col">
       <Title name={capitalizeFirstLetter(slug)} cn="mb-10 mt-24 text-center text-2xl font-semibold sm:mt-0" />
-      <ProductList products={PRODUCT_LIST} />
+      <ProductList products={products} />
     </div>
   );
 };

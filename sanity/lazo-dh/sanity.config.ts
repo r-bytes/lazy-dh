@@ -7,8 +7,8 @@ export default defineConfig({
   name: 'default',
   title: 'lazo-dh',
 
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId: 'rx2p8wni',
+  dataset: 'production',
 
   plugins: [deskTool(), visionTool()],
 

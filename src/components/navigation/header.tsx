@@ -40,7 +40,9 @@ const NAVIGATION_LIST: NavigationItem[] = [
 const Header = (props: Props) => {
   // Hooks
   const { totalPrice, totalQuantities, cartItems, showCart, setShowCart, incQty, decQty, toggleCartItemQuantity, onRemove } = useCartContext();
-  const { user } = useAuthContext();
+  
+  // Todo: check later when protected routes are available
+  // const { user } = useAuthContext();
 
   // States
   const [currentPath, setCurrentPath] = useState();
@@ -64,7 +66,8 @@ const Header = (props: Props) => {
     );
   };
 
-  if (!user) return;
+  // Todo: check later when protected routes are available
+  // if (!user) return;
 
   return (
     <div className="z-10 mx-auto w-full max-w-7xl items-center justify-between font-mono text-sm sm:flex sm:flex-col lg:flex-row">
