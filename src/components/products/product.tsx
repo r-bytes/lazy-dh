@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
 
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useCartContext } from "@/context/CartContext";
-import { navigateTo } from "@/lib/utils";
+import { formatNumberWithCommaDecimalSeparator, navigateTo } from "@/lib/utils";
 import Image from "next/image";
 import { urlFor } from "../../../sanity";
 
@@ -27,7 +27,7 @@ const Product = ({ product }: { product: ProductType }) => {
   // Variables
   const backgroundImageStyle = {
     backgroundImage: `url(${urlFor(product.image).url()})`,
-    backgroundSize: "80%",
+    backgroundSize: "200px",
     backgroundPosition: "50% 30%",
   };
 
@@ -69,7 +69,7 @@ const Product = ({ product }: { product: ProductType }) => {
     return (
       <div id="priceTotal" className="mr-2 flex-1 text-right text-3xl tracking-wide sm:ml-3 sm:text-4xl">
         <span className="mr-1 text-xs font-bold dark:text-white">€</span>
-        <span className="font-bold tracking-wide dark:text-white">{PRICE_TOTAL}</span>
+        <span className="font-bold tracking-wide dark:text-white">{formatNumberWithCommaDecimalSeparator(product.price)}</span>
       </div>
     );
   };
@@ -84,16 +84,24 @@ const Product = ({ product }: { product: ProductType }) => {
       {/* Conditionally add asChild based on isHoveredOn state */}
       <DialogTrigger {...(!isHoveredOn || !isFocused ? { asChild: true } : {})}>
         <Card
-          onFocus={() => setIsFocused(true)} // Handle focus event
-          onBlur={() => setIsFocused(false)} // Handle blur event
-          onClick={(e) => e.stopPropagation()} // Prevent the dialog from opening immediately upon clicking the card
-          className="z-5 relative flex h-[32rem] w-80 flex-col rounded-2xl bg-neutral-300/10 bg-no-repeat hover:cursor-pointer dark:bg-neutral-800/30 md:w-60"
-          style={backgroundImageStyle}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onClick={(e) => e.stopPropagation()}
+          className="relative flex h-[32rem] w-80 flex-col rounded-2xl bg-neutral-300/10 bg-no-repeat hover:cursor-pointer dark:bg-neutral-800/30 md:w-60"
         >
+          <Image
+            className="mt-16 h-60 w-full object-contain"
+            src={urlFor(product.image).url()}
+            alt={product.name}
+            width={300}
+            height={300}
+            priority
+            quality={100}
+          />
           <CardContent className="flex flex-1 flex-col items-center justify-end rounded-2xl">
             <div className="mb-12 w-full text-center">
               <CardTitle className="mb-2 flex-1 text-lg">{product.name}</CardTitle>
-              <CardDescription className="flex-1 text-2xl font-bold"> €{product.price},-</CardDescription>
+              <CardDescription className="flex-1 text-2xl font-bold"> € {formatNumberWithCommaDecimalSeparator(product.price)}</CardDescription>
             </div>
           </CardContent>
         </Card>
@@ -108,7 +116,15 @@ const Product = ({ product }: { product: ProductType }) => {
         {/* </button> */}
         {/* </Button> */}
         {/* Top */}
-        <Image className="mt-4 h-60 w-full object-contain" src={urlFor(product.image).url()} alt={product.name} width={300} height={300} />
+        <Image
+          className="mb-6 h-96 w-full object-contain"
+          src={urlFor(product.image).url()}
+          alt={product.name}
+          width={400}
+          height={400}
+          priority
+          quality={100}
+        />
         {/* Middle */}
         <DialogHeader className="flex flex-col items-center justify-between rounded-t-3xl bg-zinc-200/50 p-4 dark:bg-zinc-800">
           <div className="">

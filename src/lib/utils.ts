@@ -35,3 +35,7 @@ export const capitalizeFirstLetter = (str: string) => {
 export const navigateTo = (navigation: AppRouterInstance, value: string) => {
   navigation.push(value);
 };
+
+export const formatNumberWithCommaDecimalSeparator = (number: number) => {
+  return new Intl.NumberFormat("de", { minimumFractionDigits: 1 }).format(number);
+};
