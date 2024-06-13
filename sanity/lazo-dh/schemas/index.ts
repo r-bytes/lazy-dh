@@ -1,3 +1,4 @@
-import product from "./product";
+import category from './category'
+import product from './product'
 
-export const schemaTypes = [product]
+export const schemaTypes = [product, category]
