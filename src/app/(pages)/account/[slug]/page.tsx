@@ -1,12 +1,11 @@
 import ProductList from "@/components/products/product-list";
 import Title from "@/components/ui/title";
-import Product, { Product as ProductType } from "@/lib/types/product";
+import Product from "@/lib/types/product";
 import { capitalizeFirstLetter } from "@/lib/utils";
-import product from "../../../../../sanity/lazo-dh/schemas/product";
 
 type Props = {
   params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  // searchParams: { [key: string]: string | string[] | undefined };
   products: Product[];
 };
 
@@ -64,7 +63,7 @@ type Props = {
 //   },
 // ];
 
-const page = ({ params: { slug }, searchParams, products }: Props) => {
+const page = ({ params: { slug }, products }: Props) => {
   console.log(slug);
 
   return slug === "bestellingen" ? (
