@@ -103,5 +103,13 @@ export default defineType({
       description: 'Product is nieuw',
       type: 'boolean',
     }),
+    defineField({
+      name: 'quantity',
+      title: 'Quantity',
+      description: 'Hoeveelheid in mandje',
+      type: 'number',
+      initialValue: 0,
+      readOnly: true,
+    }),
   ],
 })

@@ -1,14 +1,13 @@
 import Product from "@/lib/types/product";
-import { NextApiRequest } from "next";
 import { groq } from "next-sanity";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { sanityClient } from "../../../../sanity";
 
 type Data = {
   products: Product[];
 };
 
-export const GET = async (req: NextApiRequest): Promise<NextResponse<Data>> => {
+export const GET = async (req: NextRequest): Promise<NextResponse<Data>> => {
   const products: Product[] = await sanityClient.fetch(query);
   return NextResponse.json({ products });
 };

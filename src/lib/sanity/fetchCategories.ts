@@ -1,4 +1,4 @@
-import { Category } from "../types/product";
+import { Category } from "../types/category";
 
 export const fetchCategories = async () => {
   const response: Response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/getCategories`, {

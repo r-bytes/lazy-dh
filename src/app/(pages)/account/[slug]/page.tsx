@@ -5,8 +5,7 @@ import { capitalizeFirstLetter } from "@/lib/utils";
 
 type Props = {
   params: { slug: string };
-  // searchParams: { [key: string]: string | string[] | undefined };
-  products: Product[];
+  searchParams: { [key: string]: string | string[] | undefined };
 };
 
 // const PRODUCT_LIST: ProductType[] = [];
@@ -63,8 +62,8 @@ type Props = {
 //   },
 // ];
 
-const page = ({ params: { slug }, products }: Props) => {
-  console.log(slug);
+const page = ({ params: { slug } }: Props) => {
+  // const products = 
 
   return slug === "bestellingen" ? (
     <div className="flex h-screen w-screen flex-col items-center justify-center"> bestellingen </div>
@@ -73,7 +72,7 @@ const page = ({ params: { slug }, products }: Props) => {
   ) : (
     <div className="flex h-screen w-screen flex-col">
       <Title name={capitalizeFirstLetter(slug)} cn="mb-10 mt-24 text-center text-2xl font-semibold sm:mt-0" />
-      <ProductList products={products} />
+      {/* <ProductList products={products} /> */}
     </div>
   );
 };

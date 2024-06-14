@@ -41,26 +41,26 @@ export const CartContext = createContext<ContextProps>({
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [showCart, setShowCart] = useState<boolean>(false);
   const [cartItems, setCartItems] = useState<Product[]>([
-    {
-      // _id: 1,
-      name: "Ouzo Paralia",
-      description:
-        "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
-      price: 15.0,
-      image: "ouzo-paralia.png",
-      slug: "ouzo-paralia",
-      quantity: 0,
-    },
-    {
-      // _id: 2,
-      name: "Ouzo Paralia",
-      description:
-        "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
-      price: 15.0,
-      image: "ouzo-paralia.png",
-      slug: "ouzo-paralia",
-      quantity: 0,
-    },
+    // {
+    //   // _id: 1,
+    //   name: "Ouzo Paralia",
+    //   description:
+    //     "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
+    //   price: 15.0,
+    //   image: "ouzo-paralia.png",
+    //   slug: "ouzo-paralia",
+    //   quantity: 0,
+    // },
+    // {
+    //   // _id: 2,
+    //   name: "Ouzo Paralia",
+    //   description:
+    //     "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
+    //   price: 15.0,
+    //   image: "ouzo-paralia.png",
+    //   slug: "ouzo-paralia",
+    //   quantity: 0,
+    // },
   ]);
 
   useEffect(() => {
