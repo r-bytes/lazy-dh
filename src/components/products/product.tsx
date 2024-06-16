@@ -23,10 +23,17 @@ const Product = ({ product }: { product: ProductType }) => {
   const [isHoveredOn, setIsHoveredOn] = useState<boolean>(false);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [productImage, setProductImage] = useState<string>(urlFor(product.image).url());
 
+  useEffect(() => {
+    console.log(product);
+
+    setProductImage(urlFor(product.image).url());
+  }, [product]);
+  
   // Variables
   const backgroundImageStyle = {
-    backgroundImage: `url(${urlFor(product.image).url()})`,
+    backgroundImage: `url(${productImage})`,
     backgroundSize: "200px",
     backgroundPosition: "50% 30%",
   };
@@ -91,12 +98,12 @@ const Product = ({ product }: { product: ProductType }) => {
         >
           <Image
             className="mt-16 h-60 w-full object-contain"
-            src={urlFor(product.image).url()}
+            src={productImage}
             alt={product.name}
-            width={300}
-            height={300}
-            priority
-            quality={100}
+            width={200}
+            height={200}
+            priority={true}
+            quality={75}
           />
           <CardContent className="flex flex-1 flex-col items-center justify-end rounded-2xl">
             <div className="mb-12 w-full text-center">
@@ -118,12 +125,12 @@ const Product = ({ product }: { product: ProductType }) => {
         {/* Top */}
         <Image
           className="mb-6 h-96 w-full object-contain"
-          src={urlFor(product.image).url()}
+          src={productImage}
           alt={product.name}
-          width={400}
-          height={400}
-          priority
-          quality={100}
+          width={200}
+          height={200}
+          priority={true}
+          quality={75}
         />
         {/* Middle */}
         <DialogHeader className="flex flex-col items-center justify-between rounded-t-3xl bg-zinc-200/50 p-4 dark:bg-zinc-800">
