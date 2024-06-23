@@ -26,8 +26,6 @@ const Product = ({ product }: { product: ProductType }) => {
   const [productImage, setProductImage] = useState<string>(urlFor(product.image).url());
 
   useEffect(() => {
-    console.log(product);
-
     setProductImage(urlFor(product.image).url());
   }, [product]);
   
