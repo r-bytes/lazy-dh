@@ -21,14 +21,23 @@ export const AssortmentCard: React.FC<AssortmentCardProps> = ({ className, categ
   const [currentPath, setCurrentPath] = useState<string>(pathname.replace("/", ""));
   const [productCounts, setProductCounts] = useState<{ [key: string]: number }>({});
 
-  useEffect(() => {
-    const counts: { [key: string]: number } = {};
-    categories.forEach((category) => {
+useEffect(() => {
+  const counts: { [key: string]: number } = {};
+  categories.forEach((category) => {
+    if (category.slug === "aanbiedingen") {      
+      const count = products.filter((product) => product.inSale).length;
+      counts[category.name] = count;
+    } else if (category.slug === "nieuw") {
+      console.log(category);
+      const count = products.filter((product) => product.isNew).length;
+      counts[category.name] = count;
+    } else {
       const count = products.filter((product) => product.category === category.name).length;
       counts[category.name] = count;
-    });
-    setProductCounts(counts);
-  }, [categories, products]);
+    }
+  });
+  setProductCounts(counts);
+}, [categories, products]);
 
   return (
     <>
