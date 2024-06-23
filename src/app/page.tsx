@@ -13,7 +13,7 @@ import { useState } from "react";
 
 
 export default async function Home() {
-  const AANBIEDINGEN: ProductType[] = await fetchProducts();
+  const AANBIEDINGEN: ProductType[] = await fetchProducts("");
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-background">

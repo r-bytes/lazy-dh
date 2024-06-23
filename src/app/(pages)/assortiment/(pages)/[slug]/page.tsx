@@ -11,9 +11,7 @@ type Props = {
 };
 
 const page = async ({ params: { slug }, searchParams }: Props) => {
-  console.log(slug);
-
-  const products = await fetchProducts();
+  const products = await fetchProducts(`?type=${slug}`);
   // Todo: optimize this?
   // const { productState: products } = useProductContext()
   return (
