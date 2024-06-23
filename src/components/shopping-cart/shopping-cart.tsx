@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import Title from "../ui/title";
 import { useEffect } from "react";
+import { urlFor } from "../../../sanity";
 
 const ShoppingCart = () => {
   // Hooks
@@ -41,7 +42,7 @@ const ShoppingCart = () => {
               <div className="product mx-auto flex max-w-7xl gap-8" key={item._id}>
                 {/* <img src={urlFor(item?.image[0])} alt="" className="cart-product-image" /> */}
                 <Card className="bg-transparent p-3 px-0">
-                  <Image src={`/${item.image}`} alt="" width={200} height={200} />
+                  <Image src={urlFor(item.image).url()} alt="" width={200} height={200} />
                 </Card>
                 <div className="item-desc m-4 flex w-full flex-col justify-between text-muted-foreground">
                   <div className="flex justify-between">
