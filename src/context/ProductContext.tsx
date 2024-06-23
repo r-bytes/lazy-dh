@@ -16,12 +16,12 @@ export const ProductContext = createContext<ContextProps>({
   setProductState: () => {},
 });
 
-export const ProductProvider = ({ children }: { children: React.ReactNode }) => {
+export const ProductProvider = ({ children, type }: { children: React.ReactNode, type: string }) => {
   const [productState, setProductState] = useState<Product[] | null>(null);
 
   useEffect(() => {
     (async () => {
-      const fetchedProducts = await fetchProducts();
+      const fetchedProducts = await fetchProducts(type);
 
       if (fetchedProducts) {
         setProductState(fetchedProducts);
