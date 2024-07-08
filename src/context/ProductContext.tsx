@@ -1,23 +1,31 @@
 "use client";
 
-import { validateRequest } from "@/lib/db/auth";
 import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import Product from "@/lib/types/product";
-import { User } from "lucia";
-import React, { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 type ContextProps = {
   productState: Product[] | null;
   setProductState: (products: Product[]) => void;
+  filteredProducts: Product[] | null;
+  setFilteredProducts: (products: Product[]) => void;
+  isSearching: boolean;
+  setIsSearching: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const ProductContext = createContext<ContextProps>({
   productState: null,
   setProductState: () => {},
+  filteredProducts: null,
+  setFilteredProducts: () => {},
+  isSearching: false,
+  setIsSearching: () => false,
 });
 
-export const ProductProvider = ({ children, type }: { children: React.ReactNode, type: string }) => {
+export const ProductProvider = ({ children, type }: { children: React.ReactNode; type: string }) => {
   const [productState, setProductState] = useState<Product[] | null>(null);
+  const [filteredProducts, setFilteredProducts] = useState<Product[] | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -34,6 +42,10 @@ export const ProductProvider = ({ children, type }: { children: React.ReactNode,
       value={{
         productState,
         setProductState,
+        filteredProducts,
+        setFilteredProducts,
+        isSearching,
+        setIsSearching,
       }}
     >
       {children}

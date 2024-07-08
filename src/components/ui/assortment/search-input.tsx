@@ -4,11 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-import { Search } from "lucide-react";
+import Product from "@/lib/types/product";
+import { useEffect } from "react";
+import { useProductContext } from "@/context/ProductContext";
 
 const FormSchema = z.object({
   productName: z.string().min(2, {
@@ -16,13 +17,23 @@ const FormSchema = z.object({
   }),
 });
 
-export function InputForm() {
+type InputFormProps = {
+  products: Product[];
+  onSearchChange: (products: Product[]) => void;
+};
+
+export function InputForm({ products, onSearchChange }: InputFormProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       productName: "",
     },
   });
+  
+  const { register, handleSubmit, setValue, watch } = form;
+  const watchedValue = watch("productName");
+    const { isSearching, setIsSearching } = useProductContext();
+
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     toast({
@@ -35,6 +46,26 @@ export function InputForm() {
     });
   }
 
+  useEffect(() => {
+    if (form.watch("productName")) {
+      const filteredProducts = products.filter((product) => product.name.toLowerCase().includes(form.watch("productName").toLowerCase()));
+      onSearchChange(filteredProducts);
+    } else {
+      onSearchChange(products); // Reset to original products if search input is cleared
+    }
+  }, [form.watch("productName"), products, onSearchChange]);
+
+  useEffect(() => {
+    if (!form.getValues("productName")) {
+      form.reset({ productName: "" });
+    }
+  }, [form]);
+
+    useEffect(() => {
+      // Update isSearching based on whether the input is empty or not
+      setIsSearching(!!watchedValue);
+    }, [watchedValue, setIsSearching]);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto w-2/3">
@@ -43,9 +74,9 @@ export function InputForm() {
           name="productName"
           render={({ field }) => (
             <FormItem>
-                <FormControl>
-                  <Input placeholder="Product zoeken ..." {...field} />
-                </FormControl>
+              <FormControl>
+                <Input placeholder="Product zoeken ..." {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
