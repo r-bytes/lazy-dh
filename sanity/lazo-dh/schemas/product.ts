@@ -34,11 +34,11 @@ export default defineType({
       },
     }),
     defineField({
-      name: 'description',
-      title: 'Description',
-      type: 'string',
-      description: 'Omschrijving van het product (maximaal 100 tekens)',
-      validation: (Rule) => Rule.min(0).max(200),
+      name: 'quantityInBox',
+      title: 'Aantal in Doos',
+      description: 'Aantal flessen in doos',
+      type: 'number',
+      initialValue: 6,
     }),
     defineField({
       name: 'price',
@@ -87,7 +87,7 @@ export default defineType({
     }),
     defineField({
       name: 'inStock',
-      title: 'In Stock',
+      title: 'Op Voorraad',
       description: 'Aantal stuks op voorraad',
       type: 'number',
     }),
