@@ -83,7 +83,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const onAdd = (product: Product, quantity: number) => {
     const checkProductInCard = cartItems.find((item) => item._id === product._id);
 
-    setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity);
+    setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity * product.quantityInBox);
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
 
     if (checkProductInCard) {
@@ -91,7 +91,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         if (cartProduct._id === product._id) {
           return {
             ...cartProduct,
-            quantity: cartProduct.quantity + quantity, // Ensure updated quantity is included
+            quantity: cartProduct.quantityInBox + quantity, // Ensure updated quantity is included
           };
         }
         return cartProduct; // Explicitly return the original cartProduct if no update is needed
@@ -110,8 +110,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     foundProduct = cartItems.find((item: Product) => item._id === product._id);
     const newCartItems = cartItems.filter((item: Product) => item._id !== product._id);
 
-    setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct!.price * foundProduct!.quantity);
-    setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - foundProduct!.quantity);
+    setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct!.price * foundProduct!.quantityInBox);
+    setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - foundProduct!.quantityInBox);
     setCartItems(newCartItems);
   };
 
@@ -123,12 +123,12 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
     if (value === "inc" && foundProduct) {
       setCartItems([...newCartItems, { ...foundProduct, quantity: foundProduct.quantity + 1 }]);
-      setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct!.price);
+      setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct!.price * foundProduct!.quantityInBox);
       setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + 1);
     } else if (value === "dec" && foundProduct) {
-      if (foundProduct.quantity > 1) {
+      if (foundProduct.quantityInBox > 1) {
         setCartItems([...newCartItems, { ...foundProduct, quantity: foundProduct.quantity - 1 }]);
-        setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct!.price);
+        setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct!.price * foundProduct!.quantityInBox);
         setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1);
       }
     }

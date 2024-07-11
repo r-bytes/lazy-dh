@@ -28,15 +28,13 @@ const Product = ({ product }: { product: ProductType }) => {
   useEffect(() => {
     setProductImage(urlFor(product.image).url());
   }, [product]);
-  
+
   // Variables
   const backgroundImageStyle = {
     backgroundImage: `url(${productImage})`,
     backgroundSize: "200px",
     backgroundPosition: "50% 30%",
   };
-
-  const PRICE_TOTAL = 200;
 
   // Functions
   const handleToggleFavorite = () => {
@@ -73,8 +71,15 @@ const Product = ({ product }: { product: ProductType }) => {
   const PriceDiv = () => {
     return (
       <div id="priceTotal" className="mr-2 flex-1 text-right text-3xl tracking-wide sm:ml-3 sm:text-4xl">
-        <span className="mr-1 text-xs font-bold dark:text-white">€</span>
-        <span className="font-bold tracking-wide dark:text-white">{formatNumberWithCommaDecimalSeparator(product.price)}</span>
+        <div>
+          <span className="mr-1 text-xs font-bold dark:text-white">€</span>
+          <span className="font-bold tracking-wide dark:text-white">
+            {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)}
+          </span>
+        </div>
+        <div>
+          <span className="mr-1 text-xs font-bold dark:text-white">€ {formatNumberWithCommaDecimalSeparator(product.price)} per stuk</span>
+        </div>
       </div>
     );
   };
@@ -94,8 +99,12 @@ const Product = ({ product }: { product: ProductType }) => {
           onClick={(e) => e.stopPropagation()}
           className="relative flex h-[32rem] w-80 flex-col rounded-2xl bg-neutral-300/10 bg-no-repeat hover:cursor-pointer dark:bg-neutral-800/30 md:w-60"
         >
+          <div className="flex items-center justify-between p-4">
+            <div className="rounded-full border bg-primary/10 p-2 text-xs text-muted-foreground"> {product.volume}</div>
+            <div className="rounded-full border bg-primary/10 p-2 text-xs text-muted-foreground"> {product.percentage} </div>
+          </div>
           <Image
-            className="mt-16 h-60 w-full object-contain"
+            className="mt-1 h-60 w-full object-contain"
             src={productImage}
             alt={product.name}
             width={200}
@@ -104,9 +113,15 @@ const Product = ({ product }: { product: ProductType }) => {
             quality={75}
           />
           <CardContent className="flex flex-1 flex-col items-center justify-end rounded-2xl">
-            <div className="mb-12 w-full text-center">
-              <CardTitle className="mb-2 flex-1 text-lg">{product.name}</CardTitle>
-              <CardDescription className="flex-1 text-2xl font-bold"> € {formatNumberWithCommaDecimalSeparator(product.price)}</CardDescription>
+            <div className="mb-12 w-full text-left">
+              <CardTitle className="text-md mb-2 flex-1">{product.name}</CardTitle>
+              <CardDescription className="flex-1 text-2xl font-bold">
+                € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)}
+              </CardDescription>
+              <CardDescription className="flex-1 text-sm font-light">
+                {" "}
+                € {formatNumberWithCommaDecimalSeparator(product.price)} per stuk
+              </CardDescription>
             </div>
           </CardContent>
         </Card>

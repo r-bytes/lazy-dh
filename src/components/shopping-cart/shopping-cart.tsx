@@ -46,14 +46,14 @@ const ShoppingCart = () => {
                 </Card>
                 <div className="item-desc m-4 flex w-full flex-col justify-between text-muted-foreground">
                   <div className="flex justify-between">
-                    <h5 className="text-lg font-semibold tracking-wide sm:text-2xl"> {item.name} </h5>
-                    <h4 className="text-lg font-semibold tracking-wide"> € {item.price} </h4>
+                    <h5 className="text-lg font-semibold tracking-wide sm:text-2xl"> {`${item.name}  ${item.volume}`} </h5>
+                    <h4 className="text-lg font-semibold tracking-wide"> € {item.price * item.quantityInBox} </h4>
                   </div>
                   <div className="bottom mt-8 flex items-center justify-between">
                     <div className="quantity">
                       <p className="quantity-desc flex">
                         <span
-                          className="minus flex w-12 items-center justify-center border border-muted-foreground/40 text-center text-red-700"
+                          className="minus flex w-12 items-center justify-center border border-muted-foreground/40 text-center text-red-700 hover:cursor-pointer"
                           onClick={() => toggleCartItemQuantity(item._id, "dec")}
                         >
                           <Minus />
@@ -62,7 +62,7 @@ const ShoppingCart = () => {
                           {item.quantity}
                         </span>
                         <span
-                          className="plus flex w-12 items-center justify-center border border-muted-foreground/40 text-center text-green-700"
+                          className="plus flex w-12 items-center justify-center border border-muted-foreground/40 text-center text-green-700 hover:cursor-pointer"
                           onClick={() => toggleCartItemQuantity(item._id, "inc")}
                         >
                           <Plus />

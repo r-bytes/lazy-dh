@@ -105,6 +105,7 @@ export interface Product extends SanityDocument {
   inStock: number;
   inSale: boolean;
   isNew: boolean;
+  quantityInBox: number;
   quantity: number;
 }
 
