@@ -38,6 +38,10 @@ export const AssortmentCard: React.FC<AssortmentCardProps> = ({ className, categ
         console.log(category);
         const count = products.filter((product) => product.isNew).length;
         counts[category.name] = count;
+      } else if (category.slug === "alles") {
+        console.log(category);
+        const count = products.filter((product) => product).length;
+        counts[category.name] = count;
       } else {
         const count = products.filter((product) => product.category === category.name).length;
         counts[category.name] = count;

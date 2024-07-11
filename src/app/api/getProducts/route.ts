@@ -16,13 +16,17 @@ export const GET = async (req: NextRequest): Promise<NextResponse<Data>> => {
       ? "&& inSale == true]"
       : searchParam === "nieuw"
         ? "&& isNew == true]"
-        : searchParam === "vodka"
-          ? "&& category == 'Vodka']"
+        : searchParam === "wodka"
+          ? "&& category == 'Wodka']"
           : searchParam === "ouzo"
             ? "&& category == 'Ouzo']"
-            : "]";
+            : searchParam === "whisky"
+              ? "&& category == 'Whisky']"
+              : searchParam === "rakia"
+                ? "&& category == 'Rakia']"
+                : "]";
 
-  const query = groq`${baseQuery} ${additionalCondition} | order(order desc)`;
+  const query = groq`${baseQuery} ${additionalCondition} | order(name asc, volume asc)`;
 
   const products: Product[] = await sanityClient.fetch(query);
   return NextResponse.json({ products });
