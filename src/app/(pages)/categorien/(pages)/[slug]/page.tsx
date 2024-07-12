@@ -1,8 +1,8 @@
 import ProductList from "@/components/products/product-list";
+import { ProductsWithFilter } from "@/components/ui/category/products-with-filter";
 import { CardHeader } from "@/components/ui/card";
-import { useProductContext } from "@/context/ProductContext";
+import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
 import { fetchProducts } from "@/lib/sanity/fetchProducts";
-import Product, { Product as ProductType } from "@/lib/types/product";
 import { capitalizeFirstLetter } from "@/lib/utils";
 
 type Props = {
@@ -12,9 +12,16 @@ type Props = {
 
 const page = async ({ params: { slug }, searchParams }: Props) => {
   const products = await fetchProducts(`?type=${slug.toLowerCase()}`);
+  console.log(`?type=${slug.toLowerCase()}`);
+  console.log(slug);
+
   // Todo: optimize this?
   // const { productState: products } = useProductContext()
-  return (
+  return slug === "alles" ? (
+    <MaxWidthWrapper className="mx-auto">
+      <ProductsWithFilter products={products!} />
+    </MaxWidthWrapper>
+  ) : (
     <div className="flex h-screen w-screen flex-col">
       <CardHeader className="mb-10 mt-24 text-center text-5xl font-semibold sm:mt-0"> {capitalizeFirstLetter(slug)} </CardHeader>
       <ProductList products={products} />
