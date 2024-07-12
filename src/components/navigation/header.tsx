@@ -31,7 +31,7 @@ type Props = {
 
 // Variables
 const NAVIGATION_LIST: NavigationItem[] = [
-  { title: "Assortiment", order: 0 },
+  { title: "Categorien", order: 0 },
   { title: "Account", order: 1 },
   { title: "Acties", order: 2 },
   { title: "Winkelwagen", order: 3 },
