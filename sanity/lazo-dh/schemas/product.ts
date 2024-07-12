@@ -15,6 +15,10 @@ export default defineType({
       title: 'Name',
       description: 'Naam van het product',
       type: 'string',
+      validation: (rule) => [
+        rule.required().min(3).warning('A title of min. 3 characters is required'),
+        rule.max(25).error('Shorter titles are usually better'),
+      ],
     }),
     defineField({
       name: 'category',
