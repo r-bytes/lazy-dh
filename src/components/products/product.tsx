@@ -70,15 +70,17 @@ const Product = ({ product }: { product: ProductType }) => {
 
   const PriceDiv = () => {
     return (
-      <div id="priceTotal" className="mr-2 flex-1 text-right text-3xl tracking-wide sm:ml-3 sm:text-4xl">
-        <div>
-          <span className="mr-1 text-xs font-bold dark:text-white">€</span>
-          <span className="font-bold tracking-wide dark:text-white">
+      <div id="priceTotal" className="mr-2 flex flex-1 flex-col text-right tracking-wide sm:ml-3">
+        <div className="mb-0">
+          <span className="mr-1 text-xs font-semibold dark:text-white">€</span>
+          <span
+            className="text-3xl font-semibold tracking-wide dark:text-white sm:text-4xl"
+          >
             {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)}
           </span>
         </div>
-        <div>
-          <span className="mr-1 text-xs font-bold dark:text-white">€ {formatNumberWithCommaDecimalSeparator(product.price)} per stuk</span>
+        <div className="flex justify-end pt-1">
+          <span className="text-tertiary mr-1 text-xs font-light">€{formatNumberWithCommaDecimalSeparator(product.price)} per stuk</span>
         </div>
       </div>
     );
@@ -100,8 +102,8 @@ const Product = ({ product }: { product: ProductType }) => {
           className="relative flex h-[32rem] w-80 flex-col rounded-2xl bg-neutral-300/10 bg-no-repeat hover:cursor-pointer dark:bg-neutral-800/30 md:w-60"
         >
           <div className="flex items-center justify-between p-4">
-            <div className="rounded-full border bg-primary/10 p-2 text-xs text-muted-foreground"> {product.volume}</div>
-            <div className="rounded-full border bg-primary/10 p-2 text-xs text-muted-foreground"> {product.percentage} </div>
+            <div className="p-2 text-xs text-muted-foreground"> {product.volume}</div>
+            <div className="p-2 text-xs text-muted-foreground"> {product.percentage} </div>
           </div>
           <Image
             className="mt-1 h-60 w-full object-contain"
@@ -112,16 +114,17 @@ const Product = ({ product }: { product: ProductType }) => {
             priority={true}
             quality={75}
           />
-          <CardContent className="flex flex-1 flex-col items-center justify-end rounded-2xl">
-            <div className="mb-12 w-full text-left">
-              <CardTitle className="text-md mb-2 flex-1">{product.name}</CardTitle>
-              <CardDescription className="flex-1 text-2xl font-bold">
-                € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)}
-              </CardDescription>
-              <CardDescription className="flex-1 text-sm font-light">
-                {" "}
-                € {formatNumberWithCommaDecimalSeparator(product.price)} per stuk
-              </CardDescription>
+          <CardContent className="flex flex-1 flex-col rounded-2xl">
+            <div className="flex w-full flex-1 flex-col items-center justify-between text-center">
+              <CardTitle className="text-2xl my-6 flex-1 font-thin">{product.name}</CardTitle>
+              <div className="self-end">
+                <CardDescription className="flex-1 text-right text-2xl font-semibold">
+                  € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)}
+                </CardDescription>
+                <CardDescription className="flex-1 text-right text-sm font-thin text-tertiary">
+                  € {formatNumberWithCommaDecimalSeparator(product.price)} per stuk
+                </CardDescription>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -148,10 +151,7 @@ const Product = ({ product }: { product: ProductType }) => {
         {/* Middle */}
         <DialogHeader className="flex flex-col items-center justify-between rounded-t-3xl bg-zinc-200/50 p-4 dark:bg-zinc-800">
           <div className="">
-            <DialogTitle className="dark:text-text-muted-foreground tx-lg mb-4 mt-4 text-center sm:text-2xl">{product.name}</DialogTitle>
-            <DialogDescription className="pb-8 text-center text-xs leading-relaxed tracking-wider dark:text-muted-foreground sm:text-sm">
-              {product.description}
-            </DialogDescription>
+            <DialogTitle className="dark:text-text-muted-foreground text-lg mb-4 mt-4 text-center sm:text-2xl lg:text-3xl font-thin text-tertiary">{product.name}</DialogTitle>
           </div>
           <div className="flex w-full items-center justify-between">
             <CounterDiv />
