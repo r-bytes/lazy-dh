@@ -1,11 +1,11 @@
 "use client";
 
-import { signUp } from "@/actions/auth.actions";
+import { signUp } from "@/actions/user.actions";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { signUpSchema } from "@/lib/types/signin";
+import { signUpSchema } from "@/lib/types/signup";
 import { navigateTo } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -22,7 +22,7 @@ export function UserSignUpForm() {
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
       confirmPassword: "",
     },
@@ -44,7 +44,7 @@ export function UserSignUpForm() {
     const signUpResponse = await signUp(values);
 
     if (signUpResponse) {
-      signUpResponse.success ? handleSuccess() : signUpResponse.error ? handleFailure(signUpResponse.error) : null;
+      signUpResponse.success ? handleSuccess() : signUpResponse.message ? handleFailure(signUpResponse.message) : null;
     }
   };
 
@@ -53,7 +53,7 @@ export function UserSignUpForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="username"
+          name="email"
           render={({ field }) => (
             <FormItem>
               <FormLabel> Email </FormLabel>

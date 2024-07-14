@@ -1,6 +1,6 @@
 "use client";
 
-import { signIn } from "@/actions/auth.actions";
+import { login } from "@/actions/user.actions";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -22,7 +22,7 @@ export function UserSignInForm() {
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
@@ -40,10 +40,10 @@ export function UserSignInForm() {
 
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
     setIsLoading(true);
-    const signUpResponse = await signIn(values);
+    const signUpResponse = await login(values);
 
     if (signUpResponse) {
-      signUpResponse.success ? handleSuccess() : signUpResponse.error ? handleFailure(signUpResponse.error) : null;
+      signUpResponse.success ? handleSuccess() : signUpResponse.message ? handleFailure(signUpResponse.message) : null;
     }
   };
 
@@ -52,7 +52,7 @@ export function UserSignInForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="username"
+          name="email"
           render={({ field }) => (
             <FormItem>
               <FormLabel> Email </FormLabel>

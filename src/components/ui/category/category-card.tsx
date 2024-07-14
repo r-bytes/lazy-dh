@@ -36,11 +36,11 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
         const count = products.filter((product) => product.inSale).length;
         counts[category.name] = count;
       } else if (category.slug === "nieuw") {
-        console.log(category);
+        // console.log(category);
         const count = products.filter((product) => product.isNew).length;
         counts[category.name] = count;
       } else if (category.slug === "alles") {
-        console.log(category);
+        // console.log(category);
         const count = products.filter((product) => product).length;
         counts[category.name] = count;
       } else {
@@ -50,11 +50,6 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
     });
     setProductCounts(counts);
   }, [categories, products]);
-
-  useEffect(() => {
-    console.log(pathname);
-    // console.log(router.pathname);
-  }, []);
 
   return (
     <Card className={cn("min-h-screen w-full", className)} {...props}>
