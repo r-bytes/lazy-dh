@@ -17,7 +17,7 @@ export default defineType({
       type: 'string',
       validation: (rule) => [
         rule.required().min(3).warning('A title of min. 3 characters is required'),
-        rule.max(25).error('Shorter titles are usually better'),
+        rule.max(50).error('Shorter titles are usually better'),
       ],
     }),
     defineField({
@@ -116,13 +116,12 @@ export default defineType({
       description: 'Product is nieuw',
       type: 'boolean',
     }),
-    // defineField({
-    //   name: 'quantity',
-    //   title: 'Quantity',
-    //   description: 'Hoeveelheid in mandje',
-    //   type: 'number',
-    //   initialValue: 0,
-    //   readOnly: true,
-    // }),
+    defineField({
+      name: 'productId',
+      title: 'Product ID',
+      description: 'A unique identifier that auto-increments',
+      type: 'number',
+      readOnly: true,
+    }),
   ],
 })

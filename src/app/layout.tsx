@@ -1,8 +1,10 @@
 import Header from "@/components/navigation/header";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { ProductProvider } from "@/context/ProductContext";
 import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 import { Inter, Montserrat } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { auth } from "../../auth";
@@ -18,7 +20,6 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  // const session = await auth();
   const isAuthenticated = await auth();
 
   // Conditionally render children based on authentication status
@@ -27,37 +28,21 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <body className={`${montserrat.className} flex min-h-screen flex-col`}>
         {!isAuthenticated && <CheckAuth />}
         <div>
-          <CartProvider>
-            <ProductProvider type="">
-              <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-                <Toaster />
-                {isAuthenticated && <Header />}
-                <main>{children}</main>
-              </ThemeProvider>
-            </ProductProvider>
-          </CartProvider>
+          <SessionProvider>
+            <CartProvider>
+              <ProductProvider type="">
+                <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+                  <AuthProvider>
+                    <Toaster />
+                    {isAuthenticated && <Header />}
+                    <main>{children}</main>
+                  </AuthProvider>
+                </ThemeProvider>
+              </ProductProvider>
+            </CartProvider>
+          </SessionProvider>
         </div>
       </body>
     </html>
   );
-  // return (
-  //   <html lang="en" suppressHydrationWarning>
-  //     <body className={`${montserrat.className} flex min-h-screen flex-col`}>
-  //       {/* Ensure body takes up full height */}
-  //       {/* Todo: delete later? */}
-  //       {/* <AuthProvider> */}
-  //       <CartProvider>
-  //         <ProductProvider type="">
-  //           <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-  //             <Toaster />
-
-  //             {/* <Header /> */}
-  //             <main>{children}</main>
-  //           </ThemeProvider>
-  //         </ProductProvider>
-  //       </CartProvider>
-  //       {/* </AuthProvider> */}
-  //     </body>
-  //   </html>
-  // );
 }

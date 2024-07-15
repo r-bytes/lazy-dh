@@ -16,16 +16,17 @@ export default async function Home() {
   const productList: Product[] = await fetchProducts("");
   const categoryList: Category[] = await fetchCategories();
 
-  const session = await auth();
+  const isAuthenticated = await auth();
+
+  console.log(isAuthenticated);
 
   // Conditional rendering based on session
-  if (!session) {
-    return null; // Or a loading indicator
+  if (!isAuthenticated) {
+    return null;
   }
-  
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-background">
-      {JSON.stringify(session)}
       <section id="categories">
         <MaxWidthWrapper className="max-w-[90rem]">
           <CategoryCard slug={"home"} products={productList} categories={categoryList} />

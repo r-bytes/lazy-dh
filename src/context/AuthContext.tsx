@@ -1,7 +1,7 @@
 "use client";
 
-import { validateRequest } from "@/lib/db/auth";
-import { User } from "lucia";
+import { User } from "next-auth";
+import { useSession } from "next-auth/react";
 import React, { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 
 type ContextProps = {
@@ -22,19 +22,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-  useEffect(() => {
-    (async () => {
-      const { user } = await validateRequest();
-      if (user) {
-        setIsAuthenticated(true);
-        setUser(user);
-      }
-    })();
-  }, []);
+  const { data: session, status } = useSession();
 
-  // const isAuthenticated = (): boolean => {
-  //   return !!user; // Returns true if user is not null
-  // };
+  useEffect(() => {
+    if (status === "authenticated") {     
+      setIsAuthenticated(true);
+      setUser(session?.user!);
+    } else {
+      setIsAuthenticated(false);
+      setUser(null);
+    }
+  }, [session, status]);
 
   return (
     <AuthContext.Provider
@@ -42,7 +40,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         user,
         setUser,
         isAuthenticated,
-        setIsAuthenticated
+        setIsAuthenticated,
       }}
     >
       {children}

@@ -34,8 +34,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
 
         // Return user object with their profile data
-        // Ensure this matches the expected User interface
-        return user.data as User;
+        return {
+          id: user.data!.id!,
+          name: user.data!.name,
+          email: user.data!.email,
+          // Add any other fields you need here
+        };
       },
     }),
   ],

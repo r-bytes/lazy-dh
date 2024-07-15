@@ -107,6 +107,7 @@ export interface Product extends SanityDocument {
   isNew: boolean;
   quantityInBox: number;
   quantity: number;
+  productId: number;
 }
 
 export interface Image {

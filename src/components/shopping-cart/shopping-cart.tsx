@@ -1,24 +1,75 @@
+import { useAuthContext } from "@/context/AuthContext";
 import { useCartContext } from "@/context/CartContext";
 import { CircleX, Minus, Plus, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import { urlFor } from "../../../sanity";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import Title from "../ui/title";
-import { useEffect } from "react";
-import { urlFor } from "../../../sanity";
+import React from "react";
 
 const ShoppingCart = () => {
   // Hooks
   const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuantity, onRemove, incQty } = useCartContext();
+  const { user } = useAuthContext();
 
   // Functions
   const handleCheckout = async () => {
     toast.loading("Redirecting...");
+    // Fetch user ID by email
+    const userIdResponse = await fetch("/api/getUserIdByEmail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: user?.email }), // Assuming user.email contains the user's email
+    });
+
+    if (!userIdResponse.ok) {
+      toast.dismiss();
+      toast.error("Failed to fetch user ID");
+      return;
+    }
+
+    const { success, userId } = await userIdResponse.json();
+
+    if (!success) {
+      toast.dismiss();
+      toast.error("User not found");
+      return;
+    }
+    
+
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+          cartItems,
+          totalPrice,
+        }),
+      });
+
+      const data = await response.json();
+      toast.dismiss();
+      if (data.success) {
+        toast.success(data.message);
+        // Optioneel: redirect naar een bevestigingspagina
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.dismiss();
+      toast.error("Er is iets misgegaan");
+    }
   };
 
-  const HorizontalRule = () => <hr className="my-12" />;  
+  const HorizontalRule = () => <hr className="my-12" />;
 
   return (
     <div className="mt-24">
@@ -38,7 +89,7 @@ const ShoppingCart = () => {
       <div className="product-container mt-4 overflow-auto p-5">
         {cartItems.length >= 1 &&
           cartItems.map((item) => (
-            <>
+            <React.Fragment key={item._id}>
               <div className="product mx-auto flex max-w-7xl gap-8" key={item._id}>
                 {/* <img src={urlFor(item?.image[0])} alt="" className="cart-product-image" /> */}
                 <Card className="bg-transparent p-3 px-0">
@@ -80,17 +131,17 @@ const ShoppingCart = () => {
                 </div>
               </div>
               <HorizontalRule />
-            </>
+            </React.Fragment>
           ))}
       </div>
 
       {cartItems.length >= 1 && (
-        <div className="mt-[-80px] mx-auto w-full max-w-7xl p-8">
+        <div className="mx-auto mt-[-80px] w-full max-w-7xl p-8">
           <div className="flex justify-between">
             <h3> Totaal: </h3>
             <h3> € {totalPrice} </h3>
           </div>
-          <div className="mx-auto w-full mt-16 flex justify-center items-center">
+          <div className="mx-auto mt-16 flex w-full items-center justify-center">
             <Button type="button" className="btn" onClick={handleCheckout}>
               Bestelling Plaatsen
             </Button>
