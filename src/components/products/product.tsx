@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
 
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useCartContext } from "@/context/CartContext";
 import { formatNumberWithCommaDecimalSeparator, navigateTo } from "@/lib/utils";
 import Image from "next/image";
@@ -17,18 +17,19 @@ const Product = ({ product }: { product: ProductType }) => {
   // Hooks
   const pathname = usePathname();
   const router = useRouter();
-  const { decQty, incQty, qty, onAdd, setShowCart } = useCartContext();
+  const { decQty, incQty, setQty, qty, onAdd, setShowCart } = useCartContext();
 
   // States
   const [isHoveredOn, setIsHoveredOn] = useState<boolean>(false);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [productImage, setProductImage] = useState<string>(urlFor(product.image).url());
-
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  
   useEffect(() => {
     setProductImage(urlFor(product.image).url());
+    setQty(0);
   }, [product]);
-
   // Variables
   const backgroundImageStyle = {
     backgroundImage: `url(${productImage})`,
@@ -43,9 +44,17 @@ const Product = ({ product }: { product: ProductType }) => {
 
   const handleBuyNow = () => {
     onAdd(product, qty);
-    setShowCart(true);
+    setShowCart(false);
+    setQty(1);
+    setIsDialogOpen(false);
   };
 
+  function handleCheckout(): void {
+    onAdd(product, qty);
+    navigateTo(router, "/winkelwagen");
+  }
+
+  // UI
   const CounterDiv = () => {
     return (
       <div className="quantity ml-2 flex h-8 items-center justify-center">
@@ -73,9 +82,7 @@ const Product = ({ product }: { product: ProductType }) => {
       <div id="priceTotal" className="mr-2 flex flex-1 flex-col text-right tracking-wide sm:ml-3">
         <div className="mb-0">
           <span className="mr-1 text-xs font-semibold dark:text-white">€</span>
-          <span
-            className="text-3xl font-semibold tracking-wide dark:text-white sm:text-4xl"
-          >
+          <span className="text-3xl font-semibold tracking-wide dark:text-white sm:text-4xl">
             {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)}
           </span>
         </div>
@@ -86,13 +93,8 @@ const Product = ({ product }: { product: ProductType }) => {
     );
   };
 
-  function handleCheckout(): void {
-    onAdd(product, qty);
-    navigateTo(router, "/winkelwagen");
-  }
-
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)}>
       {/* Conditionally add asChild based on isHoveredOn state */}
       <DialogTrigger {...(!isHoveredOn || !isFocused ? { asChild: true } : {})}>
         <Card
@@ -116,12 +118,12 @@ const Product = ({ product }: { product: ProductType }) => {
           />
           <CardContent className="flex flex-1 flex-col rounded-2xl">
             <div className="flex w-full flex-1 flex-col items-center justify-between text-center">
-              <CardTitle className="text-2xl my-6 flex-1 font-thin">{product.name}</CardTitle>
+              <CardTitle className="my-6 flex-1 text-2xl font-thin">{product.name}</CardTitle>
               <div className="self-end">
                 <CardDescription className="flex-1 text-right text-2xl font-semibold">
                   € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)}
                 </CardDescription>
-                <CardDescription className="flex-1 text-right text-sm font-thin text-tertiary">
+                <CardDescription className="text-tertiary flex-1 text-right text-sm font-thin">
                   € {formatNumberWithCommaDecimalSeparator(product.price)} per stuk
                 </CardDescription>
               </div>
@@ -151,7 +153,9 @@ const Product = ({ product }: { product: ProductType }) => {
         {/* Middle */}
         <DialogHeader className="flex flex-col items-center justify-between rounded-t-3xl bg-zinc-200/50 p-4 dark:bg-zinc-800">
           <div className="">
-            <DialogTitle className="dark:text-text-muted-foreground text-lg mb-4 mt-4 text-center sm:text-2xl lg:text-3xl font-thin text-tertiary">{product.name}</DialogTitle>
+            <DialogTitle className="dark:text-text-muted-foreground text-tertiary mb-4 mt-4 text-center text-lg font-thin sm:text-2xl lg:text-3xl">
+              {product.name}
+            </DialogTitle>
           </div>
           <div className="flex w-full items-center justify-between">
             <CounterDiv />
@@ -160,7 +164,7 @@ const Product = ({ product }: { product: ProductType }) => {
         </DialogHeader>
         {/* Bottom */}
         <DialogFooter className="mt-2 flex h-16 flex-row justify-between gap-4 rounded-b-lg rounded-t-2xl bg-zinc-100 px-4 dark:bg-zinc-900">
-          <Button type="button" className="addToCart flex-1" onClick={() => onAdd(product, qty)}>
+          <Button type="button" className="addToCart flex-1" onClick={handleBuyNow}>
             Voeg Toe
           </Button>
           <Button type="button" className="goToCart flex-1" onClick={handleCheckout}>

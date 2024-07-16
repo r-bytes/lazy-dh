@@ -1,14 +1,15 @@
 import { useAuthContext } from "@/context/AuthContext";
 import { useCartContext } from "@/context/CartContext";
+import { formatNumberWithCommaDecimalSeparator } from "@/lib/utils";
 import { CircleX, Minus, Plus, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 import toast from "react-hot-toast";
 import { urlFor } from "../../../sanity";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import Title from "../ui/title";
-import React from "react";
 
 const ShoppingCart = () => {
   // Hooks
@@ -40,7 +41,6 @@ const ShoppingCart = () => {
       toast.error("User not found");
       return;
     }
-    
 
     try {
       const response = await fetch("/api/checkout", {
@@ -75,7 +75,7 @@ const ShoppingCart = () => {
     <div className="mt-24">
       <Title name="Winkelwagen" />
       {cartItems.length < 1 && (
-        <div className="empty-cart m-10 flex h-96 flex-col items-center justify-center space-y-4 text-center">
+        <div className="empty-cart m-10 flex h-96 flex-col items-center justify-center space-y-4 text-center text-muted-foreground">
           <ShoppingBag size={150} />
           <h3> Uw winkelwagen is leeg </h3>
           <Link href={"/"}>
@@ -98,7 +98,13 @@ const ShoppingCart = () => {
                 <div className="item-desc m-4 flex w-full flex-col justify-between text-muted-foreground">
                   <div className="flex justify-between">
                     <h5 className="text-lg font-semibold tracking-wide sm:text-2xl"> {`${item.name}  ${item.volume}`} </h5>
-                    <h4 className="text-lg font-semibold tracking-wide"> € {item.price * item.quantityInBox} </h4>
+                    <button
+                      type="button"
+                      className="remove-item ml-4 cursor-pointer border-none bg-transparent text-xl text-red-500 hover:bg-transparent hover:text-xl"
+                      onClick={() => onRemove(item)}
+                    >
+                      <CircleX />
+                    </button>
                   </div>
                   <div className="bottom mt-8 flex items-center justify-between">
                     <div className="quantity">
@@ -120,13 +126,12 @@ const ShoppingCart = () => {
                         </span>
                       </p>
                     </div>
-                    <button
-                      type="button"
-                      className="remove-item ml-4 cursor-pointer border-none bg-transparent text-xl text-red-500 hover:bg-transparent hover:text-xl"
-                      onClick={() => onRemove(item)}
-                    >
-                      <CircleX />
-                    </button>
+                    <div className="flex flex-col items-end justify-end space-y-2">
+                      <h4 className="text-3xl font-semibold tracking-wide"> € {item.price * item.quantityInBox} </h4>
+                      <h4 className="text-tertiary flex-1 text-right text-xs font-thin">
+                        € {formatNumberWithCommaDecimalSeparator(item.price)} per stuk
+                      </h4>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -137,9 +142,9 @@ const ShoppingCart = () => {
 
       {cartItems.length >= 1 && (
         <div className="mx-auto mt-[-80px] w-full max-w-7xl p-8">
-          <div className="flex justify-between">
+          <div className="flex justify-between text-muted-foreground">
             <h3> Totaal: </h3>
-            <h3> € {totalPrice} </h3>
+            <h3 className="mr-2 tracking-wide"> € {totalPrice} </h3>
           </div>
           <div className="mx-auto mt-16 flex w-full items-center justify-center">
             <Button type="button" className="btn" onClick={handleCheckout}>
