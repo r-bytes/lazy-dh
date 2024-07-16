@@ -40,33 +40,11 @@ export const CartContext = createContext<ContextProps>({
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [showCart, setShowCart] = useState<boolean>(false);
-  const [cartItems, setCartItems] = useState<Product[]>([
-    // {
-    //   // _id: 1,
-    //   name: "Ouzo Paralia",
-    //   description:
-    //     "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
-    //   price: 15.0,
-    //   image: "ouzo-paralia.png",
-    //   slug: "ouzo-paralia",
-    //   quantity: 0,
-    // },
-    // {
-    //   // _id: 2,
-    //   name: "Ouzo Paralia",
-    //   description:
-    //     "Ouzo Paralia is a premium anise-flavored Greek spirit, perfect for leisurely moments by the sea. Embrace the essence of Greek summer with every sip of Ouzo Paralia.",
-    //   price: 15.0,
-    //   image: "ouzo-paralia.png",
-    //   slug: "ouzo-paralia",
-    //   quantity: 0,
-    // },
-  ]);
+  const [cartItems, setCartItems] = useState<Product[]>([]);
 
   useEffect(() => {
     removeZeroQuantityItems();
   }, []);
-  
 
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalQuantities, setTotalQuantities] = useState<number>(0);
@@ -100,7 +78,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       setCartItems(updatedCartItems);
     } else {
       const newProduct = { ...product, quantity }; // Create a copy of the product with updated quantity
-      setCartItems([...cartItems, newProduct]); // Add the new product to the cart
+      setCartItems((prevCartItems) => [...prevCartItems, newProduct]); // Add the new product to the cart while preserving existing ones
     }
 
     toast.success(`${quantity} ${product.name} toegevoegd aan de winkelwagen.`);
