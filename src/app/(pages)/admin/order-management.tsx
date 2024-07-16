@@ -12,6 +12,10 @@ const OrderManagement = () => {
   const [loading, setLoading] = useState(true);
   const [editedOrders, setEditedOrders] = useState<Record<number, string>>({});
 
+  // Sort state
+  const [sortColumn, setSortColumn] = useState<string>("id");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -30,6 +34,16 @@ const OrderManagement = () => {
             },
             items: order.orderItems,
           }));
+
+          // Sort data initially
+          transformedOrders.sort((a, b) => {
+            const aValue = a[sortColumn];
+            const bValue = b[sortColumn];
+            if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
+            if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
+            return 0;
+          });
+
           setOrders(transformedOrders);
 
           // Initialize the editedOrders state with the current status
@@ -50,7 +64,7 @@ const OrderManagement = () => {
     };
 
     fetchOrders();
-  }, []);
+  }, [sortColumn, sortDirection]); // Dependency array includes sortColumn and sortDirection
 
   const handleStatusChange = (orderId: number, newStatus: string) => {
     // Update the local state with the new status
@@ -81,6 +95,12 @@ const OrderManagement = () => {
     }
   };
 
+  // Handle sort column click
+  const handleSort = (column: string) => {
+    setSortColumn(column);
+    setSortDirection((prevDirection) => (prevDirection === "asc" ? "desc" : "asc"));
+  };
+
   if (loading) {
     return <p>Loading orders...</p>;
   }
@@ -91,14 +111,26 @@ const OrderManagement = () => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableCell className="min-w-fit"> Order nr. </TableCell>
-            <TableCell className="min-w-fit"> Klant </TableCell>
-            <TableCell className="min-w-fit"> Email </TableCell>
-            <TableCell className="min-w-fit"> Order datum </TableCell>
-            <TableCell className="min-w-fit"> Total Amount </TableCell>
-            <TableCell className="min-w-fit"> Status </TableCell>
-            <TableCell className="min-w-fit"> Producten </TableCell>
-            <TableCell className="min-w-fit"> Acties </TableCell>
+            <TableCell onClick={() => handleSort("id")}> Order nr. {sortColumn === "id" && (sortDirection === "asc" ? "▲" : "▼")} </TableCell>
+            <TableCell onClick={() => handleSort("user.name")}>
+              {" "}
+              Klant {sortColumn === "user.name" && (sortDirection === "asc" ? "▲" : "▼")}{" "}
+            </TableCell>
+            <TableCell onClick={() => handleSort("user.email")}>
+              {" "}
+              Email {sortColumn === "user.email" && (sortDirection === "asc" ? "▲" : "▼")}{" "}
+            </TableCell>
+            <TableCell onClick={() => handleSort("orderDate")}>
+              {" "}
+              Order datum {sortColumn === "orderDate" && (sortDirection === "asc" ? "▲" : "▼")}{" "}
+            </TableCell>
+            <TableCell onClick={() => handleSort("totalAmount")}>
+              {" "}
+              Total Amount {sortColumn === "totalAmount" && (sortDirection === "asc" ? "▲" : "▼")}{" "}
+            </TableCell>
+            <TableCell> Status </TableCell>
+            <TableCell> Producten </TableCell>
+            <TableCell> Acties </TableCell>
           </TableRow>
         </TableHeader>
         <TableBody>
