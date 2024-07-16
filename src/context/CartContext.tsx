@@ -43,8 +43,10 @@ export const CartContext = createContext<ContextProps>({
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [showCart, setShowCart] = useState<boolean>(false);
   const [cartItems, setCartItems] = useState<Product[]>(() => {
-    const storedCart = window.localStorage.getItem("spacejelly_cart");
-    return storedCart ? JSON.parse(storedCart).cartItems : [];
+    if (typeof window !== "undefined") {
+      const storedCart = window.localStorage.getItem("spacejelly_cart");
+      return storedCart ? JSON.parse(storedCart).cartItems : [];
+    }
   });
 
   const [totalPrice, setTotalPrice] = useState<number>(() => {

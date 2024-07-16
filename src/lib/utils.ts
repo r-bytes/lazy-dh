@@ -58,3 +58,5 @@ export const formatNumberWithCommaDecimalSeparator = (number: number): string =>
 
   return formattedNumber;
 };
+
+export const formatCurrencyTwo = (value: number) => `€ ${value.toFixed(2)}`;
