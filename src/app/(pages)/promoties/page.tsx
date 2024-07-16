@@ -13,7 +13,7 @@ export default async function Promotions({ products }: { products: Product[] }) 
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Title name={"Aanbiedingen"} cn="py-10" />
+      <Title name={"Aanbiedingen"} cn="py-4" />
       <MaxWidthWrapper>
         {!isEmpty ? (
           <ProductList products={products} />

@@ -21,7 +21,7 @@ export default function CheckAuth() {
     };
 
     checkAuth();
-  }, []);
+  }, [pathname, router]);
 
   // Render nothing or perform other actions based on authentication status
   return null;
