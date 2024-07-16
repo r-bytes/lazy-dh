@@ -10,6 +10,7 @@ type ContextProps = {
   totalPrice: number;
   totalQuantities: number;
   qty: number;
+  setQty: (value: React.SetStateAction<number>) => void;
   incQty: () => void;
   decQty: () => void;
   onAdd: (product: Product, quantity: number) => void;
@@ -27,6 +28,7 @@ export const CartContext = createContext<ContextProps>({
   totalPrice: 0,
   totalQuantities: 0,
   qty: 0,
+  setQty: () => {},
   incQty: () => {},
   decQty: () => {},
   onAdd: () => {},
@@ -40,18 +42,41 @@ export const CartContext = createContext<ContextProps>({
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [showCart, setShowCart] = useState<boolean>(false);
-  const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [cartItems, setCartItems] = useState<Product[]>(() => {
+    const storedCart = window.localStorage.getItem("spacejelly_cart");
+    return storedCart ? JSON.parse(storedCart).cartItems : [];
+  });
+
+  const [totalPrice, setTotalPrice] = useState<number>(() => {
+    const storedCart = window.localStorage.getItem("spacejelly_cart");
+    return storedCart ? JSON.parse(storedCart).totalPrice : 0;
+  });
+
+  const [totalQuantities, setTotalQuantities] = useState<number>(() => {
+    const storedCart = window.localStorage.getItem("spacejelly_cart");
+    return storedCart ? JSON.parse(storedCart).totalQuantities : 0;
+  });
+  const [qty, setQty] = useState<number>(0);
+
+  let foundProduct: Product | undefined;
+  let index: number;
 
   useEffect(() => {
     removeZeroQuantityItems();
   }, []);
 
-  const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [totalQuantities, setTotalQuantities] = useState<number>(0);
-  const [qty, setQty] = useState<number>(1);
+  useEffect(() => {
+    const storedCartData = window.localStorage.getItem("spacejelly_cart");
+    if (storedCartData) {
+      const parsedData = JSON.parse(storedCartData);
+      setCartItems(parsedData.cartItems);
+      setTotalQuantities(parsedData.totalQuantities);
+    }
+  }, []);
 
-  let foundProduct: Product | undefined;
-  let index: number;
+  useEffect(() => {
+    window.localStorage.setItem("spacejelly_cart", JSON.stringify({ cartItems, totalQuantities, totalPrice }));
+  }, [cartItems, totalQuantities, totalPrice]);
 
   const removeZeroQuantityItems = () => {
     const filteredItems = cartItems.filter((item) => item.quantity !== 0);
@@ -89,7 +114,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     const newCartItems = cartItems.filter((item: Product) => item._id !== product._id);
 
     setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct!.price * foundProduct!.quantityInBox);
-    setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - foundProduct!.quantityInBox);
+    setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - foundProduct!.quantity);
     setCartItems(newCartItems);
   };
 
@@ -131,6 +156,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         totalPrice,
         totalQuantities,
         qty,
+        setQty,
         incQty,
         decQty,
         onAdd,
