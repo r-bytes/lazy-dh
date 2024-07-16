@@ -31,6 +31,7 @@ export const orderItems = pgTable("order_items", {
     .references(() => orders.id),
   productId: text("product_id").notNull(),
   quantity: integer("quantity").notNull(),
+  quantityInBox: integer("quantity_in_box").notNull(),
   volume: varchar("volume", { length: 100 }),
   percentage: varchar("percentage", { length: 100 }),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),

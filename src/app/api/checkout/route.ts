@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
       productId: item._id,
       name: item.name,
       quantity: item.quantity,
+      quantityInBox:item.quantityInBox,
       percentage: item.percentage,
       volume: item.volume,
       price: item.price,
