@@ -29,11 +29,12 @@ export const orderItems = pgTable("order_items", {
   orderId: integer("order_id")
     .notNull()
     .references(() => orders.id),
-  productId: integer("product_id").notNull(),
+  productId: text("product_id").notNull(),
   quantity: integer("quantity").notNull(),
   volume: varchar("volume", { length: 100 }),
   percentage: varchar("percentage", { length: 100 }),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+  imgUrl: varchar("img_url", { length: 100 }),
 });
 
 export const userActivities = pgTable("user_activities", {
@@ -47,7 +48,7 @@ export const userActivities = pgTable("user_activities", {
 });
 
 export const products = pgTable("products", {
-  id: serial("id").primaryKey(),
+  id: text("id").primaryKey(),
   name: varchar("name", { length: 100 }).notNull(),
   description: text("description"),
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),

@@ -51,6 +51,7 @@ export default defineType({
       type: 'number',
       initialValue: 0,
       readOnly: true,
+      hidden: true,
     }),
     defineField({
       name: 'price',
@@ -122,6 +123,7 @@ export default defineType({
       description: 'A unique identifier that auto-increments',
       type: 'number',
       readOnly: true,
+      hidden: true,
     }),
   ],
 })

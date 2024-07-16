@@ -2,10 +2,10 @@ import { db } from "@/lib/db";
 import { orderItems, orders } from "@/lib/db/schema";
 import Product from "@/lib/types/product";
 import { NextRequest, NextResponse } from "next/server";
+import { urlFor } from "../../../../sanity";
 
 export async function POST(request: NextRequest) {
   const { userId, cartItems, totalPrice } = await request.json();
-  console.log("-------------------------------->", userId, cartItems, totalPrice);
 
   try {
     // Maak een nieuwe bestelling aan
@@ -21,12 +21,13 @@ export async function POST(request: NextRequest) {
     // Voeg de items toe aan de orderItems tabel
     const orderItemsData = cartItems.map((item: Product) => ({
       orderId: order[0].id,
-      productId: item.productId,
+      productId: item._id,
       name: item.name,
       quantity: item.quantity,
       percentage: item.percentage,
       volume: item.volume,
       price: item.price,
+      imgUrl: item.image.asset._ref,
     }));
 
     await db.insert(orderItems).values(orderItemsData);
