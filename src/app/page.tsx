@@ -8,13 +8,14 @@ import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import { Category } from "@/lib/types/category";
 import Product from "@/lib/types/product";
 import Link from "next/link";
-import Promotions from "./(pages)/promoties/page";
+
 import { auth } from "../../auth";
+import Promotions from "@/components/products/products-list-sale";
 
 export default async function Home() {
-  const AANBIEDINGEN: Product[] = await fetchProducts("?type=aanbiedingen");
   const productList: Product[] = await fetchProducts("");
   const categoryList: Category[] = await fetchCategories();
+  const productListInSale: Product[] = productList.filter(p => p.inSale)
 
   const isAuthenticated = await auth();
 
@@ -26,7 +27,7 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-background">
       <section id="promotions" className="mx-20 my-20">
-        <Promotions products={AANBIEDINGEN.slice(0, 4)} />
+        <Promotions products={productListInSale.slice(0, 4)} />
         <div className="mx-auto my-4 mb-16 flex justify-center">
           <Button title="Meer">
             <Link href={"/promoties"}>Bekijk meer</Link>
