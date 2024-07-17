@@ -4,7 +4,7 @@ export interface OrderItem {
   quantityInBox: number;
   volume: string;
   percentage: string;
-  price: string;
+  price: number;
   imgUrl: string;
 }
 
@@ -14,20 +14,17 @@ export interface User {
 }
 
 export interface Order {
-  id: number;
+  orderId: number;
   userId: string;
   orderDate: string;
   totalAmount: string;
   status: string;
-  user: User;
-  items: OrderItem | null;
+  userName: string;
+  userEmail: string;
+  orderItems: OrderItem[] | null;
 }
 
 export interface ApiResponse {
   success: boolean;
-  orders: Array<{
-    orders: Order;
-    users: User;
-    orderItems: OrderItem | null;
-  }>;
+  orders: Order[];
 }

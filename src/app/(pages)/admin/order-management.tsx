@@ -1,9 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { ApiResponse, Order } from "@/lib/types/order";
 import { formatCurrencyTwo } from "@/lib/utils";
+import { MenuDivider } from "@sanity/ui";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -11,60 +13,68 @@ const OrderManagement = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [editedOrders, setEditedOrders] = useState<Record<number, string>>({});
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   // Sort state
-  const [sortColumn, setSortColumn] = useState<string>("id");
+  const [sortColumn, setSortColumn] = useState<string>("orderId");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const res = await fetch("/api/admin/orders");
-        const data: ApiResponse = await res.json();
-        if (data.success) {
-          const transformedOrders = data.orders.map((order) => ({
-            id: order.orders.id,
-            userId: order.orders.userId,
-            orderDate: order.orders.orderDate,
-            totalAmount: order.orders.totalAmount,
-            status: order.orders.status,
-            user: {
-              name: order.users.name,
-              email: order.users.email,
-            },
-            items: order.orderItems,
-          }));
+  // Function to fetch orders
+  const fetchOrders = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/admin/orders");
+      const data: ApiResponse = await res.json();
+      if (data.success) {
+        const transformedOrders = data.orders.map((orderData) => ({
+          orderId: orderData.orderId,
+          userId: orderData.userId,
+          orderDate: orderData.orderDate,
+          totalAmount: orderData.totalAmount,
+          status: orderData.status,
+          userName: orderData.userName,
+          userEmail: orderData.userEmail,
+          orderItems: orderData.orderItems!.length > 0 ? orderData.orderItems : null,
+        }));
 
-          // Sort data initially
-          transformedOrders.sort((a, b) => {
-            const aValue = a[sortColumn];
-            const bValue = b[sortColumn];
-            if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
-            if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
-            return 0;
-          });
+        // Custom sorting logic to put "Nieuw" status at the top
+        transformedOrders.sort((a, b) => {
+          // Priority for "Nieuw" status
+          const priority = { Nieuw: 1, Bezig: 2, Afgerond: 3, Geannuleerd: 4 };
+          if (a.status === "Nieuw" && b.status !== "Nieuw") return -1;
+          if (a.status !== "Nieuw" && b.status === "Nieuw") return 1;
 
-          setOrders(transformedOrders);
+          // Other sorting logic
+          const aValue = (a as { [key: string]: any })[sortColumn];
+          const bValue = (b as { [key: string]: any })[sortColumn];
+          if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
+          if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
+          return 0;
+        });
 
-          // Initialize the editedOrders state with the current status
-          const initialEditedOrders = transformedOrders.reduce(
-            (acc, order) => {
-              acc[order.id] = order.status;
-              return acc;
-            },
-            {} as Record<number, string>
-          );
-          setEditedOrders(initialEditedOrders);
-        }
-      } catch (error) {
-        console.error("Error fetching orders:", error);
-      } finally {
-        setLoading(false);
+        setOrders(transformedOrders);
+
+        // Initialize the editedOrders state with the current status
+        const initialEditedOrders = transformedOrders.reduce(
+          (acc, order) => {
+            acc[order.orderId] = order.status;
+            return acc;
+          },
+          {} as Record<number, string>
+        );
+        setEditedOrders(initialEditedOrders);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchOrders();
-  }, [sortColumn, sortDirection]); // Dependency array includes sortColumn and sortDirection
+  }, [sortColumn, sortDirection]);
 
   const handleStatusChange = (orderId: number, newStatus: string) => {
     // Update the local state with the new status
@@ -82,8 +92,8 @@ const OrderManagement = () => {
 
       const data = await res.json();
       if (data.success) {
-        // Update the orders state with the new status if API request is successful
-        setOrders((prevOrders) => prevOrders.map((order) => (order.id === orderId ? { ...order, status: newStatus } : order)));
+        // Reload the orders data after updating the status
+        fetchOrders();
         toast.success("Status succesvol geupdate!");
       } else {
         toast.error(data.message);
@@ -101,32 +111,36 @@ const OrderManagement = () => {
     setSortDirection((prevDirection) => (prevDirection === "asc" ? "desc" : "asc"));
   };
 
+  const handleItemClick = (order: Order) => {
+    if (!order.orderItems || order.orderItems.length === 0) {
+      return;
+    }
+    setSelectedOrder(order);
+    setIsDrawerOpen(true);
+  };
+
   if (loading) {
     return <p>Loading orders...</p>;
   }
 
   return (
-    <div className="p-4">
-      <h1 className="mb-4 text-xl font-bold">Order Management</h1>
+    <div className="p-4 text-muted-foreground">
+      <h1 className="my-4 text-3xl font-bold text-muted-foreground"> Bestellingen beheren </h1>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableCell onClick={() => handleSort("id")}> Order nr. {sortColumn === "id" && (sortDirection === "asc" ? "▲" : "▼")} </TableCell>
-            <TableCell onClick={() => handleSort("user.name")}>
-              {" "}
-              Klant {sortColumn === "user.name" && (sortDirection === "asc" ? "▲" : "▼")}{" "}
+            <TableCell onClick={() => handleSort("orderId")}>
+              Bestelnr. {sortColumn === "orderId" && (sortDirection === "asc" ? "▲" : "▼")}
             </TableCell>
-            <TableCell onClick={() => handleSort("user.email")}>
-              {" "}
-              Email {sortColumn === "user.email" && (sortDirection === "asc" ? "▲" : "▼")}{" "}
+            <TableCell onClick={() => handleSort("userName")}>Klant {sortColumn === "userName" && (sortDirection === "asc" ? "▲" : "▼")}</TableCell>
+            <TableCell onClick={() => handleSort("userEmail")}>
+              Email {sortColumn === "userEmail" && (sortDirection === "asc" ? "▲" : "▼")}
             </TableCell>
             <TableCell onClick={() => handleSort("orderDate")}>
-              {" "}
-              Order datum {sortColumn === "orderDate" && (sortDirection === "asc" ? "▲" : "▼")}{" "}
+              Besteldatum {sortColumn === "orderDate" && (sortDirection === "asc" ? "▲" : "▼")}
             </TableCell>
             <TableCell onClick={() => handleSort("totalAmount")}>
-              {" "}
-              Total Amount {sortColumn === "totalAmount" && (sortDirection === "asc" ? "▲" : "▼")}{" "}
+              Prijs {sortColumn === "totalAmount" && (sortDirection === "asc" ? "▲" : "▼")}
             </TableCell>
             <TableCell> Status </TableCell>
             <TableCell> Producten </TableCell>
@@ -135,45 +149,73 @@ const OrderManagement = () => {
         </TableHeader>
         <TableBody>
           {orders.map((order) => (
-            <TableRow key={order.id}>
-              <TableCell className="min-w-fit">{order.id}</TableCell>
-              <TableCell className="min-w-fit">{order.user.name}</TableCell>
-              <TableCell className="min-w-fit">{order.user.email}</TableCell>
+            <TableRow key={order.orderId} className={order.status === "Nieuw" ? "bg-primary/20" : ""}>
+              <TableCell className="min-w-fit">{order.orderId}</TableCell>
+              <TableCell className="min-w-fit">{order.userName}</TableCell>
+              <TableCell className="min-w-fit">{order.userEmail}</TableCell>
               <TableCell className="min-w-fit">{new Date(order.orderDate).toLocaleDateString()}</TableCell>
               <TableCell className="min-w-fit">{formatCurrencyTwo(parseFloat(order.totalAmount))}</TableCell>
               <TableCell>
-                <Select value={editedOrders[order.id]} onValueChange={(value: string) => handleStatusChange(order.id, value)}>
+                <Select value={editedOrders[order.orderId]} onValueChange={(value: string) => handleStatusChange(order.orderId, value)}>
                   <SelectTrigger>
-                    <SelectValue>{editedOrders[order.id]}</SelectValue>
+                    <SelectValue>{editedOrders[order.orderId]}</SelectValue>
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="In behandeling"> Behandeling </SelectItem>
-                    <SelectItem value="Afgehandeld"> Afgehandeld </SelectItem>
-                    <SelectItem value="Geannuleerd"> Geannuleerd </SelectItem>
+                    <SelectItem className="cursor-pointer" value="Nieuw"> Nieuw </SelectItem>
+                    <SelectItem className="cursor-pointer" value="Bezig"> Bezig </SelectItem>
+                    <SelectItem className="cursor-pointer" value="Afgerond"> Afgerond </SelectItem>
+                    <SelectItem className="cursor-pointer" value="Geannuleerd"> Geannuleerd </SelectItem>
                   </SelectContent>
                 </Select>
               </TableCell>
-              <TableCell>
-                {order.items ? (
-                  <div>
-                    <p>Naam: {order.items.name}</p>
-                    <p>Liter inhoud: {order.items.volume}</p>
-                    <p>Percentage: {order.items.percentage}</p>
-                    <p>Hoeveelheid in doos: {order.items.quantityInBox}</p>
-                    <p>Price per doos: {formatCurrencyTwo(Number(order.items.price) * order.items.quantityInBox)}</p>
-                    <p>Aantal: {order.items.quantity}</p>
-                  </div>
-                ) : (
-                  <p> Geen producten in deze bestelling. </p>
-                )}
+              <TableCell
+                className={order.orderItems && order.orderItems?.length > 0 ? "underline underline-offset-4 " : ""}
+                onClick={() => handleItemClick(order)}
+                style={order.orderItems && order.orderItems?.length > 0 ? { cursor: "pointer" } : {}}
+              >
+                {order.orderItems && order.orderItems.length > 0 ? "Bekijk de producten" : "Geen producten"}
               </TableCell>
               <TableCell>
-                <Button onClick={() => saveStatus(order.id)}> Status opslaan </Button>
+                <Button onClick={() => saveStatus(order.orderId)}> Status opslaan </Button>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      {selectedOrder && (
+        <Drawer direction="right" open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
+          <DrawerContent className="min-w-fit focus:outline-none fixed right-0 sm:ml-[10%] md:ml-[75%]">
+            <DrawerHeader>
+              <DrawerTitle> Bestelling overzicht</DrawerTitle>
+              <DrawerDescription>
+                {`${selectedOrder.orderItems?.length} ${selectedOrder.orderItems?.length && selectedOrder.orderItems?.length > 1 ? "producten in bestelling" : "product in bestelling"}`}{" "}
+                #{selectedOrder.orderId}
+              </DrawerDescription>
+            </DrawerHeader>
+            <div className="w-full border">
+              {selectedOrder.orderItems && selectedOrder.orderItems.length > 0 ? (
+                selectedOrder.orderItems.map((item, index) => (
+                  <div className="p-4" key={index}>
+                    <h1 className="mb-4 pl-1 font-semibold">Product {index + 1}</h1>
+                    <ul className="list-disc pl-3 text-xs">
+                      <li>Naam: {item.name}</li>
+                      <li>Percentage: {item.percentage}</li>
+                      <li>Liter inhoud: {item.volume}</li>
+                      <li>Aantal in doos: {item.quantityInBox}</li>
+                      <li>Aantal besteld: {item.quantity}</li>
+                    </ul>
+                  </div>
+                ))
+              ) : (
+                <p>No items in this order.</p>
+              )}
+            </div>
+            <DrawerFooter>
+              <Button onClick={() => setIsDrawerOpen(false)}>Close</Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+      )}
     </div>
   );
 };

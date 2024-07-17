@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
       .values({
         userId,
         totalAmount: totalPrice,
-        status: "Pending",
+        status: "Nieuw",
       })
       .returning();
 

@@ -7,7 +7,6 @@ export const config = {
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   apiVersion: "2021-10-21",
-  token: process.env.NEXT_PUBLIC_SANITY_API_TOKEN!,
   useCdn: process.env.NODE_ENV === "production",
 };
 // set up the client for fetching data in the getProps page functions

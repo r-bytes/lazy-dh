@@ -58,6 +58,7 @@ const ShoppingCart = () => {
       const data = await response.json();
       toast.dismiss();
       if (data.success) {
+        // "Bestelling succesvol geplaatst";
         toast.success(data.message);
         // Optioneel: redirect naar een bevestigingspagina
       } else {
@@ -74,7 +75,7 @@ const ShoppingCart = () => {
   return (
     <div className="mt-24">
       <Title name="Winkelwagen" />
-      {cartItems.length < 1 && (
+      {cartItems?.length < 1 && (
         <div className="empty-cart m-10 flex h-96 flex-col items-center justify-center space-y-4 text-center text-muted-foreground">
           <ShoppingBag size={150} />
           <h3> Uw winkelwagen is leeg </h3>
@@ -87,8 +88,8 @@ const ShoppingCart = () => {
       )}
 
       <div className="product-container mt-4 overflow-auto p-5">
-        {cartItems.length >= 1 &&
-          cartItems.map((item) => (
+        {cartItems?.length >= 1 &&
+          cartItems?.map((item) => (
             <React.Fragment key={item._id}>
               <div className="product mx-auto flex max-w-7xl gap-8" key={item._id}>
                 {/* <img src={urlFor(item?.image[0])} alt="" className="cart-product-image" /> */}
@@ -140,7 +141,7 @@ const ShoppingCart = () => {
           ))}
       </div>
 
-      {cartItems.length >= 1 && (
+      {cartItems?.length >= 1 && (
         <div className="mx-auto mt-[-80px] w-full max-w-7xl p-8">
           <div className="flex justify-between text-muted-foreground">
             <h3> Totaal: </h3>
