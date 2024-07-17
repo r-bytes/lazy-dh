@@ -12,8 +12,6 @@ type Props = {
 
 const page = async ({ params: { slug }, searchParams }: Props) => {
   const products = await fetchProducts(`?type=${slug.toLowerCase()}`);
-  console.log(`?type=${slug.toLowerCase()}`);
-  console.log(slug);
 
   // Todo: optimize this?
   // const { productState: products } = useProductContext()

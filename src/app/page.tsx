@@ -18,8 +18,6 @@ export default async function Home() {
 
   const isAuthenticated = await auth();
 
-  console.log(isAuthenticated);
-
   // Conditional rendering based on session
   if (!isAuthenticated) {
     return null;

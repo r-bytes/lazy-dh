@@ -1,5 +1,4 @@
 "use client";
-import { useAuthContext } from "@/context/AuthContext";
 import { useCartContext } from "@/context/CartContext";
 import { navigateTo } from "@/lib/utils";
 import { CircleX, MenuIcon, ShoppingBag } from "lucide-react";
@@ -39,8 +38,8 @@ const NAVIGATION_LIST: NavigationItem[] = [
 
 const Header = (props: Props) => {
   // Hooks
-  const { totalPrice, totalQuantities, cartItems, showCart, setShowCart, incQty, decQty, toggleCartItemQuantity, onRemove } = useCartContext();
-  
+  const { totalQuantities } = useCartContext();
+
   // Todo: check later when protected routes are available
   // const { user } = useAuthContext();
 
@@ -74,7 +73,7 @@ const Header = (props: Props) => {
       <div className="mx-auto mt-0 flex w-full items-center justify-between p-8 sm:mx-16">
         {/* Logo */}
         <Link href={"/"}>
-          <Image className="mx-auto dark:invert" src="/logo.svg" alt="Lazy Den Haag Logo" width={300} height={20} priority />
+          <Image className="w-full h-60 mx-auto dark:invert" src="/logo.svg" alt="Lazy Den Haag Logo" width={300} height={20} priority />
         </Link>
         {/* Hamburger Menu for Small Screens */}
         <button className="flex w-full items-end justify-end pr-4 sm:pr-8 lg:hidden" onClick={() => setMenuOpen(!menuOpen)}>

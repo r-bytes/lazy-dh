@@ -9,8 +9,6 @@ const updateStatusSchema = z.object({
 });
 
 export async function PUT(request: NextRequest, { params }: { params: { orderId: string } }) {
-  console.log(params);
-  
   const { orderId } = params; // Extract orderId from params
 
   if (!orderId) {

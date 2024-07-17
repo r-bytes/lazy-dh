@@ -7,7 +7,7 @@ export const fetchProducts = async (queryParam?: string) => {
   // Only append queryParam if it is truthy
   if (queryParam) {
     url += queryParam;
-    console.log("query param found: " + url);
+    // console.log("query param found: " + url);
     
   }
 

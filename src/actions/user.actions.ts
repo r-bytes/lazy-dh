@@ -16,7 +16,7 @@ import { signIn } from "../../auth";
 async function hashPassword(password: string) {
   try {
     const hashedPassword = await argon2.hash(password);
-    console.log("Hashed password:", hashedPassword);
+    // console.log("Hashed password:", hashedPassword);
     return hashedPassword;
   } catch (error) {
     console.error("Error hashing password:", error);
