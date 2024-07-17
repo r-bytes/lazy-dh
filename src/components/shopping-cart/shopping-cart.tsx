@@ -107,8 +107,9 @@ const ShoppingCart = () => {
                       <CircleX />
                     </button>
                   </div>
-                  <div className="bottom mt-8 flex items-center justify-between">
-                    <div className="quantity">
+
+                  <div className="bottom mt-8 flex flex-col items-center justify-between sm:flex-row">
+                    <div className="quantity order-2 sm:order-1 pt-8 sm:pt-0">
                       <p className="quantity-desc flex">
                         <span
                           className="minus flex w-12 items-center justify-center border border-muted-foreground/40 text-center text-red-700 hover:cursor-pointer"
@@ -127,7 +128,8 @@ const ShoppingCart = () => {
                         </span>
                       </p>
                     </div>
-                    <div className="flex flex-col items-end justify-end space-y-2">
+
+                    <div className="flex flex-col items-end justify-end space-y-2 pt-6 sm:pt-2 order-1 md:order-2 w-44 px-2 sm:px-0">
                       <h4 className="text-3xl font-semibold tracking-wide"> € {item.price * item.quantityInBox} </h4>
                       <h4 className="text-tertiary flex-1 text-right text-xs font-thin">
                         € {formatNumberWithCommaDecimalSeparator(item.price)} per stuk

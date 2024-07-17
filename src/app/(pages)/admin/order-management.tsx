@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { ApiResponse, Order } from "@/lib/types/order";
 import { formatCurrencyTwo } from "@/lib/utils";
-import { MenuDivider } from "@sanity/ui";
+import { EyeIcon, EyeOff } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -15,6 +15,7 @@ const OrderManagement = () => {
   const [editedOrders, setEditedOrders] = useState<Record<number, string>>({});
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [hideCompleted, setHideCompleted] = useState(false);
 
   // Sort state
   const [sortColumn, setSortColumn] = useState<string>("orderId");
@@ -119,76 +120,95 @@ const OrderManagement = () => {
     setIsDrawerOpen(true);
   };
 
+  const handleHide = () => {
+    setHideCompleted(!hideCompleted);
+  };
+
   if (loading) {
-    return <p>Loading orders...</p>;
+    return <p> Loading orders... </p>;
   }
 
   return (
-    <div className="p-4 text-muted-foreground">
-      <h1 className="my-4 text-3xl font-bold text-muted-foreground"> Bestellingen beheren </h1>
-      <Table>
+    <div className="w-full overflow-x-scroll p-4 text-muted-foreground">
+      <h1 className="my-4 text-center text-3xl font-bold text-muted-foreground"> Bestellingen beheren </h1>
+      <Table className="w-full">
         <TableHeader>
           <TableRow>
-            <TableCell onClick={() => handleSort("orderId")}>
+            <TableCell className="hover:cursor-pointer" onClick={() => handleSort("orderId")}>
               Bestelnr. {sortColumn === "orderId" && (sortDirection === "asc" ? "▲" : "▼")}
             </TableCell>
-            <TableCell onClick={() => handleSort("userName")}>Klant {sortColumn === "userName" && (sortDirection === "asc" ? "▲" : "▼")}</TableCell>
-            <TableCell onClick={() => handleSort("userEmail")}>
+            <TableCell className="hover:cursor-pointer" onClick={() => handleSort("userName")}>
+              Klant {sortColumn === "userName" && (sortDirection === "asc" ? "▲" : "▼")}
+            </TableCell>
+            <TableCell className="hover:cursor-pointer" onClick={() => handleSort("userEmail")}>
               Email {sortColumn === "userEmail" && (sortDirection === "asc" ? "▲" : "▼")}
             </TableCell>
-            <TableCell onClick={() => handleSort("orderDate")}>
+            <TableCell className="hover:cursor-pointer" onClick={() => handleSort("orderDate")}>
               Besteldatum {sortColumn === "orderDate" && (sortDirection === "asc" ? "▲" : "▼")}
             </TableCell>
-            <TableCell onClick={() => handleSort("totalAmount")}>
+            <TableCell className="hover:cursor-pointer" onClick={() => handleSort("totalAmount")}>
               Prijs {sortColumn === "totalAmount" && (sortDirection === "asc" ? "▲" : "▼")}
             </TableCell>
             <TableCell> Status </TableCell>
             <TableCell> Producten </TableCell>
             <TableCell> Acties </TableCell>
+            <TableCell className="hover:cursor-pointer" onClick={handleHide}>
+              {hideCompleted ? <EyeIcon /> : <EyeOff />}
+            </TableCell>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {orders.map((order) => (
-            <TableRow key={order.orderId} className={order.status === "Nieuw" ? "bg-primary/20" : ""}>
-              <TableCell className="min-w-fit">{order.orderId}</TableCell>
-              <TableCell className="min-w-fit">{order.userName}</TableCell>
-              <TableCell className="min-w-fit">{order.userEmail}</TableCell>
-              <TableCell className="min-w-fit">{new Date(order.orderDate).toLocaleDateString()}</TableCell>
-              <TableCell className="min-w-fit">{formatCurrencyTwo(parseFloat(order.totalAmount))}</TableCell>
-              <TableCell>
-                <Select value={editedOrders[order.orderId]} onValueChange={(value: string) => handleStatusChange(order.orderId, value)}>
-                  <SelectTrigger>
-                    <SelectValue>{editedOrders[order.orderId]}</SelectValue>
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem className="cursor-pointer" value="Nieuw"> Nieuw </SelectItem>
-                    <SelectItem className="cursor-pointer" value="Bezig"> Bezig </SelectItem>
-                    <SelectItem className="cursor-pointer" value="Afgerond"> Afgerond </SelectItem>
-                    <SelectItem className="cursor-pointer" value="Geannuleerd"> Geannuleerd </SelectItem>
-                  </SelectContent>
-                </Select>
-              </TableCell>
-              <TableCell
-                className={order.orderItems && order.orderItems?.length > 0 ? "underline underline-offset-4 " : ""}
-                onClick={() => handleItemClick(order)}
-                style={order.orderItems && order.orderItems?.length > 0 ? { cursor: "pointer" } : {}}
-              >
-                {order.orderItems && order.orderItems.length > 0 ? "Bekijk de producten" : "Geen producten"}
-              </TableCell>
-              <TableCell>
-                <Button onClick={() => saveStatus(order.orderId)}> Status opslaan </Button>
-              </TableCell>
-            </TableRow>
-          ))}
+          {orders
+            .filter((order) => !hideCompleted || order.status !== "Afgerond")
+            .map((order) => (
+              <TableRow key={order.orderId} className={order.status === "Nieuw" ? "bg-primary/20" : ""}>
+                <TableCell className="min-w-fit">{order.orderId}</TableCell>
+                <TableCell className="min-w-fit">{order.userName}</TableCell>
+                <TableCell className="min-w-fit">{order.userEmail}</TableCell>
+                <TableCell className="min-w-fit">{new Date(order.orderDate).toLocaleDateString()}</TableCell>
+                <TableCell className="min-w-fit">{formatCurrencyTwo(parseFloat(order.totalAmount))}</TableCell>
+                <TableCell>
+                  <Select value={editedOrders[order.orderId]} onValueChange={(value: string) => handleStatusChange(order.orderId, value)}>
+                    <SelectTrigger className="w-36">
+                      <SelectValue>{editedOrders[order.orderId]}</SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem className="cursor-pointer" value="Nieuw">
+                        Nieuw
+                      </SelectItem>
+                      <SelectItem className="cursor-pointer" value="Bezig">
+                        Bezig
+                      </SelectItem>
+                      <SelectItem className="cursor-pointer" value="Afgerond">
+                        Afgerond
+                      </SelectItem>
+                      <SelectItem className="cursor-pointer" value="Geannuleerd">
+                        Geannuleerd
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </TableCell>
+                <TableCell
+                  className={order.orderItems && order.orderItems?.length > 0 ? "underline underline-offset-4 " : ""}
+                  onClick={() => handleItemClick(order)}
+                  style={order.orderItems && order.orderItems?.length > 0 ? { cursor: "pointer" } : {}}
+                >
+                  {order.orderItems && order.orderItems.length > 0 ? "Bekijk de producten" : "Geen producten"}
+                </TableCell>
+                <TableCell>
+                  <Button onClick={() => saveStatus(order.orderId)}> Status opslaan </Button>
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
       {selectedOrder && (
         <Drawer direction="right" open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
-          <DrawerContent className="min-w-fit focus:outline-none fixed right-0 sm:ml-[10%] md:ml-[75%]">
+          <DrawerContent className="fixed right-0 min-w-fit focus:outline-none sm:ml-[10%] md:ml-[75%]">
             <DrawerHeader>
               <DrawerTitle> Bestelling overzicht</DrawerTitle>
               <DrawerDescription>
-                {`${selectedOrder.orderItems?.length} ${selectedOrder.orderItems?.length && selectedOrder.orderItems?.length > 1 ? "producten in bestelling" : "product in bestelling"}`}{" "}
+                {`${selectedOrder.orderItems?.length} ${selectedOrder.orderItems?.length && selectedOrder.orderItems?.length > 1 ? "producten in bestelling" : "product in bestelling"}`}
                 #{selectedOrder.orderId}
               </DrawerDescription>
             </DrawerHeader>
