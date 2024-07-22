@@ -10,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 import { auth } from "../../auth";
 import CheckAuth from "./check-auth.server";
 import "./globals.css";
+import Footer from "@/components/navigation/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 const montserrat = Montserrat({ subsets: ["latin"] });
@@ -20,13 +21,15 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const isAuthenticated = await auth();
+  // Todo: cleanup
+  // const isAuthenticated = await auth();
 
   // Conditionally render children based on authentication status
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${montserrat.className} flex min-h-screen flex-col`}>
-        {!isAuthenticated && <CheckAuth />}
+        {/* Todo: cleanup */}
+        {/* {!isAuthenticated && <CheckAuth />} */}
         <div>
           <SessionProvider>
             <CartProvider>
@@ -34,8 +37,11 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
                   <AuthProvider>
                     <Toaster />
-                    {isAuthenticated && <Header />}
+                    <Header />
+                    {/* // Todo: cleanup */}
+                    {/* {isAuthenticated && <Header />} */}
                     <main>{children}</main>
+                    <Footer />
                   </AuthProvider>
                 </ThemeProvider>
               </ProductProvider>

@@ -54,7 +54,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
   return (
     <Card className={cn("min-h-screen w-full", className)} {...props}>
       <CardHeader className="mb-4 text-center">
-        <CardTitle className="mt-12 text-3xl">{slug === "home" ? "Categorieën" : capitalizeFirstLetter(currentPath)}</CardTitle>
+        <CardTitle className="mt-12 text-4xl md:text-5xl">{slug === "home" ? "Categorieën" : capitalizeFirstLetter(currentPath)}</CardTitle>
         {/* Todo: should be dynamic */}
         <CardDescription>Kies een categorie</CardDescription>
       </CardHeader>

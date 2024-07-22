@@ -9,33 +9,38 @@ import { Category } from "@/lib/types/category";
 import Product from "@/lib/types/product";
 import Link from "next/link";
 
-import { auth } from "../../auth";
-import Promotions from "@/components/products/products-list-sale";
+import { CarouselSpacing } from "@/components/products/product-carousel";
+import { CardTitle } from "@/components/ui/card";
 
 export default async function Home() {
   const productList: Product[] = await fetchProducts("");
   const categoryList: Category[] = await fetchCategories();
-  const productListInSale: Product[] = productList.filter(p => p.inSale)
+  const productListInSale: Product[] = productList.filter((p) => p.inSale);
 
-  const isAuthenticated = await auth();
+  // Todo: cleanup
+  // const isAuthenticated = await auth();
 
   // Conditional rendering based on session
-  if (!isAuthenticated) {
-    return null;
-  }
+  // if (!isAuthenticated) {
+  //   return null;
+  // }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-background">
-      <section id="promotions" className="mx-20 my-20">
-        <Promotions products={productListInSale.slice(0, 4)} />
-        <div className="mx-auto my-4 mb-16 flex justify-center">
-          <Button title="Meer">
-            <Link href={"/promoties"}>Bekijk meer</Link>
-          </Button>
+      <section id="promotions">
+        <div className="min-h-screen flex flex-col justify-center">
+          <CardTitle className="text-center text-4xl md:text-5xl">{"Aanbiedingen"}</CardTitle>
+          <CarouselSpacing products={productListInSale} />
+          {/* <Promotions products={productListInSale.slice(0, 4)} /> */}
+          <div className="mx-auto my-16 flex justify-center">
+            <Button title="Meer">
+              <Link href={"/promoties"}>Bekijk meer</Link>
+            </Button>
+          </div>
         </div>
       </section>
       <section id="categories">
-        <MaxWidthWrapper className="max-w-[90rem]">
+        <MaxWidthWrapper className="max-w-[66rem]">
           <CategoryCard slug={"home"} products={productList} categories={categoryList} />
         </MaxWidthWrapper>
       </section>
