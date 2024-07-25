@@ -41,38 +41,23 @@ export const CartContext = createContext<ContextProps>({
 });
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const [showCart, setShowCart] = useState<boolean>(false);
-  const [cartItems, setCartItems] = useState<Product[]>(() => {
-    if (typeof window !== "undefined") {
-      const storedCart = window.localStorage.getItem("spacejelly_cart");
-      return storedCart ? JSON.parse(storedCart).cartItems : [];
-    }
-  });
-
-  const [totalPrice, setTotalPrice] = useState<number>(() => {
-    const storedCart = window.localStorage.getItem("spacejelly_cart");
-    return storedCart ? JSON.parse(storedCart).totalPrice : 0;
-  });
-
-  const [totalQuantities, setTotalQuantities] = useState<number>(() => {
-    const storedCart = window.localStorage.getItem("spacejelly_cart");
-    return storedCart ? JSON.parse(storedCart).totalQuantities : 0;
-  });
-  const [qty, setQty] = useState<number>(0);
-
   let foundProduct: Product | undefined;
-  let index: number;
 
-  useEffect(() => {
-    removeZeroQuantityItems();
-  }, []);
+  const [showCart, setShowCart] = useState<boolean>(false);
+
+  const [qty, setQty] = useState<number>(0);
+  const [cartItems, setCartItems] = useState<Product[] | []>([]);
+  const [totalQuantities, setTotalQuantities] = useState<number>(0);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
   useEffect(() => {
     const storedCartData = window.localStorage.getItem("spacejelly_cart");
-    if (storedCartData) {
+    if (storedCartData && JSON.parse(storedCartData).cartItems.length > 0) {
       const parsedData = JSON.parse(storedCartData);
+
       setCartItems(parsedData.cartItems);
       setTotalQuantities(parsedData.totalQuantities);
+      setTotalPrice(parsedData.totalPrice);
     }
   }, []);
 
@@ -80,10 +65,14 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     window.localStorage.setItem("spacejelly_cart", JSON.stringify({ cartItems, totalQuantities, totalPrice }));
   }, [cartItems, totalQuantities, totalPrice]);
 
-  const removeZeroQuantityItems = () => {
-    const filteredItems = cartItems.filter((item) => item.quantity !== 0);
-    setCartItems(filteredItems); // Update the state with the filtered items
-  };
+  // useEffect(() => {
+  //   removeZeroQuantityItems();
+  // }, []);
+
+  // const removeZeroQuantityItems = () => {
+  //   const filteredItems = cartItems.filter((item) => item.quantity !== 0);
+  //   setCartItems(filteredItems); // Update the state with the filtered items
+  // };
 
   const onAdd = (product: Product, quantity: number) => {
     const checkProductInCard = cartItems.find((item) => item._id === product._id);
@@ -122,7 +111,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   const toggleCartItemQuantity = (id: number | string, value: "inc" | "dec") => {
     foundProduct = cartItems.find((item) => item._id === id);
-    index = cartItems.findIndex((product) => product._id === id);
+    // let index: number;
+    // index = cartItems.findIndex((product) => product._id === id);
 
     const newCartItems = cartItems.filter((item) => item._id !== id);
 

@@ -1,3 +1,4 @@
+import Footer from "@/components/navigation/footer";
 import Header from "@/components/navigation/header";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { AuthProvider } from "@/context/AuthContext";
@@ -7,10 +8,7 @@ import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { Inter, Montserrat } from "next/font/google";
 import { Toaster } from "react-hot-toast";
-import { auth } from "../../auth";
-import CheckAuth from "./check-auth.server";
 import "./globals.css";
-import Footer from "@/components/navigation/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 const montserrat = Montserrat({ subsets: ["latin"] });

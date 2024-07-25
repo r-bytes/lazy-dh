@@ -28,9 +28,9 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-background">
       <section id="promotions">
-        <div className="min-h-screen flex flex-col justify-center">
+        <div className="flex min-h-screen flex-col justify-center">
           <CardTitle className="text-center text-4xl md:text-5xl">{"Aanbiedingen"}</CardTitle>
-          <CarouselSpacing products={productListInSale} />
+          <CarouselSpacing products={productListInSale!} />
           {/* <Promotions products={productListInSale.slice(0, 4)} /> */}
           <div className="mx-auto my-16 flex justify-center">
             <Button title="Meer">
@@ -41,7 +41,7 @@ export default async function Home() {
       </section>
       <section id="categories">
         <MaxWidthWrapper className="max-w-[66rem]">
-          <CategoryCard slug={"home"} products={productList} categories={categoryList} />
+          <CategoryCard slug={"home"} products={productList} categories={categoryList!} />
         </MaxWidthWrapper>
       </section>
     </main>
