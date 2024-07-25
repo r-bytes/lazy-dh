@@ -20,7 +20,7 @@ const page = async ({ params: { slug }, searchParams }: Props) => {
       <ProductsWithFilter products={products!} />
     </MaxWidthWrapper>
   ) : (
-    <div className="flex h-screen w-screen flex-col">
+    <div className="flex h-full flex-col">
       <CardHeader className="mb-10 mt-24 text-center text-5xl font-semibold sm:mt-0"> {capitalizeFirstLetter(slug)} </CardHeader>
       <ProductList products={products} />
     </div>

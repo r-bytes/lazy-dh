@@ -130,12 +130,9 @@ const ShoppingCart = () => {
                     </div>
 
                     <div className="order-1 flex w-44 flex-col items-end justify-end space-y-2 px-2 pt-6 sm:px-0 sm:pt-2 md:order-2">
-                      <h4 className="text-3xl font-semibold tracking-wide">
-                        {" "}
-                        € {formatNumberWithCommaDecimalSeparator(item.price * item.quantityInBox)}{" "}
-                      </h4>
-                      <h4 className="text-tertiary flex-1 text-right text-xs font-thin">
-                        € {formatNumberWithCommaDecimalSeparator(item.price)} per stuk
+                      <h4 className="text-3xl font-semibold tracking-wide">€ {formatNumberWithCommaDecimalSeparator(item.price)}</h4>
+                      <h4 className="text-tertiary flex-1 text-right text-xs font-light">
+                        € {formatNumberWithCommaDecimalSeparator(item.price * item.quantityInBox)}
                       </h4>
                     </div>
                   </div>

@@ -65,80 +65,50 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     window.localStorage.setItem("spacejelly_cart", JSON.stringify({ cartItems, totalQuantities, totalPrice }));
   }, [cartItems, totalQuantities, totalPrice]);
 
-  // useEffect(() => {
-  //   removeZeroQuantityItems();
-  // }, []);
-
-  // const removeZeroQuantityItems = () => {
-  //   const filteredItems = cartItems.filter((item) => item.quantity !== 0);
-  //   setCartItems(filteredItems); // Update the state with the filtered items
-  // };
-
   const onAdd = (product: Product, quantity: number) => {
-    const checkProductInCard = cartItems.find((item) => item._id === product._id);
-
+    const checkProductInCart = cartItems.find((item) => item._id === product._id);
     setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity * product.quantityInBox);
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
 
-    if (checkProductInCard) {
-      const updatedCartItems = cartItems.map((cartProduct) => {
-        if (cartProduct._id === product._id) {
-          return {
-            ...cartProduct,
-            quantity: cartProduct.quantityInBox + quantity, // Ensure updated quantity is included
-          };
-        }
-        return cartProduct; // Explicitly return the original cartProduct if no update is needed
-      });
-
+    if (checkProductInCart) {
+      const updatedCartItems = cartItems.map((cartProduct) =>
+        cartProduct._id === product._id ? { ...cartProduct, quantity: cartProduct.quantity + quantity } : cartProduct
+      );
       setCartItems(updatedCartItems);
     } else {
-      const newProduct = { ...product, quantity }; // Create a copy of the product with updated quantity
-      setCartItems((prevCartItems) => [...prevCartItems, newProduct]); // Add the new product to the cart while preserving existing ones
+      const newProduct = { ...product, quantity };
+      setCartItems((prevCartItems) => [...prevCartItems, newProduct]);
     }
 
-    toast.success(`${quantity} ${product.name} toegevoegd aan de winkelwagen.`);
+    toast.success(`${quantity} box(es) of ${product.name} added to the cart.`);
   };
 
   const onRemove = (product: Product) => {
-    foundProduct = cartItems.find((item: Product) => item._id === product._id);
-    const newCartItems = cartItems.filter((item: Product) => item._id !== product._id);
-
-    setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct!.price * foundProduct!.quantityInBox);
-    setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - foundProduct!.quantity);
-    setCartItems(newCartItems);
-  };
-
-  const toggleCartItemQuantity = (id: number | string, value: "inc" | "dec") => {
-    foundProduct = cartItems.find((item) => item._id === id);
-    // let index: number;
-    // index = cartItems.findIndex((product) => product._id === id);
-
-    const newCartItems = cartItems.filter((item) => item._id !== id);
-
-    if (value === "inc" && foundProduct) {
-      setCartItems([...newCartItems, { ...foundProduct, quantity: foundProduct.quantity + 1 }]);
-      setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct!.price * foundProduct!.quantityInBox);
-      setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + 1);
-    } else if (value === "dec" && foundProduct) {
-      if (foundProduct.quantityInBox > 1) {
-        setCartItems([...newCartItems, { ...foundProduct, quantity: foundProduct.quantity - 1 }]);
-        setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct!.price * foundProduct!.quantityInBox);
-        setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1);
-      }
+    const foundProduct = cartItems.find((item) => item._id === product._id);
+    if (foundProduct) {
+      const newCartItems = cartItems.filter((item) => item._id !== product._id);
+      setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price * foundProduct.quantity * foundProduct.quantityInBox);
+      setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - foundProduct.quantity);
+      setCartItems(newCartItems);
     }
   };
 
-  const incQty = () => {
-    setQty((prevQty) => prevQty + 1);
+  const toggleCartItemQuantity = (id: number | string, value: "inc" | "dec") => {
+    const foundProduct = cartItems.find((item) => item._id === id);
+    if (foundProduct) {
+      const updatedQuantity = value === "inc" ? foundProduct.quantity + 1 : Math.max(foundProduct.quantity - 1, 0);
+      const newCartItems = cartItems.map((item) => (item._id === id ? { ...item, quantity: updatedQuantity } : item));
+      setCartItems(newCartItems);
+      setTotalPrice(
+        (prevTotalPrice) =>
+          prevTotalPrice + (value === "inc" ? foundProduct.price * foundProduct.quantityInBox : -foundProduct.price * foundProduct.quantityInBox)
+      );
+      setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + (value === "inc" ? 1 : -1));
+    }
   };
 
-  const decQty = () => {
-    setQty((prevQty) => {
-      if (prevQty - 1 < 1) return 1;
-      return prevQty - 1;
-    });
-  };
+  const incQty = () => setQty((prevQty) => prevQty + 1);
+  const decQty = () => setQty((prevQty) => Math.max(prevQty - 1, 1));
 
   return (
     <CartContext.Provider

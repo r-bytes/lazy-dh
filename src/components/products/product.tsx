@@ -50,6 +50,8 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
   };
 
   function handleCheckout(): void {
+    console.log("qty", qty);
+    
     onAdd(product, qty);
     navigateTo(router, "/winkelwagen");
   }
@@ -83,11 +85,13 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
         <div className="mb-0">
           <span className="mr-1 text-xs font-semibold dark:text-white">€</span>
           <span className="text-3xl font-semibold tracking-wide dark:text-white sm:text-4xl">
-            {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)}
+            {formatNumberWithCommaDecimalSeparator(product.price)}
           </span>
         </div>
         <div className="flex justify-end pt-1">
-          <span className="text-tertiary mr-1 text-xs font-light">€{formatNumberWithCommaDecimalSeparator(product.price)} per stuk</span>
+          <span className="text-tertiary mr-1 text-xs font-normal">
+            € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} doos
+            </span>
         </div>
       </div>
     );
@@ -97,7 +101,12 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
     <Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)}>
       {/* Conditionally add asChild based on isHoveredOn state */}
       <DialogTrigger {...(!isHoveredOn || !isFocused ? { asChild: true } : {})}>
-        <Card onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)} onClick={(e) => e.stopPropagation()} className="relative flex h-[32rem] w-80 flex-col rounded-2xl bg-neutral-300/10 bg-no-repeat hover:cursor-pointer dark:bg-neutral-800/30 md:w-60">
+        <Card
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onClick={(e) => e.stopPropagation()}
+          className="relative flex h-[32rem] w-80 flex-col rounded-2xl bg-neutral-300/10 bg-no-repeat hover:cursor-pointer dark:bg-neutral-800/30 md:w-60"
+        >
           <div className="flex items-center justify-between">
             <div className="p-2 text-xs text-muted-foreground"> {product.volume}</div>
             <div className="p-2 text-xs text-muted-foreground"> {product.percentage} </div>
@@ -118,7 +127,7 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
                 <CardDescription className="flex-1 text-right text-2xl font-semibold">
                   € {formatNumberWithCommaDecimalSeparator(product.price)}
                 </CardDescription>
-                <CardDescription className="text-tertiary flex-1 text-right text-sm font-thin">
+                <CardDescription className="text-tertiary flex-1 text-right text-sm font-light">
                   € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} doos
                 </CardDescription>
               </div>
@@ -148,7 +157,7 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
         {/* Middle */}
         <DialogHeader className="flex flex-col items-center justify-between rounded-t-3xl bg-zinc-200/50 p-4 dark:bg-zinc-800">
           <div className="">
-            <DialogTitle className="dark:text-text-muted-foreground text-tertiary mb-4 mt-4 text-center text-lg font-thin sm:text-2xl lg:text-3xl">
+            <DialogTitle className="dark:text-text-muted-foreground text-tertiary mb-4 mt-4 text-center text-lg font-light sm:text-2xl lg:text-3xl">
               {product.name}
             </DialogTitle>
           </div>
@@ -196,10 +205,10 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
               <CardTitle className="text-xl md:text-2xl">{product.name}</CardTitle>
               <div className="self-end">
                 <CardDescription className="flex-1 text-right text-2xl font-semibold">
-                  € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)}
+                  € {formatNumberWithCommaDecimalSeparator(product.price)}
                 </CardDescription>
-                <CardDescription className="text-tertiary flex-1 text-right text-sm font-thin">
-                  € {formatNumberWithCommaDecimalSeparator(product.price)} per stuk
+                <CardDescription className="text-tertiary flex-1 text-right text-sm font-light">
+                  € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} doos
                 </CardDescription>
               </div>
             </div>

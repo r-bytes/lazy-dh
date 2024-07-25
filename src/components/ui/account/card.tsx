@@ -52,11 +52,11 @@ export function AccountCard({ className, ...props }: CardProps) {
     <Card className={cn("h-screen w-full", className)} {...props}>
       <CardHeader className="mb-4 text-center">
         {/* Todo: should be dynamic */}
-        <CardTitle className="mt-12 text-3xl">Account</CardTitle>
+        <CardTitle className="mt-12 text-4xl md:text-5xl">Account</CardTitle>
         {/* Todo: should be dynamic */}
         <CardDescription>Kies een categorie</CardDescription>
       </CardHeader>
-      <CardContent className="mt-12 flex flex-col justify-center p-0">
+      <CardContent className="mt-12 flex flex-col justify-center sm:mx-16 lg:mx-2">
         {ACCOUNT.map((item, index) => (
           <div key={index} className="flex text-center lg:text-left">
             <a

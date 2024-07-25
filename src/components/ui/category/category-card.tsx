@@ -62,7 +62,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
       <InputForm products={products} onSearchChange={setFilteredProducts} />
       {isSearching && <ProductList products={filteredProducts} />}
       {!isSearching && (
-        <CardContent className="mx-16 mt-12 flex flex-col justify-center">
+        <CardContent className="sm:mx-16 lg:mx-2 mt-12 flex flex-col justify-center">
           {slug === "home"
             ? categories.slice(0, 4).map((item, index) => (
                 <div key={index} className="flex text-center lg:text-left">
@@ -125,7 +125,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
       {slug === "home" && (
         <div className="m-16 flex flex-1 justify-center">
           <Button title="Meer">
-            <Link href={"/category"}>Bekijk meer</Link>
+            <Link href={"/categorien"}>Bekijk meer</Link>
           </Button>
         </div>
       )}
