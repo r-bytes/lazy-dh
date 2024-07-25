@@ -40,7 +40,7 @@ export default async function Home() {
         </div>
       </section>
       <section id="categories">
-        <MaxWidthWrapper className="max-w-[66rem]">
+        <MaxWidthWrapper className="max-w-[84rem]">
           <CategoryCard slug={"home"} products={productList} categories={categoryList!} />
         </MaxWidthWrapper>
       </section>
