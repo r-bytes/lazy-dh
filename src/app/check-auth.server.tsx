@@ -14,8 +14,8 @@ export default function CheckAuth() {
       const session = await getSession();
       if (!session && pathname === "/") {
         navigateTo(router, "/sign-in");
-      } else if (session && pathname === "/sign-up") {
-        navigateTo(router, "/sign-up");
+      } else if (session && pathname === "/registreer") {
+        navigateTo(router, "/registreer");
       }
       setIsAuthenticated(session !== null);
     };

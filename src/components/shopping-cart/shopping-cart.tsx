@@ -1,20 +1,32 @@
 import { useAuthContext } from "@/context/AuthContext";
 import { useCartContext } from "@/context/CartContext";
-import { formatNumberWithCommaDecimalSeparator } from "@/lib/utils";
+import { formatNumberWithCommaDecimalSeparator, navigateTo } from "@/lib/utils";
 import { CircleX, Minus, Plus, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 import { urlFor } from "../../../sanity";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import Title from "../ui/title";
+import { useRouter } from "next/navigation";
 
 const ShoppingCart = () => {
   // Hooks
   const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuantity, onRemove, incQty } = useCartContext();
   const { user } = useAuthContext();
+  const router = useRouter();
+  
+  useEffect(() => {
+    console.log(user?.email);
+    
+  }, [user]);
+  
+
+  // Calculate VAT at 21%
+  const VAT = totalPrice * 0.21;
+  const totalPriceWithVAT = totalPrice + VAT;
 
   // Functions
   const handleCheckout = async () => {
@@ -25,12 +37,13 @@ const ShoppingCart = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: user?.email }), // Assuming user.email contains the user's email
+      body: JSON.stringify({ email: user?.email }),
     });
 
     if (!userIdResponse.ok) {
       toast.dismiss();
-      toast.error("Failed to fetch user ID");
+      navigateTo(router, "/winkelwagen/account")
+      // toast.error("Failed to fetch user ID");
       return;
     }
 
@@ -51,11 +64,12 @@ const ShoppingCart = () => {
         body: JSON.stringify({
           userId,
           cartItems,
-          totalPrice,
+          totalPrice: totalPriceWithVAT,
         }),
       });
 
       const data = await response.json();
+      
       toast.dismiss();
       if (data.success) {
         // "Bestelling succesvol geplaatst";
@@ -144,10 +158,18 @@ const ShoppingCart = () => {
       </div>
 
       {cartItems?.length >= 1 && (
-        <div className="mx-auto mt-[-80px] w-full max-w-7xl p-8">
+        <div className="mx-auto w-full max-w-7xl mt-[-2rem] p-8 xl:p-0">
           <div className="flex justify-between text-muted-foreground">
-            <h3> Totaal: </h3>
+            <h3> Totaalbedrag excl. BTW: </h3>
             <h3 className="mr-2 tracking-wide"> € {formatNumberWithCommaDecimalSeparator(totalPrice)} </h3>
+          </div>
+          <div className="flex justify-between text-muted-foreground mb-8">
+            <h3> BTW (21%): </h3>
+            <h3 className="mr-2 tracking-wide"> € {formatNumberWithCommaDecimalSeparator(VAT)} </h3>
+          </div>
+          <div className="flex justify-between text-muted-foreground">
+            <h3> Totaalbedrag incl. BTW: </h3>
+            <h3 className="mr-2 tracking-wide"> € {formatNumberWithCommaDecimalSeparator(totalPriceWithVAT)} </h3>
           </div>
           <div className="mx-auto mt-16 flex w-full items-center justify-center">
             <Button type="button" className="btn" onClick={handleCheckout}>

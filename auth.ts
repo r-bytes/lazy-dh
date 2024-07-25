@@ -2,13 +2,13 @@ import NextAuth, { User } from "next-auth";
 import { db } from "@/lib/db/index";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import Credentials from "next-auth/providers/credentials";
-import { getUserFromDb } from "@/actions/user.actions";
+import { getUserFromDb } from "@/actions/users/user.actions";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(db),
   providers: [
     Credentials({
-      credentials: {
+      credentials: { 
         email: {},
         password: {},
       },

@@ -34,7 +34,7 @@ const ACCOUNT: AccountOptions[] = [
     title: "Wachtwoord reset",
     description: "Wachtwoord veranderen",
     image: "UserIcon",
-    slug: "wachtwoord-reset",
+    slug: "reset-password",
   },
 ];
 
