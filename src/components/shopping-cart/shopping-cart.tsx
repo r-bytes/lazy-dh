@@ -109,7 +109,7 @@ const ShoppingCart = () => {
                   </div>
 
                   <div className="bottom mt-8 flex flex-col items-center justify-between sm:flex-row">
-                    <div className="quantity order-2 sm:order-1 pt-8 sm:pt-0">
+                    <div className="quantity order-2 pt-8 sm:order-1 sm:pt-0">
                       <p className="quantity-desc flex">
                         <span
                           className="minus flex w-12 items-center justify-center border border-muted-foreground/40 text-center text-red-700 hover:cursor-pointer"
@@ -129,8 +129,11 @@ const ShoppingCart = () => {
                       </p>
                     </div>
 
-                    <div className="flex flex-col items-end justify-end space-y-2 pt-6 sm:pt-2 order-1 md:order-2 w-44 px-2 sm:px-0">
-                      <h4 className="text-3xl font-semibold tracking-wide"> € {item.price * item.quantityInBox} </h4>
+                    <div className="order-1 flex w-44 flex-col items-end justify-end space-y-2 px-2 pt-6 sm:px-0 sm:pt-2 md:order-2">
+                      <h4 className="text-3xl font-semibold tracking-wide">
+                        {" "}
+                        € {formatNumberWithCommaDecimalSeparator(item.price * item.quantityInBox)}{" "}
+                      </h4>
                       <h4 className="text-tertiary flex-1 text-right text-xs font-thin">
                         € {formatNumberWithCommaDecimalSeparator(item.price)} per stuk
                       </h4>
@@ -147,7 +150,7 @@ const ShoppingCart = () => {
         <div className="mx-auto mt-[-80px] w-full max-w-7xl p-8">
           <div className="flex justify-between text-muted-foreground">
             <h3> Totaal: </h3>
-            <h3 className="mr-2 tracking-wide"> € {totalPrice} </h3>
+            <h3 className="mr-2 tracking-wide"> € {formatNumberWithCommaDecimalSeparator(totalPrice)} </h3>
           </div>
           <div className="mx-auto mt-16 flex w-full items-center justify-center">
             <Button type="button" className="btn" onClick={handleCheckout}>
