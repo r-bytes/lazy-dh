@@ -1,3 +1,4 @@
+import { datetime } from "drizzle-orm/mysql-core";
 import { decimal, integer, jsonb, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
@@ -10,6 +11,8 @@ export const users = pgTable("users", {
   createdAt: timestamp("created_at").defaultNow(),
   address: text("address"),
   phoneNumber: varchar("phone_number", { length: 15 }),
+  resetPasswordToken: varchar("reset_password_token", { length: 255 }).unique(),
+  resetPasswordTokenExpiry: timestamp("reset_password_token_expiry"),
 });
 
 export const orders = pgTable("orders", {

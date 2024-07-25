@@ -1,8 +1,7 @@
 import { z } from "zod";
 
-export const signUpSchema = z
+export const resetPasswordSchema = z
   .object({
-    email: z.string().email({ message: "Ongeldig e-mailadres" }),
     password: z
       .string()
       .min(8, { message: "Wachtwoord moet minimaal 8 tekens zijn" })

@@ -1,6 +1,6 @@
 "use client";
 
-import { login } from "@/actions/user.actions";
+import { login } from "@/actions/users/user.actions";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { signInSchema } from "@/lib/types/signin";
 import { navigateTo } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -16,6 +17,7 @@ import { z } from "zod";
 
 export function UserSignInForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
 
@@ -49,36 +51,43 @@ export function UserSignInForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="mt-2 max-w-96 space-y-4">
         <FormField
           control={form.control}
           name="email"
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <FormItem>
-              <FormLabel> Email </FormLabel>
               <FormControl>
-                <Input placeholder="username" {...field} />
+                <Input placeholder="Email" {...field} />
               </FormControl>
-              <FormMessage />
+              {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
           name="password"
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <FormItem>
-              <FormLabel> Password </FormLabel>
               <FormControl>
-                <Input placeholder="*****" type="password" {...field} />
+                <div className="relative">
+                  <Input placeholder="Wachtwoord" type={showPassword ? "text" : "password"} {...field} />
+                  <Button
+                    style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)" }}
+                    onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? <EyeOff /> : <Eye />}
+                  </Button>
+                </div>
               </FormControl>
-              <FormMessage />
+              {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
             </FormItem>
           )}
         />
         <Button variant="outline" type="submit" disabled={isLoading}>
           {isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.logo className="mr-2 h-4 w-4" />}
-          Submit
+          Inloggen
         </Button>
       </form>
     </Form>
