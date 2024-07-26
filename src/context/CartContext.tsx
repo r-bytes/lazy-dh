@@ -20,6 +20,7 @@ type ContextProps = {
   setCartItems: (value: React.SetStateAction<Product[]>) => void;
   setTotalQuantities: (value: React.SetStateAction<number>) => void;
   setTotalPrice: (value: React.SetStateAction<number>) => void;
+  emptyCartItems (): void;
 };
 
 export const CartContext = createContext<ContextProps>({
@@ -38,6 +39,7 @@ export const CartContext = createContext<ContextProps>({
   setCartItems: () => {},
   setTotalQuantities: () => {},
   setTotalPrice: () => {},
+  emptyCartItems : () => {},
 });
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
@@ -110,6 +112,19 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const incQty = () => setQty((prevQty) => prevQty + 1);
   const decQty = () => setQty((prevQty) => Math.max(prevQty - 1, 1));
 
+  const emptyCartItems = () => {
+    setCartItems([]);
+    setTotalQuantities(0);
+    setTotalPrice(0);
+
+    const localStorageExists = window.localStorage.getItem("spacejelly_cart");
+
+    if (localStorageExists) {
+      window.localStorage.removeItem("spacejelly_cart");
+    }
+
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -128,6 +143,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         setCartItems,
         setTotalQuantities,
         setTotalPrice,
+        emptyCartItems,
       }}
     >
       {children}

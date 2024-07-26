@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 
+import { changePassword } from "@/actions/users/user.actions";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
@@ -13,18 +14,18 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
-import { changePassword } from "@/actions/users/user.actions";
 
 interface ChangePasswordFormProps {
   resetPasswordToken: string;
 }
 
 const ChangePasswordForm = ({ resetPasswordToken }: ChangePasswordFormProps) => {
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  // const [password, setPassword] = useState<string>("");
+  // const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [message, setMessage] = useState<string>("");
 
   const router = useRouter();
 
@@ -36,37 +37,40 @@ const ChangePasswordForm = ({ resetPasswordToken }: ChangePasswordFormProps) => 
     },
   });
 
-  const handleSuccess = () => {
-    toast.success("successvol ingelogd!");
-    navigateTo(router, "/");
+  const handleSuccess = (message: string) => {
+    toast.success(message);
+    navigateTo(router, "/account/reset-password/succes");
+    setMessage(message);
     setIsLoading(false);
   };
 
-  const handleFailure = (error: any) => {
+  const handleFailure = (error: string) => {
     toast.error(error);
+    setMessage(error);
     setIsLoading(false);
   };
 
   const onSubmit = async (values: z.infer<typeof resetPasswordSchema>) => {
     setIsLoading(true);
 
+    const { password, confirmPassword } = values;
+
     if (password !== confirmPassword) {
-      setMessage("Passwords do not match");
+      setMessage("Wachtwoorden komen niet overeen");
+      toast.error("Wachtwoorden komen niet overeen");
+
       return;
     }
 
-    
     const passwordResetResponse = await changePassword(resetPasswordToken, password);
     setMessage(passwordResetResponse.message);
 
-    // const signUpResponse = await login(values);
-
-    // if (signUpResponse) {
-    //   signUpResponse.success ? handleSuccess() : signUpResponse.message ? handleFailure(signUpResponse.message) : null;
-    // }
+    if (passwordResetResponse.success) {
+      handleSuccess(passwordResetResponse.message)
+    } else {
+      handleFailure(passwordResetResponse.message);
+    }
   };
-
-  const [message, setMessage] = useState<string>("");
 
   return (
     <Form {...form}>

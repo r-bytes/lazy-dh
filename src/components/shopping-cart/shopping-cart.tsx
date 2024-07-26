@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 
 const ShoppingCart = () => {
   // Hooks
-  const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuantity, onRemove, incQty } = useCartContext();
+  const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuantity, onRemove, incQty, emptyCartItems } = useCartContext();
   const { user } = useAuthContext();
   const router = useRouter();
   
@@ -65,6 +65,7 @@ const ShoppingCart = () => {
           userId,
           cartItems,
           totalPrice: totalPriceWithVAT,
+          email: user?.email,
         }),
       });
 
@@ -74,6 +75,8 @@ const ShoppingCart = () => {
       if (data.success) {
         // "Bestelling succesvol geplaatst";
         toast.success(data.message);
+        emptyCartItems();
+        navigateTo(router, "/winkelwagen/succes")
         // Optioneel: redirect naar een bevestigingspagina
       } else {
         toast.error(data.message);

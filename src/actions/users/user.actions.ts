@@ -156,7 +156,7 @@ export async function signUp({ email, password, confirmPassword }: { email: stri
   }
 }
 
-export const resetPassword = async (email: string) => {
+export const requestPasswordReset = async (email: string) => {
   console.log("resetting password for", email);
 
   try {
@@ -270,7 +270,7 @@ export const changePassword = async (resetPasswordToken: string, password: strin
     return {
       success: true,
       data: updatedUser,
-      message: "Er is een email met een password reset link verstuurd naar het geregistreerde emailadres",
+      message: "Wachtwoord is aangepast!",
     };
   } catch (error) {
     console.error("Error fetching user from database:", error);

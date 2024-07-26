@@ -1,21 +1,21 @@
 "use client";
 
-import { login } from "@/actions/users/user.actions";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { signInSchema } from "@/lib/types/signin";
 import { navigateTo } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
 
-export function UserSignInForm() {
+export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -29,25 +29,44 @@ export function UserSignInForm() {
     },
   });
 
-  const handleSuccess = () => {
-    toast.success("successvol ingelogd!");
-    navigateTo(router, "/");
-    setIsLoading(false);
-  };
+  // const handleSuccess = () => {
+  //   toast.success("successvol ingelogd!");
+  //   if (fromCheckout ) {
+  //     navigateTo(router, "/winkelwagen");
+  //   } else {
+  //     navigateTo(router, "/");
+  //   }
+  //   setIsLoading(false);
+  // };
 
-  const handleFailure = (error: any) => {
-    toast.error(error);
-    setIsLoading(false);
-  };
+  // const handleFailure = (error: any) => {
+  //   toast.error(error);
+  //   setIsLoading(false);
+  // };
 
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
     setIsLoading(true);
-    const signUpResponse = await login(values);
+        const result = await signIn('credentials', {
+      redirect: false,  // Prevents redirecting to signIn's callback URL
+      email: values.email,
+      password: values.password,
+    });
 
-    if (signUpResponse) {
-      signUpResponse.success ? handleSuccess() : signUpResponse.message ? handleFailure(signUpResponse.message) : null;
+    if (result?.ok) {
+      toast.success("Succesvol ingelogd!");
+      navigateTo(router, `${fromCheckout ? "/winkelwagen" : "/"}`);
+    } else {
+      toast.error(result?.error || "Inloggen mislukt");
     }
+    setIsLoading(false);
   };
+
+    // const signUpResponse = await login(values);
+
+    // if (signUpResponse) {
+    //   signUpResponse.success ? handleSuccess() : signUpResponse.message ? handleFailure(signUpResponse.message) : null;
+    // }
+  // };
 
   return (
     <Form {...form}>

@@ -11,7 +11,7 @@ const page = (props: Props) => {
       <AccordionItem value="item-1">
         <AccordionTrigger> Inloggen </AccordionTrigger>
         <AccordionContent className="mb-10">
-          <UserSignInForm />
+          <UserSignInForm fromCheckout />
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">

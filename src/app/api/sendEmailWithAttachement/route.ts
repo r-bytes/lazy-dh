@@ -1,3 +1,4 @@
+// src / app / api / sendEmailWithAttachement / route.ts;
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Resend } from "resend";
 
@@ -31,7 +32,6 @@ const send = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 export default send;
-
 
 // todo
 //   const [content, setContent] = React.useState(null);
