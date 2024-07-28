@@ -21,7 +21,6 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-background">
       <section id="promotions">
-        <TestEmailButton />
         <div className="flex min-h-screen flex-col items-center justify-center">
           <CardTitle className="text-center text-4xl md:text-5xl">{"Aanbiedingen"}</CardTitle>
           <CarouselSpacing products={productListInSale!} />
