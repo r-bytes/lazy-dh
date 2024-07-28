@@ -2,11 +2,12 @@
 import { useCartContext } from "@/context/CartContext";
 import { navigateTo } from "@/lib/utils";
 import { CircleX, MenuIcon, ShoppingBag } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { Montserrat, Roboto } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import Title from "../ui/title";
 import { ModeToggle } from "../ui/toggle-mode";
 import TopHeader from "./top-header";
@@ -22,6 +23,7 @@ const roboto = Roboto({
 type NavigationItem = {
   order: number;
   title: string;
+  requiresAuth?: boolean;
 };
 
 // Props
@@ -32,7 +34,7 @@ type Props = {
 // Variables
 const NAVIGATION_LIST: NavigationItem[] = [
   { title: "Categorien", order: 0 },
-  { title: "Account", order: 1 },
+  { title: "Account", order: 1, requiresAuth: true },
   { title: "Acties", order: 2 },
   { title: "Winkelwagen", order: 3 },
 ];
@@ -40,15 +42,18 @@ const NAVIGATION_LIST: NavigationItem[] = [
 const Header = (props: Props) => {
   // Hooks
   const { totalQuantities } = useCartContext();
-
-  // Todo: check later when protected routes are available
-  // const { user } = useAuthContext();
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
   // States
-  const [currentPath, setCurrentPath] = useState();
+  const [currentPath, setCurrentPath] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const router = useRouter();
+  const pathName = usePathname();
+
+  useEffect(() => {
+    setCurrentPath(pathName.replace("/", ""));
+  }, [pathName]);
 
   // Functions
   const ShoppingCart = ({ cn }: { cn?: string }) => {
@@ -114,16 +119,33 @@ const Header = (props: Props) => {
         <div className="mx-auto hidden items-center justify-center sm:w-full sm:max-w-2xl lg:mr-10 lg:flex">
           <div className="w-full">
             <ul className="mr-8 flex items-baseline justify-end space-x-6 py-12">
-              {NAVIGATION_LIST.map((item, index, arr) => (
-                <li
-                  key={item.order}
-                  className={`font-semibold tracking-wide hover:cursor-pointer hover:text-primary ${index === arr.length - 2 ? "mr-8 rounded-md bg-primary px-3 py-2 text-tertiary hover:scale-105 hover:text-secondary-foreground dark:text-background dark:hover:bg-primary-foreground/30 dark:hover:text-primary" : currentPath === item.title.toLocaleLowerCase().replace("/", "") ? "text-secondary" : ""}`}
-                >
-                  <Link className={roboto.className} href={`/${item.title.toLowerCase() === "acties" ? "promoties" : item.title.toLowerCase()}`}>
-                    {item.title}
-                  </Link>
-                </li>
-              ))}
+              {NAVIGATION_LIST.map((item, index, arr) =>
+                item.requiresAuth && !session && item.title.toLowerCase() === "account" ? null : (
+                  <li
+                    key={item.order}
+                    className={`font-semibold tracking-wide hover:cursor-pointer hover:text-primary
+                    ${
+                      index === arr.length - 2
+                        ? "text-tertiary mr-8 rounded-md bg-primary px-3 py-2 hover:scale-105 hover:text-secondary-foreground dark:text-background dark:hover:bg-primary-foreground/30 dark:hover:text-primary"
+                        : currentPath.toLowerCase() === item.title.toLowerCase()
+                          ? "border-b-2 border-primary pb-2"
+                          : item.requiresAuth && !session
+                            ? "text-gray-500 hover:cursor-not-allowed"
+                            : ""
+                    }
+                  `}
+                  >
+                    {item.requiresAuth && !session && item.title.toLowerCase() === "account" ? null : (
+                      <Link
+                        className={roboto.className}
+                        href={`/${item.title.toLowerCase() === "acties" ? "promoties" : item.title.toLowerCase()}`}
+                      >
+                        {item.requiresAuth && !session ? "" : item.title}
+                      </Link>
+                    )}
+                  </li>
+                )
+              )}
             </ul>
           </div>
           <ModeToggle cn="mr-4" />
