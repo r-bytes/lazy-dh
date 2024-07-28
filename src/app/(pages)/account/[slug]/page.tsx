@@ -1,6 +1,4 @@
-import ProductList from "@/components/products/product-list";
 import Title from "@/components/ui/title";
-import Product from "@/lib/types/product";
 import { capitalizeFirstLetter } from "@/lib/utils";
 
 type Props = {
@@ -16,7 +14,6 @@ const page = ({ params: { slug } }: Props) => {
   ) : (
     <div className="flex h-screen w-screen flex-col">
       <Title name={capitalizeFirstLetter(slug)} cn="mb-10 mt-24 text-center text-2xl font-semibold sm:mt-0" />
-
     </div>
   );
 };

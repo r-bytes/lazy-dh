@@ -2,11 +2,10 @@ import { UserSignUpForm } from "@/components/ui/sign-up/user-sign-up-form";
 import { Metadata } from "next";
 import Link from "next/link";
 
-
 export const metadata: Metadata = {
   title: "Authentication",
   description: "Authentication forms built using the components.",
-}
+};
 
 export default function AuthenticationPage() {
   return (
