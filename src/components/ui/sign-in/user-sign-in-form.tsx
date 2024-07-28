@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../card";
 
 export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -29,25 +30,10 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
     },
   });
 
-  // const handleSuccess = () => {
-  //   toast.success("successvol ingelogd!");
-  //   if (fromCheckout ) {
-  //     navigateTo(router, "/winkelwagen");
-  //   } else {
-  //     navigateTo(router, "/");
-  //   }
-  //   setIsLoading(false);
-  // };
-
-  // const handleFailure = (error: any) => {
-  //   toast.error(error);
-  //   setIsLoading(false);
-  // };
-
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
     setIsLoading(true);
-        const result = await signIn('credentials', {
-      redirect: false,  // Prevents redirecting to signIn's callback URL
+    const result = await signIn("credentials", {
+      redirect: false, // Prevents redirecting to signIn's callback URL
       email: values.email,
       password: values.password,
     });
@@ -61,14 +47,59 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
     setIsLoading(false);
   };
 
-    // const signUpResponse = await login(values);
-
-    // if (signUpResponse) {
-    //   signUpResponse.success ? handleSuccess() : signUpResponse.message ? handleFailure(signUpResponse.message) : null;
-    // }
-  // };
-
-  return (
+  return fromCheckout ? (
+    <Form {...form}>
+      <Card className="py-8 mx-[-1rem]">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="mt-2 max-w-96 md:max-w-full space-y-4">
+          <CardHeader>
+            <CardTitle className="text-left md:text-center"> Inloggen </CardTitle>
+            <CardDescription className="text-left md:text-center"> Login in met je account gegevens </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field, fieldState }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input placeholder="Email" {...field} />
+                  </FormControl>
+                  {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field, fieldState }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="relative">
+                      <Input placeholder="Wachtwoord" type={showPassword ? "text" : "password"} {...field} />
+                      <Button
+                        style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)" }}
+                        onClick={() => setShowPassword(!showPassword)}
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                      >
+                        {showPassword ? <EyeOff /> : <Eye />}
+                      </Button>
+                    </div>
+                  </FormControl>
+                  {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                </FormItem>
+              )}
+            />
+          </CardContent>
+          <CardFooter>
+            <Button variant="outline" type="submit" disabled={isLoading}>
+              {isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.logo className="mr-2 h-4 w-4" />}
+              Inloggen
+            </Button>
+          </CardFooter>
+        </form>
+      </Card>
+    </Form>
+  ) : (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-2 max-w-96 space-y-4">
         <FormField
