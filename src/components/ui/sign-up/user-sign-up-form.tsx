@@ -3,7 +3,7 @@
 import { signUp } from "@/actions/users/user.actions";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { signUpSchema } from "@/lib/types/signup";
 import { navigateTo } from "@/lib/utils";
@@ -14,6 +14,12 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from "../accordion";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../card";
 
 export function UserSignUpForm({ fromCheckout }: { fromCheckout?: boolean }) {
@@ -26,15 +32,24 @@ export function UserSignUpForm({ fromCheckout }: { fromCheckout?: boolean }) {
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
+      name: "",
       email: "",
+      address: "",
+      postal: "",
+      city: "",
+      phoneNumber: "",
+      companyName: "",
+      vatNumber: "",
+      chamberOfCommerceNumber: "",
       password: "",
       confirmPassword: "",
+      emailVerified: false,
     },
   });
 
   const handleSuccess = () => {
     toast.success("Successvol geregistreerd!");
-    navigateTo(router, "/account/registreer/bevestig");
+    navigateTo(router, "/account/registreer/succes");
     setIsLoading(false);
   };
 
@@ -55,66 +70,183 @@ export function UserSignUpForm({ fromCheckout }: { fromCheckout?: boolean }) {
   return (
     <Form {...form}>
       <Card className="mx-[-1rem] py-8">
-        <form onSubmit={form.handleSubmit(onSubmit)} className="mt-2 max-w-96 md:max-w-full space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="mt-2 max-w-96 space-y-4 md:max-w-full">
           <CardHeader>
             <CardTitle className="text-left md:text-center"> Registreren </CardTitle>
             <CardDescription className="text-left md:text-center"> Nieuw account registreren </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field, fieldState }) => (
-                <FormItem className={fromCheckout ? "mx-2" : ""}>
-                  <FormControl>
-                    <Input placeholder="Email" {...field} />
-                  </FormControl>
-                  {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field, fieldState }) => (
-                <FormItem className={fromCheckout ? "mx-2" : ""}>
-                  <FormControl>
-                    <div className="relative">
-                      <Input placeholder="Wachtwoord" type={showPassword ? "text" : "password"} {...field} />
-                      <Button
-                        style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)" }}
-                        onClick={() => setShowPassword(!showPassword)}
-                        aria-label={showPassword ? "Hide password" : "Show password"}
-                      >
-                        {showPassword ? <EyeOff /> : <Eye />}
-                      </Button>
-                    </div>
-                  </FormControl>
-                  {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field, fieldState }) => (
-                <FormItem className={fromCheckout ? "mx-2" : ""}>
-                  <FormControl>
-                    <div className="relative">
-                      <Input placeholder="Herhaal wachtwoord" type={showConfirmPassword ? "text" : "password"} {...field} />
-                      <Button
-                        style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)" }}
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
-                      >
-                        {showPassword ? <EyeOff /> : <Eye />}
-                      </Button>
-                    </div>
-                  </FormControl>
-                  {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
-                </FormItem>
-              )}
-            />
+            <Accordion type="single" collapsible className="w-full px-2">
+              <AccordionItem value="item-1">
+                {/* <FormLabel className="m-3"> Persoonsgegevens </FormLabel> */}
+                <AccordionTrigger className="m-3"> Persoonsgegevens </AccordionTrigger>
+                <AccordionContent className="my-2 flex flex-col space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field, fieldState }) => (
+                      <FormItem className={fromCheckout ? "mx-2" : ""}>
+                        <FormControl>
+                          <Input placeholder="Naam" {...field} />
+                        </FormControl>
+                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field, fieldState }) => (
+                      <FormItem className={fromCheckout ? "mx-2" : ""}>
+                        <FormControl>
+                          <Input placeholder="Email" {...field} />
+                        </FormControl>
+                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="address"
+                    render={({ field, fieldState }) => (
+                      <FormItem className={fromCheckout ? "mx-2" : ""}>
+                        <FormControl>
+                          <Input placeholder="Adres" {...field} />
+                        </FormControl>
+                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="postal"
+                    render={({ field, fieldState }) => (
+                      <FormItem className={fromCheckout ? "mx-2" : ""}>
+                        <FormControl>
+                          <Input placeholder="Postcode" {...field} />
+                        </FormControl>
+                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="city"
+                    render={({ field, fieldState }) => (
+                      <FormItem className={fromCheckout ? "mx-2" : ""}>
+                        <FormControl>
+                          <Input placeholder="Stad" {...field} />
+                        </FormControl>
+                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="phoneNumber"
+                    render={({ field, fieldState }) => (
+                      <FormItem className={fromCheckout ? "mx-2" : ""}>
+                        <FormControl>
+                          <Input placeholder="Telefoonnummer" {...field} />
+                        </FormControl>
+                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                      </FormItem>
+                    )}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-2">
+                <AccordionTrigger className="m-3"> Bedrijfsgegevens </AccordionTrigger>
+                <AccordionContent className="my-2 flex flex-col space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="companyName"
+                    render={({ field, fieldState }) => (
+                      <FormItem className={fromCheckout ? "mx-2" : ""}>
+                        <FormControl>
+                          <Input placeholder="Bedrijfsnaam" {...field} />
+                        </FormControl>
+                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="vatNumber"
+                    render={({ field, fieldState }) => (
+                      <FormItem className={fromCheckout ? "mx-2" : ""}>
+                        <FormControl>
+                          <Input placeholder="BTW-nummer" {...field} />
+                        </FormControl>
+                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="chamberOfCommerceNumber"
+                    render={({ field, fieldState }) => (
+                      <FormItem className={fromCheckout ? "mx-2" : ""}>
+                        <FormControl>
+                          <Input placeholder="KVK-nummer" {...field} />
+                        </FormControl>
+                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                      </FormItem>
+                    )}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-3">
+                <AccordionTrigger className="m-3"> Wachtwoord </AccordionTrigger>
+                <AccordionContent className="my-2 flex flex-col space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field, fieldState }) => (
+                      <FormItem className={fromCheckout ? "mx-2" : ""}>
+                        <FormControl>
+                          <div className="relative">
+                            <Input placeholder="Wachtwoord" type={showPassword ? "text" : "password"} {...field} />
+                            <Button
+                              style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)" }}
+                              onClick={() => setShowPassword(!showPassword)}
+                              aria-label={showPassword ? "Hide password" : "Show password"}
+                            >
+                              {showPassword ? <EyeOff /> : <Eye />}
+                            </Button>
+                          </div>
+                        </FormControl>
+                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="confirmPassword"
+                    render={({ field, fieldState }) => (
+                      <FormItem className={fromCheckout ? "mx-2" : ""}>
+                        <FormControl>
+                          <div className="relative">
+                            <Input placeholder="Herhaal wachtwoord" type={showConfirmPassword ? "text" : "password"} {...field} />
+                            <Button
+                              style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)" }}
+                              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                              aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
+                            >
+                              {showPassword ? <EyeOff /> : <Eye />}
+                            </Button>
+                          </div>
+                        </FormControl>
+                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
+                      </FormItem>
+                    )}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </CardContent>
           <CardFooter>
             <Button variant="outline" type="submit" disabled={isLoading} className={fromCheckout ? "mx-2" : ""}>

@@ -1,19 +1,42 @@
 import { datetime } from "drizzle-orm/mysql-core";
-import { decimal, integer, jsonb, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { decimal, integer, jsonb, pgTable, serial, text, timestamp, varchar, boolean,  } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: text("id")
     .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
-  name: varchar("name", { length: 100 }).notNull(),
+    .$defaultFn(() => crypto.randomUUID()), // Generate a UUID for each user
+  name: varchar("name", { length: 100 }),
   email: varchar("email", { length: 100 }).notNull().unique(),
   password: varchar("password_hash", { length: 255 }).notNull(),
   createdAt: timestamp("created_at").defaultNow(),
-  address: text("address"),
+  address: text("address").notNull(),
+  city: varchar("city", { length: 100 }).notNull(),
+  postal: varchar("postal", { length: 10 }).notNull(), // Adjust the length as per the actual requirement
   phoneNumber: varchar("phone_number", { length: 15 }),
+  companyName: varchar("company_name", { length: 255 }),
+  vatNumber: varchar("vat_number", { length: 20 }),
+  chamberOfCommerceNumber: varchar("kvk_number", { length: 20 }), // 'KvK nummer' field
   resetPasswordToken: varchar("reset_password_token", { length: 255 }).unique(),
   resetPasswordTokenExpiry: timestamp("reset_password_token_expiry"),
+  emailVerified: boolean("email_verified").default(false),
+  emailVerificationToken: varchar("email_verification_token", { length: 255 }).unique(),
+  // emailVerificationTokenExpiry: timestamp("email_verification_token_expiry"),
 });
+
+// ! code below worked, before adding extra fiels
+// export const users = pgTable("users", {
+//   id: text("id")
+//     .primaryKey()
+//     .$defaultFn(() => crypto.randomUUID()),
+//   name: varchar("name", { length: 100 }).notNull(),
+//   email: varchar("email", { length: 100 }).notNull().unique(),
+//   password: varchar("password_hash", { length: 255 }).notNull(),
+//   createdAt: timestamp("created_at").defaultNow(),
+//   address: text("address"),
+//   phoneNumber: varchar("phone_number", { length: 15 }),
+//   resetPasswordToken: varchar("reset_password_token", { length: 255 }).unique(),
+//   resetPasswordTokenExpiry: timestamp("reset_password_token_expiry"),
+// });
 
 export const orders = pgTable("orders", {
   id: serial("id").primaryKey(),

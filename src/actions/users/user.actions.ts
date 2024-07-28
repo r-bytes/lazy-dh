@@ -2,13 +2,13 @@
 
 import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema";
-import { resetPasswordSchema } from "@/lib/types/resetPassword";
 import { signInSchema } from "@/lib/types/signin";
 import { signUpSchema } from "@/lib/types/signup";
 import argon2 from "argon2";
 import crypto from "crypto";
 import { eq } from "drizzle-orm";
 import { signIn } from "../../../auth";
+import { sendEmail } from "../email/sendEmail";
 
 /**
  * Creates a hashed password from a plain text password.
@@ -54,7 +54,7 @@ export async function getUserFromDb(email: string, password: string) {
       console.log("No user found with the given email.");
       return {
         success: false,
-        message: "User not found",
+        message: "Gebruiker niet gevonden",
       };
     }
 
@@ -76,7 +76,7 @@ export async function getUserFromDb(email: string, password: string) {
     console.error("Error fetching user from database:", error);
     return {
       success: false,
-      message: "An error occurred while processing your request.",
+      message: "Er is een fout opgetreden bij het verwerken van uw verzoek.",
     };
   }
 }
@@ -106,13 +106,49 @@ export async function login({ email, password }: { email: string; password: stri
     };
   }
 }
+interface SignUpParams {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  name: string;
+  address: string;
+  city: string;
+  postal: string;
+  phoneNumber: string;
+  companyName?: string;
+  vatNumber?: string;
+  chamberOfCommerceNumber?: string;
+  emailVerified: boolean;
+}
 
-export async function signUp({ email, password, confirmPassword }: { email: string; password: string; confirmPassword: string }) {
+export async function signUp({
+  name,
+  email,
+  password,
+  confirmPassword,
+  address,
+  postal,
+  city,
+  phoneNumber,
+  companyName,
+  vatNumber,
+  chamberOfCommerceNumber,
+  emailVerified,
+}: SignUpParams) {
   try {
     signUpSchema.parse({
       email,
       password,
       confirmPassword,
+      name,
+      address,
+      city,
+      postal,
+      phoneNumber,
+      companyName,
+      vatNumber,
+      chamberOfCommerceNumber,
+      emailVerified,
     });
 
     // get user from db
@@ -129,25 +165,75 @@ export async function signUp({ email, password, confirmPassword }: { email: stri
     // hash the password
     const hashedPassword = await hashPassword(password);
 
+    // create emailVerificationToken
+    const emailVerificationToken = crypto.randomBytes(12).toString("base64url"); //localhost/auth/reset-password?token=1234567890abcdefferv
+
     // insert the new user into the database
     const user = await db
       .insert(users)
       .values({
+        name: name,
         email: email,
         password: hashedPassword!,
-        name: "test",
-        address: "test address",
+        address: address,
+        postal: postal,
+        city: city,
+        phoneNumber: phoneNumber,
+        companyName: companyName,
+        vatNumber: vatNumber,
+        chamberOfCommerceNumber: vatNumber,
         createdAt: new Date(),
+        emailVerified: false,
+        emailVerificationToken: emailVerificationToken,
       })
       .returning({
         id: users.id,
         email: users.email,
       });
 
+    const emailHtml = `
+        <div>
+          <h1> Bevestig uw emailadres voor: <b>${email}</b></h1>
+          <p> Om uw account aan te vragen dien je dit emailadres te verifiëren, klik op onderstaande link:</p>
+          <a href="http://localhost:3000/account/bevestig-email?token=${emailVerificationToken}" target="_blank">
+            Klik hier om uw emailadres te bevestigen
+          </a>
+        </div>
+      `;
+
+    await sendEmail({
+      from: "Admin <admin@r-bytes.com>",
+      to: [email],
+      subject: "Account bevestigen",
+      text: emailHtml,
+      html: emailHtml,
+    });
+
     return {
       success: true,
       data: user,
     };
+
+    // ! code below worked, before adding extra fiels
+    // // insert the new user into the database
+    // const user = await db
+    //   .insert(users)
+    //   .values({
+    //     email: email,
+    //     password: hashedPassword!,
+    //     name: "test",
+    //     address: "test address",
+    //     createdAt: new Date(),
+    //   })
+    //   .returning({
+    //     id: users.id,
+    //     email: users.email,
+    //   });
+
+    // return {
+    //   success: true,
+    //   data: user,
+    // };
   } catch (error: any) {
     return {
       success: false,
@@ -170,7 +256,7 @@ export const requestPasswordReset = async (email: string) => {
       console.log("No user found with the given email.");
       return {
         success: false,
-        message: "User not found",
+        message: "Gebruiker niet gevonden",
       };
     }
 
@@ -184,31 +270,24 @@ export const requestPasswordReset = async (email: string) => {
       resetPasswordTokenExpiry: expiryDate,
     });
 
-    // await sendEmail({
-    //   from: "Admin <admin@r-bytes.com>",
-    //   to: [email],
-    //   subject: "Wachtwoord aanpassen",
-    //   react: ResetPasswordEmailTemplate({ email, resetPasswordToken }) as React.ReactElement,
-    // });
-
     return {
       success: true,
       data: user,
       message: "Er is een email met een password reset link verstuurd naar het geregistreerde emailadres",
     };
   } catch (error) {
-    console.error("Error fetching user from database:", error);
+    console.error("Fout bij het ophalen van gebruiker uit de database:", error);
     return {
       success: false,
-      message: "An error occurred while processing your request.",
+      message: "Er is een fout opgetreden bij het verwerken van uw verzoek.",
     };
   }
 };
+
 export const changePassword = async (resetPasswordToken: string, password: string) => {
   console.log("changing password...");
 
   try {
-
     const existingUser = await db.query.users.findFirst({
       where: eq(users.resetPasswordToken, resetPasswordToken),
     });
@@ -218,7 +297,7 @@ export const changePassword = async (resetPasswordToken: string, password: strin
     if (!existingUser) {
       return {
         success: false,
-        message: "User not found",
+        message: "Gebruiker niet gevonden",
       };
     }
 
@@ -227,7 +306,7 @@ export const changePassword = async (resetPasswordToken: string, password: strin
     if (!resetPasswordTokenExpiry) {
       return {
         success: false,
-        message: "Token expired",
+        message: "Token verlopen",
       };
     }
 
@@ -236,7 +315,7 @@ export const changePassword = async (resetPasswordToken: string, password: strin
     if (today > resetPasswordTokenExpiry) {
       return {
         success: false,
-        message: "Token expired",
+        message: "Token verlopen",
       };
     }
 
@@ -249,34 +328,70 @@ export const changePassword = async (resetPasswordToken: string, password: strin
       resetPasswordTokenExpiry: null,
     });
 
-    // const emailHtml = `
-    //     <div>
-    //       <h1>Wachtwoord succesvol aangepast voor: <b>${existingUser.email}</b></h1>
-    //       <p>Om je wachtwoord te resetten, klik op onderstaande link en volg de instructies:</p>
-    //       <a href="http://localhost:3000/account/reset-password?token=${resetPasswordToken}" target="_blank">
-    //         Klik hier om uw wachtwoord te resetten
-    //       </a>
-    //     </div>
-    //   `;
-
-    // await sendEmail({
-    //   from: "Admin <admin@r-bytes.com>",
-    //   to: [existingUser.email],
-    //   subject: "Wachtwoord aanpassen",
-    //   text: emailHtml,
-    //   html: emailHtml,
-    // });
-
     return {
       success: true,
       data: updatedUser,
       message: "Wachtwoord is aangepast!",
     };
   } catch (error) {
-    console.error("Error fetching user from database:", error);
+    console.error("Fout bij het ophalen van gebruiker uit de database:", error);
     return {
       success: false,
-      message: "An error occurred while processing your request.",
+      message: "Er is een fout opgetreden bij het verwerken van uw verzoek.",
+    };
+  }
+};
+
+export const verifyEmail = async (emailVerificationToken: string) => {
+  try {
+    const existingUser = await db.query.users.findFirst({
+      where: eq(users.emailVerificationToken, emailVerificationToken),
+    });
+
+    console.log(`Found user: ${JSON.stringify(existingUser)}`);
+
+    if (!existingUser) {
+      return {
+        success: false,
+        message: "Gebruiker niet gevonden",
+      };
+    }
+
+    // update the user in the database
+    const updatedUser = await db.update(users).set({
+      emailVerified: true,
+      emailVerificationToken: null,
+    });
+  
+    // todo: send email to admin
+    //  const emailHtml = `
+    //     <div>
+    //       <h1> Nieuwe account aanvraag voor: <b>${existingUser.email}</b></h1>
+    //       <p> Yooo habibi, Er is een nieuwe account aanvraag die goedgekeurd moeten worden, klik op onderstaande link: </p>
+    //       <a href="http://localhost:3000/account/bevestig-email?token=${emailVerificationToken}" target="_blank">
+    //         Klik hier het nieuwe account te checken en goed te keuren
+    //       </a>
+    //     </div>
+    //   `;
+
+    //  await sendEmail({
+    //    from: "Admin <admin@r-bytes.com>",
+    //    to: ["rvv@duck.com"],
+    //    subject: "Account bevestigen",
+    //    text: emailHtml,
+    //    html: emailHtml,
+    //  });
+
+    return {
+      success: true,
+      data: updatedUser,
+      message: "Emailadres is bevestigd",
+    };
+  } catch (error) {
+    console.error("Fout bij het ophalen van gebruiker uit de database:", error);
+    return {
+      success: false,
+      message: "Er is een fout opgetreden bij het verwerken van uw verzoek.",
     };
   }
 };

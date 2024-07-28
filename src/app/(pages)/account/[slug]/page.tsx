@@ -16,7 +16,7 @@ const page = ({ params: { slug } }: Props) => {
   ) : (
     <div className="flex h-screen w-screen flex-col">
       <Title name={capitalizeFirstLetter(slug)} cn="mb-10 mt-24 text-center text-2xl font-semibold sm:mt-0" />
-      {/* <ProductList products={products} /> */}
+
     </div>
   );
 };
