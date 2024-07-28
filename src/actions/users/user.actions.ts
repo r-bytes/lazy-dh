@@ -166,7 +166,7 @@ export async function signUp({
     const hashedPassword = await hashPassword(password);
 
     // create emailVerificationToken
-    const emailVerificationToken = crypto.randomBytes(12).toString("base64url"); //localhost/auth/reset-password?token=1234567890abcdefferv
+    const emailVerificationToken = crypto.randomBytes(12).toString("base64url"); //baseUrl/auth/reset-password?token=1234567890abcdefferv
 
     // insert the new user into the database
     const user = await db
@@ -195,7 +195,7 @@ export async function signUp({
         <div>
           <h1> Bevestig uw emailadres voor: <b>${email}</b></h1>
           <p> Om uw account aan te vragen dien je dit emailadres te verifiëren, klik op onderstaande link:</p>
-          <a href="http://localhost:3000/account/bevestig-email?token=${emailVerificationToken}" target="_blank">
+          <a href="http://${process.env.NEXT_PUBLIC_BASE_URL}/account/bevestig-email?token=${emailVerificationToken}" target="_blank">
             Klik hier om uw emailadres te bevestigen
           </a>
         </div>
@@ -260,7 +260,7 @@ export const requestPasswordReset = async (email: string) => {
       };
     }
 
-    const resetPasswordToken = crypto.randomBytes(12).toString("base64url"); //localhost/auth/reset-password?token=1234567890abcdefferv
+    const resetPasswordToken = crypto.randomBytes(12).toString("base64url"); //baseUrl/auth/reset-password?token=1234567890abcdefferv
     const today = new Date();
     const expiryDate = new Date(today.setDate(today.getDate() + 1));
 
@@ -362,13 +362,13 @@ export const verifyEmail = async (emailVerificationToken: string) => {
       emailVerified: true,
       emailVerificationToken: null,
     });
-  
+
     // todo: send email to admin
     //  const emailHtml = `
     //     <div>
     //       <h1> Nieuwe account aanvraag voor: <b>${existingUser.email}</b></h1>
     //       <p> Yooo habibi, Er is een nieuwe account aanvraag die goedgekeurd moeten worden, klik op onderstaande link: </p>
-    //       <a href="http://localhost:3000/account/bevestig-email?token=${emailVerificationToken}" target="_blank">
+    //       <a href="http://${process.env.NEXT_PUBLIC_BASE_URL}/account/bevestig-email?token=${emailVerificationToken}" target="_blank">
     //         Klik hier het nieuwe account te checken en goed te keuren
     //       </a>
     //     </div>

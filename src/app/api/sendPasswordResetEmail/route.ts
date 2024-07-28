@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     <div>
       <h1>Wachtwoord aanpassen voor: <b>${email}</b></h1>
       <p>Om je wachtwoord te resetten, klik op onderstaande link en volg de instructies:</p>
-      <a href="http://localhost:3000/account/reset-password?token=${resetPasswordToken}" target="_blank">
+      <a href="http://${process.env.NEXT_PUBLIC_BASE_URL}/account/reset-password?token=${resetPasswordToken}" target="_blank">
         Klik hier om uw wachtwoord te resetten
       </a>
     </div>
