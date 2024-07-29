@@ -194,17 +194,17 @@ export async function signUp({
     const emailHtml = `
         <div>
           <h1> Bevestig uw emailadres voor: <b>${email}</b></h1>
-          <p> Om uw account aan te vragen dien je dit emailadres te verifiëren, klik op onderstaande link:</p>
-          <a href="http://${process.env.NEXT_PUBLIC_BASE_URL}/account/bevestig-email?token=${emailVerificationToken}" target="_blank">
+          <p> Om uw account aanvraag door te zetten dien je dit emailadres te verifiëren, klik op onderstaande link:</p>
+          <a href="${process.env.NEXT_PUBLIC_BASE_URL}/account/bevestig-email?token=${emailVerificationToken}" target="_blank">
             Klik hier om uw emailadres te bevestigen
           </a>
         </div>
       `;
 
     await sendEmail({
-      from: "Admin <admin@r-bytes.com>",
+      from: "Lazo admin <admin@r-bytes.com>",
       to: [email],
-      subject: "Account bevestigen",
+      subject: "Emailadres bevestigen",
       text: emailHtml,
       html: emailHtml,
     });
@@ -213,27 +213,6 @@ export async function signUp({
       success: true,
       data: user,
     };
-
-    // ! code below worked, before adding extra fiels
-    // // insert the new user into the database
-    // const user = await db
-    //   .insert(users)
-    //   .values({
-    //     email: email,
-    //     password: hashedPassword!,
-    //     name: "test",
-    //     address: "test address",
-    //     createdAt: new Date(),
-    //   })
-    //   .returning({
-    //     id: users.id,
-    //     email: users.email,
-    //   });
-
-    // return {
-    //   success: true,
-    //   data: user,
-    // };
   } catch (error: any) {
     return {
       success: false,
@@ -368,7 +347,7 @@ export const verifyEmail = async (emailVerificationToken: string) => {
     //     <div>
     //       <h1> Nieuwe account aanvraag voor: <b>${existingUser.email}</b></h1>
     //       <p> Yooo habibi, Er is een nieuwe account aanvraag die goedgekeurd moeten worden, klik op onderstaande link: </p>
-    //       <a href="http://${process.env.NEXT_PUBLIC_BASE_URL}/account/bevestig-email?token=${emailVerificationToken}" target="_blank">
+    //       <a href="${process.env.NEXT_PUBLIC_BASE_URL}/account/bevestig-email?token=${emailVerificationToken}" target="_blank">
     //         Klik hier het nieuwe account te checken en goed te keuren
     //       </a>
     //     </div>

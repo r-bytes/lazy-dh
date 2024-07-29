@@ -8,9 +8,9 @@ export async function POST(request: NextRequest) {
 
   const emailHtml = `
     <div>
-      <h1>Wachtwoord aanpassen voor: <b>${email}</b></h1>
-      <p>Om je wachtwoord te resetten, klik op onderstaande link en volg de instructies:</p>
-      <a href="http://${process.env.NEXT_PUBLIC_BASE_URL}/account/reset-password?token=${resetPasswordToken}" target="_blank">
+      <h1> Wachtwoord wijzigen voor: <b>${email}</b></h1>
+      <p> Om je wachtwoord te resetten, klik op onderstaande link en volg de instructies:</p>
+      <a href="${process.env.NEXT_PUBLIC_BASE_URL}/account/reset-password?token=${resetPasswordToken}" target="_blank">
         Klik hier om uw wachtwoord te resetten
       </a>
     </div>
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const { data, error } = await resend.emails.send({
-      from: "Admin <admin@r-bytes.com>",
+      from: "Lazo admin <admin@r-bytes.com>",
       to: [email],
       subject: "Wachtwoord aanpassen",
       html: emailHtml,

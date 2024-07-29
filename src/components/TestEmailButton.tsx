@@ -9,7 +9,7 @@ type Props = {};
 const TestEmailButton = (props: Props) => {
   const handleSubmit = async () => {
     sendEmail({
-      from: "Admin <admin@r-bytes.com>",
+      from: "Lazo admin <admin@r-bytes.com>",
       to: ["rvv@duck.com"],
       subject: "Test email",
       text: "Test email"

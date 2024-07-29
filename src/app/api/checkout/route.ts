@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
 
     // Send the PDF as an attachment
     const { data, error } = await resend.emails.send({
-      from: "Admin <admin@r-bytes.com>",
+      from: "Lazo admin <admin@r-bytes.com>",
       to: [email], // Use the customer's actual email
       subject: "Order Confirmation",
       html: "<p>Thank you for your order. Please find your order confirmation attached.</p>",
