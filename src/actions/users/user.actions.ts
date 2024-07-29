@@ -342,24 +342,24 @@ export const verifyEmail = async (emailVerificationToken: string) => {
       emailVerificationToken: null,
     });
 
-    // todo: send email to admin
-    //  const emailHtml = `
-    //     <div>
-    //       <h1> Nieuwe account aanvraag voor: <b>${existingUser.email}</b></h1>
-    //       <p> Yooo habibi, Er is een nieuwe account aanvraag die goedgekeurd moeten worden, klik op onderstaande link: </p>
-    //       <a href="${process.env.NEXT_PUBLIC_BASE_URL}/account/bevestig-email?token=${emailVerificationToken}" target="_blank">
-    //         Klik hier het nieuwe account te checken en goed te keuren
-    //       </a>
-    //     </div>
-    //   `;
+    // send the admin a notification
+     const emailHtml = `
+        <div>
+          <h1> Nieuwe account aanvraag voor: <b> ${existingUser.email} </b></h1>
+          <p> Yooo habibi, Er is een nieuwe account aanvraag die goedgekeurd moeten worden, klik op onderstaande link: </p>
+          <a href="${process.env.NEXT_PUBLIC_BASE_URL}/admin/gebruikers-beheer?token=${existingUser.id}" target="_blank">
+            Klik hier het nieuwe account te checken en goed te keuren
+          </a>
+        </div>
+      `;
 
-    //  await sendEmail({
-    //    from: "Admin <admin@r-bytes.com>",
-    //    to: ["rvv@duck.com"],
-    //    subject: "Account bevestigen",
-    //    text: emailHtml,
-    //    html: emailHtml,
-    //  });
+     await sendEmail({
+       from: "Admin <admin@r-bytes.com>",
+       to: ["rvv@duck.com"],
+       subject: "Account bevestigen",
+       text: emailHtml,
+       html: emailHtml,
+     });
 
     return {
       success: true,

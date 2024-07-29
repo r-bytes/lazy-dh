@@ -1,6 +1,6 @@
 import React from "react";
-import OrderManagement from "./order-management";
 import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
+import OrderManagement from "../order-management";
 
 const AdminPage = () => {
   return (

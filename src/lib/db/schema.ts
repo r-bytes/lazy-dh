@@ -20,23 +20,8 @@ export const users = pgTable("users", {
   resetPasswordTokenExpiry: timestamp("reset_password_token_expiry"),
   emailVerified: boolean("email_verified").default(false),
   emailVerificationToken: varchar("email_verification_token", { length: 255 }).unique(),
-  // emailVerificationTokenExpiry: timestamp("email_verification_token_expiry"),
+  adminApproved: boolean("admin_approved").default(false),
 });
-
-// ! code below worked, before adding extra fiels
-// export const users = pgTable("users", {
-//   id: text("id")
-//     .primaryKey()
-//     .$defaultFn(() => crypto.randomUUID()),
-//   name: varchar("name", { length: 100 }).notNull(),
-//   email: varchar("email", { length: 100 }).notNull().unique(),
-//   password: varchar("password_hash", { length: 255 }).notNull(),
-//   createdAt: timestamp("created_at").defaultNow(),
-//   address: text("address"),
-//   phoneNumber: varchar("phone_number", { length: 15 }),
-//   resetPasswordToken: varchar("reset_password_token", { length: 255 }).unique(),
-//   resetPasswordTokenExpiry: timestamp("reset_password_token_expiry"),
-// });
 
 export const orders = pgTable("orders", {
   id: serial("id").primaryKey(),

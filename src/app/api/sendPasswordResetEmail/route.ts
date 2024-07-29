@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     const { data, error } = await resend.emails.send({
       from: "Lazo admin <admin@r-bytes.com>",
       to: [email],
-      subject: "Wachtwoord aanpassen",
+      subject: "Wachtwoord wijzigen",
       html: emailHtml,
       text: emailHtml,
     });
