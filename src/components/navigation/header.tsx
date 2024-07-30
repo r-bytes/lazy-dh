@@ -63,7 +63,7 @@ const Header = (props: Props) => {
         className={`${cn} cart-icon duration-400 relative cursor-pointer border-none bg-transparent text-6xl text-muted-foreground transition-transform ease-in-out`}
         onClick={() => navigateTo(router, "/winkelwagen")}
       >
-        <ShoppingBag className="lg:hover:text-primary" />
+        <ShoppingBag className="" />
         <span className="absolute right-[-16px] top-[-10px] h-5 w-5 rounded-full bg-red-500 text-center text-xs font-semibold text-gray-300 flex justify-center items-center">
           <h4>{totalQuantities}</h4>
         </span>
@@ -85,7 +85,7 @@ const Header = (props: Props) => {
             <MenuIcon size={24} /> {/* Use MenuIcon from Lucid */}
           </button>
           {/* Shopping Cart */}
-          <ShoppingCart cn={"lg:hidden hover:bg-primary"} />
+          <ShoppingCart cn={"lg:hidden hover:text-primary"} />
         </div>
 
         {/* Mobile Navigation Menu */}

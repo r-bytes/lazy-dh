@@ -40,7 +40,7 @@ async function hashPassword(password: string) {
 async function verifyPassword(plainTextPassword: string, hashedPassword: string): Promise<boolean> {
   try {
     // Verify the plain text password against the hashed password
-    const match = await bcrypt.compare(hashedPassword, plainTextPassword);
+    const match = await bcrypt.compare(plainTextPassword, hashedPassword);
     return match;
   } catch (error) {
     console.error("Error verifying password:", error);
@@ -88,7 +88,7 @@ export async function getUserFromDb(email: string, password: string) {
 }
 
 export async function login({ email, password }: { email: string; password: string }) {
-  try {
+  try { 
     signInSchema.parse({
       email,
       password,
