@@ -17,12 +17,17 @@ import { sendEmail } from "../email/sendEmail";
  * @returns The hashed password.
  */
 async function hashPassword(password: string) {
+  if (!password) {
+    console.error("Error hashing password: Password is undefined or empty.");
+    throw new Error("Password is required for hashing.");
+  }
+
   try {
-    const hashedPassword = await bcrypt.hash(password);
-    // console.log("Hashed password:", hashedPassword);
+    const hashedPassword = await bcrypt.hash(password, 12); // Ensuring that the salt is specified, typically 10-12
     return hashedPassword;
   } catch (error) {
     console.error("Error hashing password:", error);
+    throw error; // Rethrow the error to be handled or logged by the caller
   }
 }
 
@@ -164,7 +169,7 @@ export async function signUp({
     }
 
     // hash the password
-    const hashedPassword = await hashPassword(password);
+    const hashedPassword = await hashPassword(password!);
 
     // create emailVerificationToken
     const emailVerificationToken = crypto.randomBytes(12).toString("base64url"); //baseUrl/auth/reset-password?token=1234567890abcdefferv
