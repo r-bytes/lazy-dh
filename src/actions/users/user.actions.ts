@@ -4,7 +4,8 @@ import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 import { signInSchema } from "@/lib/types/signin";
 import { signUpSchema } from "@/lib/types/signup";
-import argon2 from "argon2";
+// import argon2 from "argon2";
+const bcrypt = require("bcryptjs");
 import crypto from "crypto";
 import { eq } from "drizzle-orm";
 import { signIn } from "../../../auth";
@@ -17,7 +18,7 @@ import { sendEmail } from "../email/sendEmail";
  */
 async function hashPassword(password: string) {
   try {
-    const hashedPassword = await argon2.hash(password);
+    const hashedPassword = await bcrypt.hash(password);
     // console.log("Hashed password:", hashedPassword);
     return hashedPassword;
   } catch (error) {
@@ -34,7 +35,7 @@ async function hashPassword(password: string) {
 async function verifyPassword(plainTextPassword: string, hashedPassword: string): Promise<boolean> {
   try {
     // Verify the plain text password against the hashed password
-    const match = await argon2.verify(hashedPassword, plainTextPassword);
+    const match = await bcrypt.compare(hashedPassword, plainTextPassword);
     return match;
   } catch (error) {
     console.error("Error verifying password:", error);
