@@ -7,8 +7,6 @@ type Props = {};
 
 const Page = (props: Props) => {
   return (
-    // <div className="flex flex-col justify-center px-10">
-    // </div>
       <Tabs defaultValue="login" className="mx-auto max-w-md md:max-w-5xl">
         <TabsList className="flex w-full">
           <TabsTrigger value="login"> Inloggen </TabsTrigger>

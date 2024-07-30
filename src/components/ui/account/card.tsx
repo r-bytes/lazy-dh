@@ -2,9 +2,11 @@
 import { usePathname } from "next/navigation";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { cn, navigateTo } from "@/lib/utils";
 import { HeartIcon, ScrollText, UserIcon } from "lucide-react";
 import React, { ComponentType, createElement } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type AccountOptions = {
   title: string;
@@ -17,19 +19,21 @@ type IconProps = {
   className?: string;
 };
 
+// todo: make dynamic + implement favorite
+
 const ACCOUNT: AccountOptions[] = [
-  {
-    title: "Bestellingen",
-    description: "Vorige bestellingen weergeven",
-    image: "ScrollText",
-    slug: "bestellingen",
-  },
-  {
-    title: "Favorieten",
-    description: "Favorieten producten weergeven",
-    image: "HeartIcon",
-    slug: "favorieten",
-  },
+  // {
+  //   title: "Bestellingen",
+  //   description: "Vorige bestellingen weergeven",
+  //   image: "ScrollText",
+  //   slug: "bestellingen",
+  // },
+  // {
+  //   title: "Favorieten",
+  //   description: "Favorieten producten weergeven",
+  //   image: "HeartIcon",
+  //   slug: "favorieten",
+  // },
   {
     title: "Wachtwoord reset",
     description: "Wachtwoord veranderen",
@@ -48,8 +52,9 @@ type CardProps = React.ComponentProps<typeof Card>;
 
 export function AccountCard({ className, ...props }: CardProps) {
   const pathname = usePathname();
+  
   return (
-    <Card className={cn("h-screen w-full", className)} {...props}>
+    <Card className={cn("min-h-[50vh] w-full", className)} {...props}>
       <CardHeader className="mb-4 text-center">
         {/* Todo: should be dynamic */}
         <CardTitle className="mt-12 text-4xl md:text-5xl"> Account </CardTitle>
@@ -78,5 +83,5 @@ export function AccountCard({ className, ...props }: CardProps) {
         ))}
       </CardContent>
     </Card>
-  );
+  )
 }

@@ -60,7 +60,7 @@ const UserManagement = ({ userIdFromProps }: { userIdFromProps: string }) => {
   };
 
   if (loading) {
-    return <p className="flex h-screen items-center justify-center">Loading users...</p>;
+    return <p className="flex items-center justify-center min-h-[50vh]">Loading users...</p>;
   }
 
   return (

@@ -25,7 +25,7 @@ export default function Promotions({ products }: { products?: Product[] }) {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Title name={"Aanbiedingen"} cn="py-4" />
+      <Title name={"Aanbiedingen"} cn="py-4 text-4xl md:text-5xl" />
       <MaxWidthWrapper>
         {!isEmpty ? (
           <ProductList products={products} />

@@ -76,7 +76,10 @@ const ResetPasswordForm = () => {
   return (
     <Form {...form}>
       <h1 className="my-10 text-center text-3xl font-bold sm:mb-0"> Password reset aanvragen </h1>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto mt-2 flex max-w-96 flex-col justify-center space-y-4 sm:min-h-72">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mx-auto mt-2 flex max-w-96 flex-col justify-center space-y-4 sm:min-h-72 lg:min-h-[50vh]"
+      >
         <FormField
           control={form.control}
           name="email"

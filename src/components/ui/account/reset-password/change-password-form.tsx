@@ -74,8 +74,11 @@ const ChangePasswordForm = ({ resetPasswordToken }: ChangePasswordFormProps) => 
 
   return (
     <Form {...form}>
-      <h1 className="my-10 text-center text-3xl font-bold sm:mb-0">Wachtwoord wijzigen</h1>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto mt-2 flex max-w-96 flex-col justify-center space-y-4 sm:min-h-72">
+      <h1 className="my-10 text-center text-3xl font-bold sm:mb-0"> Wachtwoord wijzigen </h1>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mx-auto mt-2 flex max-w-96 flex-col justify-center space-y-4 sm:min-h-96 lg:min-h-[50vh]"
+      >
         <FormField
           control={form.control}
           name="password"

@@ -1,0 +1,60 @@
+import React from "react";
+
+const TermsAndConditionsPage = () => {
+  const storeName = "Lazo Spirits Den Haag"
+  return (
+    <div className="container mx-auto px-4 py-8 text-muted-foreground">
+      <h1 className="mb-6 text-center text-3xl font-bold">Algemene Voorwaarden</h1>
+      <section>
+        <p>
+          Welkom bij {storeName}. Deze Algemene Voorwaarden zijn van toepassing op alle aankopen en diensten aangeboden via onze website: 
+          {" " + process.env.NEXT_PUBLIC_BASE_URL}. Door gebruik te maken van onze website, ga je akkoord met deze voorwaarden. Lees ze zorgvuldig door.
+        </p>
+
+        <h2 className="mt-5 text-xl font-semibold">1. Producten en Diensten</h2>
+        <p>
+          Wij bieden via onze website diverse alcoholische dranken aan. Alle producten zijn onderhevig aan beschikbaarheid en kunnen worden
+          gewijzigd.
+        </p>
+
+        <h2 className="mt-5 text-xl font-semibold">2. Leeftijdsrestrictie</h2>
+        <p>
+          Je moet minimaal 18 jaar oud zijn om alcoholische dranken bij ons te bestellen. Door een bestelling te plaatsen, bevestig je dat je aan
+          deze leeftijdseis voldoet.
+        </p>
+
+        <h2 className="mt-5 text-xl font-semibold">3. Bestelproces</h2>
+        <p>
+          Na het plaatsen van je bestelling ontvang je een bevestiging per e-mail met de details van je bestelling. De bestelling kan vervolgens
+          opgehaald worden
+        </p>
+
+        <h2 className="mt-5 text-xl font-semibold">4. Prijzen en Betaling</h2>
+        <p>Alle prijzen op onze website zijn inclusief BTW. Betaling geschiedt veilig via de door ons aangeboden betaalmethoden op de website.</p>
+
+        <h2 className="mt-5 text-xl font-semibold">5. Annulering en Retourbeleid</h2>
+        <p>
+          Je hebt het recht je bestelling tot 14 dagen na ontvangst zonder opgave van reden te annuleren. Je krijgt dan het volledige orderbedrag
+          inclusief verzendkosten teruggestort.
+        </p>
+
+        <h2 className="mt-5 text-xl font-semibold">6. Aansprakelijkheid</h2>
+        <p>Wij zijn niet aansprakelijk voor schade die ontstaat door verkeerd gebruik van de gekochte producten.</p>
+
+        <h2 className="mt-5 text-xl font-semibold">7. Intellectueel Eigendom</h2>
+        <p>
+          De inhoud van onze website, inclusief teksten, grafieken, logos, en beeldmateriaal, is eigendom van {storeName} en is beschermd door
+          intellectueel eigendomsrecht.
+        </p>
+
+        <h2 className="mt-5 text-xl font-semibold">8. Wijzigingen in de Voorwaarden</h2>
+        <p>Deze voorwaarden kunnen van tijd tot tijd worden aangepast. Wij raden je aan deze regelmatig te raadplegen.</p>
+
+        <h2 className="mt-5 text-xl font-semibold">9. Contact</h2>
+        <p>Voor vragen over deze voorwaarden kun je contact met ons opnemen via [contactgegevens].</p>
+      </section>
+    </div>
+  );
+};
+
+export default TermsAndConditionsPage;

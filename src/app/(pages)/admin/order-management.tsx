@@ -125,11 +125,11 @@ const OrderManagement = () => {
   };
 
   if (loading) {
-    return <p className="flex min-h-screen flex-col items-center justify-center"> Loading orders... </p>;
+    return <p className="flex min-h-[50vh] flex-col items-center justify-center"> Loading orders... </p>;
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col overflow-x-scroll p-4 text-muted-foreground">
+    <div className="flex min-h-screen w-full flex-col overflow-x-scroll p-4 text-muted-foreground my-12">
       <h1 className="my-4 text-center text-3xl font-bold text-muted-foreground"> Bestellingen beheren </h1>
       <TableCell className="self-end hover:cursor-pointer" onClick={handleHide}>
         {hideCompleted ? <EyeIcon /> : <EyeOff />}

@@ -10,20 +10,17 @@ const Footer: React.FC<FooterProps> = ({ year = new Date().getFullYear() }) => {
       <div className="container mx-auto px-4">
         <p className="text-sm sm:text-base">&copy; {year} Lazo Den Haag. All rights reserved.</p>
         <div className="mt-2 flex flex-col justify-center space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0">
-          <a href="/privacy" className="text-sm hover:underline sm:text-base">
+          <a href="/contact" className="text-sm hover:underline sm:text-base">
             Contact
           </a>
-          <a href="/about" className="text-sm hover:underline sm:text-base">
+          <a href="/over-ons" className="text-sm hover:underline sm:text-base">
             Over ons
           </a>
-          <a href="/privacy" className="text-sm hover:underline sm:text-base">
-            Leverings voorwaarden
+          <a href="/algemene-voorwaarden" className="text-sm hover:underline sm:text-base">
+            Algemene voorwaarden
           </a>
-          <a href="/terms" className="text-sm hover:underline sm:text-base">
-            Terms of Service
-          </a>
-          <a href="/privacy" className="text-sm hover:underline sm:text-base">
-            Privacy Policy
+          <a href="/privacy-beleid" className="text-sm hover:underline sm:text-base">
+            Privacy Beleid
           </a>
         </div>
       </div>
