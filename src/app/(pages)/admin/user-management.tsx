@@ -64,14 +64,14 @@ const UserManagement = ({ userIdFromProps }: { userIdFromProps: string }) => {
   }
 
   return (
-    <div className="flex w-full flex-col overflow-x-scroll p-4 text-muted-foreground">
+    <div className="flex flex-col items-center overflow-x-scroll text-muted-foreground lg:min-w-fit">
       <h1 className="my-4 text-center text-3xl font-bold">User Management</h1>
       <TableCell className="self-end hover:cursor-pointer" onClick={() => setShowApproved(!showApproved)}>
         {showApproved ? <EyeIcon /> : <EyeOff />}
       </TableCell>
       <Table className="w-full min-w-fit">
         <TableHeader>
-          <TableRow>
+          <TableRow className="min-w-fit">
             <TableCell className="min-w-fit"> Naam </TableCell>
             <TableCell className="min-w-fit">Email</TableCell>
             <TableCell className="min-w-fit">Adres</TableCell>

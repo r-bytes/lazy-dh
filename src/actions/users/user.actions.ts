@@ -158,7 +158,7 @@ export async function signUp({
     if (existedUser.success) {
       return {
         success: false,
-        message: "User already exists.",
+        message: "Account bestaat al",
       };
     }
 
@@ -195,7 +195,7 @@ export async function signUp({
         <div>
           <h1> Bevestig uw emailadres voor: <b>${email}</b></h1>
           <p> Om uw account aanvraag door te zetten dien je dit emailadres te verifiëren, klik op onderstaande link:</p>
-          <a href="${process.env.NEXT_PUBLIC_BASE_URL}/account/bevestig-email?token=${emailVerificationToken}" target="_blank">
+          <a href="${process.env.NEXT_PUBLIC_BASE_URL}/account/registreer/bevestig-email?token=${emailVerificationToken}" target="_blank">
             Klik hier om uw emailadres te bevestigen
           </a>
         </div>

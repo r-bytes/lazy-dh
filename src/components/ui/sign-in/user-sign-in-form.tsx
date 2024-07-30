@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../card";
+import { login } from "@/actions/users/user.actions";
 
 export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -32,17 +33,27 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
 
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
     setIsLoading(true);
-    const result = await signIn("credentials", {
-      redirect: false, // Prevents redirecting to signIn's callback URL
-      email: values.email,
-      password: values.password,
-    });
+    // const result = await signIn("credentials", {
+    //   redirect: false, // Prevents redirecting to signIn's callback URL
+    //   email: values.email,
+    //   password: values.password,
+    // });
 
-    if (result?.ok) {
+    // if (result?.ok) {
+    //   toast.success("Succesvol ingelogd");
+    //   navigateTo(router, `${fromCheckout ? "/winkelwagen" : "/"}`);
+    // } else {
+    //   toast.error(result?.error || "Inloggen mislukt");
+    // }
+    // setIsLoading(false);
+    const { success, data, message } = await login(values);
+
+    if (success && data?.ok) {
       toast.success("Succesvol ingelogd");
-      navigateTo(router, `${fromCheckout ? "/winkelwagen" : "/"}`);
+      router.push(fromCheckout ? "/winkelwagen" : "/"); // Using Next.js router to navigate
     } else {
-      toast.error(result?.error || "Inloggen mislukt");
+      // Display the backend message or a generic error if the message is undefined
+      toast.error(message || "Inloggen mislukt");
     }
     setIsLoading(false);
   };

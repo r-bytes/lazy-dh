@@ -8,7 +8,7 @@ type Props = {};
 
 const page = (props: Props) => {
   return (
-    <div className="my-24 flex min-h-full flex-col items-center justify-center space-y-12 text-center">
+    <div className="my-24 flex flex-col items-center justify-center space-y-4 text-center min-h-[50vh]">
       <Mail />
       <h1 className="text-lg font-bold">Check je email</h1>
       <h3 className="text-muted-foreground">We hebben een bevestigings email gestuurd naar {}</h3>

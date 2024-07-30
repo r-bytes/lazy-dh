@@ -15,7 +15,7 @@ const companyInfo = {
 const AboutPage = (props: Props) => {
   return (
     <MaxWidthWrapper className="mx-auto w-full">
-      <div className="min-h-[80vh] w-full p-10">
+      <div className="min-h-[50vh] w-full p-10">
         <h1 className="ml-2 text-center font-semibold text-muted-foreground text-3xl">Over ons</h1>
         <h4 className="my-4 ml-3 text-center text-sm font-light text-muted-foreground">Bedrijfsgegevens</h4>
 

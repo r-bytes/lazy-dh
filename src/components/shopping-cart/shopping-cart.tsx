@@ -186,7 +186,7 @@ const ShoppingCart = () => {
           </div>
           <div className="mb-8 flex justify-between text-muted-foreground">
             <h3> BTW (21%): </h3>
-            <h3 className="mr-2 tracking-wide"> € {formatNumberWithCommaDecimalSeparator(VAT)} </h3>
+            <h3 className="mr-2 tracking-wide"> € {(formatNumberWithCommaDecimalSeparator(VAT))} </h3>
           </div>
           <div className="flex justify-between text-muted-foreground">
             <h3> Totaalbedrag incl. BTW: </h3>

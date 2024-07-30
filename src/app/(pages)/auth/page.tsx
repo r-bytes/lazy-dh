@@ -24,7 +24,7 @@ const AuthPage = () => {
 
   return (
     status !== "authenticated" &&  (
-      <Tabs defaultValue="login" className="mx-auto max-w-md md:max-w-5xl min-h-[80vh] mt-24">
+      <Tabs defaultValue="login" className="mx-auto max-w-md md:max-w-5xl min-h-[50vh] mt-24">
         <TabsList className="flex w-full">
           <TabsTrigger value="login">Inloggen</TabsTrigger>
           <TabsTrigger value="signup">Registreren</TabsTrigger>
