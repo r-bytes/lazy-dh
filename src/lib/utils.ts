@@ -60,3 +60,12 @@ export const formatNumberWithCommaDecimalSeparator = (number: number): string =>
 };
 
 export const formatCurrencyTwo = (value: number) => `€ ${value.toFixed(2)}`;
+
+export const getCurrentFormattedDate = () => {
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, "0");
+  const month = String(today.getMonth() + 1).padStart(2, "0"); // JavaScript months are 0-based.
+  const year = today.getFullYear();
+
+  return `${day}-${month}-${year}`;
+}

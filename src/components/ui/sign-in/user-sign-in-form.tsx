@@ -39,7 +39,7 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
     });
 
     if (result?.ok) {
-      toast.success("Succesvol ingelogd!");
+      toast.success("Succesvol ingelogd");
       navigateTo(router, `${fromCheckout ? "/winkelwagen" : "/"}`);
     } else {
       toast.error(result?.error || "Inloggen mislukt");

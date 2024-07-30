@@ -82,7 +82,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       setCartItems((prevCartItems) => [...prevCartItems, newProduct]);
     }
 
-    toast.success(`${quantity} box(es) of ${product.name} added to the cart.`);
+    toast.success(`${quantity} ${quantity === 1 ? "doos" : "dozen"} van ${product.name} toegevoegd aan de winkelwagen`);
   };
 
   const onRemove = (product: Product) => {

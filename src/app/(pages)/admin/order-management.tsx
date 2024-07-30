@@ -101,7 +101,7 @@ const OrderManagement = () => {
         console.error("Failed to update order status:", data.message);
       }
     } catch (error) {
-      toast.error("Error updating order status");
+      toast.error("Fout bij het bijwerken van de status van de bestelling");
       console.error("Error updating order status:", error);
     }
   };
@@ -125,12 +125,15 @@ const OrderManagement = () => {
   };
 
   if (loading) {
-    return <p> Loading orders... </p>;
+    return <p className="flex min-h-screen flex-col items-center justify-center"> Loading orders... </p>;
   }
 
   return (
-    <div className="w-full overflow-x-scroll p-4 text-muted-foreground">
+    <div className="flex min-h-screen w-full flex-col overflow-x-scroll p-4 text-muted-foreground">
       <h1 className="my-4 text-center text-3xl font-bold text-muted-foreground"> Bestellingen beheren </h1>
+      <TableCell className="self-end hover:cursor-pointer" onClick={handleHide}>
+        {hideCompleted ? <EyeIcon /> : <EyeOff />}
+      </TableCell>
       <Table className="w-full">
         <TableHeader>
           <TableRow>
@@ -152,9 +155,6 @@ const OrderManagement = () => {
             <TableCell> Status </TableCell>
             <TableCell> Producten </TableCell>
             <TableCell> Acties </TableCell>
-            <TableCell className="hover:cursor-pointer" onClick={handleHide}>
-              {hideCompleted ? <EyeIcon /> : <EyeOff />}
-            </TableCell>
           </TableRow>
         </TableHeader>
         <TableBody>

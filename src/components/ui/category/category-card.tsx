@@ -24,7 +24,6 @@ interface CategoryCardProps extends Omit<CardProps, "children"> {
 
 export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categories, products, slug, ...props }) => {
   const pathname = usePathname();
-  // const router = useRouter();
   const [currentPath, setCurrentPath] = useState<string>(pathname.replace("/", ""));
   const [productCounts, setProductCounts] = useState<{ [key: string]: number }>({});
   const { filteredProducts, setFilteredProducts, isSearching } = useProductContext();
@@ -55,7 +54,6 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
     <Card className={cn("min-h-screen w-full", className)} {...props}>
       <CardHeader className="mb-4 text-center">
         <CardTitle className="mt-12 text-4xl md:text-5xl">{slug === "home" ? "Categorieën" : capitalizeFirstLetter(currentPath)}</CardTitle>
-        {/* Todo: should be dynamic */}
         <CardDescription>Kies een categorie</CardDescription>
       </CardHeader>
       {/* Search bar */}

@@ -63,16 +63,13 @@ const Header = (props: Props) => {
         className={`${cn} cart-icon duration-400 relative cursor-pointer border-none bg-transparent text-6xl text-muted-foreground transition-transform ease-in-out`}
         onClick={() => navigateTo(router, "/winkelwagen")}
       >
-        <ShoppingBag className="hover:text-primary" />
-        <span className="absolute right-[-16px] top-[-10px] h-5 w-5 rounded-full bg-red-500 text-center text-xs font-semibold text-gray-300">
-          {totalQuantities}
+        <ShoppingBag className="lg:hover:text-primary" />
+        <span className="absolute right-[-16px] top-[-10px] h-5 w-5 rounded-full bg-red-500 text-center text-xs font-semibold text-gray-300 flex justify-center items-center">
+          <h4>{totalQuantities}</h4>
         </span>
       </button>
     );
   };
-
-  // Todo: check later when protected routes are available
-  // if (!user) return;
 
   return (
     <>

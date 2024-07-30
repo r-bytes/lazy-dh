@@ -28,7 +28,7 @@ const UserManagement = ({ userIdFromProps }: { userIdFromProps: string }) => {
       }
     } catch (error) {
       toast.error("Error fetching users");
-      console.error("Error fetching users:", error);
+      console.error("Fout bij het ophalen van de gebruikers:", error);
     } finally {
       setLoading(false);
     }
@@ -49,12 +49,12 @@ const UserManagement = ({ userIdFromProps }: { userIdFromProps: string }) => {
       const data = await res.json();
       if (data.success) {
         setEditedUsers((prev) => ({ ...prev, [userId]: currentApproval }));
-        toast.success("User approval status updated!");
+        toast.success("Gebruiker goedgekeurd");
       } else {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Error updating user status");
+      toast.error("Fout bij het bijwerken van de status");
       console.error("Error updating user status:", error);
     }
   };
@@ -87,17 +87,17 @@ const UserManagement = ({ userIdFromProps }: { userIdFromProps: string }) => {
         </TableHeader>
         <TableBody>
           {users.map((user) => (
-            <TableRow key={user.id}>
+            <TableRow key={user.id} className={user.id === userIdFromProps ? "bg-primary/20" : ""}>
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.address}</TableCell>
               <TableCell>{user.postal}</TableCell>
-              <TableCell>{user.city}</TableCell>
+              <TableCell className="min-w-fit">{user.city}</TableCell>
               <TableCell>{user.phoneNumber}</TableCell>
               <TableCell>{user.companyName}</TableCell>
               <TableCell>{user.vatNumber}</TableCell>
               <TableCell>{user.chamberOfCommerceNumber}</TableCell>
-              <TableCell>{editedUsers[user.id] ? "Approved" : "Pending"}</TableCell>
+              <TableCell>{editedUsers[user.id] ? "Goedgekeurd" : "Nieuw"}</TableCell>
               <TableCell>
                 <Button onClick={() => toggleApproval(user.id)}>{editedUsers[user.id] ? "Intrekken" : "Goedkeuren"}</Button>
               </TableCell>

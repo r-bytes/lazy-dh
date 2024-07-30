@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ success: true, userId: user.id });
+    return NextResponse.json({ success: true, userId: user.id, adminApprovalStatus: user.adminApproved });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ success: false, message: "Something went wrong" }, { status: 500 });

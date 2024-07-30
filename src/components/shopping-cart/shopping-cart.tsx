@@ -1,28 +1,35 @@
-import { useAuthContext } from "@/context/AuthContext";
 import { useCartContext } from "@/context/CartContext";
 import { formatNumberWithCommaDecimalSeparator, navigateTo } from "@/lib/utils";
 import { CircleX, Minus, Plus, ShoppingBag } from "lucide-react";
+import { User } from "next-auth";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { urlFor } from "../../../sanity";
+import { Icons } from "../icons";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import Title from "../ui/title";
-import { useRouter } from "next/navigation";
 
 const ShoppingCart = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [user, setUser] = useState<User | null>(null);
+
   // Hooks
   const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuantity, onRemove, incQty, emptyCartItems } = useCartContext();
-  const { user } = useAuthContext();
+  const { data: session, status } = useSession();
   const router = useRouter();
-  
+
   useEffect(() => {
-    console.log(user?.email);
-    
-  }, [user]);
-  
+    if (status === "authenticated") {
+      setUser(session?.user!);
+    } else {
+      setUser(null);
+    }
+  }, [session, status]);
 
   // Calculate VAT at 21%
   const VAT = totalPrice * 0.21;
@@ -30,32 +37,43 @@ const ShoppingCart = () => {
 
   // Functions
   const handleCheckout = async () => {
-    toast.loading("Redirecting...");
-    // Fetch user ID by email
-    const userIdResponse = await fetch("/api/getUserIdByEmail", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: user?.email }),
-    });
-
-    if (!userIdResponse.ok) {
-      toast.dismiss();
-      navigateTo(router, "/winkelwagen/account")
-      // toast.error("Failed to fetch user ID");
-      return;
-    }
-
-    const { success, userId } = await userIdResponse.json();
-
-    if (!success) {
-      toast.dismiss();
-      toast.error("User not found");
-      return;
-    }
+    setIsLoading(true);
+    toast.loading("Bestelling plaatsen...");
 
     try {
+      // Fetch user ID by email
+      const userIdResponse = await fetch("/api/getUserIdByEmail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: user?.email }),
+      });
+
+      if (!userIdResponse.ok) {
+        toast.dismiss();
+        navigateTo(router, "/winkelwagen/account");
+        setIsLoading(false);
+        return;
+      }
+
+      const { success, userId, adminApprovalStatus } = await userIdResponse.json();
+
+      if (!success) {
+        toast.dismiss();
+        toast.error("Gebruiker onbekend");
+        setIsLoading(false);
+        return;
+      }
+
+      if (!adminApprovalStatus) {
+        toast.dismiss();
+        toast.error("Account is nog niet geactiveerd, neem contact op met Lazo");
+        setIsLoading(false);
+        return;
+      }
+
+      // If user is found, attempt to checkout
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: {
@@ -70,27 +88,27 @@ const ShoppingCart = () => {
       });
 
       const data = await response.json();
-      
       toast.dismiss();
+
       if (data.success) {
-        // "Bestelling succesvol geplaatst";
         toast.success(data.message);
         emptyCartItems();
-        navigateTo(router, "/winkelwagen/succes")
-        // Optioneel: redirect naar een bevestigingspagina
+        navigateTo(router, "/winkelwagen/succes");
       } else {
         toast.error(data.message);
       }
     } catch (error) {
       toast.dismiss();
       toast.error("Er is iets misgegaan");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const HorizontalRule = () => <hr className="my-12" />;
 
   return (
-    <div className="mt-24">
+    <div className="my-24">
       <Title name="Winkelwagen" />
       {cartItems?.length < 1 && (
         <div className="empty-cart m-10 flex h-96 flex-col items-center justify-center space-y-4 text-center text-muted-foreground">
@@ -161,12 +179,12 @@ const ShoppingCart = () => {
       </div>
 
       {cartItems?.length >= 1 && (
-        <div className="mx-auto w-full max-w-7xl mt-[-2rem] p-8 xl:p-0">
+        <div className="mx-auto mt-[-2rem] w-full max-w-7xl p-8 xl:p-0">
           <div className="flex justify-between text-muted-foreground">
             <h3> Totaalbedrag excl. BTW: </h3>
             <h3 className="mr-2 tracking-wide"> € {formatNumberWithCommaDecimalSeparator(totalPrice)} </h3>
           </div>
-          <div className="flex justify-between text-muted-foreground mb-8">
+          <div className="mb-8 flex justify-between text-muted-foreground">
             <h3> BTW (21%): </h3>
             <h3 className="mr-2 tracking-wide"> € {formatNumberWithCommaDecimalSeparator(VAT)} </h3>
           </div>
@@ -176,6 +194,7 @@ const ShoppingCart = () => {
           </div>
           <div className="mx-auto mt-16 flex w-full items-center justify-center">
             <Button type="button" className="btn" onClick={handleCheckout}>
+              {isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.logo className="mr-2 h-4 w-4" />}
               Bestelling Plaatsen
             </Button>
           </div>

@@ -14,20 +14,14 @@ const inter = Inter({ subsets: ["latin"] });
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Lazo Den Haag",
-  description: "Welkom bij Lazo Den Haag",
+  title: "Lazo Spirits Den Haag",
+  description: "Welkom bij Lazo Spirits Den Haag",
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  // Todo: cleanup
-  // const isAuthenticated = await auth();
-
-  // Conditionally render children based on authentication status
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${montserrat.className} flex min-h-screen flex-col`}>
-        {/* Todo: cleanup */}
-        {/* {!isAuthenticated && <CheckAuth />} */}
         <div>
           <SessionProvider>
             <CartProvider>
@@ -36,8 +30,6 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                   <AuthProvider>
                     <Toaster />
                     <Header />
-                    {/* // Todo: cleanup */}
-                    {/* {isAuthenticated && <Header />} */}
                     <main>{children}</main>
                     <Footer />
                   </AuthProvider>
