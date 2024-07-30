@@ -48,23 +48,39 @@ export function UserSignUpForm({ fromCheckout }: { fromCheckout?: boolean }) {
   });
 
   const handleSuccess = () => {
-    toast.success("Successvol geregistreerd!");
-    navigateTo(router, "/account/registreer/succes");
+    toast.success("Succesvol geregistreerd!");
+    router.push("/account/registreer/succes"); // Using Next.js router to navigate
     setIsLoading(false);
   };
 
-  const handleFailure = (error: any) => {
-    toast.error(error);
+  const handleFailure = (message: string) => {
+    // Provide a default error message if none is provided
+    toast.error(message || "Registratie mislukt. Probeer het alstublieft opnieuw.");
     setIsLoading(false);
   };
 
   const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
     setIsLoading(true);
-    const signUpResponse = await signUp(values);
+    try {
+      const signUpResponse = await signUp(values);
 
-    if (signUpResponse) {
-      signUpResponse.success ? handleSuccess() : signUpResponse.message ? handleFailure(signUpResponse.message) : null;
+      if (signUpResponse) {
+        if (signUpResponse.success) {
+          handleSuccess();
+        } else {
+          // Call handleFailure with a specific message or a generic one
+          handleFailure(signUpResponse.message || "Onbekende fout bij registratie.");
+        }
+      } else {
+        // Handle cases where signUpResponse might be undefined or null
+        handleFailure("Geen respons van server.");
+      }
+    } catch (error) {
+      // This catch block handles unexpected errors such as network issues
+      console.error("Registration error:", error);
+      handleFailure("Netwerkfout of server niet bereikbaar.");
     }
+    setIsLoading(false); // Ensure loading is always turned off after operation completes
   };
 
   return (

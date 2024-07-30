@@ -1,21 +1,19 @@
 "use client";
 
+import { login } from "@/actions/users/user.actions";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { signInSchema } from "@/lib/types/signin";
-import { navigateTo } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../card";
-import { login } from "@/actions/users/user.actions";
 
 export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -31,37 +29,45 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
     },
   });
 
+  // const result = await signIn("credentials", {
+  //   redirect: false, // Prevents redirecting to signIn's callback URL
+  //   email: values.email,
+  //   password: values.password,
+  // });
+
+  // if (result?.ok) {
+  //   toast.success("Succesvol ingelogd");
+  //   navigateTo(router, `${fromCheckout ? "/winkelwagen" : "/"}`);
+  // } else {
+  //   toast.error(result?.error || "Inloggen mislukt");
+  // }
+  // setIsLoading(false);
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
     setIsLoading(true);
-    // const result = await signIn("credentials", {
-    //   redirect: false, // Prevents redirecting to signIn's callback URL
-    //   email: values.email,
-    //   password: values.password,
-    // });
+    try {
+      // Attempt to log in using the provided credentials
+      const { success, data, message } = await login(values);
 
-    // if (result?.ok) {
-    //   toast.success("Succesvol ingelogd");
-    //   navigateTo(router, `${fromCheckout ? "/winkelwagen" : "/"}`);
-    // } else {
-    //   toast.error(result?.error || "Inloggen mislukt");
-    // }
-    // setIsLoading(false);
-    const { success, data, message } = await login(values);
-
-    if (success && data?.ok) {
-      toast.success("Succesvol ingelogd");
-      router.push(fromCheckout ? "/winkelwagen" : "/"); // Using Next.js router to navigate
-    } else {
-      // Display the backend message or a generic error if the message is undefined
-      toast.error(message || "Inloggen mislukt");
+      if (success && data?.ok) {
+        // If login is successful and the server response is ok, proceed
+        toast.success("Succesvol ingelogd");
+        router.push(fromCheckout ? "/winkelwagen" : "/"); // Navigate based on the checkout status
+      } else {
+        // If login fails, display an error message from the server or a generic error message
+        toast.error(message || "Inloggen mislukt");
+      }
+    } catch (error) {
+      // Catch and handle unexpected errors during the login process
+      console.error("Login error:", error);
+      toast.error("Er is een fout opgetreden tijdens het inloggen. Probeer het opnieuw.");
     }
     setIsLoading(false);
   };
 
   return fromCheckout ? (
     <Form {...form}>
-      <Card className="py-8 mx-[-1rem]">
-        <form onSubmit={form.handleSubmit(onSubmit)} className="mt-2 max-w-96 md:max-w-full space-y-4">
+      <Card className="mx-[-1rem] py-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="mt-2 max-w-96 space-y-4 md:max-w-full">
           <CardHeader>
             <CardTitle className="text-left md:text-center"> Inloggen </CardTitle>
             <CardDescription className="text-left md:text-center"> Login in met je account gegevens </CardDescription>
