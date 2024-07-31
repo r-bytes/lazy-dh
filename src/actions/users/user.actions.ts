@@ -50,7 +50,7 @@ async function verifyPassword(plainTextPassword: string, hashedPassword: string)
 
 export async function getUserFromDb(email: string, password: string) {
   try {
-    console.log(`Attempting to find user with email: ${email}`);
+    console.log(`getUserFromDb - Attempting to find user with email: ${email}`);
     const existingUser = await db.query.users.findFirst({
       where: eq(users.email, email),
     });
@@ -93,6 +93,10 @@ export async function login({ email, password }: { email: string; password: stri
       email,
       password,
     });
+
+
+    // const passwordMatch = await verifyPassword(password, existingUser.password);
+    // todo:
 
     const res = await signIn("credentials", {
       redirect: false,

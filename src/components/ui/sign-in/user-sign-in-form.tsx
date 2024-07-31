@@ -1,13 +1,14 @@
 "use client";
 
-import { login } from "@/actions/users/user.actions";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { signInSchema } from "@/lib/types/signin";
+import { navigateTo } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -29,38 +30,22 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
     },
   });
 
-  // const result = await signIn("credentials", {
-  //   redirect: false, // Prevents redirecting to signIn's callback URL
-  //   email: values.email,
-  //   password: values.password,
-  // });
-
-  // if (result?.ok) {
-  //   toast.success("Succesvol ingelogd");
-  //   navigateTo(router, `${fromCheckout ? "/winkelwagen" : "/"}`);
-  // } else {
-  //   toast.error(result?.error || "Inloggen mislukt");
-  // }
-  // setIsLoading(false);
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
     setIsLoading(true);
-    try {
-      // Attempt to log in using the provided credentials
-      const { success, data, message } = await login(values);
 
-      if (success && data?.ok) {
-        // If login is successful and the server response is ok, proceed
-        toast.success("Succesvol ingelogd");
-        router.push(fromCheckout ? "/winkelwagen" : "/"); // Navigate based on the checkout status
-      } else {
-        // If login fails, display an error message from the server or a generic error message
-        toast.error(message || "Inloggen mislukt");
-      }
-    } catch (error) {
-      // Catch and handle unexpected errors during the login process
-      console.error("Login error:", error);
-      toast.error("Er is een fout opgetreden tijdens het inloggen. Probeer het opnieuw.");
+    const result = await signIn("credentials", {
+      redirect: false, // Prevents redirecting to signIn's callback URL
+      email: values.email,
+      password: values.password,
+    });
+
+    if (result?.error) {
+      toast.error("Inloggen mislukt");
+    } else {
+      toast.success("Succesvol ingelogd");
+      navigateTo(router, `${fromCheckout ? "/winkelwagen" : "/"}`);
     }
+
     setIsLoading(false);
   };
 
@@ -94,6 +79,7 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
                     <div className="relative">
                       <Input placeholder="Wachtwoord" type={showPassword ? "text" : "password"} {...field} />
                       <Button
+                        type="reset"
                         style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)" }}
                         onClick={() => setShowPassword(!showPassword)}
                         aria-label={showPassword ? "Hide password" : "Show password"}
@@ -140,6 +126,7 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
                 <div className="relative">
                   <Input placeholder="Wachtwoord" type={showPassword ? "text" : "password"} {...field} />
                   <Button
+                    type="reset"
                     style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)" }}
                     onClick={() => setShowPassword(!showPassword)}
                     aria-label={showPassword ? "Hide password" : "Show password"}
