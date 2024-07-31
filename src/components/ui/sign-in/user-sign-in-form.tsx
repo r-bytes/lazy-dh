@@ -22,7 +22,7 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
-  const { checkAdminApproval } = useAuthContext();
+  const { checkAdminApproval, isAdminApproved } = useAuthContext();
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
@@ -37,9 +37,6 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
 
     // Call checkAdminApproval and wait for it to complete before checking the status
     await checkAdminApproval(values.email);
-
-    // Now, we can check the isAdminApproved state directly from the async function response
-    const { isAdminApproved } = useAuthContext();
 
     if (!isAdminApproved) {
       toast.error("Account wacht op goedkeuring van admin");
