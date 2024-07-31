@@ -15,12 +15,14 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../card";
+import { useAuthContext } from "@/context/AuthContext";
 
 export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
+  const { checkAdminApproval, isAdminApproved } = useAuthContext();
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
@@ -32,6 +34,16 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
 
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
     setIsLoading(true);
+
+    await checkAdminApproval(values.email);
+    console.log(isAdminApproved);
+    
+
+    if (!isAdminApproved) {
+      toast.error("Account wacht op goedkeuring van admin");
+      setIsLoading(false);
+      return;
+    }
 
     const result = await signIn("credentials", {
       redirect: false, // Prevents redirecting to signIn's callback URL
@@ -54,8 +66,8 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
       <Card className="mx-[-1rem] py-8">
         <form onSubmit={form.handleSubmit(onSubmit)} className="mt-2 max-w-96 space-y-4 md:max-w-full">
           <CardHeader>
-            <CardTitle className="text-left md:text-center"> Inloggen </CardTitle>
-            <CardDescription className="text-left md:text-center"> Login in met je account gegevens </CardDescription>
+            <CardTitle className="text-left md:text-center"> Bestaande klant </CardTitle>
+            <CardDescription className="text-left md:text-center"> Log in met je account gegevens </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <FormField

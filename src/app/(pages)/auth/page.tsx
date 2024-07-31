@@ -18,7 +18,7 @@ const AuthPage = () => {
       if (typeof window !== "undefined" && session && status === "authenticated") {
         try {
           navigateTo(router, "/")
-          toast.success("U wordt doorverwezen naar de home pagina");
+          // toast.success("U wordt doorverwezen naar de home pagina");
         } catch (error) {
           toast.error("Er is een fout opgetreden tijdens het doorverwijzen");
         }

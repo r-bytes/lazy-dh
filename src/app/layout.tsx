@@ -1,6 +1,7 @@
 import Footer from "@/components/navigation/footer";
 import Header from "@/components/navigation/header";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { ProductProvider } from "@/context/ProductContext";
 import type { Metadata } from "next";
@@ -25,11 +26,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <CartProvider>
             <ProductProvider type="">
               <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-                <Toaster />
-                <Header />
-                {/* Main content area that will grow to push the footer to the bottom */}
-                <main className="flex-grow">{children}</main>
-                <Footer />
+                <AuthProvider>
+                  <Toaster />
+                  <Header />
+                  {/* Main content area that will grow to push the footer to the bottom */}
+                  <main className="flex-grow">{children}</main>
+                  <Footer />
+                </AuthProvider>
               </ThemeProvider>
             </ProductProvider>
           </CartProvider>

@@ -4,13 +4,11 @@ import { db } from "@/lib/db";
 import { userActivities, users } from "@/lib/db/schema";
 import { signInSchema } from "@/lib/types/signin";
 import { signUpSchema } from "@/lib/types/signup";
-// import argon2 from "argon2";
-const bcrypt = require("bcryptjs");
 import crypto from "crypto";
 import { eq } from "drizzle-orm";
 import { signIn } from "../../../auth";
 import { sendEmail } from "../email/sendEmail";
-import { OrderItem } from "@/lib/types/order";
+const bcrypt = require("bcryptjs");
 
 /**
  * Creates a hashed password from a plain text password.
@@ -65,6 +63,13 @@ export async function getUserFromDb(email: string, password: string) {
       };
     }
 
+    if (existingUser!.adminApproved === false) {
+      return {
+        success: false,
+        message: "Wacht op goedkeuring door de admin",
+      };
+    }
+
     const passwordMatch = await verifyPassword(password, existingUser.password);
 
     if (!passwordMatch) {
@@ -89,12 +94,11 @@ export async function getUserFromDb(email: string, password: string) {
 }
 
 export async function login({ email, password }: { email: string; password: string }) {
-  try { 
+  try {
     signInSchema.parse({
       email,
       password,
     });
-
 
     // const passwordMatch = await verifyPassword(password, existingUser.password);
     // todo:
@@ -206,8 +210,7 @@ export async function signUp({
         email: users.email,
       });
 
-      
-      const emailHtml = `
+    const emailHtml = `
       <div>
       <h1> Bevestig uw emailadres voor: <b>${email}</b></h1>
       <p> Om uw account aanvraag door te zetten dien je dit emailadres te verifiëren, klik op onderstaande link:</p>
@@ -216,18 +219,18 @@ export async function signUp({
       </a>
       </div>
       `;
-      
-      await sendEmail({
-        from: "Lazo admin <admin@r-bytes.com>",
-        to: [email],
-        subject: "Emailadres bevestigen",
-        text: emailHtml,
-        html: emailHtml,
-      });
-      
-      updateUserActivity(email, "signup", "successfully");
 
-      return {
+    await sendEmail({
+      from: "Lazo admin <admin@r-bytes.com>",
+      to: [email],
+      subject: "Emailadres bevestigen",
+      text: emailHtml,
+      html: emailHtml,
+    });
+
+    updateUserActivity(email, "signup", "successfully");
+
+    return {
       success: true,
       data: user,
     };
@@ -258,17 +261,17 @@ export const requestPasswordReset = async (email: string) => {
         message: "Gebruiker niet gevonden",
       };
     }
-    
+
     const resetPasswordToken = crypto.randomBytes(12).toString("base64url"); //baseUrl/auth/reset-password?token=1234567890abcdefferv
     const today = new Date();
     const expiryDate = new Date(today.setDate(today.getDate() + 1));
-    
+
     // update the user in the database
     const user = await db.update(users).set({
       resetPasswordToken: resetPasswordToken,
       resetPasswordTokenExpiry: expiryDate,
     });
-    
+
     updateUserActivity(email, "password reset request", "successfully requested password reset");
     return {
       success: true,
@@ -302,9 +305,9 @@ export const changePassword = async (resetPasswordToken: string, password: strin
         message: "Gebruiker niet gevonden",
       };
     }
-    
+
     const resetPasswordTokenExpiry = existingUser.resetPasswordTokenExpiry;
-    
+
     updateUserActivity(resetPasswordToken, "changing password", "failure - token verlopen");
     if (!resetPasswordTokenExpiry) {
       return {
@@ -312,9 +315,9 @@ export const changePassword = async (resetPasswordToken: string, password: strin
         message: "Token verlopen",
       };
     }
-    
+
     const today = new Date();
-    
+
     if (today > resetPasswordTokenExpiry) {
       updateUserActivity(resetPasswordToken, "changing password", "failure - token verlopen");
       return {
@@ -322,16 +325,16 @@ export const changePassword = async (resetPasswordToken: string, password: strin
         message: "Token verlopen",
       };
     }
-    
+
     const passwordHash = await hashPassword(password);
-    
+
     // update the user in the database
     const updatedUser = await db.update(users).set({
       password: passwordHash,
       resetPasswordToken: null,
       resetPasswordTokenExpiry: null,
     });
-    
+
     updateUserActivity(resetPasswordToken, "changing password", "sucessfully");
     return {
       success: true,
@@ -429,7 +432,7 @@ export const sendPickupMail = async (order: OrderType) => {
     await sendEmail({
       from: "Lazo admin <admin@r-bytes.com>",
       to: [order[0].userEmail!],
-      subject: `Lazo Den Haag - Ophaalbericht voor bestelling: <b> ${order[0].orderId}`,
+      subject: `Lazo Den Haag - Ophaalbericht voor bestelling: ${order[0].orderId}`,
       text: emailHtml,
       html: emailHtml,
     });
@@ -446,6 +449,7 @@ export const sendPickupMail = async (order: OrderType) => {
     };
   }
 };
+
 export const verifyEmail = async (emailVerificationToken: string) => {
   try {
     const existingUser = await db.query.users.findFirst({
@@ -468,7 +472,7 @@ export const verifyEmail = async (emailVerificationToken: string) => {
     });
 
     // send the admin a notification
-     const emailHtml = `
+    const emailHtml = `
         <div>
           <h1> Nieuwe account aanvraag voor: <b> ${existingUser.email} </b></h1>
           <p> Yooo habibi, Er is een nieuwe account aanvraag die goedgekeurd moeten worden, klik op onderstaande link: </p>
@@ -478,18 +482,67 @@ export const verifyEmail = async (emailVerificationToken: string) => {
         </div>
       `;
 
-     await sendEmail({
-       from: "Admin <admin@r-bytes.com>",
-       to: ["rvv@duck.com"],
-       subject: "Account bevestigen",
-       text: emailHtml,
-       html: emailHtml,
-     });
+    await sendEmail({
+      from: "Admin <admin@r-bytes.com>",
+      to: ["rvv@duck.com"],
+      subject: "Account bevestigen",
+      text: emailHtml,
+      html: emailHtml,
+    });
 
     return {
       success: true,
       data: updatedUser,
       message: "Emailadres is bevestigd",
+    };
+  } catch (error) {
+    console.error("Fout bij het ophalen van gebruiker uit de database:", error);
+    return {
+      success: false,
+      message: "Er is een fout opgetreden bij het verwerken van uw verzoek.",
+    };
+  }
+};
+
+export const sendAdminApprovalMail = async (userId: string) => {
+  try {
+    const existingUser = await db.query.users.findFirst({
+      where: eq(users.id, userId),
+    });
+
+    console.log(`Found user: ${JSON.stringify(existingUser)}`);
+
+    if (!existingUser) {
+      return {
+        success: false,
+        message: "Gebruiker niet gevonden",
+      };
+    }
+
+    // send the admin a notification
+    const emailHtml = `
+        <div>
+          <h1> Account is goedgekeurd voor: <b> ${existingUser.email} </b></h1>
+          <p> Welkom bij Lazo Den Haag! </p>
+          <p> Uw account is goedgekeurd, klik op onderstaande knop om in te loggen </p>
+          <a href="${process.env.NEXT_PUBLIC_BASE_URL}/account" target="_blank">
+            Inloggen
+          </a>
+          
+        </div>
+      `;
+
+    await sendEmail({
+      from: "Lazo admin <admin@r-bytes.com>",
+      to: [existingUser.email],
+      subject: `Lazo Den Haag - Account is goedgekeurd`,
+      text: emailHtml,
+      html: emailHtml,
+    });
+
+    return {
+      success: true,
+      message: "Account goedgekeuring bericht is verstuurd",
     };
   } catch (error) {
     console.error("Fout bij het ophalen van gebruiker uit de database:", error);

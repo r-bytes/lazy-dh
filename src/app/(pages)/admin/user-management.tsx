@@ -1,4 +1,5 @@
 "use client";
+import { sendAdminApprovalMail } from "@/actions/users/user.actions";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { ApiResponse, DatabaseUser } from "@/lib/types/user";
@@ -46,10 +47,13 @@ const UserManagement = ({ userIdFromProps }: { userIdFromProps: string }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ adminApproved: currentApproval }),
       });
+
       const data = await res.json();
+
       if (data.success) {
         setEditedUsers((prev) => ({ ...prev, [userId]: currentApproval }));
         toast.success("Gebruiker goedgekeurd");
+        await sendAdminApprovalMail(userId);
       } else {
         toast.error(data.message);
       }

@@ -13,6 +13,7 @@ import { User } from "@/lib/types/order";
 import { DatabaseUser } from "@/lib/types/user";
 import { eq } from "drizzle-orm";
 import { InvoiceDetails } from "@/lib/types/invoice";
+import { updateUserActivity } from "@/actions/users/user.actions";
 
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -34,6 +35,8 @@ export async function POST(request: NextRequest) {
       status: "Nieuw",
     })
     .returning();
+
+    updateUserActivity(email, "order placed", "successfully")
     
     // Voeg de items toe aan de orderItems tabel
     const orderItemsData = cartItems.map((item: Product) => ({
@@ -103,6 +106,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, message: "Bestelling geplaatst en e-mail succesvol verzonden" });
   } catch (error) {
+    updateUserActivity(email, "order placed", "failure");
     console.error(error);
     return NextResponse.json({ success: false, message: "Er is iets misgegaan" }, { status: 500 });
   }
