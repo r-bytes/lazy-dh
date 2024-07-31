@@ -10,6 +10,7 @@ import crypto from "crypto";
 import { eq } from "drizzle-orm";
 import { signIn } from "../../../auth";
 import { sendEmail } from "../email/sendEmail";
+import { OrderItem } from "@/lib/types/order";
 
 /**
  * Creates a hashed password from a plain text password.
@@ -389,6 +390,62 @@ export const updateUserActivity = async (email: string, activityType: string, ac
   }
 };
 
+type OrderType = {
+  orderId: number;
+  userId: string;
+  orderDate: Date | null;
+  totalAmount: string;
+  status: string;
+  userName: string | null;
+  userEmail: string | null;
+  orderItems: unknown;
+}[];
+
+export const sendPickupMail = async (order: OrderType) => {
+  try {
+    const existingUser = await db.query.users.findFirst({
+      where: eq(users.id, order[0].userId),
+    });
+
+    console.log(`Found user: ${JSON.stringify(existingUser)}`);
+
+    if (!existingUser) {
+      return {
+        success: false,
+        message: "Gebruiker niet gevonden",
+      };
+    }
+
+    // send the admin a notification
+    const emailHtml = `
+        <div>
+          <h1> Ophaalbericht voor bestelling: <b> ${order[0].orderId} </b></h1>
+          <p> Goed nieuws! </p>
+          <p> Uw bestelling bij Lazo Den Haag zijn klaar om opgehaald te worden </p>
+          <p> Tot snel in de winkel! </p>
+        </div>
+      `;
+
+    await sendEmail({
+      from: "Lazo admin <admin@r-bytes.com>",
+      to: [order[0].userEmail!],
+      subject: `Lazo Den Haag - Ophaalbericht voor bestelling: <b> ${order[0].orderId}`,
+      text: emailHtml,
+      html: emailHtml,
+    });
+
+    return {
+      success: true,
+      message: "Ophaalbericht is verstuurd",
+    };
+  } catch (error) {
+    console.error("Fout bij het ophalen van gebruiker uit de database:", error);
+    return {
+      success: false,
+      message: "Er is een fout opgetreden bij het verwerken van uw verzoek.",
+    };
+  }
+};
 export const verifyEmail = async (emailVerificationToken: string) => {
   try {
     const existingUser = await db.query.users.findFirst({

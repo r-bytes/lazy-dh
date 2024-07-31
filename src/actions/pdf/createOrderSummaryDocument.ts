@@ -80,14 +80,14 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
   });
 
   page.drawText("Verzendadres:", {
-    x: 300,
+    x: 400,
     y: addressBlockY - 40,
     size: 10,
     font: regularFont,
     lineHeight: 10,
   });
   page.drawText(shippingDetails, {
-    x: 293,
+    x: 393,
     y: addressBlockY - 50,
     size: 8,
     font: regularFont,
@@ -117,7 +117,7 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
   `;
 
   page.drawText(referenceInfoRight, {
-    x: 293,
+    x: 393,
     y: referenceY + 11,
     size: 8,
     font: regularFont,

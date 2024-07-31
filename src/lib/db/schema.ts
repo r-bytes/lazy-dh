@@ -58,25 +58,3 @@ export const userActivities = pgTable("user_activities", {
   activityData: varchar("activity_data", { length: 50 }).notNull(),
   createdAt: timestamp("created_at").defaultNow(),
 });
-
-export const products = pgTable("products", {
-  id: text("id").primaryKey(),
-  name: varchar("name", { length: 100 }).notNull(),
-  description: text("description"),
-  price: decimal("price", { precision: 10, scale: 2 }).notNull(),
-  stock: integer("stock").notNull(),
-  category: varchar("category", { length: 50 }),
-  imageUrl: text("image_url"),
-});
-
-export const payments = pgTable("payments", {
-  id: serial("id").primaryKey(),
-  orderId: integer("order_id")
-    .notNull()
-    .references(() => orders.id),
-  paymentMethod: varchar("payment_method", { length: 50 }),
-  paymentStatus: varchar("payment_status", { length: 50 }),
-  transactionId: varchar("transaction_id", { length: 100 }),
-  amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
-  paymentDate: timestamp("payment_date").defaultNow(),
-});
