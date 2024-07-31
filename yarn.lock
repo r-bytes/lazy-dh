@@ -1697,7 +1697,7 @@
   dependencies:
     "@floating-ui/utils" "^0.2.0"
 
-"@floating-ui/dom@^1.0.0", "@floating-ui/dom@^1.2.7":
+"@floating-ui/dom@^1.0.0":
   version "1.6.5"
   resolved "https://registry.npmjs.org/@floating-ui/dom/-/dom-1.6.5.tgz"
   integrity sha512-Nsdud2X65Dz+1RHjAIP0t8z5e2ff/IRbei6BqFrl1urT8sDVzM1HMQ+R0XcU5ceRfyO3I6ayeqIfh+6Wb8LGTw==
@@ -1705,17 +1705,17 @@
     "@floating-ui/core" "^1.0.0"
     "@floating-ui/utils" "^0.2.0"
 
-"@floating-ui/react-dom@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/@floating-ui/react-dom/-/react-dom-2.0.0.tgz"
-  integrity sha512-Ke0oU3SeuABC2C4OFu2mSAwHIP5WUiV98O9YWoHV4Q5aT6E9k06DV0Khi5uYspR8xmmBk08t8ZDcz3TR3ARkEg==
-  dependencies:
-    "@floating-ui/dom" "^1.2.7"
-
 "@floating-ui/react-dom@^2.0.0", "@floating-ui/react-dom@^2.1.0":
   version "2.1.0"
   resolved "https://registry.npmjs.org/@floating-ui/react-dom/-/react-dom-2.1.0.tgz"
   integrity sha512-lNzj5EQmEKn5FFKc04+zasr09h/uX8RtJRNj5gUXsSQIXHVWTVh+hVAg1vOMCexkX8EgvemMvIFpQfkosnVNyA==
+  dependencies:
+    "@floating-ui/dom" "^1.0.0"
+
+"@floating-ui/react-dom@^2.0.4":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@floating-ui/react-dom/-/react-dom-2.1.1.tgz#cca58b6b04fc92b4c39288252e285e0422291fb0"
+  integrity sha512-4h84MJt3CHrtG18mGsXuLCHMrug49d7DFkU0RMIyshRveBeyV2hmV/pDaF2Uxtu8kgq5r46llp5E5FQiR0K2Yg==
   dependencies:
     "@floating-ui/dom" "^1.0.0"
 
@@ -2831,11 +2831,6 @@
     tsconfig-paths "^4.2.0"
     zod "^3.22.4"
 
-"@sanity/color@^2.2.5":
-  version "2.2.5"
-  resolved "https://registry.npmjs.org/@sanity/color/-/color-2.2.5.tgz"
-  integrity sha512-tTi22KoKuER3sldXYl4c1Dq2zU7tMLDkljFiaUKVkBbu4PBvRGCFw75kXZnD2b4Bsp6vin+7sI+AKdCKRhfRuw==
-
 "@sanity/color@^3.0.0", "@sanity/color@^3.0.6":
   version "3.0.6"
   resolved "https://registry.npmjs.org/@sanity/color/-/color-3.0.6.tgz"
@@ -2911,7 +2906,7 @@
     split2 "4.2.0"
     throttle-debounce "5.0.0"
 
-"@sanity/icons@^2.0.0", "@sanity/icons@^2.4.1":
+"@sanity/icons@^2.0.0", "@sanity/icons@^2.7.0":
   version "2.11.8"
   resolved "https://registry.npmjs.org/@sanity/icons/-/icons-2.11.8.tgz"
   integrity sha512-C4ViXtk6eyiNTQ5OmxpfmcK6Jw+LLTi9zg9XBUD15DzC4xTHaGW9SVfUa43YtPGs3WC3M0t0K59r0GDjh52HIg==
@@ -3092,16 +3087,16 @@
     "@sanity/client" "^6.19.1"
     "@types/react" "^18.0.25"
 
-"@sanity/ui@^1.0.0":
-  version "1.9.3"
-  resolved "https://registry.npmjs.org/@sanity/ui/-/ui-1.9.3.tgz"
-  integrity sha512-AdWEVFaK0Snk6xxP0lGPVP3QQYKwzkfGFpFZnL9d6UtWt8yeuS8BMLVAzmXzg14hrqH50ex9nvNl3eq6a0MWiw==
+"@sanity/ui@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@sanity/ui/-/ui-2.0.0.tgz#3ef9fd830b8f73398569d1634b702207d4602c05"
+  integrity sha512-y+vRMc74DnH2FH8BBqkjiDu5eGfy1CYKRzkKRepftKFDsUoJIdQeUPl3ULq+paeN4FqKJRzKT1j4++o8HwhmmQ==
   dependencies:
-    "@floating-ui/react-dom" "2.0.0"
-    "@sanity/color" "^2.2.5"
-    "@sanity/icons" "^2.4.1"
+    "@floating-ui/react-dom" "^2.0.4"
+    "@sanity/color" "^3.0.0"
+    "@sanity/icons" "^2.7.0"
     csstype "^3.1.2"
-    framer-motion "^10.16.2"
+    framer-motion "^10.16.5"
     react-refractor "^2.1.7"
 
 "@sanity/ui@^2.1.14":
@@ -5684,9 +5679,9 @@ framer-motion@11.0.8:
   optionalDependencies:
     "@emotion/is-prop-valid" "^0.8.2"
 
-framer-motion@^10.16.2:
+framer-motion@^10.16.5:
   version "10.18.0"
-  resolved "https://registry.npmjs.org/framer-motion/-/framer-motion-10.18.0.tgz"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.18.0.tgz#1f4fc51403996ea7170af885bd44a7079d255950"
   integrity sha512-oGlDh1Q1XqYPksuTD/usb0I70hq95OUzmL9+6Zd+Hs4XV0oaISBa/UUMSjYiq6m8EUF32132mOJ8xVZS+I0S6w==
   dependencies:
     tslib "^2.4.0"

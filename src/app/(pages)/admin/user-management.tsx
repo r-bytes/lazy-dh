@@ -60,12 +60,12 @@ const UserManagement = ({ userIdFromProps }: { userIdFromProps: string }) => {
   };
 
   if (loading) {
-    return <p className="flex items-center justify-center">Loading users...</p>;
+    return <p className="flex items-center justify-center">Gebruikers laden...</p>;
   }
 
   return (
     <div className="flex flex-col items-center overflow-x-scroll text-muted-foreground lg:min-w-fit">
-      <h1 className="my-4 text-center text-3xl font-bold">User Management</h1>
+      <h1 className="my-4 text-center text-3xl font-bold">Gebruikers Beheer</h1>
       <TableCell className="self-end hover:cursor-pointer" onClick={() => setShowApproved(!showApproved)}>
         {showApproved ? <EyeIcon /> : <EyeOff />}
       </TableCell>

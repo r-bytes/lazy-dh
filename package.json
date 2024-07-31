@@ -26,7 +26,7 @@
     "@sanity/icons": "^2.0.0",
     "@sanity/image-url": "1",
     "@sanity/types": "^3.45.0",
-    "@sanity/ui": "^1.0.0",
+    "@sanity/ui": "2.0.0",
     "@sanity/vision": "3",
     "@shadcn/ui": "^0.0.4",
     "@tanstack/react-table": "^8.19.3",

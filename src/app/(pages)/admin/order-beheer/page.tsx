@@ -20,7 +20,7 @@ const AdminPage = () => {
     }
 
     // Check if the user is one of the authorized emails
-    const authorizedEmails = ["rvv@duck.com", "lazodenahaag@gmail.com"];
+    const authorizedEmails = ["rvv@duck.com", "lazodenhaag@gmail.com"];
     if (authorizedEmails.includes(session.user!.email!)) {
       setIsAuthenticated(true);
     } else {
