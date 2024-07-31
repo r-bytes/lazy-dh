@@ -15,14 +15,13 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../card";
-import { useAuthContext } from "@/context/AuthContext";
 
 export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isAdminApproved, setIsAdminApproved] = useState<boolean>(false);
 
   const router = useRouter();
-  const { checkAdminApproval, isAdminApproved } = useAuthContext();
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
@@ -32,33 +31,54 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
     },
   });
 
+  const checkAdminApproval = async (email: string) => {
+    if (email) {
+      try {
+        const response = await fetch("/api/getUserApprovalStatus", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email }),
+        });
+        const data = await response.json();
+
+        return data;
+      } catch (error) {
+        console.error("Failed to fetch admin approval status:", error);
+        setIsAdminApproved(false);
+      }
+    }
+  };
+
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
     setIsLoading(true);
 
-    await checkAdminApproval(values.email);
-    console.log(isAdminApproved);
-    
+    const s = await checkAdminApproval(values.email);
+    const { success, message } = await s;
 
-    if (!isAdminApproved) {
-      toast.error("Account wacht op goedkeuring van admin");
+    if (!success && message === "Account wacht op goedkeuring van admin") {
+      toast.error(message);
+      setIsLoading(false);
+      return;
+    } else if (success && message === "Account is goedgekeurd") {
+      const result = await signIn("credentials", {
+        redirect: false, // Prevents redirecting to signIn's callback URL
+        email: values.email,
+        password: values.password,
+      });
+
+      if (result?.error) {
+        toast.error("Inloggen mislukt");
+      } else {
+        toast.success("Succesvol ingelogd");
+        navigateTo(router, `${fromCheckout ? "/winkelwagen" : "/"}`);
+      }
+
       setIsLoading(false);
       return;
     }
 
-    const result = await signIn("credentials", {
-      redirect: false, // Prevents redirecting to signIn's callback URL
-      email: values.email,
-      password: values.password,
-    });
-
-    if (result?.error) {
-      toast.error("Inloggen mislukt");
-    } else {
-      toast.success("Succesvol ingelogd");
-      navigateTo(router, `${fromCheckout ? "/winkelwagen" : "/"}`);
-    }
-
-    setIsLoading(false);
+    toast.error(message);
+    return;
   };
 
   return fromCheckout ? (
