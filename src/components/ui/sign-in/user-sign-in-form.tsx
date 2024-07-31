@@ -35,8 +35,9 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
     setIsLoading(true);
 
-    // Call checkAdminApproval and wait for it to complete before checking the status
     await checkAdminApproval(values.email);
+    console.log(isAdminApproved);
+    
 
     if (!isAdminApproved) {
       toast.error("Account wacht op goedkeuring van admin");

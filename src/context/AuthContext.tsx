@@ -6,7 +6,7 @@ import React, { createContext, Dispatch, SetStateAction, useContext, useEffect, 
 
 type ContextProps = {
   user: User | null;
-  setUser: Dispatch<SetStateAction<User | null>>;
+  setUser: (user: User) => void;
   isAuthenticated: boolean;
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
   isAdminApproved: boolean;
@@ -16,12 +16,12 @@ type ContextProps = {
 
 export const AuthContext = createContext<ContextProps>({
   user: null,
-  setUser: () => {},
+  setUser: (user: User) => null,
   isAuthenticated: false,
-  setIsAuthenticated: () => {},
+  setIsAuthenticated: () => false,
   isAdminApproved: false,
-  setIsAdminApproved: () => {},
-  checkAdminApproval: async () => {},
+  setIsAdminApproved: () => false,
+  checkAdminApproval: async () => {}
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -32,17 +32,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { data: session, status } = useSession();
 
   const checkAdminApproval = async (email: string) => {
-    if (email) {
+    if (email) {      
       try {
         const response = await fetch("/api/getUserApprovalStatus", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ email: email }),
         });
         const data = await response.json();
 
-        setIsAdminApproved(data.success && data.message === "Account is goedgekeurd");
+        if (data.success && data.message === "Account is goedgekeurd") {
+          console.log(data);
+          
+          setIsAdminApproved(true);
+        } else {
+          console.log(data);
+          setIsAdminApproved(false);
+        }
       } catch (error) {
+        
         console.error("Failed to fetch admin approval status:", error);
         setIsAdminApproved(false);
       }
@@ -53,9 +61,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (status === "authenticated" && session?.user) {
       setIsAuthenticated(true);
       setUser(session.user);
-      if (session.user.email) {
-        checkAdminApproval(session.user.email);
-      }
+
+      session.user.email && checkAdminApproval(session.user.email);
+
     } else {
       setIsAuthenticated(false);
       setUser(null);
@@ -72,7 +80,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setIsAuthenticated,
         isAdminApproved,
         setIsAdminApproved,
-        checkAdminApproval,
+        checkAdminApproval
       }}
     >
       {children}
