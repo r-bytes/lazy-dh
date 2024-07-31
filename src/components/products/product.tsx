@@ -135,18 +135,18 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
           </CardContent>
         </Card>
       </DialogTrigger>
-      <DialogContent className="max-h-4/5 flex w-4/5 flex-col justify-center rounded-2xl bg-zinc-100 p-0 dark:bg-zinc-900">
-        <Heart
+      <DialogContent className="max-h-3/5 sm:max-h-4/5 flex w-4/5 flex-col justify-center rounded-2xl bg-zinc-100 p-0 dark:bg-zinc-900">
+        {/* <Heart
           className="m-4 h-4 w-4 hover:cursor-pointer"
           onClick={handleToggleFavorite}
           color={isFavorite ? "red" : ""}
           fill={isFavorite ? "red" : "bg-muted-foreground/30"}
-        />
+        /> */}
         {/* </button> */}
         {/* </Button> */}
         {/* Top */}
         <Image
-          className="mb-6 h-96 w-full object-contain"
+          className="mb-6 mt-12 h-72 w-full object-contain sm:h-96"
           src={productImage}
           alt={product.name}
           width={200}
@@ -215,18 +215,18 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
           </CardContent>
         </Card>
       </DialogTrigger>
-      <DialogContent className="max-h-4/5 flex w-4/5 flex-col justify-center rounded-2xl bg-zinc-100 p-0 dark:bg-zinc-900">
-        <Heart
+      <DialogContent className="max-h-3/5 sm:max-h-4/5 flex w-4/5 flex-col justify-center rounded-2xl bg-zinc-100 p-0 dark:bg-zinc-900">
+        {/* <Heart
           className="m-4 h-4 w-4 hover:cursor-pointer"
           onClick={handleToggleFavorite}
           color={isFavorite ? "red" : ""}
           fill={isFavorite ? "red" : "bg-muted-foreground/30"}
-        />
+        /> */}
         {/* </button> */}
         {/* </Button> */}
         {/* Top */}
         <Image
-          className="mb-6 h-96 w-full object-contain"
+          className="mb-6 mt-12 h-72 w-full object-contain  sm:h-96"
           src={productImage}
           alt={product.name}
           width={200}

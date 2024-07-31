@@ -5,14 +5,14 @@ export const users = pgTable("users", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()), // Generate a UUID for each user
-  name: varchar("name", { length: 100 }),
+  name: varchar("name", { length: 100 }).notNull(),
   email: varchar("email", { length: 100 }).notNull().unique(),
   password: varchar("password_hash", { length: 255 }).notNull(),
   createdAt: timestamp("created_at").defaultNow(),
   address: text("address").notNull(),
   city: varchar("city", { length: 100 }).notNull(),
   postal: varchar("postal", { length: 10 }).notNull(), // Adjust the length as per the actual requirement
-  phoneNumber: varchar("phone_number", { length: 15 }),
+  phoneNumber: varchar("phone_number", { length: 15 }).notNull(),
   companyName: varchar("company_name", { length: 255 }),
   vatNumber: varchar("vat_number", { length: 20 }),
   chamberOfCommerceNumber: varchar("kvk_number", { length: 20 }), // 'KvK nummer' field

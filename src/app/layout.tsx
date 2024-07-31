@@ -18,26 +18,25 @@ export const metadata: Metadata = {
   description: "Welkom bij Lazo Spirits Den Haag",
 };
 
-export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${montserrat.className} flex min-h-screen flex-col`}>
-        <div>
-          <SessionProvider>
-            <CartProvider>
-              <ProductProvider type="">
-                <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-                  <AuthProvider>
-                    <Toaster />
-                    <Header />
-                    <main>{children}</main>
-                    <Footer />
-                  </AuthProvider>
-                </ThemeProvider>
-              </ProductProvider>
-            </CartProvider>
-          </SessionProvider>
-        </div>
+        <SessionProvider>
+          <CartProvider>
+            <ProductProvider type="">
+              <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+                <AuthProvider>
+                  <Toaster />
+                  <Header />
+                  {/* Main content area that will grow to push the footer to the bottom */}
+                  <main className="flex-grow">{children}</main>
+                  <Footer />
+                </AuthProvider>
+              </ThemeProvider>
+            </ProductProvider>
+          </CartProvider>
+        </SessionProvider>
       </body>
     </html>
   );

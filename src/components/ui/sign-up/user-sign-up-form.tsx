@@ -1,35 +1,34 @@
 "use client";
 
 import { signUp } from "@/actions/users/user.actions";
-import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { signUpSchema } from "@/lib/types/signup";
-import { navigateTo } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger
-} from "../accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../accordion";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../card";
+import { navigateTo } from "@/lib/utils";
 
-export function UserSignUpForm({ fromCheckout }: { fromCheckout?: boolean }) {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+export function UserSignUpForm({ fromCheckout = false }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  const [expanded, setExpanded] = useState<string[]>([]);
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof signUpSchema>>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    clearErrors,
+  } = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: "",
@@ -47,231 +46,165 @@ export function UserSignUpForm({ fromCheckout }: { fromCheckout?: boolean }) {
     },
   });
 
-  const handleSuccess = () => {
-    toast.success("Succesvol geregistreerd!");
-    router.push("/account/registreer/succes"); // Using Next.js router to navigate
-    setIsLoading(false);
-  };
-
-  const handleFailure = (message: string) => {
-    // Provide a default error message if none is provided
-    toast.error(message || "Registratie mislukt. Probeer het alstublieft opnieuw.");
-    setIsLoading(false);
-  };
-
   const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
     setIsLoading(true);
     try {
-      const signUpResponse = await signUp(values);
-
-      if (signUpResponse) {
-        if (signUpResponse.success) {
-          handleSuccess();
-        } else {
-          // Call handleFailure with a specific message or a generic one
-          handleFailure(signUpResponse.message || "Onbekende fout bij registratie.");
-        }
+      const response = await signUp(values);
+      if (response.success) {
+        toast.success("Succesvol geregistreerd");
+        navigateTo(router, "/account/registreer/succes");
       } else {
-        // Handle cases where signUpResponse might be undefined or null
-        handleFailure("Geen respons van server.");
+        toast.error(response.message);
       }
     } catch (error) {
-      // This catch block handles unexpected errors such as network issues
-      console.error("Registration error:", error);
-      handleFailure("Netwerkfout of server niet bereikbaar.");
+      toast.error("Fout bij registreren, probeer later nog eens");
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false); // Ensure loading is always turned off after operation completes
   };
 
+  // Automatically open accordion sections with errors after submission
+  useEffect(() => {
+    const sectionsWithErrors = Object.keys(errors).map((field) => field.split(".")[0]);
+    setExpanded(sectionsWithErrors);
+  }, [errors]);
+
   return (
-    <Form {...form}>
-      <Card className="mx-[-1rem] py-8">
-        <form onSubmit={form.handleSubmit(onSubmit)} className="mt-2 max-w-96 space-y-4 md:max-w-full">
-          <CardHeader>
-            <CardTitle className="text-left md:text-center"> Registreren </CardTitle>
-            <CardDescription className="text-left md:text-center"> Nieuw account registreren </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <Accordion type="single" collapsible className="w-full px-2">
-              <AccordionItem value="item-1">
-                {/* <FormLabel className="m-3"> Persoonsgegevens </FormLabel> */}
-                <AccordionTrigger className="m-3"> Persoonsgegevens </AccordionTrigger>
-                <AccordionContent className="my-2 flex flex-col space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field, fieldState }) => (
-                      <FormItem className={fromCheckout ? "mx-2" : ""}>
-                        <FormControl>
-                          <Input placeholder="Naam" {...field} />
-                        </FormControl>
-                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field, fieldState }) => (
-                      <FormItem className={fromCheckout ? "mx-2" : ""}>
-                        <FormControl>
-                          <Input placeholder="Email" {...field} />
-                        </FormControl>
-                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
-                      </FormItem>
-                    )}
-                  />
+    <Card className="mx-auto my-8 p-4 shadow-lg">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <CardHeader>
+          <CardTitle>Register</CardTitle>
+          <CardDescription>Fill in the form to create a new account.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Accordion type="single" collapsible className="w-full px-2">
+            <AccordionItem value="item-1">
+              <AccordionTrigger className="m-3"> Persoonsgegevens </AccordionTrigger>
+              <AccordionContent className="my-2 flex flex-col space-y-4">
+                <div className={fromCheckout ? "relative mx-2" : "relative"}>
+                  <Input id="name" placeholder="Name" {...register("name")} />
+                  <span style={{ position: "absolute", right: 15, top: "50%", transform: "translateY(-50%)" }} className="text-lg text-red-500">
+                    *
+                  </span>
+                </div>
+                <div className={fromCheckout ? "relative mx-2" : "relative"}>
+                  <Input id="email" placeholder="Email" {...register("email")} />
+                  <span style={{ position: "absolute", right: 15, top: "50%", transform: "translateY(-50%)" }} className="text-lg text-red-500">
+                    *
+                  </span>
+                </div>
+                <div className={fromCheckout ? "relative mx-2" : "relative"}>
+                  <Input id="address" placeholder="Adres" {...register("address")} />
+                  <span style={{ position: "absolute", right: 15, top: "50%", transform: "translateY(-50%)" }} className="text-lg text-red-500">
+                    *
+                  </span>
+                </div>
 
-                  <FormField
-                    control={form.control}
-                    name="address"
-                    render={({ field, fieldState }) => (
-                      <FormItem className={fromCheckout ? "mx-2" : ""}>
-                        <FormControl>
-                          <Input placeholder="Adres" {...field} />
-                        </FormControl>
-                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="postal"
-                    render={({ field, fieldState }) => (
-                      <FormItem className={fromCheckout ? "mx-2" : ""}>
-                        <FormControl>
-                          <Input placeholder="Postcode" {...field} />
-                        </FormControl>
-                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="city"
-                    render={({ field, fieldState }) => (
-                      <FormItem className={fromCheckout ? "mx-2" : ""}>
-                        <FormControl>
-                          <Input placeholder="Stad" {...field} />
-                        </FormControl>
-                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="phoneNumber"
-                    render={({ field, fieldState }) => (
-                      <FormItem className={fromCheckout ? "mx-2" : ""}>
-                        <FormControl>
-                          <Input placeholder="Telefoonnummer" {...field} />
-                        </FormControl>
-                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
-                      </FormItem>
-                    )}
-                  />
-                </AccordionContent>
-              </AccordionItem>
+                <div className={fromCheckout ? "relative mx-2" : "relative"}>
+                  <Input id="postal" placeholder="Postcode" {...register("postal")} />
+                  <span style={{ position: "absolute", right: 15, top: "50%", transform: "translateY(-50%)" }} className="text-lg text-red-500">
+                    *
+                  </span>
+                </div>
 
-              <AccordionItem value="item-2">
-                <AccordionTrigger className="m-3"> Bedrijfsgegevens </AccordionTrigger>
-                <AccordionContent className="my-2 flex flex-col space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="companyName"
-                    render={({ field, fieldState }) => (
-                      <FormItem className={fromCheckout ? "mx-2" : ""}>
-                        <FormControl>
-                          <Input placeholder="Bedrijfsnaam" {...field} />
-                        </FormControl>
-                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="vatNumber"
-                    render={({ field, fieldState }) => (
-                      <FormItem className={fromCheckout ? "mx-2" : ""}>
-                        <FormControl>
-                          <Input placeholder="BTW-nummer" {...field} />
-                        </FormControl>
-                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="chamberOfCommerceNumber"
-                    render={({ field, fieldState }) => (
-                      <FormItem className={fromCheckout ? "mx-2" : ""}>
-                        <FormControl>
-                          <Input placeholder="KVK-nummer" {...field} />
-                        </FormControl>
-                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
-                      </FormItem>
-                    )}
-                  />
-                </AccordionContent>
-              </AccordionItem>
+                <div className={fromCheckout ? "relative mx-2" : "relative"}>
+                  <Input id="city" placeholder="Stad" {...register("city")} />
+                  <span style={{ position: "absolute", right: 15, top: "50%", transform: "translateY(-50%)" }} className="text-lg text-red-500">
+                    *
+                  </span>
+                </div>
 
-              <AccordionItem value="item-3">
+                <div className={fromCheckout ? "relative mx-2" : "relative"}>
+                  <Input id="phoneNumber" placeholder="Telefoonnummer" {...register("phoneNumber")} />
+                  <span style={{ position: "absolute", right: 15, top: "50%", transform: "translateY(-50%)" }} className="text-lg text-red-500">
+                    *
+                  </span>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-2">
+              <AccordionTrigger className="m-3"> Bedrijfsgegevens </AccordionTrigger>
+              <AccordionContent className="my-2 flex flex-col space-y-4">
+                <div className={fromCheckout ? "mx-2" : ""}>
+                  <Input id="companyName" placeholder="Bedrijfsnaam" {...register("companyName")} />
+                </div>
+                <div className={fromCheckout ? "mx-2" : ""}>
+                  <Input id="vatNumber" placeholder="BTW-nummer" {...register("vatNumber")} />
+                </div>
+                <div className={fromCheckout ? "mx-2" : ""}>
+                  <Input id="chamberOfCommerceNumber" placeholder="KVK-nummer" {...register("chamberOfCommerceNumber")} />
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-3">
+              <AccordionItem value="password">
                 <AccordionTrigger className="m-3"> Wachtwoord </AccordionTrigger>
-                <AccordionContent className="my-2 flex flex-col space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field, fieldState }) => (
-                      <FormItem className={fromCheckout ? "mx-2" : ""}>
-                        <FormControl>
-                          <div className="relative">
-                            <Input placeholder="Wachtwoord" type={showPassword ? "text" : "password"} {...field} />
-                            <Button
-                              style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)" }}
-                              onClick={() => setShowPassword(!showPassword)}
-                              aria-label={showPassword ? "Hide password" : "Show password"}
-                            >
-                              {showPassword ? <EyeOff /> : <Eye />}
-                            </Button>
-                          </div>
-                        </FormControl>
-                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="confirmPassword"
-                    render={({ field, fieldState }) => (
-                      <FormItem className={fromCheckout ? "mx-2" : ""}>
-                        <FormControl>
-                          <div className="relative">
-                            <Input placeholder="Herhaal wachtwoord" type={showConfirmPassword ? "text" : "password"} {...field} />
-                            <Button
-                              style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)" }}
-                              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                              aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
-                            >
-                              {showPassword ? <EyeOff /> : <Eye />}
-                            </Button>
-                          </div>
-                        </FormControl>
-                        {fieldState.error && <FormMessage>{fieldState.error.message}</FormMessage>}
-                      </FormItem>
-                    )}
-                  />
+                <AccordionContent className="my-2 flex flex-col gap-4">
+                  <div className={fromCheckout ? "relative mx-2" : "relative"}>
+                    <Input
+                      placeholder="Wachtwoord"
+                      type={showPassword ? "text" : "password"}
+                      {...register("password", {
+                        required: "Password is required",
+                      })}
+                    />
+                    <Button
+                      type="button"
+                      style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)" }}
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <EyeOff /> : <Eye />}
+                    </Button>
+                    <span style={{ position: "absolute", right: 80, top: "50%", transform: "translateY(-50%)" }} className="text-lg text-red-500">
+                      *
+                    </span>
+                  </div>
+
+                  <div className={fromCheckout ? "relative mx-2" : "relative"}>
+                    <Input
+                      placeholder="Herhaal wachtwoord"
+                      type={showConfirmPassword ? "text" : "password"}
+                      {...register("confirmPassword", {
+                        required: "Confirm password is required",
+                      })}
+                    />
+                    <Button
+                      type="button"
+                      style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)" }}
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    >
+                      {showConfirmPassword ? <EyeOff /> : <Eye />}
+                    </Button>
+                    <span style={{ position: "absolute", right: 80, top: "50%", transform: "translateY(-50%)" }} className="text-lg text-red-500">
+                      *
+                    </span>
+                  </div>
                 </AccordionContent>
               </AccordionItem>
-            </Accordion>
-          </CardContent>
-          <CardFooter>
-            <Button variant="outline" type="submit" disabled={isLoading} className={fromCheckout ? "mx-2" : ""}>
-              {isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.logo className="mr-2 h-4 w-4" />}
-              Submit
-            </Button>
-          </CardFooter>
-        </form>
-      </Card>
-    </Form>
+              {errors.name && <p className="m-4 text-red-500">{errors.name.message}</p>}
+              {errors.email && <p className="m-4 text-red-500">{errors.email.message}</p>}
+              {errors.address && <p className="m-4 text-red-500">{errors.address.message}</p>}
+              {errors.postal && <p className="m-4 text-red-500">{errors.postal.message}</p>}
+              {errors.city && <p className="m-4 text-red-500">{errors.city.message}</p>}
+              {errors.phoneNumber && <p className="m-4 text-red-500">{errors.phoneNumber.message}</p>}
+              {errors.email && <p className="m-4 text-red-500">{errors.email.message}</p>}
+              {errors.companyName && <p className="m-4 text-red-500">{errors.companyName.message}</p>}
+              {errors.vatNumber && <p className="m-4 text-red-500">{errors.vatNumber.message}</p>}
+              {errors.chamberOfCommerceNumber && <p className="m-4 text-red-500">{errors.chamberOfCommerceNumber.message}</p>}
+              {errors.email && <p className="m-4 text-red-500">{errors.email.message}</p>}
+              {errors.password && <p className="m-4 text-red-500">{errors.password.message}</p>}
+              {errors.confirmPassword && <p className="m-4 text-red-500">{errors.confirmPassword.message}</p>}
+            </AccordionItem>
+          </Accordion>
+        </CardContent>
+        <CardFooter>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? "Registering..." : "Register"}
+          </Button>
+        </CardFooter>
+      </form>
+    </Card>
   );
 }
