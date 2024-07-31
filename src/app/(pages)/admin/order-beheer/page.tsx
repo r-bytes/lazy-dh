@@ -30,15 +30,15 @@ const AdminPage = () => {
   }, [session, status, router]);
 
   if (status === "loading") {
-    return <div className="flex min-h-[50vh] flex-col items-center justify-center">Loading...</div>; // Show loading text while checking session
+    return <div className="flex flex-col items-center justify-center">Loading...</div>; // Show loading text while checking session
   }
 
   if (!isAuthenticated) {
-    return <p className="flex min-h-[50vh] flex-col items-center justify-center">Access Denied</p>; // Show an access denied message if not authenticated
+    return <p className="flex flex-col items-center justify-center">Access Denied</p>; // Show an access denied message if not authenticated
   }
 
   return (
-    <MaxWidthWrapper className="mx-auto min-h-[50vh]">
+    <MaxWidthWrapper className="mx-auto">
       <OrderManagement />
     </MaxWidthWrapper>
   );

@@ -29,15 +29,15 @@ const AuthPage = () => {
   }, [session, status, router]);
 
   if (status === "loading") {
-    return <p className="flex min-h-[50vh] items-center justify-center">Laden...</p>;
+    return <p className="flex items-center justify-center">Laden...</p>;
   }
 
   if (status === "authenticated") {
-    return <p className="flex min-h-[50vh] items-center justify-center">U wordt doorverwezen...</p>;
+    return <p className="flex items-center justify-center">U wordt doorverwezen...</p>;
   }
 
   return (
-    <Tabs defaultValue="login" className="mx-auto mt-24 min-h-[50vh] max-w-md md:max-w-5xl">
+    <Tabs defaultValue="login" className="mx-auto mt-24 max-w-md md:max-w-5xl">
       <TabsList className="flex w-full">
         <TabsTrigger value="login">Inloggen</TabsTrigger>
         <TabsTrigger value="signup">Registreren</TabsTrigger>

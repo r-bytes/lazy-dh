@@ -63,7 +63,7 @@ export function AccountCard({ className, ...props }: CardProps) {
   }, []);
 
   return (
-    <Card className={cn("min-h-[50vh] w-full", className)} {...props}>
+    <Card className={cn("w-full", className)} {...props}>
       <CardHeader className="mb-4 text-center">
         <CardTitle className="mt-12 text-4xl md:text-5xl"> Account </CardTitle>
         <CardDescription> Kies een categorie </CardDescription>

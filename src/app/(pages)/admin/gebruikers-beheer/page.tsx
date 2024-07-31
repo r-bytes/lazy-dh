@@ -27,16 +27,16 @@ const UserManagementPage = ({ searchParams }: UserManagementPageProps) => {
   }, [session, status, router]);
 
   if (status === "loading") {
-    return <div className="flex min-h-[50vh] flex-col items-center justify-center">Loading...</div>; // Display loading indicator while session is being verified
+    return <div className="flex flex-col items-center justify-center">Loading...</div>; // Display loading indicator while session is being verified
   }
 
   if (!isAuthenticated) {
     // This should be a return to a simple "Access Denied" or similar page
-    return <div className="flex min-h-[50vh] flex-col items-center justify-center">Access Denied</div>;
+    return <div className="flex flex-col items-center justify-center">Access Denied</div>;
   }
 
   return (
-    <MaxWidthWrapper className="mx-auto min-h-[60vh]">
+    <MaxWidthWrapper className="mx-auto">
       <UserManagement userIdFromProps={searchParams.token as string} />
     </MaxWidthWrapper>
   );
