@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
       vatNumber: currentUser!.vatNumber,
       chamberOfCommerceNumber: currentUser!.chamberOfCommerceNumber,
       orderNumber: order[0].id.toString(),
-      invoiceNumber: `${formattedDate.toString()}"-"${order[0].id.toString()}`,
+      invoiceNumber: `${formattedDate.toString()}-${order[0].id.toString()}`,
       date: formattedDate.toString(),
       invoiceCustomerCountry: "Nederland",
       shippingCustomerCustomerName: currentUser!.name,

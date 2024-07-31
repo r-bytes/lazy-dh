@@ -10,7 +10,7 @@ export default function Page() {
   const router = useRouter();
   
   return session && status === "authenticated" ?  (
-    <div className="mx-auto flex min-h-screen flex-col items-center justify-between bg-background lg:max-w-7xl lg:p-24">
+    <div className="mx-auto flex flex-col items-center justify-between bg-background lg:max-w-7xl lg:p-24">
       <MaxWidthWrapper>
         <AccountCard />
       </MaxWidthWrapper>

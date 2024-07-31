@@ -18,7 +18,7 @@ export const ProductsWithFilter: React.FC<ProductsWithFilterProps> = ({ classNam
 
   return (
     <>
-      <Card className={cn("min-h-screen w-full", className)} {...props}>
+      <Card className={cn("w-full", className)} {...props}>
         <CardHeader className="mb-4 text-center">
           <CardTitle className="mt-12 text-3xl text-muted-foreground"> Alle Producten </CardTitle>
         </CardHeader>

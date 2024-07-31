@@ -51,7 +51,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
   }, [categories, products]);
 
   return (
-    <Card className={cn("min-h-screen w-full", className)} {...props}>
+    <Card className={cn("w-full", className)} {...props}>
       <CardHeader className="mb-4 text-center">
         <CardTitle className="mt-12 text-4xl md:text-5xl">{slug === "home" ? "Categorieën" : capitalizeFirstLetter(currentPath)}</CardTitle>
         <CardDescription>Kies een categorie</CardDescription>

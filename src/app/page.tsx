@@ -19,9 +19,9 @@ export default async function Home() {
   const productListInSale: Product[] = productList.filter((p) => p.inSale);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-background">
+    <main className="flex flex-col items-center justify-between bg-background">
       <section id="promotions">
-        <div className="flex min-h-screen flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center">
           <CardTitle className="text-center text-4xl md:text-5xl">{"Aanbiedingen"}</CardTitle>
           <CarouselSpacing products={productListInSale!} />
           <div className="mx-auto my-16 flex justify-center">

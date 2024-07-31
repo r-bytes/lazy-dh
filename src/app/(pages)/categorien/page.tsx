@@ -10,7 +10,7 @@ export default async function Page() {
   const productList: Product[] = await fetchProducts("");
 
   return (
-    <div className="mx-auto flex min-h-screen flex-col items-center justify-between bg-background lg:max-w-7xl lg:p-24">
+    <div className="mx-auto flex flex-col items-center justify-between bg-background lg:max-w-7xl lg:p-24">
       <MaxWidthWrapper>
         <CategoryCard categories={categoryList} products={productList} />
       </MaxWidthWrapper>

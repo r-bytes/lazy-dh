@@ -6,7 +6,7 @@ type Props = {};
 
 const page = (props: Props) => {
   return (
-    <div className="flex flex-col h-screen items-center justify-center">
+    <div className="flex flex-col items-center justify-center">
       Hartelijk dank! Uw bestelling is geplaatst!
       <Link href={"/"}>
         <Button type="button" className="mt-16">

@@ -90,7 +90,7 @@ const Header = (props: Props) => {
 
         {/* Mobile Navigation Menu */}
         <div className={`lg:hidden ${menuOpen ? "fixed inset-0 z-50 bg-zinc-100 dark:bg-black" : "hidden"}`}>
-          <div className="flex h-screen flex-col items-center justify-between gap-4">
+          <div className="flex flex-col items-center justify-between gap-4">
             <CircleX
               onClick={() => setMenuOpen(false)}
               className="h-12 w-full border p-2 text-right text-muted-foreground hover:cursor-pointer hover:bg-secondary"
