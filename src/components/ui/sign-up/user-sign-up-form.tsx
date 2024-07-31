@@ -28,6 +28,7 @@ export function UserSignUpForm({ fromCheckout = false }) {
     formState: { errors },
     setError,
     clearErrors,
+    watch,
   } = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -46,6 +47,15 @@ export function UserSignUpForm({ fromCheckout = false }) {
     },
   });
 
+    useEffect(() => {
+      const subscription = watch((value, { name, type }) => {
+        if (type === "change" && errors[name!]) {
+          clearErrors(name);
+        }
+      });
+      return () => subscription.unsubscribe();
+    }, [watch, clearErrors, errors]);
+
   const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
     setIsLoading(true);
     try {
@@ -54,6 +64,8 @@ export function UserSignUpForm({ fromCheckout = false }) {
         toast.success("Succesvol geregistreerd");
         navigateTo(router, "/account/registreer/succes");
       } else {
+        const errorKeys = Object.keys(errors) as Array<keyof z.infer<typeof signUpSchema>>;
+        setExpanded(errorKeys);
         toast.error(response.message);
       }
     } catch (error) {
@@ -63,12 +75,6 @@ export function UserSignUpForm({ fromCheckout = false }) {
     }
   };
 
-  // Automatically open accordion sections with errors after submission
-  useEffect(() => {
-    const sectionsWithErrors = Object.keys(errors).map((field) => field.split(".")[0]);
-    setExpanded(sectionsWithErrors);
-  }, [errors]);
-
   return (
     <Card className="mx-auto my-8 p-4 shadow-lg">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -77,7 +83,7 @@ export function UserSignUpForm({ fromCheckout = false }) {
           <CardDescription>Fill in the form to create a new account.</CardDescription>
         </CardHeader>
         <CardContent>
-          <Accordion type="single" collapsible className="w-full px-2">
+          <Accordion type="multiple" className="w-full px-2">
             <AccordionItem value="item-1">
               <AccordionTrigger className="m-3"> Persoonsgegevens </AccordionTrigger>
               <AccordionContent className="my-2 flex flex-col space-y-4">
