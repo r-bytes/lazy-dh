@@ -6,7 +6,7 @@ import React, { createContext, Dispatch, SetStateAction, useContext, useEffect, 
 
 type ContextProps = {
   user: User | null;
-  setUser: (user: User) => void;
+  setUser: Dispatch<SetStateAction<User | null>>;
   isAuthenticated: boolean;
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
   isAdminApproved: boolean;
@@ -16,15 +16,15 @@ type ContextProps = {
 
 export const AuthContext = createContext<ContextProps>({
   user: null,
-  setUser: (user: User) => null,
+  setUser: () => {},
   isAuthenticated: false,
-  setIsAuthenticated: () => false,
+  setIsAuthenticated: () => {},
   isAdminApproved: false,
-  setIsAdminApproved: () => false,
-  checkAdminApproval: async () => {}
+  setIsAdminApproved: () => {},
+  checkAdminApproval: async () => {},
 });
 
-export const AuthProvider = ({ email, children }: { email: string, children: React.ReactNode }) => {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isAdminApproved, setIsAdminApproved] = useState<boolean>(false);
@@ -33,28 +33,15 @@ export const AuthProvider = ({ email, children }: { email: string, children: Rea
 
   const checkAdminApproval = async (email: string) => {
     if (email) {
-      console.log("checkAdminApproval");
-
-      console.log(email);
-
       try {
         const response = await fetch("/api/getUserApprovalStatus", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email }),
+          body: JSON.stringify({ email }),
         });
         const data = await response.json();
 
-        console.log(data);
-
-        if (data.success && data.message === "Account is goedgekeurd") {
-          console.log(data);
-
-          setIsAdminApproved(true);
-        } else {
-          console.log(data);
-          setIsAdminApproved(false);
-        }
+        setIsAdminApproved(data.success && data.message === "Account is goedgekeurd");
       } catch (error) {
         console.error("Failed to fetch admin approval status:", error);
         setIsAdminApproved(false);
@@ -66,7 +53,9 @@ export const AuthProvider = ({ email, children }: { email: string, children: Rea
     if (status === "authenticated" && session?.user) {
       setIsAuthenticated(true);
       setUser(session.user);
-      checkAdminApproval(email);
+      if (session.user.email) {
+        checkAdminApproval(session.user.email);
+      }
     } else {
       setIsAuthenticated(false);
       setUser(null);
@@ -83,7 +72,7 @@ export const AuthProvider = ({ email, children }: { email: string, children: Rea
         setIsAuthenticated,
         isAdminApproved,
         setIsAdminApproved,
-        checkAdminApproval
+        checkAdminApproval,
       }}
     >
       {children}
