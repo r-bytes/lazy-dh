@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { HeartIcon, ScrollText, UserIcon, LogOutIcon } from "lucide-react";
+import { updateUserActivity } from "@/actions/users/user.actions";
 
 type AccountOptions = {
   title: string;
@@ -57,9 +58,15 @@ type CardProps = React.ComponentProps<typeof Card>;
 
 export function AccountCard({ className, ...props }: CardProps) {
   const router = useRouter();
+  const { data: session } = useSession();
 
   const handleLogoff = useCallback(() => {
-    signOut(); // or whatever function you use for logging out
+    if (session) {
+      updateUserActivity(session.user!.email!, "logoff", "successfully");
+    }
+    
+    signOut();
+
   }, []);
 
   return (

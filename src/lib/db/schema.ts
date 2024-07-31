@@ -55,7 +55,7 @@ export const userActivities = pgTable("user_activities", {
     .notNull()
     .references(() => users.id),
   activityType: varchar("activity_type", { length: 50 }).notNull(),
-  activityData: jsonb("activity_data"),
+  activityData: varchar("activity_data", { length: 50 }).notNull(),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

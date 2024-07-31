@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { users } from "@/lib/db/schema";
+import { userActivities, users } from "@/lib/db/schema";
 import { signInSchema } from "@/lib/types/signin";
 import { signUpSchema } from "@/lib/types/signup";
 // import argon2 from "argon2";
@@ -104,11 +104,14 @@ export async function login({ email, password }: { email: string; password: stri
       password,
     });
 
+    updateUserActivity(email, "login", "successfully");
+
     return {
       success: true,
       data: res,
     };
   } catch (error: any) {
+    updateUserActivity(email, "login", "failure");
     console.error(error); // Log the actual error for debugging
     return {
       success: false,
@@ -166,6 +169,7 @@ export async function signUp({
 
     // dont overwrite existing user
     if (existedUser.success) {
+      updateUserActivity(email, "signup", "failure - account already exists");
       return {
         success: false,
         message: "Account bestaat al",
@@ -201,29 +205,33 @@ export async function signUp({
         email: users.email,
       });
 
-    const emailHtml = `
-        <div>
-          <h1> Bevestig uw emailadres voor: <b>${email}</b></h1>
-          <p> Om uw account aanvraag door te zetten dien je dit emailadres te verifiëren, klik op onderstaande link:</p>
-          <a href="${process.env.NEXT_PUBLIC_BASE_URL}/account/registreer/bevestig-email?token=${emailVerificationToken}" target="_blank">
-            Klik hier om uw emailadres te bevestigen
-          </a>
-        </div>
+      
+      const emailHtml = `
+      <div>
+      <h1> Bevestig uw emailadres voor: <b>${email}</b></h1>
+      <p> Om uw account aanvraag door te zetten dien je dit emailadres te verifiëren, klik op onderstaande link:</p>
+      <a href="${process.env.NEXT_PUBLIC_BASE_URL}/account/registreer/bevestig-email?token=${emailVerificationToken}" target="_blank">
+      Klik hier om uw emailadres te bevestigen
+      </a>
+      </div>
       `;
+      
+      await sendEmail({
+        from: "Lazo admin <admin@r-bytes.com>",
+        to: [email],
+        subject: "Emailadres bevestigen",
+        text: emailHtml,
+        html: emailHtml,
+      });
+      
+      updateUserActivity(email, "signup", "successfully");
 
-    await sendEmail({
-      from: "Lazo admin <admin@r-bytes.com>",
-      to: [email],
-      subject: "Emailadres bevestigen",
-      text: emailHtml,
-      html: emailHtml,
-    });
-
-    return {
+      return {
       success: true,
       data: user,
     };
   } catch (error: any) {
+    updateUserActivity(email, "signup", "failure - " + error.message);
     return {
       success: false,
       message: error.message,
@@ -243,28 +251,31 @@ export const requestPasswordReset = async (email: string) => {
 
     if (!existingUser) {
       console.log("No user found with the given email.");
+      updateUserActivity(email, "password reset request", "failure - user does not exist");
       return {
         success: false,
         message: "Gebruiker niet gevonden",
       };
     }
-
+    
     const resetPasswordToken = crypto.randomBytes(12).toString("base64url"); //baseUrl/auth/reset-password?token=1234567890abcdefferv
     const today = new Date();
     const expiryDate = new Date(today.setDate(today.getDate() + 1));
-
+    
     // update the user in the database
     const user = await db.update(users).set({
       resetPasswordToken: resetPasswordToken,
       resetPasswordTokenExpiry: expiryDate,
     });
-
+    
+    updateUserActivity(email, "password reset request", "successfully requested password reset");
     return {
       success: true,
       data: user,
       message: "Er is een email met een password reset link verstuurd naar het geregistreerde emailadres",
     };
   } catch (error) {
+    updateUserActivity(email, "password reset request", "failure");
     console.error("Fout bij het ophalen van gebruiker uit de database:", error);
     return {
       success: false,
@@ -283,47 +294,94 @@ export const changePassword = async (resetPasswordToken: string, password: strin
 
     console.log(`Found user: ${JSON.stringify(existingUser)}`);
 
+    updateUserActivity(resetPasswordToken, "changing password", "failure - user does not exist");
     if (!existingUser) {
       return {
         success: false,
         message: "Gebruiker niet gevonden",
       };
     }
-
+    
     const resetPasswordTokenExpiry = existingUser.resetPasswordTokenExpiry;
-
+    
+    updateUserActivity(resetPasswordToken, "changing password", "failure - token verlopen");
     if (!resetPasswordTokenExpiry) {
       return {
         success: false,
         message: "Token verlopen",
       };
     }
-
+    
     const today = new Date();
-
+    
     if (today > resetPasswordTokenExpiry) {
+      updateUserActivity(resetPasswordToken, "changing password", "failure - token verlopen");
       return {
         success: false,
         message: "Token verlopen",
       };
     }
-
+    
     const passwordHash = await hashPassword(password);
-
+    
     // update the user in the database
     const updatedUser = await db.update(users).set({
       password: passwordHash,
       resetPasswordToken: null,
       resetPasswordTokenExpiry: null,
     });
-
+    
+    updateUserActivity(resetPasswordToken, "changing password", "sucessfully");
     return {
       success: true,
       data: updatedUser,
       message: "Wachtwoord is aangepast!",
     };
   } catch (error) {
+    updateUserActivity(resetPasswordToken, "login", "failure - when fetching the user from the database");
     console.error("Fout bij het ophalen van gebruiker uit de database:", error);
+    return {
+      success: false,
+      message: "Er is een fout opgetreden bij het verwerken van uw verzoek.",
+    };
+  }
+};
+
+export const updateUserActivity = async (email: string, activityType: string, activityData: string) => {
+  console.log("updating user activity...");
+
+  try {
+    console.log(`Attempting to find user with email: ${email}`);
+    const existingUser = await db.query.users.findFirst({
+      where: eq(users.email, email),
+    });
+    console.log(`Found user: ${JSON.stringify(existingUser)}`);
+
+    if (!existingUser) {
+      console.log("No user found with the given email.");
+      return {
+        success: false,
+        message: "Gebruiker niet gevonden",
+      };
+    }
+
+    const today = new Date();
+
+    // update the user in the database
+    const userActivityResponse = await db.insert(userActivities).values({
+      userId: existingUser.id,
+      activityData: activityData,
+      activityType: activityType,
+      createdAt: today,
+    });
+
+    return {
+      success: true,
+      data: userActivityResponse,
+      message: "Activiteit gelogd in de database",
+    };
+  } catch (error) {
+    console.error("Fout bij het loggen van de activiteit", error);
     return {
       success: false,
       message: "Er is een fout opgetreden bij het verwerken van uw verzoek.",

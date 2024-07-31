@@ -2,7 +2,7 @@ import NextAuth, { User } from "next-auth";
 import { db } from "@/lib/db/index";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import Credentials from "next-auth/providers/credentials";
-import { getUserFromDb } from "@/actions/users/user.actions";
+import { getUserFromDb, updateUserActivity } from "@/actions/users/user.actions";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(db),
@@ -32,6 +32,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!user.success) {
           throw new Error(`Login failed: ${user.message}`);
         }
+
+        updateUserActivity(user.data!.email, "login", "successfully")
 
         // Return user object with their profile data
         return {
