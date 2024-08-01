@@ -19,7 +19,7 @@ export default function Page() {
     <div>
       <p> Toegang geweigerd </p>
     </div>
-  ) : !session ? (
+  ) : (
     navigateTo(router, "/auth")
-  ) : null;
+  );
 }
