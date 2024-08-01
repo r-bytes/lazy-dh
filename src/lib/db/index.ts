@@ -4,7 +4,7 @@ import postgres from "postgres";
 import * as schema from "./schema";
 
 const pool = postgres(process.env.AUTH_DRIZZLE_URL!, {
-  max: 1,
+  max: 10,
   // ssl: { rejectUnauthorized: false }, // SSL configuration for secure connection
 });
 

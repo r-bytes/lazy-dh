@@ -78,14 +78,14 @@ export function UserSignUpForm({ fromCheckout = false }) {
   return (
     <Card className="mx-auto my-8 p-4 shadow-lg">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <CardHeader>
+        <CardHeader className="ml-3">
           <CardTitle className="text-left md:text-center"> Nieuwe klant </CardTitle>
           <CardDescription className="text-left md:text-center"> Vul het formulier in om een nieuw account te maken </CardDescription>
         </CardHeader>
         <CardContent>
           <Accordion type="multiple" defaultValue={["item-1", "item-2", "item-3"]} className="w-full px-2">
             <AccordionItem value="item-1">
-              <AccordionTrigger className="my-3"> Persoonsgegevens </AccordionTrigger>
+              <AccordionTrigger className="m-3"> Persoonsgegevens </AccordionTrigger>
               <AccordionContent className="my-2 flex flex-col space-y-4">
                 <div className={fromCheckout ? "relative mx-2" : "relative"}>
                   <Input id="name" placeholder="Name" {...register("name")} />
@@ -130,7 +130,7 @@ export function UserSignUpForm({ fromCheckout = false }) {
             </AccordionItem>
 
             <AccordionItem value="item-2">
-              <AccordionTrigger className="my-3"> Bedrijfsgegevens </AccordionTrigger>
+              <AccordionTrigger className="m-3"> Bedrijfsgegevens </AccordionTrigger>
               <AccordionContent className="my-2 flex flex-col space-y-4">
                 <div className={fromCheckout ? "mx-2" : ""}>
                   <Input id="companyName" placeholder="Bedrijfsnaam" {...register("companyName")} />
@@ -146,7 +146,7 @@ export function UserSignUpForm({ fromCheckout = false }) {
 
             <AccordionItem value="item-3">
               <AccordionItem value="password">
-                <AccordionTrigger className="my-3"> Wachtwoord </AccordionTrigger>
+                <AccordionTrigger className="m-3"> Wachtwoord </AccordionTrigger>
                 <AccordionContent className="my-2 flex flex-col gap-4">
                   <div className={fromCheckout ? "relative mx-2" : "relative"}>
                     <Input
@@ -206,8 +206,8 @@ export function UserSignUpForm({ fromCheckout = false }) {
           </Accordion>
         </CardContent>
         <CardFooter>
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? "Registering..." : "Register"}
+          <Button className="ml-3" type="submit" disabled={isLoading}>
+            {isLoading ? "Registreren..." : "Register"}
           </Button>
         </CardFooter>
       </form>
