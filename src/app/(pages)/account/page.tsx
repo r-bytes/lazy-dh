@@ -15,10 +15,6 @@ export default function Page() {
         <AccountCard session={session} />
       </MaxWidthWrapper>
     </div>
-  ) : session && status === "unauthenticated" ? (
-    <div>
-      <p> Toegang geweigerd </p>
-    </div>
   ) : (
     navigateTo(router, "/auth")
   );
