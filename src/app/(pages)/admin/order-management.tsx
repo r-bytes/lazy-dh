@@ -289,7 +289,7 @@ const OrderManagement = ({ session }: { session: Session }) => {
                 </TableCell>
                 <TableCell>
                   <Button onClick={() => saveStatus(order.orderId)}> Status opslaan </Button>
-                  <Button onClick={async () => selectedOrder && await generatePDF(selectedOrder)}>Genereer PDF</Button>
+                  {/* <Button onClick={async () => selectedOrder && await generatePDF(selectedOrder)}>Genereer PDF</Button> */}
                 </TableCell>
               </TableRow>
             ))}

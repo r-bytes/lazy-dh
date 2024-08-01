@@ -37,7 +37,7 @@ const AuthPage = () => {
   }
 
   return (
-    <Tabs defaultValue="login" className="mx-auto mt-24 max-w-md md:max-w-5xl">
+    <Tabs defaultValue="login" className="mx-auto sm:mt-12 max-w-md md:max-w-5xl">
       <TabsList className="flex w-full">
         <TabsTrigger value="login">Inloggen</TabsTrigger>
         <TabsTrigger value="signup">Registreren</TabsTrigger>

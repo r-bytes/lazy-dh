@@ -83,7 +83,7 @@ export function UserSignUpForm({ fromCheckout = false }) {
           <CardDescription className="text-left md:text-center"> Vul het formulier in om een nieuw account te maken </CardDescription>
         </CardHeader>
         <CardContent>
-          <Accordion type="multiple" className="w-full px-2">
+          <Accordion type="multiple" defaultValue={["item-1", "item-2", "item-3"]} className="w-full px-2">
             <AccordionItem value="item-1">
               <AccordionTrigger className="my-3"> Persoonsgegevens </AccordionTrigger>
               <AccordionContent className="my-2 flex flex-col space-y-4">
