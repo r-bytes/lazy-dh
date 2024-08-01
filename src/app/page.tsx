@@ -31,7 +31,7 @@ export default async function Home() {
       </section>
       <section id="categories">
         <MaxWidthWrapper className="my-12 max-w-[84rem] sm:my-24">
-          <CategoryCard categories={categoryList} slug={"home"} />
+          <CategoryCard categories={categoryList} products={productList} slug={"home"} />
         </MaxWidthWrapper>
       </section>
     </main>
