@@ -1,15 +1,14 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-import Product from "@/lib/types/product";
-import { useEffect } from "react";
 import { useProductContext } from "@/context/ProductContext";
+import Product from "@/lib/types/product";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const FormSchema = z.object({
   productName: z.string().min(2, {
@@ -29,11 +28,10 @@ export function InputForm({ products, onSearchChange }: InputFormProps) {
       productName: "",
     },
   });
-  
+
   const { register, handleSubmit, setValue, watch } = form;
   const watchedValue = watch("productName");
-    const { isSearching, setIsSearching } = useProductContext();
-
+  const { isSearching, setIsSearching } = useProductContext();
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     toast({
@@ -61,10 +59,10 @@ export function InputForm({ products, onSearchChange }: InputFormProps) {
     }
   }, [form]);
 
-    useEffect(() => {
-      // Update isSearching based on whether the input is empty or not
-      setIsSearching(!!watchedValue);
-    }, [watchedValue, setIsSearching]);
+  useEffect(() => {
+    // Update isSearching based on whether the input is empty or not
+    setIsSearching(!!watchedValue);
+  }, [watchedValue, setIsSearching]);
 
   return (
     <Form {...form}>

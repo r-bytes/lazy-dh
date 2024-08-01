@@ -39,7 +39,7 @@ const AdminPage = () => {
 
   return (
     <MaxWidthWrapper className="mx-auto">
-      <OrderManagement />
+      <OrderManagement session={session!} />
     </MaxWidthWrapper>
   );
 };

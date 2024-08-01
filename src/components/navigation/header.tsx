@@ -13,7 +13,6 @@ import { ModeToggle } from "../ui/toggle-mode";
 import TopHeader from "./top-header";
 
 // Fonts
-const montserrat = Montserrat({ subsets: ["latin"] });
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["100", "300", "500", "700"],
@@ -74,11 +73,18 @@ const Header = (props: Props) => {
   return (
     <>
       <TopHeader text="Let op! Alle prijzen op de website zijn exclusief BTW." />
-      <div className="z-10 mx-auto w-full max-w-7xl items-center justify-between font-mono text-sm sm:flex sm:flex-col lg:flex-row">
+      <div className={`z-10 mx-auto w-full max-w-7xl items-center justify-between text-sm tracking-wide sm:flex sm:flex-col lg:flex-row`}>
         <div className="mx-auto mt-0 flex w-full items-center justify-between p-8 sm:mx-16">
           {/* Logo */}
           <Link href={"/"}>
-            <Image className="mx-auto h-60 w-full dark:invert" src="/logo.svg" alt="Lazy Den Haag Logo" width={300} height={20} priority />
+            <Image
+              className="mx-auto w-full dark:invert sm:h-52 lg:h-60"
+              src="/logo.svg"
+              alt="Lazy Den Haag Logo"
+              width={300}
+              height={20}
+              priority
+            />
           </Link>
           {/* Hamburger Menu for Small Screens */}
           <button className="flex w-full items-end justify-end pr-4 sm:pr-8 lg:hidden" onClick={() => setMenuOpen(!menuOpen)}>
@@ -90,16 +96,13 @@ const Header = (props: Props) => {
 
         {/* Mobile Navigation Menu */}
         <div className={`lg:hidden ${menuOpen ? "fixed inset-0 z-50 min-h-screen bg-zinc-100 dark:bg-black" : "hidden"}`}>
-          <div className="h-screen flex-col flex items-center justify-between gap-4">
-            <CircleX
-              onClick={() => setMenuOpen(false)}
-              className="h-12 w-full border p-2 text-right text-muted-foreground hover:cursor-pointer"
-            />
+          <div className="flex h-screen flex-col items-center justify-between gap-4">
+            <CircleX onClick={() => setMenuOpen(false)} className="h-12 w-full border p-2 text-right text-muted-foreground hover:cursor-pointer" />
             <ul>
               {NAVIGATION_LIST.map((item, index, arr) => (
                 <li key={item.order} className={`hover:text-primary} font-semibold tracking-wide hover:cursor-pointer`}>
                   <Link
-                    className={roboto.className}
+                    className={`${roboto.className} tracking-wider`}
                     onClick={() => setMenuOpen(false)}
                     href={`/${item.title.toLowerCase() === "acties" ? "promoties" : item.title.toLowerCase()}`}
                   >
@@ -134,7 +137,7 @@ const Header = (props: Props) => {
                   >
                     {item.requiresAuth && !session && item.title.toLowerCase() === "account" ? null : (
                       <Link
-                        className={roboto.className}
+                        className={`${roboto.className} tracking-wider`}
                         href={`/${item.title.toLowerCase() === "acties" ? "promoties" : item.title.toLowerCase()}`}
                       >
                         {item.requiresAuth && !session ? "" : item.title}

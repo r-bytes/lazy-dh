@@ -12,8 +12,8 @@ export const fetchProducts = async (queryParam?: string) => {
   }
 
   const response: Response = await fetch(url, {
-    // cache: "force-cache", // SSG
-    cache: "no-store", // SSR
+    cache: "force-cache", // SSG
+    // cache: "no-store", // SSR
     // next: {
     //     revalidate: 20, // ISR
     // },

@@ -1,12 +1,13 @@
 "use client";
-import React, { ComponentType, createElement, useCallback } from "react";
-import { useSession, signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
-
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { HeartIcon, ScrollText, UserIcon, LogOutIcon } from "lucide-react";
 import { updateUserActivity } from "@/actions/users/user.actions";
+import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { HeartIcon, LogOutIcon, ScrollText, UserIcon } from "lucide-react";
+import { Session } from "next-auth";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import React, { ComponentType, createElement, useCallback } from "react";
+import Title from "../title";
 
 type AccountOptions = {
   title: string;
@@ -54,26 +55,28 @@ const iconMap: Record<string, ComponentType<IconProps>> = {
   LogOutIcon: LogOutIcon,
 };
 
-type CardProps = React.ComponentProps<typeof Card>;
+interface AccountCardProps extends React.ComponentProps<typeof Card> {
+  className?: string;
+  session?: Session;
+}
 
-export function AccountCard({ className, ...props }: CardProps) {
+export function AccountCard({ className, session, ...props }: AccountCardProps) {
   const router = useRouter();
-  const { data: session } = useSession();
 
   const handleLogoff = useCallback(() => {
     if (session) {
       updateUserActivity(session.user!.email!, "logoff", "successfully");
     }
-    
-    signOut();
 
+    signOut();
   }, []);
 
   return (
-    <Card className={cn("w-full", className)} {...props}>
+    <Card className={cn("w-full text-muted-foreground", className)} {...props}>
       <CardHeader className="mb-4 text-center">
-        <CardTitle className="mt-12 text-4xl md:text-5xl"> Account </CardTitle>
-        <CardDescription> Kies een categorie </CardDescription>
+        <span className="text-center text-xs text-muted-foreground sm:text-right"> Ingelogd als: {session?.user?.email}</span>
+        <Title name="Account" cn="pt-6" />
+        <CardDescription className="md:text-base"> Kies een categorie </CardDescription>
       </CardHeader>
       <CardContent className="mt-12 flex flex-col justify-center sm:mx-16 lg:mx-2">
         {ACCOUNT.map((item, index) => (
@@ -87,7 +90,7 @@ export function AccountCard({ className, ...props }: CardProps) {
               </button>
             ) : (
               <a
-                href={`/${item.slug}`}
+                href={`/account/${item.slug}`}
                 className="group w-full rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
               >
                 <AccountOptionContent item={item} />

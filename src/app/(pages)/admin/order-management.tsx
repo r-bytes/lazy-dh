@@ -1,15 +1,20 @@
 "use client";
+import { createOrderSummaryDocument } from "@/actions/pdf/createOrderSummaryDocument";
+import downloadPDF from "@/actions/pdf/downloadPDF";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
+import { InvoiceDetails } from "@/lib/types/invoice";
 import { ApiResponse, Order } from "@/lib/types/order";
-import { formatCurrencyTwo } from "@/lib/utils";
+import Product from "@/lib/types/product";
+import { formatCurrencyTwo, getCurrentFormattedDate } from "@/lib/utils";
 import { EyeIcon, EyeOff } from "lucide-react";
+import { Session } from "next-auth";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const OrderManagement = () => {
+const OrderManagement = ({ session }: { session: Session }) => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [editedOrders, setEditedOrders] = useState<Record<number, string>>({});
@@ -77,6 +82,93 @@ const OrderManagement = () => {
     fetchOrders();
   }, [sortColumn, sortDirection]);
 
+  const generatePDF = async (order: Order) => {
+    console.log("downloading pdf ....");
+    
+    try {
+      const userIdResponse = await fetch("/api/getUserIdByEmail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: session.user?.email }),
+      });
+
+      if (!userIdResponse.ok) {
+        toast.dismiss();
+        return;
+      }
+
+      const { userObject } = await userIdResponse.json();
+      const formattedDate = getCurrentFormattedDate();
+
+      const orderItemsData: Product[] = order.orderItems!.map((item) => ({
+        image: {
+          _type: "image",
+          asset: {
+            _ref: "string",
+            _type: "reference",
+          },
+        },
+        _id: item.name,
+        _createdAt: formattedDate,
+        _updatedAt: formattedDate,
+        _rev: "unavailable",
+        orderId: order.orderId,
+        productId: Number(item.name),
+        name: item.name,
+        quantity: item.quantity,
+        quantityInBox: item.quantityInBox,
+        percentage: Number(item.percentage),
+        volume: Number(item.volume),
+        price: item.price,
+        imgUrl: item.imgUrl,
+        _type: "product",
+        category: "product",
+        description: item.name,
+        inStock: true,
+        inSale: false,
+        isNew: false,
+      }));
+
+      const invoiceDetails: InvoiceDetails = {
+        invoiceCustomerName: userObject!.name,
+        invoiceCustomerEmail: userObject!.email,
+        invoiceCustomerAddress: userObject!.address,
+        invoiceCustomerCity: userObject!.city,
+        invoiceCustomerPostal: userObject!.postal,
+        invoiceCustomerPhoneNumber: userObject!.phoneNumber,
+        companyName: userObject!.companyName,
+        vatNumber: userObject!.vatNumber,
+        chamberOfCommerceNumber: userObject!.chamberOfCommerceNumber,
+        orderNumber: order.orderId.toString(),
+        invoiceNumber: `${order.orderDate.toString()}-${order.orderId.toString()}`,
+        date: formattedDate.toString(),
+        invoiceCustomerCountry: "Nederland",
+        shippingCustomerCustomerName: userObject!.name,
+        shippingCustomerCustomerEmail: userObject!.email,
+        shippingCustomerAddress: userObject!.address,
+        shippingCustomerPostal: userObject!.postal,
+        shippingCustomerCity: userObject!.city,
+        shippingCustomerCountry: "Nederland",
+        customerPhoneNumber: null,
+      };
+
+      if (!order) {
+        toast.error("Geen order geselecteerd voor PDF creatie.");
+        return;
+      }
+
+      const pdfBase64 = await createOrderSummaryDocument(orderItemsData, invoiceDetails);
+      downloadPDF(pdfBase64, `Order-${order.orderId}.pdf`);
+      toast.success("PDF generated and downloaded successfully!");
+
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      toast.error("Fout bij het genereren van de PDF.");
+    }
+  };
+
   const handleStatusChange = (orderId: number, newStatus: string) => {
     // Update the local state with the new status
     setEditedOrders((prev) => ({ ...prev, [orderId]: newStatus }));
@@ -129,7 +221,7 @@ const OrderManagement = () => {
   }
 
   return (
-    <div className="flex w-full flex-col overflow-x-scroll p-4 text-muted-foreground my-12">
+    <div className="my-12 flex w-full flex-col overflow-x-scroll p-4 text-muted-foreground">
       <h1 className="my-4 text-center text-3xl font-bold text-muted-foreground"> Bestellingen beheren </h1>
       <TableCell className="self-end hover:cursor-pointer" onClick={handleHide}>
         {hideCompleted ? <EyeIcon /> : <EyeOff />}
@@ -197,6 +289,7 @@ const OrderManagement = () => {
                 </TableCell>
                 <TableCell>
                   <Button onClick={() => saveStatus(order.orderId)}> Status opslaan </Button>
+                  <Button onClick={async () => selectedOrder && await generatePDF(selectedOrder)}>Genereer PDF</Button>
                 </TableCell>
               </TableRow>
             ))}

@@ -41,12 +41,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         });
         const data = await response.json();
 
-        if (data.success && data.message === "Account is goedgekeurd") {
-          console.log(data);
-          
+        if (data.success && data.message === "Account is goedgekeurd") {          
           setIsAdminApproved(true);
         } else {
-          console.log(data);
           setIsAdminApproved(false);
         }
       } catch (error) {

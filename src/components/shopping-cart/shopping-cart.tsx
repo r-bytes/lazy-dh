@@ -128,8 +128,8 @@ const ShoppingCart = () => {
             <React.Fragment key={item._id}>
               <div className="product mx-auto flex max-w-7xl gap-8" key={item._id}>
                 {/* <img src={urlFor(item?.image[0])} alt="" className="cart-product-image" /> */}
-                <Card className="bg-transparent p-3 px-0">
-                  <Image src={urlFor(item.image).url()} alt="" width={200} height={200} />
+                <Card className="bg-transparent py-16 px-0 w-60">
+                  <Image src={urlFor(item.image).url()} alt={item.name} className="h-full w-full" width={400} height={200} />
                 </Card>
                 <div className="item-desc m-4 flex w-full flex-col justify-between text-muted-foreground">
                   <div className="flex justify-between">

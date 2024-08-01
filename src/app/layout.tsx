@@ -6,11 +6,10 @@ import { CartProvider } from "@/context/CartContext";
 import { ProductProvider } from "@/context/ProductContext";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
-import { Inter, Montserrat } from "next/font/google";
+import { Inter, Montserrat, Roboto } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

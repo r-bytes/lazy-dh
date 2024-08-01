@@ -53,16 +53,16 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
   // Address Blocks
   const addressBlockY = titleY - 10;
   const addressDetails = `
-    Naam: ${invoiceDetails.companyName ? invoiceDetails.companyName : invoiceDetails.invoiceCustomerName}
-    Adres: ${invoiceDetails.invoiceCustomerAddress}
-    Postcode + Stad: ${invoiceDetails.invoiceCustomerPostal} ${invoiceDetails.invoiceCustomerCity}
-    Land: ${invoiceDetails.invoiceCustomerCountry}`;
+    ${invoiceDetails.companyName ? invoiceDetails.companyName : invoiceDetails.invoiceCustomerName}
+    ${invoiceDetails.invoiceCustomerAddress}
+    ${invoiceDetails.invoiceCustomerPostal} ${invoiceDetails.invoiceCustomerCity}
+    ${invoiceDetails.invoiceCustomerCountry}`;
 
   const shippingDetails = `
-    Naam: ${invoiceDetails.companyName ? invoiceDetails.companyName : invoiceDetails.invoiceCustomerName}
-    Adres: ${invoiceDetails.shippingCustomerAddress}
-    Postcode + Stad: ${invoiceDetails.shippingCustomerPostal} ${invoiceDetails.shippingCustomerCity}
-    Land: ${invoiceDetails.shippingCustomerCountry}`;
+    ${invoiceDetails.companyName ? invoiceDetails.companyName : invoiceDetails.invoiceCustomerName}
+    ${invoiceDetails.shippingCustomerAddress}
+    ${invoiceDetails.shippingCustomerPostal} ${invoiceDetails.shippingCustomerCity}
+    ${invoiceDetails.shippingCustomerCountry}`;
 
   page.drawText("Factuuradres:", {
     x: 50,

@@ -1,6 +1,6 @@
 import ProductList from "@/components/products/product-list";
-import { ProductsWithFilter } from "@/components/ui/category/products-with-filter";
 import { CardHeader } from "@/components/ui/card";
+import { ProductsWithFilter } from "@/components/ui/category/products-with-filter";
 import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
 import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import { capitalizeFirstLetter } from "@/lib/utils";
@@ -13,8 +13,6 @@ type Props = {
 const page = async ({ params: { slug }, searchParams }: Props) => {
   const products = await fetchProducts(`?type=${slug.toLowerCase()}`);
 
-  // Todo: optimize this?
-  // const { productState: products } = useProductContext()
   return slug === "alles" ? (
     <MaxWidthWrapper className="mx-auto">
       <ProductsWithFilter products={products!} />

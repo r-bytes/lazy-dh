@@ -30,8 +30,8 @@ export function CarouselSpacing({ products, cn }: { products: ProductType[] | nu
         ))}
       </CarouselContent>
 
-      <CarouselPrevious disabled={!hasEnoughItems} className="left-[-12px] rounded-full bg-black bg-opacity-50 p-2 text-white" />
-      <CarouselNext disabled={!hasEnoughItems} className="right-[-8px] rounded-full bg-black bg-opacity-50 p-2 text-white" />
+      <CarouselPrevious className="hidden sm:block left-[-12px] rounded-full bg-black bg-opacity-20 p-2 text-white" />
+      <CarouselNext className="hidden sm:block right-[-8px] rounded-full bg-black bg-opacity-20 p-2 text-white" />
     </Carousel>
   );
 }
