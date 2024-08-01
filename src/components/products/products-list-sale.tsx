@@ -11,41 +11,35 @@ export default function Promotions({ products }: { products?: Product[] }) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
 
-  // Check if products prop is empty
-  const isEmpty = !products;
-
   useEffect(() => {
-    // Check if products already exist, else we fetch them
-    if (isEmpty) {
-      (async () => {
-        setIsLoading(true);
-        // Fetch new products if they don't exist
-        const newProducts = await fetchProducts("?type=aanbiedingen").then();
-        setFetchedProducts(newProducts);
-
-        setIsLoading(false);
-      })();
+    // Fetch new products if they don't exist
+    if (!products || products.length === 0) {
+      setIsLoading(true);
+      fetchProducts("?type=aanbiedingen")
+        .then(setFetchedProducts)
+        .catch(console.error)
+        .finally(() => setIsLoading(false));
     }
-  }, [isEmpty]);
+  }, [products]);
+
+  // Determine the list of products to render
+  const productsToRender = products && products.length > 0 ? products : fetchedProducts;
 
   return (
     <MaxWidthWrapper className="mx-auto flex flex-col items-center justify-center">
-      <Title name={"Aanbiedingen"} cn="text-4xl md:text-5xl mt-12" />
-      <CardDescription className="md:text-base"> Producten in de aanbieding </CardDescription>
-      {!isEmpty ? (
-        <ProductList products={products} />
-      ) : fetchedProducts.length > 0 ? (
-        <ProductList products={fetchedProducts} />
-      ) : isLoading ? (
+      <Title name="Aanbiedingen" cn="text-4xl md:text-5xl mt-12" />
+      <CardDescription className="md:text-base">Producten in de aanbieding</CardDescription>
+      {isLoading ? (
         <div className="py-5 text-center">
-          <p> Laden ... </p>
+          <p>Laden...</p>
         </div>
-      ) : !fetchProducts && !isLoading ? (
-        // Fallback UI when there are no products in sale
+      ) : productsToRender.length > 0 ? (
+        <ProductList products={productsToRender} />
+      ) : (
         <div className="py-5 text-center">
-          <p> Geen producten in de aanbieding </p>
+          <p>Geen producten in de aanbieding</p>
         </div>
-      ) : null}
+      )}
     </MaxWidthWrapper>
   );
 }
