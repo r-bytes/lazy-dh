@@ -11,18 +11,28 @@ export const fetchProducts = async (queryParam?: string) => {
     
   }
 
-  const response: Response = await fetch(url, {
-    cache: "force-cache", // SSG
-    // cache: "no-store", // SSR
-    // next: {
-    //     revalidate: 20, // ISR
-    // },
-  });
 
-  const data = await response.json();
+  try {
+    const response: Response = await fetch(url, {
+      cache: "force-cache", // SSG - Use to speed up subsequent visits.
+      // cache: "no-store", // SSR
+      // next: {
+      //     revalidate: 20, // ISR
+      // },
+    });
 
-  const products: Product[] = data.products;
+    if (!response.ok) {
+      // Log error or throw exception based on the status code
+      console.error(`Failed to fetch products: ${response.status} ${response.statusText}`);
+      return []; // Return an empty array or throw an error based on your error handling strategy
+    }
 
-  // console.log("=====> fetching... pageInfo")
-  return products;
+    const data = await response.json();
+
+    const products: Product[] = data.products;
+    return products;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    throw new Error("Failed to fetch products");
+  }
 };
