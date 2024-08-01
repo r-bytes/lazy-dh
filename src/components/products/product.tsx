@@ -29,7 +29,7 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
   useEffect(() => {
     setProductImage(urlFor(product.image).url());
     setQty(1);
-  }, [product]);
+  }, [product, setQty]);
   // Variables
   const backgroundImageStyle = {
     backgroundImage: `url(${productImage})`,

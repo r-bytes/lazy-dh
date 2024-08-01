@@ -69,7 +69,7 @@ export function AccountCard({ className, session, ...props }: AccountCardProps) 
     }
 
     signOut();
-  }, []);
+  }, [session]);
 
   return (
     <Card className={cn("w-full text-muted-foreground", className)} {...props}>

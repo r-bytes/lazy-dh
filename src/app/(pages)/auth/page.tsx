@@ -15,7 +15,7 @@ const AuthPage = () => {
   useEffect(() => {
     // This check ensures code runs only in the browser
     const handleRedirect = async () => {
-      if (typeof window !== "undefined" && session && status === "authenticated") {
+      if (session && status === "authenticated") {
         try {
           navigateTo(router, "/")
           // toast.success("U wordt doorverwezen naar de home pagina");

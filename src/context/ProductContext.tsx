@@ -47,7 +47,7 @@ export const ProductProvider = ({ children, type }: { children: React.ReactNode;
         setCategoryState(fetchedCategories);
       }
     })();
-  }, []);
+  }, [type]);
 
   return (
     <ProductContext.Provider

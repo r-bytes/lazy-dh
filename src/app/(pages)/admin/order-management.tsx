@@ -82,92 +82,92 @@ const OrderManagement = ({ session }: { session: Session }) => {
     fetchOrders();
   }, [sortColumn, sortDirection]);
 
-  const generatePDF = async (order: Order) => {
-    console.log("downloading pdf ....");
+  // const generatePDF = async (order: Order) => {
+  //   console.log("downloading pdf ....");
     
-    try {
-      const userIdResponse = await fetch("/api/getUserIdByEmail", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: session.user?.email }),
-      });
+  //   try {
+  //     const userIdResponse = await fetch("/api/getUserIdByEmail", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ email: session.user?.email }),
+  //     });
 
-      if (!userIdResponse.ok) {
-        toast.dismiss();
-        return;
-      }
+  //     if (!userIdResponse.ok) {
+  //       toast.dismiss();
+  //       return;
+  //     }
 
-      const { userObject } = await userIdResponse.json();
-      const formattedDate = getCurrentFormattedDate();
+  //     const { userObject } = await userIdResponse.json();
+  //     const formattedDate = getCurrentFormattedDate();
 
-      const orderItemsData: Product[] = order.orderItems!.map((item) => ({
-        image: {
-          _type: "image",
-          asset: {
-            _ref: "string",
-            _type: "reference",
-          },
-        },
-        _id: item.name,
-        _createdAt: formattedDate,
-        _updatedAt: formattedDate,
-        _rev: "unavailable",
-        orderId: order.orderId,
-        productId: Number(item.name),
-        name: item.name,
-        quantity: item.quantity,
-        quantityInBox: item.quantityInBox,
-        percentage: Number(item.percentage),
-        volume: Number(item.volume),
-        price: item.price,
-        imgUrl: item.imgUrl,
-        _type: "product",
-        category: "product",
-        description: item.name,
-        inStock: true,
-        inSale: false,
-        isNew: false,
-      }));
+  //     const orderItemsData: Product[] = order.orderItems!.map((item) => ({
+  //       image: {
+  //         _type: "image",
+  //         asset: {
+  //           _ref: "string",
+  //           _type: "reference",
+  //         },
+  //       },
+  //       _id: item.name,
+  //       _createdAt: formattedDate,
+  //       _updatedAt: formattedDate,
+  //       _rev: "unavailable",
+  //       orderId: order.orderId,
+  //       productId: Number(item.name),
+  //       name: item.name,
+  //       quantity: item.quantity,
+  //       quantityInBox: item.quantityInBox,
+  //       percentage: Number(item.percentage),
+  //       volume: Number(item.volume),
+  //       price: item.price,
+  //       imgUrl: item.imgUrl,
+  //       _type: "product",
+  //       category: "product",
+  //       description: item.name,
+  //       inStock: true,
+  //       inSale: false,
+  //       isNew: false,
+  //     }));
 
-      const invoiceDetails: InvoiceDetails = {
-        invoiceCustomerName: userObject!.name,
-        invoiceCustomerEmail: userObject!.email,
-        invoiceCustomerAddress: userObject!.address,
-        invoiceCustomerCity: userObject!.city,
-        invoiceCustomerPostal: userObject!.postal,
-        invoiceCustomerPhoneNumber: userObject!.phoneNumber,
-        companyName: userObject!.companyName,
-        vatNumber: userObject!.vatNumber,
-        chamberOfCommerceNumber: userObject!.chamberOfCommerceNumber,
-        orderNumber: order.orderId.toString(),
-        invoiceNumber: `${order.orderDate.toString()}-${order.orderId.toString()}`,
-        date: formattedDate.toString(),
-        invoiceCustomerCountry: "Nederland",
-        shippingCustomerCustomerName: userObject!.name,
-        shippingCustomerCustomerEmail: userObject!.email,
-        shippingCustomerAddress: userObject!.address,
-        shippingCustomerPostal: userObject!.postal,
-        shippingCustomerCity: userObject!.city,
-        shippingCustomerCountry: "Nederland",
-        customerPhoneNumber: null,
-      };
+  //     const invoiceDetails: InvoiceDetails = {
+  //       invoiceCustomerName: userObject!.name,
+  //       invoiceCustomerEmail: userObject!.email,
+  //       invoiceCustomerAddress: userObject!.address,
+  //       invoiceCustomerCity: userObject!.city,
+  //       invoiceCustomerPostal: userObject!.postal,
+  //       invoiceCustomerPhoneNumber: userObject!.phoneNumber,
+  //       companyName: userObject!.companyName,
+  //       vatNumber: userObject!.vatNumber,
+  //       chamberOfCommerceNumber: userObject!.chamberOfCommerceNumber,
+  //       orderNumber: order.orderId.toString(),
+  //       invoiceNumber: `${order.orderDate.toString()}-${order.orderId.toString()}`,
+  //       date: formattedDate.toString(),
+  //       invoiceCustomerCountry: "Nederland",
+  //       shippingCustomerCustomerName: userObject!.name,
+  //       shippingCustomerCustomerEmail: userObject!.email,
+  //       shippingCustomerAddress: userObject!.address,
+  //       shippingCustomerPostal: userObject!.postal,
+  //       shippingCustomerCity: userObject!.city,
+  //       shippingCustomerCountry: "Nederland",
+  //       customerPhoneNumber: null,
+  //     };
 
-      if (!order) {
-        toast.error("Geen order geselecteerd voor PDF creatie.");
-        return;
-      }
+  //     if (!order) {
+  //       toast.error("Geen order geselecteerd voor PDF creatie.");
+  //       return;
+  //     }
 
-      const pdfBase64 = await createOrderSummaryDocument(orderItemsData, invoiceDetails);
-      downloadPDF(pdfBase64, `Order-${order.orderId}.pdf`);
-      toast.success("PDF generated and downloaded successfully!");
+  //     const pdfBase64 = await createOrderSummaryDocument(orderItemsData, invoiceDetails);
+  //     downloadPDF(pdfBase64, `Order-${order.orderId}.pdf`);
+  //     toast.success("PDF generated and downloaded successfully!");
 
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-      toast.error("Fout bij het genereren van de PDF.");
-    }
-  };
+  //   } catch (error) {
+  //     console.error("Error generating PDF:", error);
+  //     toast.error("Fout bij het genereren van de PDF.");
+  //   }
+  // };
 
   const handleStatusChange = (orderId: number, newStatus: string) => {
     // Update the local state with the new status
