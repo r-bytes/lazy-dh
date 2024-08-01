@@ -3,7 +3,6 @@ import { capitalizeFirstLetter } from "@/lib/utils";
 
 type Props = {
   params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
 };
 
 const page = ({ params: { slug } }: Props) => {

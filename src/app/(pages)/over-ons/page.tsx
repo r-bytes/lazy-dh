@@ -1,8 +1,6 @@
 import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
-type Props = {};
-
 const companyInfo = {
   Naam: "Lazo Spirits Den Haag",
   Adres: "adres",
@@ -12,7 +10,7 @@ const companyInfo = {
   "BTW-identificatienummer: ": "123",
 };
 
-const AboutPage = (props: Props) => {
+const AboutPage = () => {
   return (
     <MaxWidthWrapper className="mx-auto w-full">
       <div className="w-full p-10">

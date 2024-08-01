@@ -8,10 +8,9 @@ import { capitalizeFirstLetter } from "@/lib/utils";
 
 type Props = {
   params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
 };
 
-const page = async ({ params: { slug }, searchParams }: Props) => {
+const page = async ({ params: { slug } }: Props) => {
   const products = await fetchProducts(`?type=${slug.toLowerCase()}`);
   console.log(products);
   console.log(slug.toLowerCase());

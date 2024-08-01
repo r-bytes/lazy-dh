@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-type Props = {};
-
-const page = (props: Props) => {
+const page = () => {
   return (
     <div className="flex flex-col items-center justify-center">
       <p className="mt-48">Hartelijk dank! Uw bestelling is geplaatst!</p>

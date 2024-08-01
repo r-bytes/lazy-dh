@@ -4,9 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
 import Link from "next/link";
 
-type Props = {};
-
-const page = (props: Props) => {
+const page = () => {
   return (
     <div className="my-24 flex flex-col items-center justify-center space-y-4 text-center">
       <Mail />

@@ -3,9 +3,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { UserSignInForm } from "@/components/ui/sign-in/user-sign-in-form";
 import { UserSignUpForm } from "@/components/ui/sign-up/user-sign-up-form";
 
-type Props = {};
-
-const Page = (props: Props) => {
+const Page = () => {
   return (
       <Tabs defaultValue="login" className="mx-auto max-w-md md:max-w-5xl">
         <TabsList className="flex w-full">

@@ -4,9 +4,7 @@ import { Button } from "./ui/button";
 import { sendEmail } from "@/actions/email/sendEmail";
 import { EmailTemplate } from "./email/email-template";
 
-type Props = {};
-
-const TestEmailButton = (props: Props) => {
+const TestEmailButton = () => {
   const handleSubmit = async () => {
     sendEmail({
       from: "Lazo admin <admin@r-bytes.com>",

@@ -3,7 +3,7 @@ import { useCartContext } from "@/context/CartContext";
 import { navigateTo } from "@/lib/utils";
 import { CircleX, MenuIcon, ShoppingBag } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { Montserrat, Roboto } from "next/font/google";
+import { Roboto } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -63,7 +63,7 @@ const Header = (props: Props) => {
         onClick={() => navigateTo(router, "/winkelwagen")}
       >
         <ShoppingBag className="" />
-        <span className="absolute right-[-16px] top-[-10px] h-5 w-5 rounded-full bg-red-500 text-center text-xs font-semibold text-gray-300 flex justify-center items-center">
+        <span className="absolute right-[-16px] top-[-10px] flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-center text-xs font-semibold text-gray-300">
           <h4>{totalQuantities}</h4>
         </span>
       </button>
