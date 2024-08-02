@@ -1,7 +1,7 @@
 "use client";
 import { useCartContext } from "@/context/CartContext";
 import { navigateTo } from "@/lib/utils";
-import { CircleX, MenuIcon, ShoppingBag } from "lucide-react";
+import { CircleX, MenuIcon, ShoppingBag, Fingerprint } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { Roboto } from "next/font/google";
 import Image from "next/image";
@@ -69,6 +69,20 @@ const Header = (props: Props) => {
       </button>
     );
   };
+
+  const AdminPage = ({ cn }: { cn?: string }) => {
+    return (
+      <button
+        type="button"
+        className={`${cn} cart-icon duration-400 relative cursor-pointer border-none bg-transparent text-6xl text-muted-foreground transition-transform ease-in-out`}
+        onClick={() => navigateTo(router, "/admin")}
+      >
+        <Fingerprint />
+      </button>
+    );
+  };
+
+
 
   return (
     <>
@@ -148,6 +162,7 @@ const Header = (props: Props) => {
               )}
             </ul>
           </div>
+          <AdminPage cn={"hover:text-primary mr-4"} />
           <ModeToggle cn="mr-4" />
           <ShoppingCart cn="mr-10" />
         </div>

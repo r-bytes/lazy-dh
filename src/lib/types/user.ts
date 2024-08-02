@@ -15,7 +15,7 @@ export type DatabaseUser = {
   resetPasswordTokenExpiry?: Date | null;
   emailVerified?: boolean;
   emailVerificationToken?: string | null;
-  adminApproved?: boolean;
+  admin_approved?: boolean | null;
 };
 
 export interface ApiResponse {

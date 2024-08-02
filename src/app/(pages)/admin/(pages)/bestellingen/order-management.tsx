@@ -224,7 +224,7 @@ const OrderManagement = ({ session }: { session: Session }) => {
   }
 
   return (
-    <div className="my-12 flex w-full flex-col overflow-x-scroll p-4 text-muted-foreground">
+    <>
       <h1 className="my-4 text-center text-3xl font-bold text-muted-foreground"> Bestellingen beheren </h1>
       <TableCell className="self-end hover:cursor-pointer" onClick={handleHide}>
         {hideCompleted ? <EyeIcon /> : <EyeOff />}
@@ -332,7 +332,7 @@ const OrderManagement = ({ session }: { session: Session }) => {
           </DrawerContent>
         </Drawer>
       )}
-    </div>
+    </>
   );
 };
 

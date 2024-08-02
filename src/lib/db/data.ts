@@ -1,24 +1,26 @@
+"use server"
 import { sql } from "@vercel/postgres";
 import { unstable_noStore as noStore } from "next/cache";
 import { DatabaseUser } from "../types/user";
+import { Order } from "../types/order";
 
-export async function fetchUsers() {
+export const fetchAllUsers = async (): Promise<DatabaseUser[]> => {
   noStore();
-  try {
-    const data = await sql<DatabaseUser[]>`SELECT * FROM revenue`;
+  const { rows } = await sql<DatabaseUser>`SELECT * FROM users`;
+  return rows;
+};
 
-    return data.rows;
-  } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch users");
-  }
-}
+export const fetchUsersNeedApproval = async (): Promise<DatabaseUser[]> => {
+  noStore();
+  const { rows } = await sql<DatabaseUser>`SELECT * FROM users WHERE admin_approved != true`;
+  return rows;
+};
 
-export async function fetchOrders() {
+export async function fetchAllOrders(): Promise<Order[]> {
   noStore();
 
   try {
-    const data = await sql<DatabaseUser[]>`SELECT * FROM order`;
+    const data = await sql<Order>`SELECT * FROM orders`;
 
     return data.rows;
   } catch (error) {

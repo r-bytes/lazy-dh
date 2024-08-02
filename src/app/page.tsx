@@ -1,4 +1,5 @@
 "use server";
+import { sql } from "@vercel/postgres";
 
 import { CarouselSpacing } from "@/components/products/product-carousel";
 import { Button } from "@/components/ui/button";
@@ -11,10 +12,10 @@ import { Category } from "@/lib/types/category";
 import Product from "@/lib/types/product";
 import Link from "next/link";
 
-export default async function Home() {
+export default async function Home({ params }: { params: { user: string } }): Promise<JSX.Element> {
   const productList: Product[] = await fetchProducts("");
   const categoryList: Category[] = await fetchCategories();
-  const productListInSale: Product[] = productList.filter((p) => p.inSale);
+  const productListInSale: Product[] = productList.filter((p) => p.inSale);  
 
   return (
     <main className="flex flex-col items-center justify-between bg-background">
