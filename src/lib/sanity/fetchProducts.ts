@@ -1,7 +1,7 @@
 import { Product } from "../types/product";
 
 export const fetchProducts = async (queryParam?: string) => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   let url = `${baseUrl}/api/getProducts`;
 
   // Only append queryParam if it is truthy

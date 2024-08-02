@@ -1,7 +1,7 @@
 import { Category } from "../types/category";
 
 export const fetchCategories = async () => {
-  const response: Response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/getCategories`, {
+  const response: Response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getCategories`, {
     cache: "force-cache", // SSG
     // cache: "no-store", // SSR
     // next: {
