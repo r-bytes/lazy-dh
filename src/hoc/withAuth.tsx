@@ -43,3 +43,5 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
 
 // Helper function to get the display name of a component
 const getDisplayName = (WrappedComponent: React.ComponentType<any>) => WrappedComponent.displayName || WrappedComponent.name || "Component";
+
+export default withAuth;

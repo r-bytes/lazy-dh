@@ -1,5 +1,6 @@
 "use client";
 import { sendAdminApprovalMail } from "@/actions/users/user.actions";
+import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import Title from "@/components/ui/title";
@@ -7,9 +8,6 @@ import { DatabaseUser } from "@/lib/types/user";
 import { EyeIcon, EyeOff } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { fetchUsersNeedApproval } from "@/lib/db/data";
-import { Icons } from "@/components/icons";
-
 interface UserManagementProps {
   allUsers: DatabaseUser[];
   userId: string;
@@ -33,7 +31,7 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
   const toggleApproval = async (userId: string) => {
     const currentApproval = !editedUsers[userId];
     setIsSaving((prev) => ({ ...prev, [userId]: true })); // Set saving state for the specific user
-    
+
     try {
       const res = await fetch(`/api/admin/users/${userId}`, {
         cache: "no-store",

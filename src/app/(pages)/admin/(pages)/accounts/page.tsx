@@ -1,14 +1,13 @@
 "use client";
 import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
-import { useEffect, useState } from "react";
-import { DatabaseUser } from "@/lib/types/user";
-import { fetchAllUsers } from "@/lib/db/data";
-import UserManagement from "./user-management";
-import { Session } from "next-auth";
 import withAuth from "@/hoc/withAuth";
+import { fetchAllUsers } from "@/lib/db/data";
+import { DatabaseUser } from "@/lib/types/user";
+import { useEffect, useState } from "react";
+import UserManagement from "./user-management";
 
 interface UserManagementPageProps {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
 const UserManagementPage = ({ searchParams }: UserManagementPageProps) => {

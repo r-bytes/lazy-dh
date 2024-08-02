@@ -1,27 +1,27 @@
 "use client";
 import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
-import OrderManagement from "./order-management";
-import { useEffect, useState } from "react";
-import { Order } from "@/lib/types/order";
-import { fetchAllOrders } from "@/lib/db/data";
 import withAuth from "@/hoc/withAuth";
+import { fetchAllOrders } from "@/lib/db/data";
+import { Order } from "@/lib/types/order";
+import { useEffect, useState } from "react";
+import OrderManagement from "./order-management";
 
 const OrderManagementPage = () => {
-    const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
 
-    useEffect(() => {
-      const loadOrders = async () => {
-        const fetchedOrders = await fetchAllOrders();
-        setOrders(fetchedOrders);
-      };
+  useEffect(() => {
+    const loadOrders = async () => {
+      const fetchedOrders = await fetchAllOrders();
+      setOrders(fetchedOrders);
+    };
 
-      loadOrders();
-    }, []);
+    loadOrders();
+  }, []);
   return orders.length > 0 ? (
     <MaxWidthWrapper className="mx-auto flex flex-col">
       <OrderManagement allOrders={orders} />
     </MaxWidthWrapper>
-  ): null;
+  ) : null;
 };
 
-export default withAuth(OrderManagementPage)
+export default withAuth(OrderManagementPage);

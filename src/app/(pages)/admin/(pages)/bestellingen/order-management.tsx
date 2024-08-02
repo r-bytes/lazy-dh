@@ -5,7 +5,7 @@ import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, D
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import Title from "@/components/ui/title";
-import { ApiResponse, Order } from "@/lib/types/order";
+import { Order } from "@/lib/types/order";
 import { formatCurrencyTwo } from "@/lib/utils";
 import { EyeIcon, EyeOff } from "lucide-react";
 import { Session } from "next-auth";
