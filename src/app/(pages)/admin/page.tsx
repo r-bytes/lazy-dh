@@ -1,7 +1,6 @@
 import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
 import Title from "@/components/ui/title";
 import Link from "next/link";
-import withAuth from "@/hoc/withAuth";
 
 type Props = {};
 

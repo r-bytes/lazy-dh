@@ -24,4 +24,4 @@ const OrderManagementPage = () => {
   ): null;
 };
 
-export default withAuth(OrderManagementPage);
+export default OrderManagementPage

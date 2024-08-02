@@ -2,7 +2,6 @@
 import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
 import { useEffect, useState } from "react";
 import { DatabaseUser } from "@/lib/types/user";
-import withAuth from "@/hoc/withAuth";
 import { fetchAllUsers } from "@/lib/db/data";
 import UserManagement from "./user-management";
 import { Session } from "next-auth";
@@ -34,4 +33,4 @@ const UserManagementPage = ({ searchParams, session }: UserManagementPageProps) 
   ) : null;
 };
 
-export default withAuth(UserManagementPage);
+export default UserManagementPage;
