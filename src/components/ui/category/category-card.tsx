@@ -87,7 +87,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
         <CardContent className="mt-12 flex flex-col justify-center sm:mx-16 lg:mx-2">
           {slug === "home"
             ? categories.slice(0, 4).map((item, index) => (
-                <div key={index} className="flex text-center lg:text-left">
+                <div key={index} className="flex text-center lg:text-left w-4/5 sm:w-11/12 lg:w-10/12 mx-auto">
                   <a
                     href={`/categorien/${item.slug}`}
                     className="group w-full rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
@@ -96,14 +96,14 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
                   >
                     <div className="flex items-center justify-center px-4">
                       <Image
-                        className="hidden h-24 w-24 object-contain sm:block"
+                        className="hidden h-24 w-24 object-contain md:block"
                         src={urlFor(item.image).url()}
                         alt=""
                         width={100}
                         height={100}
                         priority
                       />
-                      <div className="flex flex-1 flex-col text-left sm:mx-12 sm:text-center">
+                      <div className="flex flex-1 flex-col text-left md:mx-12 md:text-center">
                         <h2 className="text-md mb-3 font-semibold sm:text-lg md:text-2xl">{item.name}</h2>
                         <p className="m-0 text-sm opacity-50">{`(${productCounts[item.name] || 0}) producten`}</p>
                       </div>

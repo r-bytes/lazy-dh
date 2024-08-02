@@ -1,13 +1,8 @@
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
+import { drizzle } from "drizzle-orm/vercel-postgres";
+import { sql } from "@vercel/postgres";
 
 import * as schema from "./schema";
 
-const pool = postgres(process.env.AUTH_DRIZZLE_URL!, {
-  max: 10,
-  // ssl: { rejectUnauthorized: false }, // SSL configuration for secure connection
-});
-
-export const db = drizzle(pool, {
+export const db = drizzle(sql, {
   schema,
 });

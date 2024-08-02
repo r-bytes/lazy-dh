@@ -1,4 +1,3 @@
-import { datetime } from "drizzle-orm/mysql-core";
 import { decimal, integer, jsonb, pgTable, serial, text, timestamp, varchar, boolean,  } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
