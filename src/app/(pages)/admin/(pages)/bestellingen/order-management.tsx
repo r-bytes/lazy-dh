@@ -1,8 +1,10 @@
 "use client";
+import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
+import Title from "@/components/ui/title";
 import { ApiResponse, Order } from "@/lib/types/order";
 import { formatCurrencyTwo } from "@/lib/utils";
 import { EyeIcon, EyeOff } from "lucide-react";
@@ -10,15 +12,14 @@ import { Session } from "next-auth";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders: Order[] }) => {
-  console.log(allOrders);
-  
+const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders: Order[] }) => {  
   const [orders, setOrders] = useState<Order[]>(allOrders);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [editedOrders, setEditedOrders] = useState<Record<number, string>>({});
+    const [isSaving, setIsSaving] = useState<Record<number, boolean>>({});
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
-  const [hideCompleted, setHideCompleted] = useState(false);
+  const [hideCompleted, setHideCompleted] = useState(true);
 
   // Sort state
   const [sortColumn, setSortColumn] = useState<string>("orderId");
@@ -26,12 +27,7 @@ const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders:
 
   // Function to fetch orders
   const fetchOrders = async () => {
-    setLoading(true);
-
-    // const res = await fetch("/api/admin/orders", {
-    //   cache: "no-store",
-    // });
-    // const data: ApiResponse = await res.json();
+    setIsLoading(true);
 
     const transformedOrders = orders.map((orderData) => ({
       orderId: orderData.orderId,
@@ -65,17 +61,19 @@ const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders:
     const initialEditedOrders = transformedOrders.reduce(
       (acc, order) => {
         acc[order.orderId] = order.status;
+        
         return acc;
       },
       {} as Record<number, string>
     );
     setEditedOrders(initialEditedOrders);
-    setLoading(false);
+    setIsLoading(false);
   };
+
 
   useEffect(() => {
     fetchOrders();
-  }, [sortColumn, sortDirection]);
+  }, [sortColumn, sortDirection, ]);
 
   // const generatePDF = async (order: Order) => {
   //   console.log("downloading pdf ....");
@@ -169,8 +167,9 @@ const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders:
     setEditedOrders((prev) => ({ ...prev, [orderId]: newStatus }));
   };
 
-  const saveStatus = async (orderId: number) => {
+const saveStatus = async (orderId: number) => {
     const newStatus = editedOrders[orderId];
+    setIsSaving((prev) => ({ ...prev, [orderId]: true }));
     try {
       const res = await fetch(`/api/admin/orders/${orderId}`, {
         cache: "no-store",
@@ -181,8 +180,10 @@ const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders:
 
       const data = await res.json();
       if (data.success) {
-        // Reload the orders data after updating the status
-        fetchOrders();
+        // Update the local orders state to reflect the new status
+        setOrders((prevOrders) => prevOrders.map((order) =>
+          order.orderId === orderId ? { ...order, status: newStatus } : order
+        ));
         toast.success("Status succesvol geupdate!");
       } else {
         toast.error(data.message);
@@ -191,8 +192,36 @@ const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders:
     } catch (error) {
       toast.error("Fout bij het bijwerken van de status van de bestelling");
       console.error("Error updating order status:", error);
+    } finally {
+      setIsSaving((prev) => ({ ...prev, [orderId]: false })); // Reset saving state for the specific order
     }
   };
+
+
+  // const saveStatus = async (orderId: number) => {
+  //   const newStatus = editedOrders[orderId];
+  //   try {
+  //     const res = await fetch(`/api/admin/orders/${orderId}`, {
+  //       cache: "no-store",
+  //       method: "PUT",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ status: newStatus }),
+  //     });
+
+  //     const data = await res.json();
+  //     if (data.success) {
+  //       // Reload the orders data after updating the status
+  //       fetchOrders();
+  //       toast.success("Status succesvol geupdate!");
+  //     } else {
+  //       toast.error(data.message);
+  //       console.error("Failed to update order status:", data.message);
+  //     }
+  //   } catch (error) {
+  //     toast.error("Fout bij het bijwerken van de status van de bestelling");
+  //     console.error("Error updating order status:", error);
+  //   }
+  // };
 
   // Handle sort column click
   const handleSort = (column: string) => {
@@ -212,13 +241,13 @@ const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders:
     setHideCompleted(!hideCompleted);
   };
 
-  if (loading) {
-    return <p className="flex flex-col items-center justify-center"> Loading orders... </p>;
+  if (isLoading) {
+    return <p className="flex flex-col items-center justify-center"> Bestellingen laden... </p>;
   }
 
   return (
     <>
-      <h1 className="my-4 text-center text-3xl font-bold text-muted-foreground"> Bestellingen beheren </h1>
+      <Title name={"Bestellingen beheren"} />
       <Button variant={"outline"} className="self-end hover:cursor-pointer" onClick={handleHide}>
         {hideCompleted ? <EyeIcon /> : <EyeOff />}
       </Button>
@@ -247,7 +276,7 @@ const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders:
         </TableHeader>
         <TableBody>
           {orders
-            .filter((order) => !hideCompleted || order.status !== "Afgerond")
+            .filter((order) => !hideCompleted || (order.status !== "Afgerond" && order.status !== "Geannuleerd"))
             .map((order) => (
               <TableRow key={order.orderId} className={order.status === "Nieuw" ? "bg-primary/20" : ""}>
                 <TableCell className="min-w-fit">{order.orderId}</TableCell>
@@ -284,7 +313,9 @@ const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders:
                   {order.orderItems && order.orderItems.length > 0 ? "Bekijk de producten" : "Geen producten"}
                 </TableCell>
                 <TableCell>
-                  <Button onClick={() => saveStatus(order.orderId)}> Status opslaan </Button>
+                  <Button className="w-32" onClick={() => saveStatus(order.orderId)}>
+                    {isSaving[order.orderId] ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : "Status opslaan"}
+                  </Button>
                   {/* <Button onClick={async () => selectedOrder && await generatePDF(selectedOrder)}>Genereer PDF</Button> */}
                 </TableCell>
               </TableRow>

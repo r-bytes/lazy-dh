@@ -14,6 +14,7 @@ import { z } from "zod";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../accordion";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../card";
 import { navigateTo } from "@/lib/utils";
+import { Icons } from "@/components/icons";
 
 export function UserSignUpForm({ fromCheckout = false }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -207,7 +208,7 @@ export function UserSignUpForm({ fromCheckout = false }) {
         </CardContent>
         <CardFooter>
           <Button className="ml-3" type="submit" disabled={isLoading}>
-            {isLoading ? "Registreren..." : "Register"}
+            {isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : "Registeer"}
           </Button>
         </CardFooter>
       </form>

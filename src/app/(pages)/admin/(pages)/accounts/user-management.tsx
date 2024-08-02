@@ -8,6 +8,7 @@ import { EyeIcon, EyeOff } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { fetchUsersNeedApproval } from "@/lib/db/data";
+import { Icons } from "@/components/icons";
 
 interface UserManagementProps {
   allUsers: DatabaseUser[];
@@ -16,9 +17,10 @@ interface UserManagementProps {
 
 const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
   const [users, setUsers] = useState<DatabaseUser[]>(allUsers);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [editedUsers, setEditedUsers] = useState<Record<string, boolean>>({});
   const [showApproved, setShowApproved] = useState(false);
+  const [isSaving, setIsSaving] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     const initialStatus = allUsers.reduce<Record<string, boolean>>((acc, user) => {
@@ -30,8 +32,9 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
 
   const toggleApproval = async (userId: string) => {
     const currentApproval = !editedUsers[userId];
+    setIsSaving((prev) => ({ ...prev, [userId]: true })); // Set saving state for the specific user
+    
     try {
-      setLoading(true);
       const res = await fetch(`/api/admin/users/${userId}`, {
         cache: "no-store",
         method: "PUT",
@@ -44,6 +47,7 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
       if (data.success) {
         setEditedUsers((prev) => ({ ...prev, [userId]: currentApproval }));
         toast.success(currentApproval ? "Gebruiker goedgekeurd" : "Goedkeuring ingetrokken");
+
         if (currentApproval) {
           await sendAdminApprovalMail(userId);
         }
@@ -54,34 +58,19 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
       toast.error("Fout bij het bijwerken van de status");
       console.error("Error updating user status:", error);
     } finally {
-      setLoading(false);
+      setIsSaving((prev) => ({ ...prev, [userId]: false })); // Reset saving state for the specific user
     }
   };
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      if (showApproved) {
-        setLoading(true);
-        const usersNeedApproval = await fetchUsersNeedApproval();
-        setUsers(usersNeedApproval);
-        setLoading(false);
-      } else {
-        setUsers(allUsers);
-      }
-    };
-
-    fetchUsers();
-  }, [showApproved, allUsers]);
-
   return (
     <>
-      <Title name="Gebruikers Beheer" />
+      <Title name="Accounts beheren" />
       <div className="mb-4 flex justify-end">
         <Button variant="outline" onClick={() => setShowApproved((prev) => !prev)}>
           {showApproved ? <EyeOff /> : <EyeIcon />}
         </Button>
       </div>
-      {loading ? (
+      {isLoading ? (
         <p className="flex items-center justify-center">Gebruikers laden...</p>
       ) : (
         <Table className="w-full min-w-fit">
@@ -101,23 +90,33 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {users.map((user) => (
-              <TableRow key={user.id} className={user.id === userId ? "bg-primary/20" : ""}>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.address}</TableCell>
-                <TableCell>{user.postal}</TableCell>
-                <TableCell className="min-w-fit">{user.city}</TableCell>
-                <TableCell>{user.phoneNumber}</TableCell>
-                <TableCell>{user.companyName}</TableCell>
-                <TableCell>{user.vatNumber}</TableCell>
-                <TableCell>{user.chamberOfCommerceNumber}</TableCell>
-                <TableCell>{editedUsers[user.id] ? "Goedgekeurd" : "Nieuw"}</TableCell>
-                <TableCell>
-                  <Button onClick={() => toggleApproval(user.id)}>{editedUsers[user.id] ? "Intrekken" : "Goedkeuren"}</Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {users
+              .filter((user) => !showApproved || !user.admin_approved)
+              .map((user) => (
+                <TableRow key={user.id} className={user.id === userId ? "bg-primary/20" : ""}>
+                  <TableCell>{user.name}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.address}</TableCell>
+                  <TableCell>{user.postal}</TableCell>
+                  <TableCell className="min-w-fit">{user.city}</TableCell>
+                  <TableCell>{user.phoneNumber}</TableCell>
+                  <TableCell>{user.companyName}</TableCell>
+                  <TableCell>{user.vatNumber}</TableCell>
+                  <TableCell>{user.chamberOfCommerceNumber}</TableCell>
+                  <TableCell>{editedUsers[user.id] ? "Goedgekeurd" : "Nieuw"}</TableCell>
+                  <TableCell>
+                    <Button className="w-32" onClick={() => toggleApproval(user.id)}>
+                      {isSaving[user.id] ? (
+                        <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                      ) : editedUsers[user.id] ? (
+                        "Intrekken"
+                      ) : (
+                        "Goedkeuren"
+                      )}
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       )}

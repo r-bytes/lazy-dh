@@ -26,16 +26,15 @@ const TermsAndConditionsPage = () => {
         <h2 className="mt-5 text-xl font-semibold">3. Bestelproces</h2>
         <p>
           Na het plaatsen van je bestelling ontvang je een bevestiging per e-mail met de details van je bestelling. De bestelling kan vervolgens
-          opgehaald worden
+          opgehaald worden.
         </p>
 
         <h2 className="mt-5 text-xl font-semibold">4. Prijzen en Betaling</h2>
-        <p>Alle prijzen op onze website zijn inclusief BTW. Betaling geschiedt veilig via de door ons aangeboden betaalmethoden op de website.</p>
+        <p>Alle prijzen op onze website zijn exclusief BTW. Betaling geschiedt veilig via de door ons aangeboden betaalmethoden op de website. Op dit moment alleen vooraf overmaken of bij het afhalen. </p>
 
         <h2 className="mt-5 text-xl font-semibold">5. Annulering en Retourbeleid</h2>
         <p>
-          Je hebt het recht je bestelling tot 14 dagen na ontvangst zonder opgave van reden te annuleren. Je krijgt dan het volledige orderbedrag
-          inclusief verzendkosten teruggestort.
+          Je hebt het recht je bestelling tot 14 dagen na ontvangst te retourneren mits deze onaangebroken zijn.
         </p>
 
         <h2 className="mt-5 text-xl font-semibold">6. Aansprakelijkheid</h2>

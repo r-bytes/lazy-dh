@@ -9,14 +9,14 @@ const OrderManagementPage = () => {
     const [orders, setOrders] = useState<Order[]>([]);
 
     useEffect(() => {
-      const loadUsers = async () => {
+      const loadOrders = async () => {
         const fetchedOrders = await fetchAllOrders();
         setOrders(fetchedOrders);
       };
 
-      loadUsers();
+      loadOrders();
     }, []);
-  return orders ? (
+  return orders.length > 0 ? (
     <MaxWidthWrapper className="mx-auto flex flex-col">
       <OrderManagement allOrders={orders} />
     </MaxWidthWrapper>
