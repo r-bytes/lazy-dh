@@ -51,7 +51,7 @@ export function InputForm({ products, onSearchChange }: InputFormProps) {
     } else {
       onSearchChange(products); // Reset to original products if search input is cleared
     }
-  }, [products, onSearchChange, form]);
+  }, [products, onSearchChange, form, form.watch("productName")]);
 
   useEffect(() => {
     if (!form.getValues("productName")) {
