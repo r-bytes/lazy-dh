@@ -11,11 +11,10 @@ import { fetchUsersNeedApproval } from "@/lib/db/data";
 
 interface UserManagementProps {
   allUsers: DatabaseUser[];
-  userIdFromProps: string;
   userId: string;
 }
 
-const UserManagement = ({ allUsers, userIdFromProps, userId }: UserManagementProps) => {
+const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
   const [users, setUsers] = useState<DatabaseUser[]>(allUsers);
   const [loading, setLoading] = useState(false);
   const [editedUsers, setEditedUsers] = useState<Record<string, boolean>>({});
@@ -103,7 +102,7 @@ const UserManagement = ({ allUsers, userIdFromProps, userId }: UserManagementPro
           </TableHeader>
           <TableBody>
             {users.map((user) => (
-              <TableRow key={user.id} className={user.id === userIdFromProps ? "bg-primary/20" : ""}>
+              <TableRow key={user.id} className={user.id === userId ? "bg-primary/20" : ""}>
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.address}</TableCell>

@@ -7,11 +7,10 @@ import UserManagement from "./user-management";
 import { Session } from "next-auth";
 
 interface UserManagementPageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
-  session: Session;
+  searchParams: { [key: string]: string | string[] | undefined }
 }
 
-const UserManagementPage = ({ searchParams, session }: UserManagementPageProps) => {
+const UserManagementPage = ({ searchParams }: UserManagementPageProps) => {
   const [users, setUsers] = useState<DatabaseUser[]>([]);
 
   useEffect(() => {
@@ -24,11 +23,10 @@ const UserManagementPage = ({ searchParams, session }: UserManagementPageProps) 
   }, []);
 
   const userIdFromProps = searchParams.token as string;
-  const userId = session?.user?.id ?? "";
 
   return users.length > 0 ? (
     <MaxWidthWrapper className="mx-auto flex flex-col">
-      <UserManagement allUsers={users} userIdFromProps={userIdFromProps} userId={userId} />
+      <UserManagement allUsers={users} userId={userIdFromProps} />
     </MaxWidthWrapper>
   ) : null;
 };
