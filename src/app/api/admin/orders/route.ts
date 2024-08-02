@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { users, orders, orderItems } from "@/lib/db/schema";
+import { orderItems, orders, users } from "@/lib/db/schema";
 import { eq, sql } from "drizzle-orm";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
@@ -36,9 +36,19 @@ export async function GET(request: NextRequest) {
       .leftJoin(orderItems, eq(orderItems.orderId, orders.id))
       .groupBy(orders.id, orders.userId, orders.orderDate, orders.totalAmount, orders.status, users.name, users.email);
 
-    return NextResponse.json({ success: true, orders: allOrders });
+    // return NextResponse.json({ success: true, orders: allOrders });
+
+    // Create a response with disabled caching
+    const response = NextResponse.json({ success: true, orders: allOrders });
+    response.headers.set("Cache-Control", "no-store, max-age=0");
+    return response;
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ success: false, message: "Er is iets misgegaan" }, { status: 500 });
+    // return NextResponse.json({ success: false, message: "Er is iets misgegaan" }, { status: 500 });
+
+    // It's a good practice to set caching headers even in case of errors
+    const errorResponse = NextResponse.json({ success: false, message: "Er is iets misgegaan" }, { status: 500 });
+    errorResponse.headers.set("Cache-Control", "no-store, max-age=0");
+    return errorResponse;
   }
 }

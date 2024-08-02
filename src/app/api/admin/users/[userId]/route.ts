@@ -33,7 +33,7 @@ export async function PUT(request: NextRequest, { params }: { params: { userId: 
         id: users.id,
       })
       .from(users)
-      .where(eq(users.id, userId))
+      .where(eq(users.id, userId));
 
     if (!existingUser) {
       return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
@@ -48,9 +48,15 @@ export async function PUT(request: NextRequest, { params }: { params: { userId: 
       .where(eq(users.id, userId))
       .execute();
 
-    return NextResponse.json({ success: true, message: "User status updated successfully" });
+    // Create a response with disabled caching
+    const response = NextResponse.json({ success: true, message: "User status updated successfully" });
+    response.headers.set("Cache-Control", "no-store, max-age=0");
+    return response;
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ success: false, message: "Error updating user status" }, { status: 500 });
+    // It's a good practice to set caching headers even in case of errors
+    const errorResponse = NextResponse.json({ success: false, message: "Error updating user status" }, { status: 500 });
+    errorResponse.headers.set("Cache-Control", "no-store, max-age=0");
+    return errorResponse;
   }
 }

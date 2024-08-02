@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { sendPickupMail } from "@/actions/users/user.actions";
 import { db } from "@/lib/db";
 import { orderItems, orders, users } from "@/lib/db/schema";
 import { eq, sql } from "drizzle-orm";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { sendPickupMail } from "@/actions/users/user.actions";
 
 const updateStatusSchema = z.object({
   status: z.string().nonempty(), // Ensure status is a non-empty string
@@ -63,15 +63,20 @@ export async function PUT(request: NextRequest, { params }: { params: { orderId:
       .leftJoin(orderItems, eq(orderItems.orderId, orders.id))
       .where(eq(orders.id, parseInt(orderId, 10)))
       .groupBy(orders.id, orders.userId, orders.orderDate, orders.totalAmount, orders.status, users.name, users.email);
-    
+
     if (status === "Afgerond" && currentOrder) {
       sendPickupMail(currentOrder);
     }
     
-
-    return NextResponse.json({ success: true, message: "Order status updated successfully" });
+    // Create a response with disabled caching
+    const response = NextResponse.json({ success: true, message: "Order status updated successfully" });
+    response.headers.set("Cache-Control", "no-store, max-age=0");
+    return response;
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ success: false, message: "Error updating order status" }, { status: 500 });
+    // It's a good practice to set caching headers even in case of errors
+    const errorResponse = NextResponse.json({ success: false, message: "Error updating order status" }, { status: 500 });
+    errorResponse.headers.set("Cache-Control", "no-store, max-age=0");
+    return errorResponse;
   }
 }
