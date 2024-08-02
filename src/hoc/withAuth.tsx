@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const withAuth = (WrappedComponent: React.ComponentType<any>) => {
-  return (props: any) => {
+  const WithAuthComponent = (props: any) => {
     const { data: session, status } = useSession();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const router = useRouter();
@@ -35,6 +35,11 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
 
     return <WrappedComponent {...props} session={session} />;
   };
+  // Set the display name for debugging purposes
+  WithAuthComponent.displayName = `WithAuth(${getDisplayName(WrappedComponent)})`;
+
+  return WithAuthComponent;
 };
 
-export default withAuth;
+// Helper function to get the display name of a component
+const getDisplayName = (WrappedComponent: React.ComponentType<any>) => WrappedComponent.displayName || WrappedComponent.name || "Component";
