@@ -16,7 +16,7 @@ const UserManagement = ({ userIdFromProps }: { userIdFromProps: string }) => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/admin/users");
+      const res = await fetch("/api/admin/users", { cache: "no-store" });
       const data: ApiResponse = await res.json();
       if (data.success) {
         const usersRequiringApproval = data.users.filter((user) => showApproved || !user.adminApproved);
@@ -43,6 +43,7 @@ const UserManagement = ({ userIdFromProps }: { userIdFromProps: string }) => {
     const currentApproval = !editedUsers[userId];
     try {
       const res = await fetch(`/api/admin/users/${userId}`, {
+        cache: 'no-store',
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ adminApproved: currentApproval }),
@@ -90,7 +91,7 @@ const UserManagement = ({ userIdFromProps }: { userIdFromProps: string }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users.map((user) => (
+          {users?.map((user) => (
             <TableRow key={user.id} className={user.id === userIdFromProps ? "bg-primary/20" : ""}>
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.email}</TableCell>

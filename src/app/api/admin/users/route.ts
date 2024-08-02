@@ -1,14 +1,11 @@
-import { sql } from "@vercel/postgres";
 import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-
   try {
-    const allUsers = await sql`SELECT * from USERS`;
     // Fetch all orders, including user and order item details
-    // const allUsers = await db.select().from(users);
+    const allUsers = await db.select().from(users);
 
     // Create a response with disabled caching
     const response = NextResponse.json({ success: true, users: allUsers });

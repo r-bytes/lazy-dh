@@ -30,7 +30,9 @@ const OrderManagement = ({ session }: { session: Session }) => {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/admin/orders");
+      const res = await fetch("/api/admin/orders", {
+        cache: "no-store",
+      });
       const data: ApiResponse = await res.json();
       if (data.success) {
         const transformedOrders = data.orders.map((orderData) => ({
@@ -178,6 +180,7 @@ const OrderManagement = ({ session }: { session: Session }) => {
     const newStatus = editedOrders[orderId];
     try {
       const res = await fetch(`/api/admin/orders/${orderId}`, {
+        cache: "no-store",
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
