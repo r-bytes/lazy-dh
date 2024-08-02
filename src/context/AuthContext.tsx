@@ -12,6 +12,7 @@ type ContextProps = {
   isAdminApproved: boolean;
   setIsAdminApproved: Dispatch<SetStateAction<boolean>>;
   checkAdminApproval: (email: string) => Promise<void>;
+  authorizedEmails: string[];
 };
 
 export const AuthContext = createContext<ContextProps>({
@@ -21,13 +22,16 @@ export const AuthContext = createContext<ContextProps>({
   setIsAuthenticated: () => false,
   isAdminApproved: false,
   setIsAdminApproved: () => false,
-  checkAdminApproval: async () => {}
+  checkAdminApproval: async () => {},
+  authorizedEmails: [],
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isAdminApproved, setIsAdminApproved] = useState<boolean>(false);
+
+  const authorizedEmails: string[] = JSON.parse(process.env.NEXT_PUBLIC_AUTHORIZED_EMAILS || "[]");
 
   const { data: session, status } = useSession();
 
@@ -77,7 +81,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setIsAuthenticated,
         isAdminApproved,
         setIsAdminApproved,
-        checkAdminApproval
+        checkAdminApproval,
+        authorizedEmails,
       }}
     >
       {children}

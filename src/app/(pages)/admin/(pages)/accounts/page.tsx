@@ -5,6 +5,7 @@ import { DatabaseUser } from "@/lib/types/user";
 import { fetchAllUsers } from "@/lib/db/data";
 import UserManagement from "./user-management";
 import { Session } from "next-auth";
+import withAuth from "@/hoc/withAuth";
 
 interface UserManagementPageProps {
   searchParams: { [key: string]: string | string[] | undefined }
@@ -31,4 +32,4 @@ const UserManagementPage = ({ searchParams }: UserManagementPageProps) => {
   ) : null;
 };
 
-export default UserManagementPage;
+export default withAuth(UserManagementPage);

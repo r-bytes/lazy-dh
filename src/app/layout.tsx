@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${montserrat.className} flex min-h-screen flex-col`}>
+      <body className={`${montserrat.className} flex min-h-screen flex-col text-muted-foreground`}>
         <SessionProvider>
           <CartProvider>
             <ProductProvider type="">

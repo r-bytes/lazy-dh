@@ -4,6 +4,7 @@ import OrderManagement from "./order-management";
 import { useEffect, useState } from "react";
 import { Order } from "@/lib/types/order";
 import { fetchAllOrders } from "@/lib/db/data";
+import withAuth from "@/hoc/withAuth";
 
 const OrderManagementPage = () => {
     const [orders, setOrders] = useState<Order[]>([]);
@@ -23,4 +24,4 @@ const OrderManagementPage = () => {
   ): null;
 };
 
-export default OrderManagementPage
+export default withAuth(OrderManagementPage)

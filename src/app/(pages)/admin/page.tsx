@@ -1,10 +1,10 @@
+"use client";
 import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
 import Title from "@/components/ui/title";
+import withAuth from "@/hoc/withAuth";
 import Link from "next/link";
 
-type Props = {};
-
-const AdminPage = (props: Props) => {
+const AdminPage: React.FC = () => {
   return (
     <MaxWidthWrapper className="mx-auto flex flex-col">
       <Title name="Beheer pagina" />
@@ -24,4 +24,4 @@ const AdminPage = (props: Props) => {
   );
 };
 
-export default AdminPage
+export default withAuth(AdminPage);

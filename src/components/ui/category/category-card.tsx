@@ -77,7 +77,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
   return products && categories ? (
     <Card className={cn("w-full", className)} {...props}>
       <CardHeader className="mb-4 text-center">
-        <Title name={slug === "home" ? "Categorieën" : capitalizeFirstLetter(currentPath)} cn="mt-12 text-4xl md:text-5xl" />
+        <Title name={slug === "home" ? "Categorieën" : capitalizeFirstLetter(currentPath)} cn="mt-12" />
         <CardDescription className="md:text-base">Kies een categorie</CardDescription>
       </CardHeader>
       {/* Search bar */}

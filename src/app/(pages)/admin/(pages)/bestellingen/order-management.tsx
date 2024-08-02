@@ -249,7 +249,7 @@ const saveStatus = async (orderId: number) => {
     <>
       <Title name={"Bestellingen beheren"} />
       <Button variant={"outline"} className="self-end hover:cursor-pointer" onClick={handleHide}>
-        {hideCompleted ? <EyeIcon /> : <EyeOff />}
+        {!hideCompleted ? <EyeIcon /> : <EyeOff />}
       </Button>
       <Table className="w-full">
         <TableHeader>

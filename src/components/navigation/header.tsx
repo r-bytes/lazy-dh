@@ -1,7 +1,8 @@
 "use client";
+import { useAuthContext } from "@/context/AuthContext";
 import { useCartContext } from "@/context/CartContext";
 import { navigateTo } from "@/lib/utils";
-import { CircleX, MenuIcon, ShoppingBag, Fingerprint } from "lucide-react";
+import { CircleX, Fingerprint, MenuIcon, ShoppingBag } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { Roboto } from "next/font/google";
 import Image from "next/image";
@@ -40,8 +41,9 @@ const NAVIGATION_LIST: NavigationItem[] = [
 
 const Header = (props: Props) => {
   // Hooks
-  const { totalQuantities } = useCartContext();
   const { data: session, status } = useSession();
+  const { totalQuantities } = useCartContext();
+  const { authorizedEmails } = useAuthContext();
   const router = useRouter();
 
   // States
@@ -81,8 +83,6 @@ const Header = (props: Props) => {
       </button>
     );
   };
-
-
 
   return (
     <>
@@ -162,7 +162,7 @@ const Header = (props: Props) => {
               )}
             </ul>
           </div>
-          <AdminPage cn={"hover:text-primary mr-4"} />
+          {session && status === "authenticated" && authorizedEmails.includes(session.user?.email!) && <AdminPage cn="hover:text-primary mr-4" />}
           <ModeToggle cn="mr-4" />
           <ShoppingCart cn="mr-10" />
         </div>
