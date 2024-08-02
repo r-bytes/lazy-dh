@@ -20,9 +20,46 @@ export async function fetchAllOrders(): Promise<Order[]> {
   noStore();
 
   try {
-    const data = await sql<Order>`SELECT * FROM orders`;
+    // Fetch all orders, including user and order item details
+    const query = `
+      SELECT 
+        orders.id AS "orderId",
+        orders.user_id AS "userId",
+        orders.order_date AS "orderDate",
+        orders.total_amount AS "totalAmount",
+        orders.status AS "status",
+        users.name AS "userName",
+        users.email AS "userEmail",
+        COALESCE(
+          json_agg(
+            json_build_object(
+              'name', order_items.name,
+              'quantity', order_items.quantity,
+              'quantityInBox', order_items.quantity_in_box,
+              'volume', order_items.volume,
+              'percentage', order_items.percentage,
+              'price', order_items.price,
+              'imgUrl', order_items.img_url
+            )
+          ) FILTER (WHERE order_items.order_id IS NOT NULL),
+          '[]'
+        ) AS "orderItems"
+      FROM orders
+      LEFT JOIN users ON orders.user_id = users.id
+      LEFT JOIN order_items ON order_items.order_id = orders.id
+      GROUP BY 
+        orders.id, 
+        orders.user_id, 
+        orders.order_date, 
+        orders.total_amount, 
+        orders.status, 
+        users.name, 
+        users.email;
+    `;
 
-    return data.rows;
+    const { rows } = await sql.query(query);
+
+    return rows;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch orders");

@@ -11,17 +11,17 @@ const OrderManagementPage = () => {
 
     useEffect(() => {
       const loadUsers = async () => {
-        const fetchedUsers = await fetchAllOrders();
-        setOrders(fetchedUsers);
+        const fetchedOrders = await fetchAllOrders();
+        setOrders(fetchedOrders);
       };
 
       loadUsers();
     }, []);
-  return (
+  return orders ? (
     <MaxWidthWrapper className="mx-auto flex flex-col">
-      <OrderManagement />
+      <OrderManagement allOrders={orders} />
     </MaxWidthWrapper>
-  );
+  ): null;
 };
 
 export default withAuth(OrderManagementPage);

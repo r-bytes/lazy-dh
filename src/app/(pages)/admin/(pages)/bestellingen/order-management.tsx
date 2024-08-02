@@ -1,21 +1,19 @@
 "use client";
-import { createOrderSummaryDocument } from "@/actions/pdf/createOrderSummaryDocument";
-import downloadPDF from "@/actions/pdf/downloadPDF";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
-import { InvoiceDetails } from "@/lib/types/invoice";
 import { ApiResponse, Order } from "@/lib/types/order";
-import Product from "@/lib/types/product";
-import { formatCurrencyTwo, getCurrentFormattedDate } from "@/lib/utils";
+import { formatCurrencyTwo } from "@/lib/utils";
 import { EyeIcon, EyeOff } from "lucide-react";
 import { Session } from "next-auth";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const OrderManagement = ({ session }: { session: Session }) => {
-  const [orders, setOrders] = useState<Order[]>([]);
+const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders: Order[] }) => {
+  console.log(allOrders);
+  
+  const [orders, setOrders] = useState<Order[]>(allOrders);
   const [loading, setLoading] = useState(true);
   const [editedOrders, setEditedOrders] = useState<Record<number, string>>({});
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -29,55 +27,50 @@ const OrderManagement = ({ session }: { session: Session }) => {
   // Function to fetch orders
   const fetchOrders = async () => {
     setLoading(true);
-    try {
-      const res = await fetch("/api/admin/orders", {
-        cache: "no-store",
-      });
-      const data: ApiResponse = await res.json();
-      if (data.success) {
-        const transformedOrders = data.orders.map((orderData) => ({
-          orderId: orderData.orderId,
-          userId: orderData.userId,
-          orderDate: orderData.orderDate,
-          totalAmount: orderData.totalAmount,
-          status: orderData.status,
-          userName: orderData.userName,
-          userEmail: orderData.userEmail,
-          orderItems: orderData.orderItems!.length > 0 ? orderData.orderItems : null,
-        }));
 
-        // Custom sorting logic to put "Nieuw" status at the top
-        transformedOrders.sort((a, b) => {
-          // Priority for "Nieuw" status
-          const priority = { Nieuw: 1, Bezig: 2, Afgerond: 3, Geannuleerd: 4 };
-          if (a.status === "Nieuw" && b.status !== "Nieuw") return -1;
-          if (a.status !== "Nieuw" && b.status === "Nieuw") return 1;
+    // const res = await fetch("/api/admin/orders", {
+    //   cache: "no-store",
+    // });
+    // const data: ApiResponse = await res.json();
 
-          // Other sorting logic
-          const aValue = (a as { [key: string]: any })[sortColumn];
-          const bValue = (b as { [key: string]: any })[sortColumn];
-          if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
-          if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
-          return 0;
-        });
+    const transformedOrders = orders.map((orderData) => ({
+      orderId: orderData.orderId,
+      userId: orderData.userId,
+      orderDate: orderData.orderDate,
+      totalAmount: orderData.totalAmount,
+      status: orderData.status,
+      userName: orderData.userName,
+      userEmail: orderData.userEmail,
+      orderItems: orderData.orderItems!.length > 0 ? orderData.orderItems : null,
+    }));
 
-        setOrders(transformedOrders);
+    // Custom sorting logic to put "Nieuw" status at the top
+    transformedOrders.sort((a, b) => {
+      // Priority for "Nieuw" status
+      const priority = { Nieuw: 1, Bezig: 2, Afgerond: 3, Geannuleerd: 4 };
+      if (a.status === "Nieuw" && b.status !== "Nieuw") return -1;
+      if (a.status !== "Nieuw" && b.status === "Nieuw") return 1;
 
-        // Initialize the editedOrders state with the current status
-        const initialEditedOrders = transformedOrders.reduce(
-          (acc, order) => {
-            acc[order.orderId] = order.status;
-            return acc;
-          },
-          {} as Record<number, string>
-        );
-        setEditedOrders(initialEditedOrders);
-      }
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-    } finally {
-      setLoading(false);
-    }
+      // Other sorting logic
+      const aValue = (a as { [key: string]: any })[sortColumn];
+      const bValue = (b as { [key: string]: any })[sortColumn];
+      if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
+      if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    setOrders(transformedOrders);
+
+    // Initialize the editedOrders state with the current status
+    const initialEditedOrders = transformedOrders.reduce(
+      (acc, order) => {
+        acc[order.orderId] = order.status;
+        return acc;
+      },
+      {} as Record<number, string>
+    );
+    setEditedOrders(initialEditedOrders);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -86,7 +79,7 @@ const OrderManagement = ({ session }: { session: Session }) => {
 
   // const generatePDF = async (order: Order) => {
   //   console.log("downloading pdf ....");
-    
+
   //   try {
   //     const userIdResponse = await fetch("/api/getUserIdByEmail", {
   //       method: "POST",
@@ -226,9 +219,9 @@ const OrderManagement = ({ session }: { session: Session }) => {
   return (
     <>
       <h1 className="my-4 text-center text-3xl font-bold text-muted-foreground"> Bestellingen beheren </h1>
-      <TableCell className="self-end hover:cursor-pointer" onClick={handleHide}>
+      <Button variant={"outline"} className="self-end hover:cursor-pointer" onClick={handleHide}>
         {hideCompleted ? <EyeIcon /> : <EyeOff />}
-      </TableCell>
+      </Button>
       <Table className="w-full">
         <TableHeader>
           <TableRow>
