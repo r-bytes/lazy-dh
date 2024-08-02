@@ -33,7 +33,7 @@ type Props = {
 
 // Variables
 const NAVIGATION_LIST: NavigationItem[] = [
-  { title: "Categorien", order: 0 },
+  { title: "Categorieën", order: 0 },
   { title: "Account", order: 1, requiresAuth: false },
   { title: "Acties", order: 2 },
   { title: "Winkelwagen", order: 3 },
@@ -118,7 +118,7 @@ const Header = (props: Props) => {
                   <Link
                     className={`${roboto.className} tracking-wider`}
                     onClick={() => setMenuOpen(false)}
-                    href={`/${item.title.toLowerCase() === "acties" ? "promoties" : item.title.toLowerCase()}`}
+                    href={`/${item.title.replace("ë", "e").toLowerCase() === "acties" ? "promoties" : item.title.replace("ë", "e").toLowerCase()}`}
                   >
                     <Title name={item.title} />
                   </Link>
@@ -141,7 +141,7 @@ const Header = (props: Props) => {
                     ${
                       index === arr.length - 2
                         ? "text-tertiary mr-8 rounded-md bg-primary px-3 py-2 hover:scale-105 hover:text-secondary-foreground dark:text-background dark:hover:bg-primary-foreground/30 dark:hover:text-primary"
-                        : currentPath.toLowerCase() === item.title.toLowerCase()
+                        : currentPath.toLowerCase() === item.title.replace("ë", "e").toLowerCase()
                           ? "border-b-2 border-primary pb-2"
                           : item.requiresAuth && !session
                             ? "text-gray-500 hover:cursor-not-allowed"
@@ -152,7 +152,7 @@ const Header = (props: Props) => {
                     {item.requiresAuth && !session && item.title.toLowerCase() === "account" ? null : (
                       <Link
                         className={`${roboto.className} tracking-wider`}
-                        href={`/${item.title.toLowerCase() === "acties" ? "promoties" : item.title.toLowerCase()}`}
+                        href={`/${item.title.replace("ë", "e").toLowerCase() === "acties" ? "promoties" : item.title.replace("ë", "e").toLowerCase()}`}
                       >
                         {item.requiresAuth && !session ? "" : item.title}
                       </Link>

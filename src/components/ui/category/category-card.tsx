@@ -87,9 +87,9 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
         <CardContent className="mt-12 flex flex-col justify-center sm:mx-16 lg:mx-2">
           {slug === "home"
             ? categories.slice(0, 4).map((item, index) => (
-                <div key={index} className="flex text-center lg:text-left w-4/5 sm:w-11/12 lg:w-10/12 mx-auto">
+                <div key={index} className="mx-auto flex w-4/5 text-center sm:w-11/12 lg:w-10/12 lg:text-left">
                   <a
-                    href={`/categorien/${item.slug}`}
+                    href={`/categorieen/${item.slug}`}
                     className="group w-full rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
                     // target="_blank"
                     rel="noopener noreferrer"
@@ -104,10 +104,10 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
                         priority
                       />
                       <div className="flex flex-1 flex-col text-left md:mx-12 md:text-center">
-                        <h2 className="text-md mb-3 font-semibold sm:text-lg md:text-2xl">{item.name}</h2>
+                        <h2 className="text-md mb-3 font-semibold text-muted-foreground sm:text-lg md:text-2xl lg:text-3xl">{item.name}</h2>
                         <p className="m-0 text-sm opacity-50">{`(${productCounts[item.name] || 0}) producten`}</p>
                       </div>
-                      <span className="inline-block text-lg transition-transform group-hover:translate-x-1 motion-reduce:transform-none sm:text-3xl">
+                      <span className="inline-block text-lg text-muted-foreground transition-transform group-hover:translate-x-1 motion-reduce:transform-none sm:text-3xl">
                         &#x279C;
                       </span>
                     </div>
@@ -132,7 +132,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
                         priority
                       />
                       <div className="flex flex-1 flex-col text-left sm:mx-12 sm:text-center">
-                        <h2 className="text-md mb-3 font-semibold sm:text-lg md:text-2xl">{item.name}</h2>
+                        <h2 className="text-md mb-3 font-semibold sm:text-lg md:text-2xl lg:text-3xl">{item.name}</h2>
                         <p className="m-0 text-sm opacity-50">{`(${productCounts[item.name] || 0}) producten`}</p>
                       </div>
                       <span className="inline-block text-lg transition-transform group-hover:translate-x-1 motion-reduce:transform-none sm:text-3xl">
@@ -147,15 +147,18 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
       {slug === "home" && (
         <div className="m-16 flex flex-1 justify-center">
           <Button title="Meer">
-            <Link href={"/categorien"}>Bekijk meer</Link>
+            <Link href={"/categorieen"}>Bekijk meer</Link>
           </Button>
         </div>
       )}
     </Card>
-  ): !products && !categories && productState && categoryState ? (
+  ) : !products && !categories && productState && categoryState ? (
     <Card className={cn("w-full", className)} {...props}>
       <CardHeader className="mb-4 text-center">
-        <Title name={slug === "home" ? "Categorieën" : capitalizeFirstLetter(currentPath)} cn="mt-12 text-4xl md:text-5xl" />
+        <Title
+          name={slug === "home" ? "Categorieën" : currentPath === "categorieen" ? "Categorieën" : capitalizeFirstLetter(currentPath)}
+          cn="mt-12 text-4xl md:text-5xl"
+        />
         <CardDescription className="md:text-base">Kies een categorie</CardDescription>
       </CardHeader>
       {/* Search bar */}
@@ -167,7 +170,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
             ? categoryState.slice(0, 4).map((item, index) => (
                 <div key={index} className="flex text-center lg:text-left">
                   <a
-                    href={`/categorien/${item.slug}`}
+                    href={`/categorieen/${item.slug}`}
                     className="group w-full rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
                     // target="_blank"
                     rel="noopener noreferrer"
@@ -182,10 +185,10 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
                         priority
                       />
                       <div className="flex flex-1 flex-col text-left sm:mx-12 sm:text-center">
-                        <h2 className="text-md mb-3 font-semibold sm:text-lg md:text-2xl">{item.name}</h2>
+                        <h2 className="text-md mb-3 font-semibold text-muted-foreground sm:text-lg md:text-2xl lg:text-3xl">{item.name}</h2>
                         <p className="m-0 text-sm opacity-50">{`(${productCounts[item.name] || 0}) producten`}</p>
                       </div>
-                      <span className="inline-block text-lg transition-transform group-hover:translate-x-1 motion-reduce:transform-none sm:text-3xl">
+                      <span className="inline-block text-lg text-muted-foreground transition-transform group-hover:translate-x-1 motion-reduce:transform-none sm:text-3xl">
                         &#x279C;
                       </span>
                     </div>
@@ -210,10 +213,10 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
                         priority
                       />
                       <div className="flex flex-1 flex-col text-left sm:mx-12 sm:text-center">
-                        <h2 className="text-md mb-3 font-semibold sm:text-lg md:text-2xl">{item.name}</h2>
+                        <h2 className="text-md mb-3 font-semibold text-muted-foreground sm:text-lg md:text-2xl lg:text-3xl">{item.name}</h2>
                         <p className="m-0 text-sm opacity-50">{`(${productCounts[item.name] || 0}) producten`}</p>
                       </div>
-                      <span className="inline-block text-lg transition-transform group-hover:translate-x-1 motion-reduce:transform-none sm:text-3xl">
+                      <span className="inline-block text-lg text-muted-foreground transition-transform group-hover:translate-x-1 motion-reduce:transform-none sm:text-3xl">
                         &#x279C;
                       </span>
                     </div>
@@ -225,12 +228,14 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
       {slug === "home" && (
         <div className="m-16 flex flex-1 justify-center">
           <Button title="Meer">
-            <Link href={"/categorien"}>Bekijk meer</Link>
+            <Link href={"/categorieen"}>Bekijk meer</Link>
           </Button>
         </div>
       )}
     </Card>
-  ) : <div>
-    <p> Geen producten/categorien </p>
-  </div>;
+  ) : (
+    <div>
+      <p> Geen producten/categorieen </p>
+    </div>
+  );
 };

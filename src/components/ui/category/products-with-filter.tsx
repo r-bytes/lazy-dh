@@ -7,6 +7,7 @@ import { Product } from "@/lib/types/product";
 import { cn } from "@/lib/utils";
 import React from "react";
 import { InputForm } from "./search-input";
+import Title from "../title";
 
 type CardProps = React.ComponentProps<typeof Card>;
 interface ProductsWithFilterProps extends Omit<CardProps, "children"> {
@@ -20,7 +21,7 @@ export const ProductsWithFilter: React.FC<ProductsWithFilterProps> = ({ classNam
     <>
       <Card className={cn("w-full", className)} {...props}>
         <CardHeader className="mb-4 text-center">
-          <CardTitle className="mt-12 text-3xl text-muted-foreground"> Alle Producten </CardTitle>
+          <Title name="Alle Producten" cn="mt-12 text-muted-foreground" />
         </CardHeader>
         {/* Search bar */}
         <InputForm products={products} onSearchChange={setFilteredProducts} />

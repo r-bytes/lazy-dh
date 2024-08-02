@@ -476,7 +476,7 @@ export const verifyEmail = async (emailVerificationToken: string) => {
         <div>
           <h1> Nieuwe account aanvraag voor: <b> ${existingUser.email} </b></h1>
           <p> Yooo habibi, Er is een nieuwe account aanvraag die goedgekeurd moeten worden, klik op onderstaande link: </p>
-          <a href="${process.env.NEXT_PUBLIC_BASE_URL}/admin/gebruikers-beheer?token=${existingUser.id}" target="_blank">
+          <a href="${process.env.NEXT_PUBLIC_BASE_URL}/admin/accounts?token=${existingUser.id}" target="_blank">
             Klik hier het nieuwe account te checken en goed te keuren
           </a>
         </div>
@@ -505,6 +505,56 @@ export const verifyEmail = async (emailVerificationToken: string) => {
 };
 
 export const sendAdminApprovalMail = async (userId: string) => {
+  try {
+    const existingUser = await db.query.users.findFirst({
+      where: eq(users.id, userId),
+    });
+
+    console.log(`Found user: ${JSON.stringify(existingUser)}`);
+
+    if (!existingUser) {
+      return {
+        success: false,
+        message: "Gebruiker niet gevonden",
+      };
+    }
+
+    // send the user a notification
+    const emailHtml = `
+        <div>
+          <h1> Account is goedgekeurd voor: <b> ${existingUser.email} </b></h1>
+          <p> Welkom bij Lazo Den Haag! </p>
+          <p> Uw account is goedgekeurd, u kunt nu inloggen.</p>
+          <p>klik op onderstaande knop om in te loggen </p>
+          <a href="${process.env.NEXT_PUBLIC_BASE_URL}/account" target="_blank">
+            Inloggen
+          </a>
+          
+        </div>
+      `;
+
+    await sendEmail({
+      from: "Lazo admin <admin@r-bytes.com>",
+      to: [existingUser.email],
+      subject: `Lazo Den Haag - Account is goedgekeurd`,
+      text: emailHtml,
+      html: emailHtml,
+    });
+
+    return {
+      success: true,
+      message: "Account goedgekeuring bericht is verstuurd",
+    };
+  } catch (error) {
+    console.error("Fout bij het ophalen van gebruiker uit de database:", error);
+    return {
+      success: false,
+      message: "Er is een fout opgetreden bij het verwerken van uw verzoek.",
+    };
+  }
+};
+
+export const sendAdminOrderMail = async (userId: string) => {
   try {
     const existingUser = await db.query.users.findFirst({
       where: eq(users.id, userId),

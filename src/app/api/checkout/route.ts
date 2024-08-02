@@ -87,9 +87,37 @@ export async function POST(request: NextRequest) {
     // Send the PDF as an attachment
     const { data, error } = await resend.emails.send({
       from: "Lazo admin <admin@r-bytes.com>",
-      to: [email], // Use the customer's actual email
+      to: [email],
       subject: `Bevestingsmail voor bestelling: ${order[0].id} `,
       html: "<p> Bedankt voor uw bestelling! </p> <p> U vindt uw orderbevestiging in de bijlage. </p>",
+      attachments: [
+        {
+          content: outPutPdf,
+          filename: `lazo-spirits-order-bevestiging-${order[0].id}-${formattedDate}.pdf`,
+          content_type: "application/pdf",
+        },
+      ],
+    });
+
+    const emailHtml = `
+      <div>
+        <h1> Nieuwe bestelling ontvangen voor: <b> ${email} </b></h1>
+        <p> In de bijlage een kopie van de fatuur. </p>
+        <p>klik op onderstaande knop om de status van de bestelling te behandelen </p>
+        <a href="${process.env.NEXT_PUBLIC_BASE_URL}/admin/bestellingen" target="_blank">
+          Bestelling bekijken
+        </a>
+        
+      </div>
+    `;
+
+    // Copy to admin
+    const { data: d, error: e } = await resend.emails.send({
+      from: "Lazo admin <admin@r-bytes.com>",
+      to: [process.env.ADMIN_EMAIL!],
+      subject: `Nieuwe bestelling ontvangen: ${order[0].id} `,
+      html: emailHtml,
+      text: emailHtml,
       attachments: [
         {
           content: outPutPdf,
@@ -102,6 +130,11 @@ export async function POST(request: NextRequest) {
     if (error) {
       console.error("Email sending error:", error);
       return NextResponse.json({ success: false, message: "Fout bij het verzenden van de bevestigingsmail" });
+    }
+    
+    if (e) {
+      console.error("Email sending error:", error);
+      return NextResponse.json({ success: false, message: "Fout bij het verzenden van de bevestigingsmail naar de admin" });
     }
 
     return NextResponse.json({ success: true, message: "Bestelling geplaatst en e-mail succesvol verzonden" });

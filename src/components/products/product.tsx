@@ -122,7 +122,7 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
           />
           <CardContent className="flex flex-1 flex-col rounded-2xl">
             <div className="flex w-full flex-1 flex-col items-center justify-between text-center">
-              <CardTitle className="text-xl md:text-2xl">{product.name}</CardTitle>
+              <CardTitle className="mt-12 text-xl font-light md:text-2xl">{product.name}</CardTitle>
               <div className="self-end">
                 <CardDescription className="flex-1 text-right text-2xl font-semibold">
                   € {formatNumberWithCommaDecimalSeparator(product.price)}
@@ -157,7 +157,7 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
         {/* Middle */}
         <DialogHeader className="flex flex-col items-center justify-between rounded-t-3xl bg-zinc-200/50 p-4 dark:bg-zinc-800">
           <div className="">
-            <DialogTitle className="dark:text-text-muted-foreground text-tertiary mb-4 mt-4 text-center text-lg font-light sm:text-2xl lg:text-3xl">
+            <DialogTitle className="text-tertiary mb-4 mt-4 text-center text-lg font-light dark:text-white sm:text-2xl lg:text-3xl">
               {product.name}
             </DialogTitle>
           </div>
@@ -202,7 +202,7 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
           />
           <CardContent className="flex flex-1 flex-col rounded-2xl">
             <div className="flex w-full flex-1 flex-col items-center justify-between text-center">
-              <CardTitle className="text-xl md:text-2xl">{product.name}</CardTitle>
+              <CardTitle className="mt-6 md:text-2xl text-xl font-light">{product.name}</CardTitle>
               <div className="self-end">
                 <CardDescription className="flex-1 text-right text-2xl font-semibold">
                   € {formatNumberWithCommaDecimalSeparator(product.price)}
@@ -226,7 +226,7 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
         {/* </Button> */}
         {/* Top */}
         <Image
-          className="mb-6 mt-12 h-72 w-full object-contain  sm:h-96"
+          className="mb-6 mt-12 h-72 w-full object-contain sm:h-96"
           src={productImage}
           alt={product.name}
           width={200}
@@ -237,7 +237,7 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
         {/* Middle */}
         <DialogHeader className="flex flex-col items-center justify-between rounded-t-3xl bg-zinc-200/50 p-4 dark:bg-zinc-800">
           <div className="">
-            <DialogTitle className="dark:text-text-muted-foreground text-tertiary mb-4 mt-4 text-center text-lg font-thin sm:text-2xl lg:text-3xl">
+            <DialogTitle className="text-tertiary mb-4 mt-4 text-center text-lg font-light dark:text-white sm:text-2xl lg:text-3xl">
               {product.name}
             </DialogTitle>
           </div>
