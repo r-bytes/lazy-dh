@@ -24,7 +24,7 @@ const AgeVerificationModal: React.FC = () => {
   const handleDeny = () => {
     alert("U moet 18 jaar of ouder zijn om deze site te bezoeken.");
     setIsOpen(false);
-    router.push("/not-old-enough")
+    router.push("https://duckduckgo.com")
   };
 
   if (!isOpen) {
@@ -32,7 +32,7 @@ const AgeVerificationModal: React.FC = () => {
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen}>
       <DialogOverlay className="fixed inset-0 bg-black bg-opacity-50 z-50" />
       <DialogContent className="fixed flex items-center justify-center border-none bg-transparent">
         <div className="w-full max-w-md rounded bg-zinc-800 p-6 shadow-lg">
@@ -41,10 +41,10 @@ const AgeVerificationModal: React.FC = () => {
             U moet 18 jaar of ouder zijn om deze site te bezoeken. Bevestig dat u 18 jaar of ouder bent.
           </DialogDescription>
           <div className="mt-4 flex justify-end space-x-4">
-            <Button onClick={handleDeny} className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-900">
+            <Button onClick={handleDeny} className="rounded border-none bg-red-600 px-4 py-2 text-white hover:bg-red-800">
               Nee
             </Button>
-            <Button onClick={handleConfirm} className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-900">
+            <Button onClick={handleConfirm} className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-700">
               Ja
             </Button>
           </div>
