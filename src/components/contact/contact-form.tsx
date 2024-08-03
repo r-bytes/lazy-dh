@@ -35,7 +35,7 @@ const ContactForm: React.FC = () => {
         cache: "no-store",
         headers: { "Content-Type": "application/json" },
         method: "POST",
-        body: JSON.stringify({ data: data }),
+        body: JSON.stringify(data),
       });
 
       setSuccessMessage("E-mail succesvol verzonden");

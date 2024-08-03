@@ -1,3 +1,4 @@
+// import GoogleMapCard from "@/components/google-map-card";
 import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import Title from "@/components/ui/title";
@@ -15,7 +16,7 @@ const AboutPage = () => {
   return (
     <MaxWidthWrapper className="mx-auto w-full">
       <div className="w-full p-10">
-        <Title name="Over ons"/>
+        <Title name="Over ons" />
         <h4 className="my-4 ml-3 text-center text-base font-light text-muted-foreground">Bedrijfsgegevens</h4>
 
         <Table className="my-10 w-full min-w-fit">
@@ -30,6 +31,7 @@ const AboutPage = () => {
           </TableBody>
         </Table>
       </div>
+      {/* <GoogleMapCard /> */}
     </MaxWidthWrapper>
   );
 };

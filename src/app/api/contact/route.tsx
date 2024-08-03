@@ -4,7 +4,7 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export const GET = async (request: NextRequest) => {
+export async function POST(request: NextRequest) {
   if (request.method !== "POST") {
     return NextResponse.json({ message: "Method not allowed" }, { status: 405 });
   }
@@ -35,6 +35,6 @@ export const GET = async (request: NextRequest) => {
 
     return NextResponse.json({ message: "E-mail succesvol verzonden" }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: "Internal Server Error"}, { status: 500 });
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 };
