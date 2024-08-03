@@ -6,23 +6,25 @@ type FooterProps = {
 
 const Footer: React.FC<FooterProps> = ({ year = new Date().getFullYear() }) => {
   return (
-    <footer className="bg-zinc-900/90 p-4 text-center font-normal tracking-wide text-primary mt-24">
-      <div className="container mx-auto px-4">
-        <p className="text-sm sm:text-base">&copy; {year} Lazo Den Haag. All rights reserved.</p>
-        <div className="mt-2 flex flex-col justify-center space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0">
-          <a href="/contact" className="text-sm hover:underline sm:text-base">
-            Contact
-          </a>
-          <a href="/over-ons" className="text-sm hover:underline sm:text-base">
-            Over ons
-          </a>
-          <a href="/algemene-voorwaarden" className="text-sm hover:underline sm:text-base">
+    <footer className="mt-24 bg-zinc-900/90 p-4 text-center font-normal tracking-wide text-primary">
+      <div className="mx-auto px-1">
+        <div className="pt-4 grid grid-cols-2 grid-rows-2 sm:grid-cols-3 md:grid-cols-4 justify-center max-w-4xl mx-auto place-items-center">
+          <a href="/algemene-voorwaarden" className="text-sm hover:underline sm:text-base min-w-fit">
             Algemene voorwaarden
           </a>
           <a href="/privacy-beleid" className="text-sm hover:underline sm:text-base">
             Privacy Beleid
           </a>
+          <a href="/over-ons" className="text-sm hover:underline sm:text-base">
+            Over ons
+          </a>
+          <a href="/contact" className="text-sm hover:underline sm:text-base">
+            Contact
+          </a>
         </div>
+        <p className="text-sm sm:text-xs py-6">
+          &copy; {year} {process.env.COMPANY_NAME!}. Alle rechten voorbehouden.
+        </p>
       </div>
     </footer>
   );

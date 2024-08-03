@@ -9,6 +9,8 @@ import { SessionProvider } from "next-auth/react";
 import { Inter, Montserrat, Roboto } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
+import CookieBanner from "@/components/navigation/cookie-banner";
+import AgeVerificationModal from "@/components/age-verification-modal";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -20,12 +22,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+                  <AgeVerificationModal />
       <body className={`${montserrat.className} flex min-h-screen flex-col text-muted-foreground`}>
         <SessionProvider>
           <CartProvider>
             <ProductProvider type="">
               <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
                 <AuthProvider>
+                  <CookieBanner />
                   <Toaster />
                   <Header />
                   {/* Main content area that will grow to push the footer to the bottom */}

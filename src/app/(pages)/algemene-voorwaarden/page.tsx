@@ -3,8 +3,8 @@ import React from "react";
 const TermsAndConditionsPage = () => {
   const storeName = "Lazo Spirits Den Haag"
   return (
-    <div className="container mx-auto px-4 py-8 text-muted-foreground">
-      <h1 className="mb-6 text-center text-3xl font-bold">Algemene Voorwaarden</h1>
+    <div className="max-w-5xl mx-auto px-20 py-8 text-muted-foreground text-center md:text-left">
+      <h1 className="mb-6 text-center md:text-left text-3xl font-bold">Algemene Voorwaarden</h1>
       <section>
         <p>
           Welkom bij {storeName}. Deze Algemene Voorwaarden zijn van toepassing op alle aankopen en diensten aangeboden via onze website: 
@@ -50,7 +50,7 @@ const TermsAndConditionsPage = () => {
         <p>Deze voorwaarden kunnen van tijd tot tijd worden aangepast. Wij raden je aan deze regelmatig te raadplegen.</p>
 
         <h2 className="mt-5 text-xl font-semibold">9. Contact</h2>
-        <p>Voor vragen over deze voorwaarden kun je contact met ons opnemen via [contactgegevens].</p>
+        <p>Voor vragen over deze voorwaarden kun je contact met ons opnemen via {process.env.COMPANY_EMAIL}.</p>
       </section>
     </div>
   );

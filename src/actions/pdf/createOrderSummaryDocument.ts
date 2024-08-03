@@ -268,7 +268,7 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
   });
 
   // Footer Info
-  const footerInfo = `companyName, invoiceCustomerAddress, invoiceCustomerPostal, invoiceCustomerCity, invoiceCustomerCountry`;
+  const footerInfo = `${process.env.COMPANY_NAME!}, ${process.env.COMPANY_ADDRESS!}, ${process.env.COMPANY_POSTAL!}, ${process.env.COMPANY_CITY!}, ${process.env.COMPANY_COUNTRY!}`;
   const footerTextWidth = regularFont.widthOfTextAtSize(footerInfo, 8);
   page.drawText(footerInfo, {
     x: (width - footerTextWidth) / 2,
@@ -279,7 +279,7 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
   });
 
   // Contact Info
-  const contactInfo = `phone, email, bankName`;
+  const contactInfo = `${process.env.COMPANY_PHONE!}, ${process.env.COMPANY_EMAIL!}`;
   const contactTextWidth = regularFont.widthOfTextAtSize(contactInfo, 8);
   page.drawText(contactInfo, {
     x: (width - contactTextWidth) / 2,
@@ -290,7 +290,7 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
   });
 
   // Registration Info
-  const regInfo = `KvK: kvk, BTW nr: vatNumber, IBAN: iban, BIC: bic`;
+  const regInfo = `KVK: ${process.env.COMPANY_KVK_NUMBER!}, BTW-nr: ${process.env.COMPANY_VAT_NUMBER!}, IBAN: ${process.env.COMPANY_IBAN!}`;
   const regTextWidth = regularFont.widthOfTextAtSize(regInfo, 8);
   page.drawText(regInfo, {
     x: (width - regTextWidth) / 2,
@@ -311,7 +311,7 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
     height: bannerHeight,
     color: rgb(red, green, blue), // Yellow color
   });
-  const bannerText = process.env.NEXT_PUBLIC_BASE_URL || "default base URL";
+  const bannerText = process.env.NEXT_PUBLIC_BASE_URL! || "http://localhost:3000";
   const bannerTextWidth = regularFont.widthOfTextAtSize(bannerText, 8);
   page.drawText(bannerText, {
     x: (width - bannerTextWidth) / 2,

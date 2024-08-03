@@ -33,6 +33,7 @@ export default async function Home({ params }: { params: { user: string } }): Pr
       <section id="categories">
         <MaxWidthWrapper className="my-12 max-w-[84rem] sm:my-24">
           <CategoryCard categories={categoryList} products={productList} slug={"home"} />
+          
         </MaxWidthWrapper>
       </section>
     </main>

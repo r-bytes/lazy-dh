@@ -1,21 +1,22 @@
 import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import Title from "@/components/ui/title";
 
 const companyInfo = {
-  Naam: "Lazo Spirits Den Haag",
-  Adres: "adres",
-  Telefoonnummer: "123",
-  "IBAN-nummer": "123",
-  "KVK-nummer: ": "123",
-  "BTW-identificatienummer: ": "123",
+  "Naam": process.env.COMPANY_NAME!,
+  "Adres": `${process.env.COMPANY_ADDRESS!}, ${process.env.COMPANY_POSTAL!}, ${process.env.COMPANY_CITY!}`,
+  "Telefoonnummer": process.env.COMPANY_PHONE!,
+  "IBAN-nummer": process.env.COMPANY_IBAN!,
+  "KVK-nummer: ": process.env.COMPANY_KVK_NUMBER!,
+  "BTW-identificatienummer: ": process.env.COMPANY_VAT_NUMBER!,
 };
 
 const AboutPage = () => {
   return (
     <MaxWidthWrapper className="mx-auto w-full">
       <div className="w-full p-10">
-        <h1 className="ml-2 text-center font-semibold text-muted-foreground text-3xl">Over ons</h1>
-        <h4 className="my-4 ml-3 text-center text-sm font-light text-muted-foreground">Bedrijfsgegevens</h4>
+        <Title name="Over ons"/>
+        <h4 className="my-4 ml-3 text-center text-base font-light text-muted-foreground">Bedrijfsgegevens</h4>
 
         <Table className="my-10 w-full min-w-fit">
           <TableBody>

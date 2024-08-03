@@ -21,6 +21,7 @@ export function UserSignUpForm({ fromCheckout = false }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [expanded, setExpanded] = useState<string[]>([]);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const router = useRouter();
 
   const {
@@ -205,9 +206,26 @@ export function UserSignUpForm({ fromCheckout = false }) {
               {errors.confirmPassword && <p className="m-4 text-red-500">{errors.confirmPassword.message}</p>}
             </AccordionItem>
           </Accordion>
+          {/* Checkbox for terms and conditions */}
+          <div className="mt-4 ml-4">
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                checked={termsAccepted}
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+              />
+              <span className="ml-2 text-muted-foreground">
+                Ik accepteer de
+                <a href="/algemene-voorwaarden" className="ml-2 text-primary underline">
+                  algemene voorwaarden
+                </a>
+              </span>
+            </label>
+          </div>
         </CardContent>
         <CardFooter>
-          <Button className="ml-3" type="submit" disabled={isLoading}>
+          <Button className="ml-3" type="submit" disabled={isLoading || !termsAccepted}>
             {isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : "Registeer"}
           </Button>
         </CardFooter>

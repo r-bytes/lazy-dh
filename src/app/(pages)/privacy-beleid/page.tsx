@@ -5,8 +5,8 @@ type Props = {};
 const PrivacyPage = (props: Props) => {
   const storeName = "Lazo Spirits Den Haag"
   return (
-    <div className="container mx-auto px-4 py-8 text-muted-foreground">
-      <h1 className="mb-6 text-center text-3xl font-bold">Gebruiksvoorwaarden en Privacybeleid</h1>
+    <div className="mx-auto max-w-5xl px-20 py-8 text-center text-muted-foreground md:text-left">
+      <h1 className="mb-6 text-center md:text-left text-3xl font-bold">Gebruiksvoorwaarden en Privacybeleid</h1>
 
       {/* Gebruiksvoorwaarden Sectie */}
       <section className="mb-12">
@@ -28,8 +28,8 @@ const PrivacyPage = (props: Props) => {
         </p>
         <h3 className="mt-4 font-semibold">Beperking van Aansprakelijkheid</h3>
         <p>
-          {storeName} is niet aansprakelijk voor enige directe, indirecte, incidentele, speciale of gevolgschade die voortkomt uit het
-          gebruik van of de onmogelijkheid om deze website te gebruiken.
+          {storeName} is niet aansprakelijk voor enige directe, indirecte, incidentele, speciale of gevolgschade die voortkomt uit het gebruik van
+          of de onmogelijkheid om deze website te gebruiken.
         </p>
         <h3 className="mt-4 font-semibold">Wijzigingen in de Voorwaarden</h3>
         <p>
