@@ -222,7 +222,7 @@ export async function signUp({
       `;
 
     await sendEmail({
-      from: "Lazo admin <admin@r-bytes.com>",
+      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
       to: [email],
       subject: "Emailadres bevestigen",
       text: emailHtml,
@@ -457,7 +457,7 @@ export const sendPickupMail = async (order: OrderType) => {
       `;
 
     await sendEmail({
-      from: "Lazo admin <admin@r-bytes.com>",
+      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
       to: [order[0].userEmail!],
       subject: `Lazo Den Haag - Ophaalbericht voor bestelling: ${order[0].orderId}`,
       text: emailHtml,
@@ -502,7 +502,7 @@ export const verifyEmail = async (emailVerificationToken: string) => {
     const emailHtml = `
         <div>
           <h1> Nieuwe account aanvraag voor: <b> ${existingUser.email} </b></h1>
-          <p> Yooo habibi, Er is een nieuwe account aanvraag die goedgekeurd moeten worden, klik op onderstaande link: </p>
+          <p> Er is een nieuwe account aanvraag die goedgekeurd moeten worden, klik op onderstaande link: </p>
           <a href="${process.env.NEXT_PUBLIC_BASE_URL}/admin/accounts?token=${existingUser.id}" target="_blank">
             Klik hier het nieuwe account te checken en goed te keuren
           </a>
@@ -510,7 +510,7 @@ export const verifyEmail = async (emailVerificationToken: string) => {
       `;
 
     await sendEmail({
-      from: "Admin <admin@r-bytes.com>",
+      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
       to: ["rvv@duck.com"],
       subject: "Account bevestigen",
       text: emailHtml,
@@ -561,9 +561,9 @@ export const sendAdminApprovalMail = async (userId: string) => {
       `;
 
     await sendEmail({
-      from: "Lazo admin <admin@r-bytes.com>",
+      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
       to: [existingUser.email],
-      subject: `Lazo Den Haag - Account is goedgekeurd`,
+      subject: `Account is goedgekeurd`,
       text: emailHtml,
       html: emailHtml,
     });
@@ -610,9 +610,9 @@ export const sendAdminOrderMail = async (userId: string) => {
       `;
 
     await sendEmail({
-      from: "Lazo admin <admin@r-bytes.com>",
+      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
       to: [existingUser.email],
-      subject: `Lazo Den Haag - Account is goedgekeurd`,
+      subject: `Account is goedgekeurd`,
       text: emailHtml,
       html: emailHtml,
     });

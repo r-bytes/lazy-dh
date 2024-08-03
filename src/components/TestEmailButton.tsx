@@ -7,13 +7,12 @@ import { EmailTemplate } from "./email/email-template";
 const TestEmailButton = () => {
   const handleSubmit = async () => {
     sendEmail({
-      from: "Lazo admin <admin@r-bytes.com>",
+      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
       to: ["rvv@duck.com"],
       subject: "Test email",
-      text: "Test email"
+      text: "Test email",
       // react: EmailTemplate({ firstName: "ray", }) as React.ReactElement
-
-    })
+    });
   }
 
   return <Button onClick={handleSubmit}>
