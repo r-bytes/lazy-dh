@@ -451,7 +451,7 @@ export const sendPickupMail = async (order: OrderType) => {
         <div>
           <h1> Ophaalbericht voor bestelling: <b> ${order[0].orderId} </b></h1>
           <p> Goed nieuws! </p>
-          <p> Uw bestelling bij Lazo Den Haag zijn klaar om opgehaald te worden </p>
+          <p> Uw bestelling bij Lazo Den Haag ligt klaar om opgehaald te worden. </p>
           <p> Tot snel in de winkel! </p>
         </div>
       `;
