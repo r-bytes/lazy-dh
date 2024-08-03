@@ -34,7 +34,7 @@ const CookieBanner: React.FC = () => {
       <div className="">
         <p>Wij gebruiken cookies om uw ervaring te verbeteren en te analyseren.</p>
         <p>
-          Door op "Accepteren" te klikken, gaat u akkoord met ons gebruik van cookies. Voor meer informatie, bekijk ons:{" "}
+          Door op &quot;Accepteren&quot; te klikken, gaat u akkoord met ons gebruik van cookies. Voor meer informatie, bekijk ons:
           <a href="/privacy-beleid" className="underline">
             privacybeleid
           </a>
