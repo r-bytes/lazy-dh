@@ -419,22 +419,19 @@ export const removeFavoriteProduct = async (userId: string, productId: string) =
   }
 };
 
-// export async function checkFavoriteStatus(userId: string, productId: string): Promise<boolean> {
-//   try {
-//     const result = await db
-//       .select({ count: favoriteProducts.id })
-//       .from(favoriteProducts)
-//       .where(and(eq(favoriteProducts.userId, userId), eq(favoriteProducts.productId, productId)));
-
-//     return result[0].count > 0;
-//   } catch (error) {
-//     console.error("Database Error:", error);
-//     throw new Error("Failed to check favorite status");
-//   }
-// }
+type OrderType = {
+  orderId: number;
+  userId: string;
+  orderDate: Date | null;
+  totalAmount: string;
+  status: string;
+  userName: string | null;
+  userEmail: string | null;
+  orderItems: unknown;
+}[];
 
 // Email functions
-export const sendPickupMail = async (order: Order[]) => {
+export const sendPickupMail = async (order: OrderType) => {
   try {
     const existingUser = await db.query.users.findFirst({
       where: eq(users.id, order[0].userId),
