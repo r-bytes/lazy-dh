@@ -8,7 +8,7 @@ const TestEmailButton = () => {
   const handleSubmit = async () => {
     sendEmail({
       from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
-      to: ["rvv@duck.com"],
+      to: [process.env.ADMIN_EMAIL!],
       subject: "Test email",
       text: "Test email",
       // react: EmailTemplate({ firstName: "ray", }) as React.ReactElement

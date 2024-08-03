@@ -511,7 +511,7 @@ export const verifyEmail = async (emailVerificationToken: string) => {
 
     await sendEmail({
       from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
-      to: ["rvv@duck.com"],
+      to: [process.env.ADMIN_EMAIL!],
       subject: "Account bevestigen",
       text: emailHtml,
       html: emailHtml,
