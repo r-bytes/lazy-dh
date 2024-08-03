@@ -11,10 +11,10 @@ import { useEffect, useState } from "react";
 import BeatLoader from "react-spinners/BeatLoader";
 import { CardDescription } from "../ui/card";
 
-export default function Favorites() {
+export default function Favorites({ products }: {products: Product[]}) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [color, setColor] = useState("#facc15");
-  const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
+  const [fetchedProducts, setFetchedProducts] = useState<Product[]>(products);
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -40,8 +40,8 @@ export default function Favorites() {
             const productIds = await getFavoriteProductIds(userId);
 
             if (productIds && productIds.length > 0) {
-              const allProducts = await fetchProducts("");
-              const favoriteProducts = allProducts.filter((product) => productIds.includes(product._id));
+              
+              const favoriteProducts = fetchedProducts.filter((product) => productIds.includes(product._id));
               setFetchedProducts(favoriteProducts);
             }
           }

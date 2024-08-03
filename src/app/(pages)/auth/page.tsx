@@ -5,11 +5,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { navigateTo } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const AuthPage = () => {
   const { data: session, status } = useSession();
+  const [color, setColor] = useState("#facc15");
   const router = useRouter();
 
   useEffect(() => {
@@ -29,11 +31,19 @@ const AuthPage = () => {
   }, [session, status, router]);
 
   if (status === "loading") {
-    return <p className="flex items-center justify-center">Laden...</p>;
+    return (
+      <div className="my-32 flex justify-center items-center">
+        <BeatLoader color={color} loading={true} size={20} aria-label="Loading Spinner" />
+      </div>
+    );
   }
 
   if (status === "authenticated") {
-    return <p className="flex items-center justify-center">U wordt doorverwezen...</p>;
+    return (
+      <div className="my-32 flex items-center justify-center">
+        <BeatLoader color={color} loading={true} size={20} aria-label="Loading Spinner" />
+      </div>
+    );
   }
 
   return (

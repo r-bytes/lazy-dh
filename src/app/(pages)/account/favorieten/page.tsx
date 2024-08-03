@@ -1,7 +1,7 @@
 import FavoriteProductList from "@/components/products/product-list-favorite";
+import { fetchProducts } from "@/lib/sanity/fetchProducts";
 
-const page = () => {
-  return <FavoriteProductList />;
-};
-
-export default page;
+export default async function Page() {
+  const products = await fetchProducts("");
+  return products.length > 0 ? <FavoriteProductList products={products} /> : null;
+}

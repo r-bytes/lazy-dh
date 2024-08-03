@@ -9,11 +9,13 @@ import BeatLoader from "react-spinners/BeatLoader";
 import { CardDescription } from "../ui/card";
 
 export default function Promotions({ products }: { products?: Product[] }) {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
   const [color, setColor] = useState("#facc15");
 
   useEffect(() => {
+    console.log(products);
+    
     // Fetch new products if they don't exist
     if (!products || products.length === 0) {
       setIsLoading(true);
