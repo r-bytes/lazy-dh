@@ -1,4 +1,4 @@
-import { decimal, integer, jsonb, pgTable, serial, text, timestamp, varchar, boolean,  } from "drizzle-orm/pg-core";
+import { decimal, integer, jsonb, pgTable, serial, text, timestamp, varchar, boolean } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: text("id")
@@ -55,5 +55,14 @@ export const userActivities = pgTable("user_activities", {
     .references(() => users.id),
   activityType: varchar("activity_type", { length: 50 }).notNull(),
   activityData: varchar("activity_data", { length: 50 }).notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const favoriteProducts = pgTable("favorite_products", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id),
+  productId: text("product_id").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
 });

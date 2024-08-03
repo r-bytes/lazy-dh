@@ -1,11 +1,12 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { userActivities, users } from "@/lib/db/schema";
+import { favoriteProducts, userActivities, users } from "@/lib/db/schema";
+import { Order } from "@/lib/types/order";
 import { signInSchema } from "@/lib/types/signin";
 import { signUpSchema } from "@/lib/types/signup";
 import crypto from "crypto";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { signIn } from "../../../auth";
 import { sendEmail } from "../email/sendEmail";
 const bcrypt = require("bcryptjs");
@@ -393,18 +394,47 @@ export const updateUserActivity = async (email: string, activityType: string, ac
   }
 };
 
-type OrderType = {
-  orderId: number;
-  userId: string;
-  orderDate: Date | null;
-  totalAmount: string;
-  status: string;
-  userName: string | null;
-  userEmail: string | null;
-  orderItems: unknown;
-}[];
+// Product functions
+export const addFavoriteProduct = async (userId: string, productId: string) => {
+  try {
+    await db.insert(favoriteProducts).values({
+      userId,
+      productId,
+    });
+    return { success: true, message: "Product succesvol toegevoegd aan favorieten", data: { productId, userId } };
+  } catch (error) {
+    console.error("Error adding favorite product:", error);
+    return { success: false, message: "Er is iets misgegaan" };
+  }
+};
 
-export const sendPickupMail = async (order: OrderType) => {
+export const removeFavoriteProduct = async (userId: string, productId: string) => {
+  try {
+    await db.delete(favoriteProducts).where(and(eq(favoriteProducts.userId, userId), eq(favoriteProducts.productId, productId)));
+
+    return { success: true, message: "Product succesvol verwijderd uit favorieten" };
+  } catch (error) {
+    console.error("Error removing favorite product:", error);
+    return { success: false, message: "Er is iets misgegaan" };
+  }
+};
+
+// export async function checkFavoriteStatus(userId: string, productId: string): Promise<boolean> {
+//   try {
+//     const result = await db
+//       .select({ count: favoriteProducts.id })
+//       .from(favoriteProducts)
+//       .where(and(eq(favoriteProducts.userId, userId), eq(favoriteProducts.productId, productId)));
+
+//     return result[0].count > 0;
+//   } catch (error) {
+//     console.error("Database Error:", error);
+//     throw new Error("Failed to check favorite status");
+//   }
+// }
+
+// Email functions
+export const sendPickupMail = async (order: Order[]) => {
   try {
     const existingUser = await db.query.users.findFirst({
       where: eq(users.id, order[0].userId),

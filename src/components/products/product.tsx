@@ -10,7 +10,9 @@ import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useCartContext } from "@/context/CartContext";
 import { formatNumberWithCommaDecimalSeparator, navigateTo } from "@/lib/utils";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+import toast from "react-hot-toast";
 import { urlFor } from "../../../sanity";
 
 const Product = ({ product, carousel }: { product: ProductType; carousel?: boolean }) => {
@@ -18,6 +20,7 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
   const pathname = usePathname();
   const router = useRouter();
   const { decQty, incQty, setQty, qty, onAdd, setShowCart } = useCartContext();
+  const { data: session, status } = useSession();
 
   // States
   const [isHoveredOn, setIsHoveredOn] = useState<boolean>(false);
@@ -25,21 +28,80 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [productImage, setProductImage] = useState<string>(urlFor(product.image).url());
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
     setProductImage(urlFor(product.image).url());
     setQty(1);
   }, [product, setQty]);
-  // Variables
-  const backgroundImageStyle = {
-    backgroundImage: `url(${productImage})`,
-    backgroundSize: "200px",
-    backgroundPosition: "50% 30%",
-  };
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      if (session && session.user) {
+        try {
+          const res = await fetch("/api/getUserIdByEmail", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: session.user.email }),
+          });
+
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+
+          const { userId } = await res.json();
+          setUserId(userId);
+          // Fetch favorite status
+          const favoriteRes = await fetch(`/api/favorites/status?userId=${userId}&productId=${product._id}`);
+          const { isFavorite } = await favoriteRes.json();
+          setIsFavorite(isFavorite);
+        } catch (error) {
+          console.error("Error fetching user ID or checking favorite status:", error);
+        }
+      }
+    };
+
+    fetchUserId();
+  }, [session, product._id]);
 
   // Functions
-  const handleToggleFavorite = () => {
-    setIsFavorite(!isFavorite);
+  const handleToggleFavorite = async () => {
+    if (!session?.user?.email) {
+      toast.error("Je moet eerst inloggen...");
+      return;
+    }
+
+    if (!userId) {
+      toast.error("Er is iets misgegaan bij het ophalen van de gebruiker-ID.");
+      return;
+    }
+
+    const productId = product._id;
+    const newIsFavorite = !isFavorite;
+    setIsFavorite(newIsFavorite);
+
+    try {
+      const url = `/api/favorites`;
+      const method = isFavorite ? "DELETE" : "POST";
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId, productId }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to ${isFavorite ? "remove" : "add"} favorite`);
+      }
+      toast.success(`${product.name} succesvol ${newIsFavorite ? "toegevoegd aan" : "verwijderd uit"} favorieten.`);
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+      toast.error("Er is iets misgegaan bij het wijzigen van favorieten.");
+    }
   };
 
   const handleBuyNow = () => {
@@ -51,7 +113,7 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
 
   function handleCheckout(): void {
     console.log("qty", qty);
-    
+
     onAdd(product, qty);
     navigateTo(router, "/winkelwagen");
   }
@@ -91,7 +153,7 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
         <div className="flex justify-end pt-1">
           <span className="text-tertiary mr-1 text-xs font-normal">
             € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} doos
-            </span>
+          </span>
         </div>
       </div>
     );
@@ -136,14 +198,13 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
         </Card>
       </DialogTrigger>
       <DialogContent className="max-h-3/5 sm:max-h-4/5 flex w-4/5 flex-col justify-center rounded-2xl bg-zinc-100 p-0 dark:bg-zinc-900">
-        {/* <Heart
+        <Heart
           className="m-4 h-4 w-4 hover:cursor-pointer"
           onClick={handleToggleFavorite}
           color={isFavorite ? "red" : ""}
           fill={isFavorite ? "red" : "bg-muted-foreground/30"}
-        /> */}
-        {/* </button> */}
-        {/* </Button> */}
+        />
+
         {/* Top */}
         <Image
           className="mb-6 mt-12 h-72 w-full object-contain sm:h-96"
@@ -202,7 +263,7 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
           />
           <CardContent className="flex flex-1 flex-col rounded-2xl">
             <div className="flex w-full flex-1 flex-col items-center justify-between text-center">
-              <CardTitle className="mt-6 md:text-2xl text-xl font-light">{product.name}</CardTitle>
+              <CardTitle className="mt-6 text-xl font-light md:text-2xl">{product.name}</CardTitle>
               <div className="self-end">
                 <CardDescription className="flex-1 text-right text-2xl font-semibold">
                   € {formatNumberWithCommaDecimalSeparator(product.price)}
@@ -216,14 +277,13 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
         </Card>
       </DialogTrigger>
       <DialogContent className="max-h-3/5 sm:max-h-4/5 flex w-4/5 flex-col justify-center rounded-2xl bg-zinc-100 p-0 dark:bg-zinc-900">
-        {/* <Heart
+        <Heart
           className="m-4 h-4 w-4 hover:cursor-pointer"
           onClick={handleToggleFavorite}
           color={isFavorite ? "red" : ""}
           fill={isFavorite ? "red" : "bg-muted-foreground/30"}
-        /> */}
-        {/* </button> */}
-        {/* </Button> */}
+        />
+
         {/* Top */}
         <Image
           className="mb-6 mt-12 h-72 w-full object-contain sm:h-96"

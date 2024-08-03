@@ -15,7 +15,8 @@ import Link from "next/link";
 export default async function Home({ params }: { params: { user: string } }): Promise<JSX.Element> {
   const productList: Product[] = await fetchProducts("");
   const categoryList: Category[] = await fetchCategories();
-  const productListInSale: Product[] = productList.filter((p) => p.inSale);  
+  const productListInSale: Product[] = productList.filter((p) => p.inSale); 
+   
 
   return (
     <main className="flex flex-col items-center justify-between bg-background">
@@ -33,7 +34,6 @@ export default async function Home({ params }: { params: { user: string } }): Pr
       <section id="categories">
         <MaxWidthWrapper className="my-12 max-w-[84rem] sm:my-24">
           <CategoryCard categories={categoryList} products={productList} slug={"home"} />
-          
         </MaxWidthWrapper>
       </section>
     </main>

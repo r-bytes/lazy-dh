@@ -28,12 +28,12 @@ const ACCOUNT: AccountOptions[] = [
   //   image: "ScrollText",
   //   slug: "bestellingen",
   // },
-  // {
-  //   title: "Favorieten",
-  //   description: "Favorieten producten weergeven",
-  //   image: "HeartIcon",
-  //   slug: "favorieten",
-  // },
+  {
+    title: "Favorieten",
+    description: "Favorieten producten weergeven",
+    image: "HeartIcon",
+    slug: "favorieten",
+  },
   {
     title: "Wachtwoord reset",
     description: "Wachtwoord veranderen",
