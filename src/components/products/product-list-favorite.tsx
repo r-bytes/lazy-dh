@@ -11,10 +11,10 @@ import { useEffect, useState } from "react";
 import BeatLoader from "react-spinners/BeatLoader";
 import { CardDescription } from "../ui/card";
 
-export default function Favorites({ products }: {products: Product[]}) {
+export default function Favorites({ products }: { products: Product[] }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [color, setColor] = useState("#facc15");
-  const [fetchedProducts, setFetchedProducts] = useState<Product[]>(products);
+  const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -38,11 +38,14 @@ export default function Favorites({ products }: {products: Product[]}) {
 
           if (userId) {
             const productIds = await getFavoriteProductIds(userId);
+            console.log(productIds);
 
             if (productIds && productIds.length > 0) {
-              
-              const favoriteProducts = fetchedProducts.filter((product) => productIds.includes(product._id));
+              const allProducts = await fetchProducts("");
+              const favoriteProducts = allProducts.filter((product) => productIds.includes(product._id));
               setFetchedProducts(favoriteProducts);
+            } else {
+              setFetchedProducts([]);
             }
           }
         } catch (error) {
@@ -56,6 +59,10 @@ export default function Favorites({ products }: {products: Product[]}) {
     fetchFavoriteProducts();
   }, [session]);
 
+  const handleRemoveFavorite = (productId: string) => {
+    setFetchedProducts((prevProducts) => prevProducts.filter((product) => product._id !== productId));
+  };
+
   return (
     <MaxWidthWrapper className="mx-auto flex flex-col items-center justify-center">
       <Title name="Favorieten" cn="text-4xl md:text-5xl mt-12 mb-0" />
@@ -65,7 +72,7 @@ export default function Favorites({ products }: {products: Product[]}) {
           <BeatLoader color={color} loading={isLoading} size={20} aria-label="Loading Spinner" />
         </div>
       ) : fetchedProducts.length > 0 ? (
-        <ProductList products={fetchedProducts} />
+        <ProductList products={fetchedProducts} onRemoveFavorite={handleRemoveFavorite} />
       ) : (
         <div className="py-5 text-center">
           <p className="mt-24">Geen favoriete producten</p>

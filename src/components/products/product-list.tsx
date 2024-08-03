@@ -1,13 +1,17 @@
-// "use client"
 import { Product as ProductType } from "@/lib/types/product";
 import Product from "./product";
-import { useEffect } from "react";
+import { FC } from "react";
 
-const ProductList = ({ products, cn }: { products: ProductType[] | null; cn?: string }) => { 
+interface ProductListProps {
+  products: ProductType[];
+  onRemoveFavorite: (productId: string) => void;
+}
+
+const ProductList: FC<ProductListProps> = ({ products, onRemoveFavorite }) => {
   return (
-    <div className={`${cn} mx-auto flex max-w-7xl flex-wrap place-items-center items-center justify-center gap-8 my-24 `}>
-      {products?.map((product) => (
-        <Product key={product._id} product={product} />
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {products.map((product) => (
+        <Product key={product._id} product={product} onRemoveFavorite={onRemoveFavorite} />
       ))}
     </div>
   );

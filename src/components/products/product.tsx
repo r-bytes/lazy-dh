@@ -3,7 +3,7 @@
 import { Product as ProductType } from "@/lib/types/product";
 import { Heart, Minus, Plus } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
 
@@ -15,7 +15,13 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import { urlFor } from "../../../sanity";
 
-const Product = ({ product, carousel }: { product: ProductType; carousel?: boolean }) => {
+interface ProductProps {
+  product: ProductType;
+  carousel?: boolean;
+  onRemoveFavorite: (productId: string) => void;
+}
+
+const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
   // Hooks
   const pathname = usePathname();
   const router = useRouter();
@@ -67,42 +73,48 @@ const Product = ({ product, carousel }: { product: ProductType; carousel?: boole
   }, [session, product._id]);
 
   // Functions
-  const handleToggleFavorite = async () => {
-    if (!session?.user?.email) {
-      toast.error("Je moet eerst inloggen...");
-      return;
+const handleToggleFavorite = async () => {
+  if (!session?.user?.email) {
+    toast.error("Je moet eerst inloggen...");
+    return;
+  }
+
+  if (!userId) {
+    toast.error("Er is iets misgegaan bij het ophalen van de gebruiker-ID.");
+    return;
+  }
+
+  const productId = product._id;
+  const newIsFavorite = !isFavorite;
+  setIsFavorite(newIsFavorite);
+
+  try {
+    const url = `/api/favorites`;
+    const method = isFavorite ? "DELETE" : "POST";
+
+    const response = await fetch(url, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId, productId }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to ${isFavorite ? "remove" : "add"} favorite`);
     }
 
-    if (!userId) {
-      toast.error("Er is iets misgegaan bij het ophalen van de gebruiker-ID.");
-      return;
+    toast.success(`${product.name} succesvol ${newIsFavorite ? "toegevoegd aan" : "verwijderd uit"} favorieten.`);
+
+    // Call the onRemoveFavorite callback if the product is removed from favorites
+    if (!newIsFavorite) {
+      onRemoveFavorite(productId);
     }
-
-    const productId = product._id;
-    const newIsFavorite = !isFavorite;
-    setIsFavorite(newIsFavorite);
-
-    try {
-      const url = `/api/favorites`;
-      const method = isFavorite ? "DELETE" : "POST";
-
-      const response = await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId, productId }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to ${isFavorite ? "remove" : "add"} favorite`);
-      }
-      toast.success(`${product.name} succesvol ${newIsFavorite ? "toegevoegd aan" : "verwijderd uit"} favorieten.`);
-    } catch (error) {
-      console.error("Error toggling favorite:", error);
-      toast.error("Er is iets misgegaan bij het wijzigen van favorieten.");
-    }
-  };
+  } catch (error) {
+    console.error("Error toggling favorite:", error);
+    toast.error("Er is iets misgegaan bij het wijzigen van favorieten.");
+  }
+};
 
   const handleBuyNow = () => {
     onAdd(product, qty);
