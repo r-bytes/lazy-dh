@@ -9,6 +9,7 @@ import { EyeIcon, EyeOff } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import BeatLoader from "react-spinners/BeatLoader";
+import { Dialog, DialogTrigger, DialogContent, DialogFooter } from "@/components/ui/dialog";
 
 interface UserManagementProps {
   allUsers: DatabaseUser[];
@@ -22,6 +23,8 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
   const [editedUsers, setEditedUsers] = useState<Record<string, boolean>>({});
   const [showApproved, setShowApproved] = useState(false);
   const [isSaving, setIsSaving] = useState<Record<string, boolean>>({});
+  const [isDeleting, setIsDeleting] = useState<Record<string, boolean>>({});
+  const [deleteUserId, setDeleteUserId] = useState<string | null>(null);
 
   useEffect(() => {
     const initialStatus = allUsers.reduce<Record<string, boolean>>((acc, user) => {
@@ -60,6 +63,39 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
       console.error("Error updating user status:", error);
     } finally {
       setIsSaving((prev) => ({ ...prev, [userId]: false })); // Reset saving state for the specific user
+    }
+  };
+
+  const confirmDeleteUser = (userId: string) => {
+    setDeleteUserId(userId);
+  };
+
+  const deleteUser = async () => {
+    if (!deleteUserId) return;
+
+    setIsDeleting((prev) => ({ ...prev, [deleteUserId]: true })); // Set deleting state for the specific user
+
+    try {
+      const res = await fetch(`/api/admin/users/${deleteUserId}`, {
+        cache: "no-store",
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setUsers((prev) => prev.filter((user) => user.id !== deleteUserId));
+        toast.success("Gebruiker succesvol verwijderd");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error("Fout bij het verwijderen van de gebruiker");
+      console.error("Error deleting user:", error);
+    } finally {
+      setIsDeleting((prev) => ({ ...prev, [deleteUserId]: false })); // Reset deleting state for the specific user
+      setDeleteUserId(null); // Reset the deleteUserId state
     }
   };
 
@@ -108,7 +144,10 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
                   <TableCell>{user.chamberOfCommerceNumber}</TableCell>
                   <TableCell>{editedUsers[user.id] ? "Goedgekeurd" : "Nieuw"}</TableCell>
                   <TableCell>
-                    <Button className="w-32" onClick={() => toggleApproval(user.id)}>
+                    <Button
+                      className="w-32 bg-primary/70 mb-2 font-bold text-secondary hover:bg-primary hover:text-secondary"
+                      onClick={() => toggleApproval(user.id)}
+                    >
                       {isSaving[user.id] ? (
                         <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                       ) : editedUsers[user.id] ? (
@@ -117,12 +156,33 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
                         "Goedkeuren"
                       )}
                     </Button>
+                    <Button variant="destructive" className="hover:bg-red-700 w-32" onClick={() => confirmDeleteUser(user.id)}>
+                      {isDeleting[user.id] ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : "Verwijderen"}
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
           </TableBody>
         </Table>
       )}
+      <Dialog open={!!deleteUserId} onOpenChange={(open) => !open && setDeleteUserId(null)}>
+        <DialogTrigger />
+        <DialogContent className="border-none bg-zinc-800">
+          <h2 className="text-lg font-bold text-secondary dark:text-secondary-foreground">Weet je zeker dat je deze gebruiker wil verwijderen?</h2>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              className="bg-primary/70 font-bold text-secondary hover:bg-primary hover:text-secondary"
+              onClick={() => setDeleteUserId(null)}
+            >
+              Annuleren
+            </Button>
+            <Button variant="destructive" className="hover:bg-red-700" onClick={deleteUser}>
+              Verwijderen
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

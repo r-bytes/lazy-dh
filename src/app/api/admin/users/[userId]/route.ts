@@ -60,3 +60,35 @@ export async function PUT(request: NextRequest, { params }: { params: { userId: 
     return errorResponse;
   }
 }
+
+export async function DELETE(request: NextRequest, { params }: { params: { userId: string } }) {
+  const { userId } = params;
+
+  if (!userId) {
+    return NextResponse.json({ success: false, message: "User ID is required" }, { status: 400 });
+  }
+
+  try {
+    const existingUser = await db
+      .select({
+        id: users.id,
+      })
+      .from(users)
+      .where(eq(users.id, userId));
+
+    if (!existingUser) {
+      return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
+    }
+
+    await db.delete(users).where(eq(users.id, userId)).execute();
+
+    const response = NextResponse.json({ success: true, message: "User deleted successfully" });
+    response.headers.set("Cache-Control", "no-store, max-age=0");
+    return response;
+  } catch (error) {
+    console.error(error);
+    const errorResponse = NextResponse.json({ success: false, message: "Error deleting user" }, { status: 500 });
+    errorResponse.headers.set("Cache-Control", "no-store, max-age=0");
+    return errorResponse;
+  }
+}
