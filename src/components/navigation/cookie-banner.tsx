@@ -30,21 +30,21 @@ const CookieBanner: React.FC = () => {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around bg-secondary p-4 text-white">
-      <div className="">
+    <div className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around bg-secondary p-4 bg-zinc-900 text-white">
+      <div className="p-8">
         <p>Wij gebruiken cookies om uw ervaring te verbeteren en te analyseren.</p>
         <p>
-          Door op &quot;Accepteren&quot; te klikken, gaat u akkoord met ons gebruik van cookies. Voor meer informatie, bekijk ons:
-          <a href="/privacy-beleid" className="underline">
+          Door op &quot;Accepteren&quot; te klikken, gaat u akkoord met ons gebruik van cookies. Voor meer informatie, bekijk ons: {" "}
+          <a href="/privacy-beleid" className="underline text-primary">
             privacybeleid
           </a>
         </p>
       </div>
       <div>
-        <Button onClick={handleAccept} className="mr-2 w-32 rounded bg-green-500 px-4 py-2 text-white">
+        <Button onClick={handleAccept} className="m-2 w-32 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-800">
           Accepteren
         </Button>
-        <Button onClick={handleDecline} className="w-32 rounded bg-red-500 px-4 py-2 text-white">
+        <Button onClick={handleDecline} className="m-2 w-32 rounded bg-red-500 px-4 py-2 text-white hover:bg-red-800">
           Weigeren
         </Button>
       </div>

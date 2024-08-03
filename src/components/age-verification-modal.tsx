@@ -33,8 +33,8 @@ const AgeVerificationModal: React.FC = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogOverlay className="fixed inset-0 bg-black bg-opacity-50" />
-      <DialogContent className="fixed flex items-center justify-center border-none">
+      <DialogOverlay className="fixed inset-0 bg-black bg-opacity-50 z-50" />
+      <DialogContent className="fixed flex items-center justify-center border-none bg-transparent">
         <div className="w-full max-w-md rounded bg-zinc-800 p-6 shadow-lg">
           <DialogTitle className="text-2xl font-bold">Leeftijdsverificatie</DialogTitle>
           <DialogDescription className="mt-2">
