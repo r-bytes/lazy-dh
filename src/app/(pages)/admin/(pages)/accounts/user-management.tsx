@@ -145,7 +145,7 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
                   <TableCell>{editedUsers[user.id] ? "Goedgekeurd" : "Nieuw"}</TableCell>
                   <TableCell>
                     <Button
-                      className="w-32 bg-primary/70 mb-2 font-bold text-secondary hover:bg-primary hover:text-secondary"
+                      className="mb-2 w-32 bg-primary/70 font-bold text-black/70 hover:bg-primary dark:text-secondary dark:hover:text-secondary"
                       onClick={() => toggleApproval(user.id)}
                     >
                       {isSaving[user.id] ? (
@@ -156,7 +156,7 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
                         "Goedkeuren"
                       )}
                     </Button>
-                    <Button variant="destructive" className="hover:bg-red-700 w-32" onClick={() => confirmDeleteUser(user.id)}>
+                    <Button variant="destructive" className="w-32 hover:bg-red-700" onClick={() => confirmDeleteUser(user.id)}>
                       {isDeleting[user.id] ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : "Verwijderen"}
                     </Button>
                   </TableCell>
@@ -172,7 +172,7 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
           <DialogFooter>
             <Button
               variant="outline"
-              className="bg-primary/70 font-bold text-secondary hover:bg-primary hover:text-secondary"
+              className="border-none bg-primary/70 font-bold text-black/70 hover:bg-primary dark:text-secondary dark:hover:text-secondary"
               onClick={() => setDeleteUserId(null)}
             >
               Annuleren
