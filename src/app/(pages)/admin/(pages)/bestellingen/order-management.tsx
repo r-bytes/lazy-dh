@@ -11,12 +11,13 @@ import { EyeIcon, EyeOff } from "lucide-react";
 import { Session } from "next-auth";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-
-const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders: Order[] }) => {  
+import BeatLoader from "react-spinners/BeatLoader";
+const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders: Order[] }) => {
   const [orders, setOrders] = useState<Order[]>(allOrders);
   const [isLoading, setIsLoading] = useState(true);
+  const [color, setColor] = useState("#facc15");
   const [editedOrders, setEditedOrders] = useState<Record<number, string>>({});
-    const [isSaving, setIsSaving] = useState<Record<number, boolean>>({});
+  const [isSaving, setIsSaving] = useState<Record<number, boolean>>({});
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [hideCompleted, setHideCompleted] = useState(true);
@@ -61,7 +62,7 @@ const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders:
     const initialEditedOrders = transformedOrders.reduce(
       (acc, order) => {
         acc[order.orderId] = order.status;
-        
+
         return acc;
       },
       {} as Record<number, string>
@@ -70,10 +71,9 @@ const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders:
     setIsLoading(false);
   };
 
-
   useEffect(() => {
     fetchOrders();
-  }, [sortColumn, sortDirection, ]);
+  }, [sortColumn, sortDirection]);
 
   // const generatePDF = async (order: Order) => {
   //   console.log("downloading pdf ....");
@@ -167,7 +167,7 @@ const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders:
     setEditedOrders((prev) => ({ ...prev, [orderId]: newStatus }));
   };
 
-const saveStatus = async (orderId: number) => {
+  const saveStatus = async (orderId: number) => {
     const newStatus = editedOrders[orderId];
     setIsSaving((prev) => ({ ...prev, [orderId]: true }));
     try {
@@ -181,9 +181,7 @@ const saveStatus = async (orderId: number) => {
       const data = await res.json();
       if (data.success) {
         // Update the local orders state to reflect the new status
-        setOrders((prevOrders) => prevOrders.map((order) =>
-          order.orderId === orderId ? { ...order, status: newStatus } : order
-        ));
+        setOrders((prevOrders) => prevOrders.map((order) => (order.orderId === orderId ? { ...order, status: newStatus } : order)));
         toast.success("Status succesvol geupdate!");
       } else {
         toast.error(data.message);
@@ -196,7 +194,6 @@ const saveStatus = async (orderId: number) => {
       setIsSaving((prev) => ({ ...prev, [orderId]: false })); // Reset saving state for the specific order
     }
   };
-
 
   // const saveStatus = async (orderId: number) => {
   //   const newStatus = editedOrders[orderId];
@@ -242,7 +239,11 @@ const saveStatus = async (orderId: number) => {
   };
 
   if (isLoading) {
-    return <p className="flex flex-col items-center justify-center"> Bestellingen laden... </p>;
+    return (
+      <div className="my-32">
+        <BeatLoader color={color} loading={isLoading} size={20} aria-label="Loading Spinner" />
+      </div>
+    );
   }
 
   return (

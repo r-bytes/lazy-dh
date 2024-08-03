@@ -5,11 +5,13 @@ import Title from "@/components/ui/title";
 import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import Product from "@/lib/types/product";
 import { useEffect, useState } from "react";
+import BeatLoader from "react-spinners/BeatLoader";
 import { CardDescription } from "../ui/card";
 
 export default function Promotions({ products }: { products?: Product[] }) {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
+  const [color, setColor] = useState("#facc15");
 
   useEffect(() => {
     // Fetch new products if they don't exist
@@ -30,8 +32,8 @@ export default function Promotions({ products }: { products?: Product[] }) {
       <Title name="Aanbiedingen" cn="text-4xl md:text-5xl mt-12" />
       <CardDescription className="md:text-base">Producten in de aanbieding</CardDescription>
       {isLoading ? (
-        <div className="py-5 text-center">
-          <p>Laden...</p>
+        <div className="my-32">
+          <BeatLoader color={color} loading={isLoading} size={20} aria-label="Loading Spinner" />
         </div>
       ) : productsToRender.length > 0 ? (
         <ProductList products={productsToRender} />

@@ -8,6 +8,8 @@ import { DatabaseUser } from "@/lib/types/user";
 import { EyeIcon, EyeOff } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import BeatLoader from "react-spinners/BeatLoader";
+
 interface UserManagementProps {
   allUsers: DatabaseUser[];
   userId: string;
@@ -16,6 +18,7 @@ interface UserManagementProps {
 const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
   const [users, setUsers] = useState<DatabaseUser[]>(allUsers);
   const [isLoading, setIsLoading] = useState(false);
+  const [color, setColor] = useState("#facc15");
   const [editedUsers, setEditedUsers] = useState<Record<string, boolean>>({});
   const [showApproved, setShowApproved] = useState(false);
   const [isSaving, setIsSaving] = useState<Record<string, boolean>>({});
@@ -69,7 +72,9 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
         </Button>
       </div>
       {isLoading ? (
-        <p className="flex items-center justify-center">Gebruikers laden...</p>
+        <div className="my-32">
+          <BeatLoader color={color} loading={isLoading} size={20} aria-label="Loading Spinner" />
+        </div>
       ) : (
         <Table className="w-full min-w-fit">
           <TableHeader>

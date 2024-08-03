@@ -1,8 +1,9 @@
-"use client"
+"use client";
 import { useAuthContext } from "@/context/AuthContext";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const withAuth = (WrappedComponent: React.ComponentType<any>) => {
   const WithAuthComponent = (props: any) => {
@@ -10,6 +11,7 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const router = useRouter();
     const { authorizedEmails } = useAuthContext();
+    const [color, setColor] = useState("#facc15");
 
     useEffect(() => {
       if (status === "loading") return; // Do nothing while loading
@@ -23,18 +25,23 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
       } else {
         setIsAuthenticated(true);
       }
-    }, [session, status, router]);
+    }, [session, status, router, authorizedEmails]);
 
     if (status === "loading") {
-      return <div className="flex flex-col items-center justify-center">Loading...</div>;
+      return (
+        <div className="my-32 flex items-center justify-center">
+          <BeatLoader color={color} loading={true} size={20} aria-label="Loading Spinner" />
+        </div>
+      );
     }
 
     if (!isAuthenticated) {
-      return <p className="flex flex-col items-center justify-center">Access Denied</p>;
+      return <p className="my-32 flex flex-col items-center justify-center">Access Denied</p>;
     }
 
     return <WrappedComponent {...props} session={session} />;
   };
+
   // Set the display name for debugging purposes
   WithAuthComponent.displayName = `WithAuth(${getDisplayName(WrappedComponent)})`;
 
