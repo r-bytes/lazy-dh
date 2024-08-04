@@ -25,7 +25,7 @@ const UserManagementPage = ({ searchParams }: UserManagementPageProps) => {
   const userIdFromProps = searchParams.token as string;
 
   return users.length > 0 ? (
-    <MaxWidthWrapper className="mx-auto flex flex-col">
+    <MaxWidthWrapper className="mx-auto flex flex-col md:px-8">
       <UserManagement allUsers={users} userId={userIdFromProps} />
     </MaxWidthWrapper>
   ) : null;

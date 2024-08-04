@@ -15,7 +15,7 @@ export default function Promotions({ products }: { products?: Product[] }) {
 
   useEffect(() => {
     console.log(products);
-    
+
     // Fetch new products if they don't exist
     if (!products || products.length === 0) {
       setIsLoading(true);

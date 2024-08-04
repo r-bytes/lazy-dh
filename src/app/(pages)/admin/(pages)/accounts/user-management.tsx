@@ -143,7 +143,7 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
                   <TableCell>{user.vatNumber}</TableCell>
                   <TableCell>{user.chamberOfCommerceNumber}</TableCell>
                   <TableCell>{editedUsers[user.id] ? "Goedgekeurd" : "Nieuw"}</TableCell>
-                  <TableCell>
+                  <TableCell className="flex justify-end pr-0 mr-0 flex-col">
                     <Button
                       className="mb-2 w-32 bg-primary/70 font-bold text-black/70 hover:bg-primary dark:text-secondary dark:hover:text-secondary"
                       onClick={() => toggleApproval(user.id)}

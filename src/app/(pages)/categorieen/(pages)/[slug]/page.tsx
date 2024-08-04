@@ -13,10 +13,6 @@ type Props = {
 const page = async ({ params: { slug } }: Props) => {
   const products = await fetchProducts(`?type=${slug.toLowerCase()}`);
 
-    const handleRemoveFavorite = (productId: string) => {
-      console.log(`Remove favorite: ${productId}`);
-    };
-
   return slug === "alles" ? (
     <MaxWidthWrapper className="mx-auto">
       <ProductsWithFilter products={products!} />
@@ -24,7 +20,7 @@ const page = async ({ params: { slug } }: Props) => {
   ) : (
     <div className="flex h-full flex-col">
       <Title name={capitalizeFirstLetter(slug)} />
-      <ProductList products={products} onRemoveFavorite={handleRemoveFavorite} />
+      <ProductList products={products} />
     </div>
   );
 };

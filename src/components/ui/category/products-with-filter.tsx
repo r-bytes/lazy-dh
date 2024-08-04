@@ -17,10 +17,6 @@ interface ProductsWithFilterProps extends Omit<CardProps, "children"> {
 export const ProductsWithFilter: React.FC<ProductsWithFilterProps> = ({ className, products, ...props }) => {
   const { filteredProducts, setFilteredProducts, isSearching } = useProductContext();
 
-  const handleRemoveFavorite = (productId: string) => {
-    console.log(`Remove favorite: ${productId}`);
-  };
-
   return (
     <>
       <Card className={cn("w-full", className)} {...props}>
@@ -30,9 +26,9 @@ export const ProductsWithFilter: React.FC<ProductsWithFilterProps> = ({ classNam
         {/* Search bar */}
         <InputForm products={products} onSearchChange={setFilteredProducts} />
         {isSearching ? (
-          <ProductList products={filteredProducts} onRemoveFavorite={handleRemoveFavorite} />
+          <ProductList products={filteredProducts} />
         ) : (
-          <ProductList products={products} onRemoveFavorite={handleRemoveFavorite} />
+          <ProductList products={products} />
         )}
       </Card>
     </>

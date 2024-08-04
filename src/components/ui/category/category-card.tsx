@@ -28,7 +28,6 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
   const [productCounts, setProductCounts] = useState<{ [key: string]: number }>({});
   const { productState, categoryState, filteredProducts, setFilteredProducts, isSearching } = useProductContext();
 
-
   useEffect(() => {
     if (categories && products) {
       const counts: { [key: string]: number } = {};
@@ -71,7 +70,6 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
       });
       setProductCounts(counts);
     }
-    
   }, [categories, products, productState, categoryState]);
 
   return products && categories ? (

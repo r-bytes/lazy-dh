@@ -5,7 +5,7 @@ import { FC } from "react";
 interface ProductListProps {
   products: ProductType[] | null;
   cn?: string;
-  onRemoveFavorite: (productId: string) => void;
+  onRemoveFavorite?: (productId: string) => void;
 }
 
 const ProductList: FC<ProductListProps> = ({ products, onRemoveFavorite, cn }) => {
