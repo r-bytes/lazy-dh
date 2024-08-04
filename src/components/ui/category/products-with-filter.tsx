@@ -1,13 +1,13 @@
 "use client";
 
 import ProductList from "@/components/products/product-list";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader } from "@/components/ui/card";
 import { useProductContext } from "@/context/ProductContext";
 import { Product } from "@/lib/types/product";
 import { cn } from "@/lib/utils";
 import React from "react";
-import { InputForm } from "./search-input";
 import Title from "../title";
+import { InputForm } from "./search-input";
 
 type CardProps = React.ComponentProps<typeof Card>;
 interface ProductsWithFilterProps extends Omit<CardProps, "children"> {
@@ -17,6 +17,10 @@ interface ProductsWithFilterProps extends Omit<CardProps, "children"> {
 export const ProductsWithFilter: React.FC<ProductsWithFilterProps> = ({ className, products, ...props }) => {
   const { filteredProducts, setFilteredProducts, isSearching } = useProductContext();
 
+  const handleRemoveFavorite = (productId: string) => {
+    console.log(`Remove favorite: ${productId}`);
+  };
+
   return (
     <>
       <Card className={cn("w-full", className)} {...props}>
@@ -25,7 +29,11 @@ export const ProductsWithFilter: React.FC<ProductsWithFilterProps> = ({ classNam
         </CardHeader>
         {/* Search bar */}
         <InputForm products={products} onSearchChange={setFilteredProducts} />
-        {isSearching ? <ProductList products={filteredProducts} /> : <ProductList products={products} />}
+        {isSearching ? (
+          <ProductList products={filteredProducts} onRemoveFavorite={handleRemoveFavorite} />
+        ) : (
+          <ProductList products={products} onRemoveFavorite={handleRemoveFavorite} />
+        )}
       </Card>
     </>
   );

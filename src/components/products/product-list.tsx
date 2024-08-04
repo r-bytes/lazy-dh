@@ -3,14 +3,15 @@ import Product from "./product";
 import { FC } from "react";
 
 interface ProductListProps {
-  products: ProductType[];
+  products: ProductType[] | null;
+  cn?: string;
   onRemoveFavorite: (productId: string) => void;
 }
 
-const ProductList: FC<ProductListProps> = ({ products, onRemoveFavorite }) => {
+const ProductList: FC<ProductListProps> = ({ products, onRemoveFavorite, cn }) => {
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {products.map((product) => (
+    <div className={`${cn} mx-auto my-24 flex max-w-7xl flex-wrap place-items-center items-center justify-center gap-8 `}>
+      {products?.map((product) => (
         <Product key={product._id} product={product} onRemoveFavorite={onRemoveFavorite} />
       ))}
     </div>
