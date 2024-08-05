@@ -1,3 +1,4 @@
+"use server"
 import { Product } from "../types/product";
 
 export const fetchProducts = async (queryParam?: string) => {
