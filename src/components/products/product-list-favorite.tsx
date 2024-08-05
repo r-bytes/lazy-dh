@@ -14,7 +14,7 @@ import { CardDescription } from "../ui/card";
 export default function Favorites({ products }: { products: Product[] }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [color, setColor] = useState("#facc15");
-  const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
+  const [fetchedProducts, setFetchedProducts] = useState<Product[]>(products);
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -33,6 +33,9 @@ export default function Favorites({ products }: { products: Product[] }) {
           if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`);
           }
+
+          console.log("res", res);
+          
 
           const { userId } = await res.json();
 
