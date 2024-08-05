@@ -15,6 +15,8 @@ export const fetchProducts = async (queryParam?: string) => {
 
   try {
     const response: Response = await fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
       // cache: "force-cache", // SSG - Use to speed up subsequent visits.
       cache: "no-store", // SSR
       // next: {
