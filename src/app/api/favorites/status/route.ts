@@ -1,6 +1,9 @@
 import { checkFavoriteStatus } from "@/lib/db/data";
 import { NextRequest, NextResponse } from "next/server";
 
+// Explicitly state that this is a dynamic route
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
