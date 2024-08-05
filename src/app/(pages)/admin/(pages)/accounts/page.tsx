@@ -4,6 +4,7 @@ import withAuth from "@/hoc/withAuth";
 import { fetchAllUsers } from "@/lib/db/data";
 import { DatabaseUser } from "@/lib/types/user";
 import { useEffect, useState } from "react";
+import BeatLoader from "react-spinners/BeatLoader";
 import UserManagement from "./user-management";
 
 interface UserManagementPageProps {
@@ -12,11 +13,19 @@ interface UserManagementPageProps {
 
 const UserManagementPage = ({ searchParams }: UserManagementPageProps) => {
   const [users, setUsers] = useState<DatabaseUser[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [color, setColor] = useState("#facc15");
 
   useEffect(() => {
     const loadUsers = async () => {
-      const fetchedUsers = await fetchAllUsers();
-      setUsers(fetchedUsers);
+      try {
+        const fetchedUsers = await fetchAllUsers();
+        setUsers(fetchedUsers);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     loadUsers();
@@ -24,11 +33,17 @@ const UserManagementPage = ({ searchParams }: UserManagementPageProps) => {
 
   const userIdFromProps = searchParams.token as string;
 
-  return users.length > 0 ? (
+  return (
     <MaxWidthWrapper className="mx-auto flex flex-col md:px-8">
-      <UserManagement allUsers={users} userId={userIdFromProps} />
+      {isLoading ? (
+        <div className="my-32">
+          <BeatLoader color={color} loading={isLoading} size={20} aria-label="Loading Spinner" />
+        </div>
+      ) : (
+        <UserManagement allUsers={users} userId={userIdFromProps} />
+      )}
     </MaxWidthWrapper>
-  ) : null;
+  );
 };
 
 export default withAuth(UserManagementPage);
