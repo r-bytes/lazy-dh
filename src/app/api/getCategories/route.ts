@@ -12,6 +12,22 @@ export const GET = async (req: NextRequest): Promise<NextResponse<Data>> => {
   return NextResponse.json({ categories });
 };
 
-const query: string = groq`
-  *[_type == "category"] | order(order asc)
-`;
+  const query: string = groq`
+    *[_type == "category"] | order(order asc)
+  `;
+
+export const middleware = async (req: NextRequest) => {
+  if (req.method === "OPTIONS") {
+    const headers = new Headers();
+    headers.append("Access-Control-Allow-Origin", "*");
+    headers.append("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+    headers.append("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    return new Response(null, { status: 204, headers });
+  }
+
+  const response = await GET(req);
+  response.headers.append("Access-Control-Allow-Origin", "*");
+  response.headers.append("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  response.headers.append("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  return response;
+};

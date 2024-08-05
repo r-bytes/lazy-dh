@@ -11,10 +11,13 @@ export const fetchCategories = async () => {
     // },
   });
 
+  if (!response.ok) {
+    throw new Error(`Failed to fetch categories: ${response.status} ${response.statusText}`);
+  }
+
   const data = await response.json();
-  
+
   const categories: Category[] = data.categories;
 
-  // console.log("=====> fetching... pageInfo")
   return categories;
 };
