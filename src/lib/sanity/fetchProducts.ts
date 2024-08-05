@@ -1,7 +1,7 @@
 import { Product } from "../types/product";
 
 export const fetchProducts = async (queryParam?: string) => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!;
   let url = `${baseUrl}/api/getProducts`;
 
   // Only append queryParam if it is truthy
@@ -14,8 +14,8 @@ export const fetchProducts = async (queryParam?: string) => {
 
   try {
     const response: Response = await fetch(url, {
-      cache: "force-cache", // SSG - Use to speed up subsequent visits.
-      // cache: "no-store", // SSR
+      // cache: "force-cache", // SSG - Use to speed up subsequent visits.
+      cache: "no-store", // SSR
       // next: {
       //     revalidate: 20, // ISR
       // },
