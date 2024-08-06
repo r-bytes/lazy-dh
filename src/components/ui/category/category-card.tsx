@@ -75,7 +75,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
   return products && categories ? (
     <Card className={cn("w-full", className)} {...props}>
       <CardHeader className="mb-4 text-center">
-        <Title name={slug === "home" ? "Categorieën" : capitalizeFirstLetter(currentPath)} cn="mt-12" />
+        <Title name={slug === "home" ? "Categorieën" : capitalizeFirstLetter(currentPath)} cn="text-4xl mt-12" />
         <CardDescription className="md:text-base">Kies een categorie</CardDescription>
       </CardHeader>
       {/* Search bar */}
@@ -85,7 +85,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
         <CardContent className="mt-12 flex flex-col justify-center sm:mx-16 lg:mx-2">
           {slug === "home"
             ? categories.slice(0, 4).map((item, index) => (
-                <div key={index} className="mx-auto flex w-4/5 text-center sm:w-11/12 lg:w-10/12 lg:text-left">
+                <div key={index} className="mx-auto flex w-full text-center lg:w-10/12 lg:text-left">
                   <a
                     href={`/categorieen/${item.slug}`}
                     className="group w-full rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
@@ -102,7 +102,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
                         priority
                       />
                       <div className="flex flex-1 flex-col text-left md:mx-12 md:text-center">
-                        <h2 className="text-md mb-3 font-semibold text-muted-foreground sm:text-lg md:text-2xl lg:text-3xl">{item.name}</h2>
+                        <h2 className="text-xl mb-3 font-semibold text-muted-foreground md:text-2xl lg:text-3xl">{item.name}</h2>
                         <p className="m-0 text-sm opacity-50">{`(${productCounts[item.name] || 0}) producten`}</p>
                       </div>
                       <span className="inline-block text-lg text-muted-foreground transition-transform group-hover:translate-x-1 motion-reduce:transform-none sm:text-3xl">

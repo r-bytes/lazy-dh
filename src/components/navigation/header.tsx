@@ -111,10 +111,12 @@ const Header = (props: Props) => {
         {/* Mobile Navigation Menu */}
         <div className={`lg:hidden ${menuOpen ? "fixed inset-0 z-50 min-h-screen bg-zinc-100 dark:bg-black" : "hidden"}`}>
           <div className="flex h-screen flex-col items-center justify-between gap-4">
-            <CircleX onClick={() => setMenuOpen(false)} className="h-12 w-full border p-2 text-right text-muted-foreground hover:cursor-pointer" />
-            <ul>
+            <div className="w-screen hover:bg-zinc-200 dark:hover:bg-zinc-900">
+              <CircleX onClick={() => setMenuOpen(false)} className="h-12 w-full p-2 text-right text-muted-foreground hover:cursor-pointer" />
+            </div>
+            <ul className="flex w-screen flex-1 flex-col items-center justify-center gap-8">
               {NAVIGATION_LIST.map((item, index, arr) => (
-                <li key={item.order} className={`hover:text-primary} font-semibold tracking-wide hover:cursor-pointer`}>
+                <li key={item.order} className={`font-semibold tracking-wide hover:cursor-pointer hover:text-primary`}>
                   <Link
                     className={`${roboto.className} tracking-wider`}
                     onClick={() => setMenuOpen(false)}

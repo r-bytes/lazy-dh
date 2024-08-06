@@ -22,7 +22,7 @@ export default async function Home({ params }: { params: { user: string } }): Pr
     <main className="flex flex-col items-center justify-between bg-background">
       <section id="promotions">
         <div className="flex flex-col items-center justify-center">
-          <Title name="Aanbiedingen" />
+          <Title name="Aanbiedingen" cn="text-4xl mt-6" />
           <CarouselSpacing products={productListInSale!} />
           <div className="mx-auto my-16 flex justify-center">
             <Button title="Meer">

@@ -65,7 +65,7 @@ export default function Favorites() {
   return (
     <MaxWidthWrapper className="mx-auto flex flex-col items-center justify-center">
       <Title name="Favorieten" cn="text-4xl md:text-5xl mt-12 mb-0" />
-      <CardDescription className="mt-[-1rem] md:text-base">Je favoriete producten</CardDescription>
+      {fetchedProducts.length > 0 && !isLoading && <CardDescription className="mt-[-1rem] md:text-base">Je favoriete producten</CardDescription>}
       {isLoading ? (
         <div className="my-32">
           <BeatLoader color={color} loading={isLoading} size={20} aria-label="Loading Spinner" />
