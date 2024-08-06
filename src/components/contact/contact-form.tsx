@@ -71,7 +71,7 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <Card className="mx-auto w-screen max-w-3xl border-4 p-10">
+    <Card className="mx-auto w-screen max-w-3xl p-10">
       <Title name="Contacteer ons"/>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
