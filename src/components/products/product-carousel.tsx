@@ -22,7 +22,7 @@ export function CarouselSpacing({ products, cn }: { products: ProductType[] | nu
     >
       <CarouselContent className="relative px-0">
         {products?.map((prod) => (
-          <CarouselItem key={prod._id} className={`basis-full sm:basis-1/2 lg:p-0 ${products.length > 3 ? "lg:basis-1/4" : "lg:basis-1/3"}`}>
+          <CarouselItem key={prod._id} className={`flex sm:block justify-center items-center basis-full sm:basis-1/2 lg:p-0 ${products.length > 3 ? "lg:basis-1/4" : "lg:basis-1/3"}`}>
             <CardContent className="flex aspect-square items-center justify-center p-0 sm:mx-4">
               <Product carousel product={prod} />
             </CardContent>
