@@ -14,7 +14,7 @@ import Link from "next/link";
 
 export default async function Home({ params }: { params: { user: string } }): Promise<JSX.Element> {
   // Fetching product and category data
-  const productList: Product[] = await fetchProducts("", { cache: "no-store" });
+  const productList: Product[] = await fetchProducts("");
   const categoryList: Category[] = await fetchCategories();
 
   // Filtering products for specific sections
