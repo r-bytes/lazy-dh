@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import { Product } from "../types/product";
 
 export const fetchProducts = async (queryParam?: string) => {
@@ -9,19 +9,17 @@ export const fetchProducts = async (queryParam?: string) => {
   if (queryParam) {
     url += queryParam;
     // console.log("query param found: " + url);
-    
   }
-
 
   try {
     const response: Response = await fetch(url, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
-      // cache: "force-cache", // SSG - Use to speed up subsequent visits.
+      cache: "force-cache", // SSG - Use to speed up subsequent visits.
       // cache: "no-store", // SSR
-      next: {
-          revalidate: 1, // ISR
-      },
+      // next: {
+      //     revalidate: 20, // ISR
+      // },
     });
 
     if (!response.ok) {

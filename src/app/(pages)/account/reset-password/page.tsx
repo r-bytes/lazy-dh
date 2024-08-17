@@ -4,6 +4,8 @@ import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
+export const dynamic = "force-dynamic";
+
 interface ResetPasswordPageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
