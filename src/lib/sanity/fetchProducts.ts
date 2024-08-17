@@ -13,8 +13,8 @@ export const fetchProducts = async (queryParam?: string, options?: RequestInit) 
     const response: Response = await fetch(url, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
-      cache: "no-store", // Disable caching entirely
-      ...options, // Spread any additional options like cache mode
+      cache: options?.cache || "default",
+      ...options, // Additional options
     });
 
     if (!response.ok) {

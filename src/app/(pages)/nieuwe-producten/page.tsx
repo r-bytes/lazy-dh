@@ -3,7 +3,7 @@ import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import Product from "@/lib/types/product";
 
 export default async function Page() {
-  const products: Product[] = await fetchProducts("?type=nieuw", { cache: "no-store" });
+  const products: Product[] = await fetchProducts("?type=nieuw", { next: { revalidate: 1 } });
 
   return products.length > 0 ? <Promotions products={products} isNew /> : null;
 }
