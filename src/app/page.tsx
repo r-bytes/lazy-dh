@@ -16,7 +16,7 @@ export default async function Home({ params }: { params: { user: string } }): Pr
   const productList: Product[] = await fetchProducts("");
   const categoryList: Category[] = await fetchCategories();
   const productListInSale: Product[] = productList.filter((p) => p.inSale); 
-   
+  const productListNew: Product[] = productList.filter((p) => p.isNew); 
 
   return (
     <main className="flex flex-col items-center justify-between bg-background">
@@ -24,6 +24,17 @@ export default async function Home({ params }: { params: { user: string } }): Pr
         <div className="flex flex-col items-center justify-center">
           <Title name="Aanbiedingen" cn="text-4xl mt-6" />
           <CarouselSpacing products={productListInSale!} />
+          <div className="mx-auto my-16 flex justify-center">
+            <Button title="Meer">
+              <Link href={"/promoties"}>Bekijk meer</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+      <section id="new">
+        <div className="flex flex-col items-center justify-center">
+          <Title name="Nieuw" cn="text-4xl mt-6" />
+          <CarouselSpacing products={productListNew!} />
           <div className="mx-auto my-16 flex justify-center">
             <Button title="Meer">
               <Link href={"/promoties"}>Bekijk meer</Link>
