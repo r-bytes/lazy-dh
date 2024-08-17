@@ -1,21 +1,22 @@
 "use client";
 
+import CategoryCardSkeleton from "@/components/products/category-skeleton";
 import ProductList from "@/components/products/product-list";
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { useProductContext } from "@/context/ProductContext";
+import { fetchCategories } from "@/lib/sanity/fetchCategories";
+import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import { Category } from "@/lib/types/category";
 import { Product } from "@/lib/types/product";
 import { capitalizeFirstLetter, cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { urlFor } from "../../../../sanity";
 import { Button } from "../button";
 import Title from "../title";
 import { InputForm } from "./search-input";
-import { fetchProducts } from "@/lib/sanity/fetchProducts";
-import { fetchCategories } from "@/lib/sanity/fetchCategories";
 
 type CardProps = React.ComponentProps<typeof Card>;
 interface CategoryCardProps extends Omit<CardProps, "children"> {
@@ -30,6 +31,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
   const [productCounts, setProductCounts] = useState<{ [key: string]: number }>({});
   const { productState, categoryState, filteredProducts, setFilteredProducts, isSearching, setProductState, setCategoryState } =
     useProductContext();
+  const [loading, setLoading] = useState(true); // State to manage loading
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +43,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
         const fetchedCategories = await fetchCategories();
         setCategoryState(fetchedCategories);
       }
+      setLoading(false); // Set loading to false after data is fetched
     };
 
     fetchData();
@@ -75,8 +78,8 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
     }
   }, [categories, products, productState, categoryState]);
 
-  if (!products && !categories && !productState && !categoryState) {
-    return <div>Loading...</div>; // Render a loading state while fetching data
+  if (loading) {
+    return <CategoryCardSkeleton className={className} {...props} />;
   }
 
   return (
