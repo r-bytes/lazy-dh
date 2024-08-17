@@ -17,11 +17,11 @@ export const fetchProducts = async (queryParam?: string) => {
     const response: Response = await fetch(url, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
-      // cache: "force-cache", // SSG - Use to speed up subsequent visits.
-      cache: "no-store", // SSR
-      // next: {
-      //     revalidate: 20, // ISR
-      // },
+      cache: "force-cache", // SSG - Use to speed up subsequent visits.
+      // cache: "no-store", // SSR
+      next: {
+          revalidate: 20, // ISR
+      },
     });
 
     if (!response.ok) {
