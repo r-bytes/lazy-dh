@@ -12,18 +12,18 @@ export default defineType({
     }),
     defineField({
       name: 'image',
-      title: 'Image',
+      title: 'Afbeelding',
       type: 'image',
     }),
     defineField({
       name: 'name',
-      title: 'Name',
-      description: 'Naam van het product',
+      title: 'Naam',
+      description: 'Naam van de categorie',
       type: 'string',
     }),
     defineField({
       name: 'slug',
-      title: 'Slug',
+      title: 'URL',
       description: 'Slug van het product',
       type: 'string',
     }),

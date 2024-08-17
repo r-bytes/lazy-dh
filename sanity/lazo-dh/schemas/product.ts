@@ -7,12 +7,12 @@ export default defineType({
   fields: [
     defineField({
       name: 'image',
-      title: 'Image',
+      title: 'Afbeelding',
       type: 'image',
     }),
     defineField({
       name: 'name',
-      title: 'Name',
+      title: 'Naam',
       description: 'Naam van het product',
       type: 'string',
       validation: (rule) => [
@@ -22,7 +22,7 @@ export default defineType({
     }),
     defineField({
       name: 'category',
-      title: 'Category',
+      title: 'Categorie',
       description: 'Categorie van het product',
       type: 'string',
       initialValue: 'Rakia',
@@ -55,7 +55,7 @@ export default defineType({
     }),
     defineField({
       name: 'price',
-      title: 'Price',
+      title: 'Prijs',
       description: 'Prijs van het product',
       type: 'number',
     }),
@@ -107,13 +107,13 @@ export default defineType({
     }),
     defineField({
       name: 'inSale',
-      title: 'In Sale',
+      title: 'In Aanbieding',
       description: 'Product is in de aanbieding',
       type: 'boolean',
     }),
     defineField({
       name: 'isNew',
-      title: 'Is New',
+      title: 'Is Nieuw',
       description: 'Product is nieuw',
       type: 'boolean',
     }),
