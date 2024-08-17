@@ -36,7 +36,7 @@ export default async function Home({ params }: { params: { user: string } }): Pr
       <section id="new">
         <Card className="mx-2 sm:mx-20 p-4 md:p-16">
           <div className="mt-24 flex flex-col items-center justify-center md:mt-32">
-            <Title name="Nieuwe producten" cn="text-3xl sm:text-4xl mt-6" />
+            <Title name="Nieuwe producten" cn="text-3xl sm:text-4xl" />
             {/* <CarouselSpacing products={productListNew!} /> */}
             <ProductList products={productListNew!.slice(0, 4)} />
             <div className="mx-auto my-16 flex justify-center">
