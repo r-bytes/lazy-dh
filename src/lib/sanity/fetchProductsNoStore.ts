@@ -1,7 +1,7 @@
 "use server";
 import { Product } from "../types/product";
 
-export const fetchProducts = async (queryParam?: string) => {
+export const fetchProductsNoStore = async (queryParam?: string) => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!;
   let url = `${baseUrl}/api/getProducts`;
 
@@ -12,14 +12,8 @@ export const fetchProducts = async (queryParam?: string) => {
   }
 
   try {
-    const response: Response = await fetch(url, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      // cache: "force-cache", // SSG - Use to speed up subsequent visits.
+    const response: Response = await fetch(url!, {
       cache: "no-store", // SSR
-      // next: {
-      //     revalidate: 20, // ISR
-      // },
     });
 
     if (!response.ok) {
@@ -29,7 +23,6 @@ export const fetchProducts = async (queryParam?: string) => {
     }
 
     const data = await response.json();
-
     const products: Product[] = data.products;
     return products;
   } catch (error) {
