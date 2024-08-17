@@ -8,7 +8,11 @@ import { useEffect, useState } from "react";
 import BeatLoader from "react-spinners/BeatLoader";
 import { CardDescription } from "../ui/card";
 
-export default function Promotions({ products }: { products?: Product[] }) {
+type PromotionsProps = {
+  products?: Product[];
+  isNew?: boolean;
+};
+export default function Promotions({ products, isNew }: PromotionsProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
   const [color, setColor] = useState("#facc15");
@@ -31,8 +35,8 @@ export default function Promotions({ products }: { products?: Product[] }) {
 
   return (
     <MaxWidthWrapper className="mx-auto flex flex-col items-center justify-center">
-      <Title name="Aanbiedingen" cn="text-4xl md:text-5xl mt-12" />
-      <CardDescription className="md:text-base">Producten in de aanbieding</CardDescription>
+      <Title name={isNew ? "Nieuwe Producten" : "Aanbiedingen"} cn="text-4xl md:text-5xl mt-12" />
+      <CardDescription className="md:text-base"> {isNew ? "Onze nieuwste producten" : "Producten in de aanbieding"}</CardDescription>
       {isLoading ? (
         <div className="my-32">
           <BeatLoader color={color} loading={isLoading} size={20} aria-label="Loading Spinner" />

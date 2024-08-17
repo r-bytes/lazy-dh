@@ -11,6 +11,8 @@ import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import { Category } from "@/lib/types/category";
 import Product from "@/lib/types/product";
 import Link from "next/link";
+import ProductList from "@/components/products/product-list";
+import { Card } from "@/components/ui/card";
 
 export default async function Home({ params }: { params: { user: string } }): Promise<JSX.Element> {
   const productList: Product[] = await fetchProducts("");
@@ -21,7 +23,7 @@ export default async function Home({ params }: { params: { user: string } }): Pr
   return (
     <main className="flex flex-col items-center justify-between bg-background">
       <section id="promotions">
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center md:mt-12">
           <Title name="Aanbiedingen" cn="text-4xl mt-6" />
           <CarouselSpacing products={productListInSale!} />
           <div className="mx-auto my-16 flex justify-center">
@@ -32,15 +34,18 @@ export default async function Home({ params }: { params: { user: string } }): Pr
         </div>
       </section>
       <section id="new">
-        <div className="flex flex-col items-center justify-center">
-          <Title name="Nieuw" cn="text-4xl mt-6" />
-          <CarouselSpacing products={productListNew!} />
-          <div className="mx-auto my-16 flex justify-center">
-            <Button title="Meer">
-              <Link href={"/promoties"}>Bekijk meer</Link>
-            </Button>
+        <Card className="mx-2 sm:mx-20 p-4 md:p-16">
+          <div className="mt-24 flex flex-col items-center justify-center md:mt-32">
+            <Title name="Nieuwe producten" cn="text-3xl sm:text-4xl mt-6" />
+            {/* <CarouselSpacing products={productListNew!} /> */}
+            <ProductList products={productListNew!.slice(0, 4)} />
+            <div className="mx-auto my-16 flex justify-center">
+              <Button title="Meer">
+                <Link href={"/nieuwe-producten"}>Bekijk meer</Link>
+              </Button>
+            </div>
           </div>
-        </div>
+        </Card>
       </section>
       <section id="categories">
         <MaxWidthWrapper className="my-12 max-w-[84rem] sm:my-24">
