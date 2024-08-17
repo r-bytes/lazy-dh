@@ -11,13 +11,8 @@ export const fetchProducts = async (queryParam?: string) => {
   }
 
   try {
-    const response: Response = await fetch(url, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      cache: "no-store", // SSR - Disable caching to always fetch fresh data.
-      // next: {
-      //     revalidate: 20, // ISR - Commented out because it's not needed with "no-store".
-      // },
+    const response: Response = await fetch(url!, {
+      cache: "no-store",
     });
 
     if (!response.ok) {
