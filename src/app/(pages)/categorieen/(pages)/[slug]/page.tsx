@@ -11,7 +11,7 @@ type Props = {
 };
 
 const page = async ({ params: { slug } }: Props) => {
-  const products = await fetchProducts(`?type=${slug.toLowerCase()}`);
+  const products = await fetchProducts(`?type=${slug.toLowerCase()}`, { cache: "no-store" });
 
   return slug === "alles" ? (
     <MaxWidthWrapper className="mx-auto">

@@ -40,7 +40,7 @@ export default function Favorites() {
             const productIds = await getFavoriteProductIds(userId);
 
             if (productIds && productIds.length > 0) {
-              const allProducts = await fetchProducts("");
+              const allProducts = await fetchProducts("", { cache: "no-store" });
               const favoriteProducts = allProducts.filter((product) => productIds.includes(product._id));
               setFetchedProducts(favoriteProducts);
             } else {

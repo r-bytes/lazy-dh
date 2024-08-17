@@ -1,37 +1,28 @@
-"use server"
+"use server";
 import { Product } from "../types/product";
 
-export const fetchProducts = async (queryParam?: string) => {
+export const fetchProducts = async (queryParam?: string, options?: RequestInit) => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!;
   let url = `${baseUrl}/api/getProducts`;
 
-  // Only append queryParam if it is truthy
   if (queryParam) {
     url += queryParam;
-    // console.log("query param found: " + url);
-    
   }
-
 
   try {
     const response: Response = await fetch(url, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
-      cache: "force-cache", // SSG - Use to speed up subsequent visits.
-      // cache: "no-store", // SSR
-      next: {
-          revalidate: 0, // ISR
-      },
+      cache: "no-store", // Disable caching entirely
+      ...options, // Spread any additional options like cache mode
     });
 
     if (!response.ok) {
-      // Log error or throw exception based on the status code
       console.error(`Failed to fetch products: ${response.status} ${response.statusText}`);
-      return []; // Return an empty array or throw an error based on your error handling strategy
+      return [];
     }
 
     const data = await response.json();
-
     const products: Product[] = data.products;
     return products;
   } catch (error) {

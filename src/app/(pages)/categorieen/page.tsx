@@ -6,7 +6,7 @@ import { Category } from "@/lib/types/category";
 import Product from "@/lib/types/product";
 
 export default async function Page() {
-  const productList: Product[] = await fetchProducts("");
+  const productList: Product[] = await fetchProducts("", { cache: "no-store" });
   const categoryList: Category[] = await fetchCategories();
 
   return (
