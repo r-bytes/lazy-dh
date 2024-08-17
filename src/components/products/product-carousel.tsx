@@ -1,17 +1,29 @@
-"use client"
+"use client";
 
-import React, { useRef } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { fetchProductsNoStore } from "@/lib/sanity/fetchProductsNoStore";
 import { Product as ProductType } from "@/lib/types/product";
-import Product from "./product";
 import Autoplay from "embla-carousel-autoplay";
+import { useEffect, useRef, useState } from "react";
+import Product from "./product";
 
-export function CarouselSpacing({ products, cn }: { products: ProductType[] | null; cn?: string }) {
-  const hasEnoughItems = products && products.length >= 4;
-
+export function CarouselSpacing({ products, cn }: { products?: ProductType[]; cn?: string }) {
+  const [fetchedProducts, setFetchedProducts] = useState<ProductType[] | null>(null);
   const autoplay = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 
+  useEffect(() => {
+    const loadProducts = async () => {
+      if (!products) {
+        const productList: ProductType[] = await fetchProductsNoStore("");
+        const productListInSale: ProductType[] = productList.filter((p) => p.inSale);
+        setFetchedProducts(productListInSale);
+      }
+    };
+    loadProducts();
+  }, [products]);
+
+  const displayedProducts = products || fetchedProducts;
 
   return (
     <Carousel
@@ -21,8 +33,13 @@ export function CarouselSpacing({ products, cn }: { products: ProductType[] | nu
       onMouseLeave={autoplay.current.reset}
     >
       <CarouselContent className="relative px-0">
-        {products?.map((prod) => (
-          <CarouselItem key={prod._id} className={`flex sm:block justify-center items-center basis-full sm:basis-1/2 lg:p-0 ${products.length > 3 ? "lg:basis-1/4" : "lg:basis-1/3"}`}>
+        {displayedProducts?.map((prod) => (
+          <CarouselItem
+            key={prod._id}
+            className={`flex basis-full items-center justify-center sm:block sm:basis-1/2 lg:p-0 ${
+              displayedProducts.length > 3 ? "lg:basis-1/4" : "lg:basis-1/3"
+            }`}
+          >
             <CardContent className="flex aspect-square items-center justify-center p-0 sm:mx-4">
               <Product carousel product={prod} />
             </CardContent>
@@ -30,8 +47,8 @@ export function CarouselSpacing({ products, cn }: { products: ProductType[] | nu
         ))}
       </CarouselContent>
 
-      <CarouselPrevious className="hidden sm:block left-[-12px] rounded-full bg-black bg-opacity-20 p-2 text-white" />
-      <CarouselNext className="hidden sm:block right-[-8px] rounded-full bg-black bg-opacity-20 p-2 text-white" />
+      <CarouselPrevious className="left-[-12px] hidden rounded-full bg-black bg-opacity-20 p-2 text-white sm:block" />
+      <CarouselNext className="right-[-8px] hidden rounded-full bg-black bg-opacity-20 p-2 text-white sm:block" />
     </Carousel>
   );
 }

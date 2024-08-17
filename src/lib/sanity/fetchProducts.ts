@@ -16,10 +16,9 @@ export const fetchProducts = async (queryParam?: string) => {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       // cache: "force-cache", // SSG - Use to speed up subsequent visits.
-      cache: "no-store", // SSR
-      // next: {
-      //     revalidate: 20, // ISR
-      // },
+      next: {
+          revalidate: 60, // ISR
+      },
     });
 
     if (!response.ok) {

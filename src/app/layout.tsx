@@ -1,3 +1,5 @@
+import AgeVerificationModal from "@/components/age-verification-modal";
+import CookieBanner from "@/components/navigation/cookie-banner";
 import Footer from "@/components/navigation/footer";
 import Header from "@/components/navigation/header";
 import { ThemeProvider } from "@/components/ui/theme-provider";
@@ -6,11 +8,9 @@ import { CartProvider } from "@/context/CartContext";
 import { ProductProvider } from "@/context/ProductContext";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
-import { Inter, Montserrat, Roboto } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
-import CookieBanner from "@/components/navigation/cookie-banner";
-import AgeVerificationModal from "@/components/age-verification-modal";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-                  <AgeVerificationModal />
+      <AgeVerificationModal />
       <body className={`${montserrat.className} flex min-h-screen flex-col text-muted-foreground`}>
         <SessionProvider>
           <CartProvider>

@@ -28,6 +28,6 @@ export const GET = async (req: NextRequest): Promise<NextResponse<Data>> => {
 
   const query = groq`${baseQuery} ${additionalCondition} | order(name asc, volume asc)`;
 
-  const products: Product[] = await sanityClient.fetch(query);
+  const products: Product[] = await sanityClient.fetch(query, {}, { next: { revalidate: 3600 } });
   return NextResponse.json({ products });
 };
