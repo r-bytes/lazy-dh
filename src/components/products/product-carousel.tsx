@@ -7,17 +7,26 @@ import { Product as ProductType } from "@/lib/types/product";
 import Autoplay from "embla-carousel-autoplay";
 import { useEffect, useRef, useState } from "react";
 import Product from "./product";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function CarouselSpacing({ products, cn }: { products?: ProductType[]; cn?: string }) {
   const [fetchedProducts, setFetchedProducts] = useState<ProductType[] | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(!products);
   const autoplay = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 
   useEffect(() => {
     const loadProducts = async () => {
       if (!products) {
-        const productList: ProductType[] = await fetchProductsNoStore("");
-        const productListInSale: ProductType[] = productList.filter((p) => p.inSale);
-        setFetchedProducts(productListInSale);
+        setIsLoading(true);
+        try {
+          const productList: ProductType[] = await fetchProductsNoStore("");
+          const productListInSale: ProductType[] = productList.filter((p) => p.inSale);
+          setFetchedProducts(productListInSale);
+        } catch (error) {
+          console.error("Failed to load products:", error);
+        } finally {
+          setIsLoading(false);
+        }
       }
     };
     loadProducts();
@@ -33,18 +42,26 @@ export function CarouselSpacing({ products, cn }: { products?: ProductType[]; cn
       onMouseLeave={autoplay.current.reset}
     >
       <CarouselContent className="relative px-0">
-        {displayedProducts?.map((prod) => (
-          <CarouselItem
-            key={prod._id}
-            className={`flex basis-full items-center justify-center sm:block sm:basis-1/2 lg:p-0 ${
-              displayedProducts.length > 3 ? "lg:basis-1/4" : "lg:basis-1/3"
-            }`}
-          >
-            <CardContent className="flex aspect-square items-center justify-center p-0 sm:mx-4">
-              <Product carousel product={prod} />
-            </CardContent>
-          </CarouselItem>
-        ))}
+        {isLoading
+          ? [...Array(4)].map((_, index) => (
+              <CarouselItem key={index} className={`flex basis-full items-center justify-center sm:block sm:basis-1/4 lg:p-0`}>
+                <CardContent className="flex aspect-square items-center justify-center p-0 sm:mx-4">
+                  <Skeleton className="h-[300px] w-[300px] sm:h-[320px] sm:w-[320px] lg:h-[512px] lg:w-[230px]" />
+                </CardContent>
+              </CarouselItem>
+            ))
+          : displayedProducts?.map((prod) => (
+              <CarouselItem
+                key={prod._id}
+                className={`flex basis-full items-center justify-center sm:block sm:basis-1/2 lg:p-0 ${
+                  displayedProducts?.length && displayedProducts.length > 3 ? "lg:basis-1/4" : "lg:basis-1/3"
+                }`}
+              >
+                <CardContent className="flex aspect-square items-center justify-center p-0 sm:mx-4">
+                  <Product carousel product={prod} />
+                </CardContent>
+              </CarouselItem>
+            ))}
       </CarouselContent>
 
       <CarouselPrevious className="left-[-12px] hidden rounded-full bg-black bg-opacity-20 p-2 text-white sm:block" />
