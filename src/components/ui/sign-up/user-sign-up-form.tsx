@@ -90,7 +90,7 @@ export function UserSignUpForm({ fromCheckout = false }) {
               <AccordionTrigger className="m-3"> Persoonsgegevens </AccordionTrigger>
               <AccordionContent className="my-2 flex flex-col space-y-4">
                 <div className={fromCheckout ? "relative mx-2" : "relative"}>
-                  <Input id="name" placeholder="Name" {...register("name")} />
+                  <Input id="name" placeholder="Naam" {...register("name")} />
                   <span style={{ position: "absolute", right: 15, top: "50%", transform: "translateY(-50%)" }} className="text-lg text-red-500">
                     *
                   </span>
