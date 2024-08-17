@@ -13,7 +13,9 @@ export const fetchProductsNoStore = async (queryParam?: string) => {
 
   try {
     const response: Response = await fetch(url!, {
-      cache: "no-store", // SSR
+      next: {
+        revalidate: 60
+      }
     });
 
     if (!response.ok) {
