@@ -3,47 +3,48 @@
 import ProductList from "@/components/products/product-list";
 import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
 import Title from "@/components/ui/title";
-import { fetchProducts } from "@/lib/sanity/fetchProducts";
+import { fetchProductsNoStore } from "@/lib/sanity/fetchProductsNoStore";
 import Product from "@/lib/types/product";
 import { useEffect, useState } from "react";
 import BeatLoader from "react-spinners/BeatLoader";
 import { CardDescription } from "../ui/card";
-import { fetchProductsNoStore } from "@/lib/sanity/fetchProductsNoStore";
 
 type PromotionsProps = {
-  products?: Product[];
   isNew?: boolean;
   isPromo?: boolean;
 };
 
-export default function Promotions({ products, isNew, isPromo }: PromotionsProps) {
+export default function Promotions({ isNew, isPromo }: PromotionsProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
   const [color, setColor] = useState("#facc15");
 
   useEffect(() => {
-    const getProducts = async (param: string) => {
+    const getProducts = async (filterType: string) => {
       setIsLoading(true);
       try {
-        const products: Product[] = await fetchProductsNoStore(param);
-        if (products && products.length > 0) {
-          setFetchedProducts(products);
-        } else {
-          setFetchedProducts([]); // Ensure state is updated if no products are found
+        const products: Product[] = await fetchProductsNoStore("");
+        let filteredProducts: Product[] = [];
+
+        if (filterType === "nieuw") {
+          filteredProducts = products.filter((p) => p.isNew);
+        } else if (filterType === "aanbiedingen") {
+          filteredProducts = products.filter((p) => p.inSale);
         }
-        console.log(products);
+
+        setFetchedProducts(filteredProducts);
       } catch (error) {
         console.log(error);
-        setFetchedProducts([]); // Ensure state is updated in case of error
+        setFetchedProducts([]);
       } finally {
         setIsLoading(false);
       }
     };
 
     if (isPromo) {
-      getProducts("?type=aanbiedingen");
+      getProducts("aanbiedingen");
     } else if (isNew) {
-      getProducts("?type=nieuw");
+      getProducts("nieuw");
     }
   }, [isNew, isPromo]);
 
