@@ -186,11 +186,11 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
             <div className="p-2 text-xs text-muted-foreground"> {product.percentage} </div>
           </div>
           <Image
-            className="mt-1 h-60 w-full object-contain"
+            className="mt-10 h-60 w-full object-contain"
             src={productImage}
             alt={product.name}
-            width={200}
-            height={200}
+            width={400}
+            height={400}
             priority={true}
             quality={75}
           />
@@ -222,13 +222,13 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
           className="mb-6 mt-12 h-72 w-full object-contain sm:h-96"
           src={productImage}
           alt={product.name}
-          width={200}
-          height={200}
+          width={400}
+          height={400}
           priority={true}
           quality={75}
         />
         {/* Middle */}
-        <DialogHeader className="flex flex-col items-center justify-between rounded-t-3xl bg-zinc-200/50 p-4 dark:bg-zinc-800">
+        <DialogHeader className="flex flex-col items-center justify-between rounded-t-3xl bg-zinc-400/50 p-4 dark:bg-zinc-800">
           <div className="">
             <DialogTitle className="text-tertiary mb-4 mt-4 text-center text-lg font-light dark:text-white sm:text-2xl lg:text-3xl">
               {product.name}
@@ -265,11 +265,11 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
             <div className="p-2 text-xs text-muted-foreground"> {product.percentage} </div>
           </div>
           <Image
-            className="mt-1 h-60 w-full object-contain"
+            className="mt-8 h-60 w-full object-contain"
             src={productImage}
             alt={product.name}
-            width={200}
-            height={200}
+            width={400}
+            height={400}
             priority={true}
             quality={75}
           />
@@ -301,13 +301,13 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
           className="mb-6 mt-12 h-72 w-full object-contain sm:h-96"
           src={productImage}
           alt={product.name}
-          width={200}
-          height={200}
+          width={400}
+          height={400}
           priority={true}
           quality={75}
         />
         {/* Middle */}
-        <DialogHeader className="flex flex-col items-center justify-between rounded-t-3xl bg-zinc-200/50 p-4 dark:bg-zinc-800">
+        <DialogHeader className="flex flex-col items-center justify-between rounded-t-3xl bg-zinc-400/50 p-4 dark:bg-zinc-800">
           <div className="">
             <DialogTitle className="text-tertiary mb-4 mt-4 text-center text-lg font-light dark:text-white sm:text-2xl lg:text-3xl">
               {product.name}
