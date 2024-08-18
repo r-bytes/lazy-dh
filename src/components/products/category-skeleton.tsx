@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardDescription } from "@/components/ui/
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import Title from "../ui/title";
+import { InputFormSkeleton } from "./input-form-skeleton";
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -13,6 +14,7 @@ const CategoryCardSkeleton: React.FC<CardProps> = ({ className, ...props }) => {
         <Title name="Categorieën" cn="text-4xl mt-12" />
         <CardDescription className="md:text-base">Kies een categorie</CardDescription>
       </CardHeader>
+      <InputFormSkeleton />
       <CardContent className="mt-12 flex flex-col justify-center sm:mx-16 lg:mx-2">
         {[...Array(4)].map((_, index) => (
           <div key={index} className="mx-auto flex w-full text-center lg:w-10/12 lg:text-left">
