@@ -83,6 +83,15 @@ const Header = (props: Props) => {
       </button>
     );
   };
+  const AdminPageNoIcon = ({ cn }: { cn?: string }) => {
+    return (
+      <li key={cn} className={`font-semibold tracking-wide hover:cursor-pointer hover:text-primary`}>
+        <Link className={`${roboto.className} tracking-wider`} onClick={() => setMenuOpen(false)} href={"/admin"}>
+          <Title name={"Admin"} />
+        </Link>
+      </li>
+    );
+  };
 
   return (
     <>
@@ -115,6 +124,7 @@ const Header = (props: Props) => {
               <CircleX onClick={() => setMenuOpen(false)} className="h-12 w-full p-2 text-right text-muted-foreground hover:cursor-pointer" />
             </div>
             <ul className="flex w-screen flex-1 flex-col items-center justify-center gap-8">
+              {session && status === "authenticated" && authorizedEmails.includes(session.user?.email!) && <AdminPageNoIcon cn={session.user?.id} />}
               {NAVIGATION_LIST.map((item, index, arr) => (
                 <li key={item.order} className={`font-semibold tracking-wide hover:cursor-pointer hover:text-primary`}>
                   <Link

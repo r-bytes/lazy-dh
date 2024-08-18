@@ -2,14 +2,14 @@
 import { sendAdminApprovalMail } from "@/actions/users/user.actions";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import Title from "@/components/ui/title";
+import { useAuthContext } from "@/context/AuthContext";
 import { DatabaseUser } from "@/lib/types/user";
 import { EyeIcon, EyeOff } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import BeatLoader from "react-spinners/BeatLoader";
-import { Dialog, DialogTrigger, DialogContent, DialogFooter } from "@/components/ui/dialog";
 
 interface UserManagementProps {
   allUsers: DatabaseUser[];
@@ -17,7 +17,8 @@ interface UserManagementProps {
 }
 
 const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
-  const [users, setUsers] = useState<DatabaseUser[]>(allUsers);
+  const { authorizedEmails } = useAuthContext();
+  const [users, setUsers] = useState<DatabaseUser[]>(allUsers.filter((user) => !authorizedEmails.includes(user.email)));
   const [color, setColor] = useState("#facc15");
   const [editedUsers, setEditedUsers] = useState<Record<string, boolean>>({});
   const [showApproved, setShowApproved] = useState(false);
@@ -124,7 +125,7 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
         </TableHeader>
         <TableBody>
           {users
-            .filter((user) => !showApproved || !user.admin_approved)
+            .filter((user) => !showApproved || !user.admin_approved || !authorizedEmails.includes(user.email))
             .map((user) => (
               <TableRow key={user.id} className={user.id === userId ? "bg-primary/20" : ""}>
                 <TableCell>{user.name}</TableCell>

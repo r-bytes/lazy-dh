@@ -36,7 +36,7 @@ const UserManagementPage = ({ searchParams }: UserManagementPageProps) => {
   return (
     <MaxWidthWrapper className="mx-auto flex flex-col md:px-8">
       {isLoading ? (
-        <div className="my-32">
+        <div className="my-32 flex items-center justify-center">
           <BeatLoader color={color} loading={isLoading} size={20} aria-label="Loading Spinner" />
         </div>
       ) : (
