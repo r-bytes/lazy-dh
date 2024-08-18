@@ -60,8 +60,16 @@ export function UserSignUpForm({ fromCheckout = false }) {
 
   const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
     setIsLoading(true);
+    
     try {
-      const response = await signUp(values);
+      // Convert email to lowercase before submission
+      const lowercasedValues = {
+        ...values,
+        email: values.email.toLowerCase(),
+      };
+
+      const response = await signUp(lowercasedValues);
+
       if (response.success) {
         toast.success("Succesvol geregistreerd");
         navigateTo(router, "/account/registreer/succes");

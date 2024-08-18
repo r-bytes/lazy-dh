@@ -52,8 +52,11 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
     setIsLoading(true);
 
-    const s = await checkAdminApproval(values.email);
-    const { success, message } = await s;
+    // Convert email to lowercase before proceeding
+    const lowerCaseEmail = values.email.toLowerCase();
+
+    const adminApprovalResponse = await checkAdminApproval(values.email);
+    const { success, message } = await adminApprovalResponse;
 
     if (!success && message === "Account wacht op goedkeuring van admin") {
       toast.error(message);
@@ -62,7 +65,7 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
     } else if (success && message === "Account is goedgekeurd") {
       const result = await signIn("credentials", {
         redirect: false, // Prevents redirecting to signIn's callback URL
-        email: values.email,
+        email: lowerCaseEmail,
         password: values.password,
       });
 
