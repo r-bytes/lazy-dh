@@ -111,10 +111,12 @@ export async function POST(request: NextRequest) {
       </div>
     `;
 
+    const adminEmails = JSON.parse(process.env.ADMIN_EMAIL!);
+
     // Copy to admin
     const { data: d, error: e } = await resend.emails.send({
       from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
-      to: [process.env.ADMIN_EMAIL!],
+      to: adminEmails,
       subject: `Nieuwe bestelling ontvangen: ${order[0].id} `,
       html: emailHtml,
       text: emailHtml,

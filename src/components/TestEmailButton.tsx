@@ -4,11 +4,13 @@ import { Button } from "./ui/button";
 import { sendEmail } from "@/actions/email/sendEmail";
 import { EmailTemplate } from "./email/email-template";
 
+const adminEmails = JSON.parse(process.env.ADMIN_EMAIL!);
+
 const TestEmailButton = () => {
   const handleSubmit = async () => {
     sendEmail({
       from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
-      to: [process.env.ADMIN_EMAIL!],
+      to: adminEmails,
       subject: "Test email",
       text: "Test email",
       // react: EmailTemplate({ firstName: "ray", }) as React.ReactElement

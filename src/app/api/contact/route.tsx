@@ -19,10 +19,12 @@ export async function POST(request: NextRequest) {
     </div>
   `;
 
+  const adminEmails = JSON.parse(process.env.ADMIN_EMAIL!);
+
   try {
     const { data, error } = await resend.emails.send({
       from: "Website Contact <no-reply@r-bytes.com>",
-      to: [process.env.ADMIN_EMAIL!],
+      to: adminEmails,
       subject: "Nieuw contactbericht",
       html: emailHtml,
       text: emailHtml,

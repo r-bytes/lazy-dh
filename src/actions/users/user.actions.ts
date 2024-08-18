@@ -508,9 +508,11 @@ export const verifyEmail = async (emailVerificationToken: string) => {
         </div>
       `;
 
+    const adminEmails = JSON.parse(process.env.ADMIN_EMAIL!);
+
     await sendEmail({
       from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
-      to: [process.env.ADMIN_EMAIL!],
+      to: adminEmails,
       subject: "Account bevestigen",
       text: adminEmailHtml,
       html: adminEmailHtml,
@@ -526,7 +528,7 @@ export const verifyEmail = async (emailVerificationToken: string) => {
 
     await sendEmail({
       from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
-      to: [process.env.ADMIN_EMAIL!],
+      to: adminEmails,
       subject: "Account bevestigen",
       text: customerEmailHtml,
       html: customerEmailHtml,
