@@ -4,6 +4,7 @@ import { ProductsWithFilter } from "@/components/ui/category/products-with-filte
 import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
 import Title from "@/components/ui/title";
 import { fetchProducts } from "@/lib/sanity/fetchProducts";
+import { fetchProductsNoStore } from "@/lib/sanity/fetchProductsNoStore";
 import { capitalizeFirstLetter } from "@/lib/utils";
 
 type Props = {
@@ -11,7 +12,7 @@ type Props = {
 };
 
 const page = async ({ params: { slug } }: Props) => {
-  const products = await fetchProducts(`?type=${slug.toLowerCase()}`);
+  const products = await fetchProductsNoStore("");
 
   return slug === "alles" ? (
     <MaxWidthWrapper className="mx-auto">
@@ -20,7 +21,7 @@ const page = async ({ params: { slug } }: Props) => {
   ) : (
     <div className="flex h-full flex-col">
       <Title name={capitalizeFirstLetter(slug)} />
-      <ProductList products={products} />
+      <ProductList />
     </div>
   );
 };

@@ -22,9 +22,9 @@ const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Eleme
         </div>
       </section>
       <section id="new">
-        <Card className="mx-2 px-4 sm:mx-20 md:px-16">
+        <Card className="mx-2 px-4 sm:mx-20 md:px-16 my-20">
           <div className="mt-2 flex flex-col items-center justify-center md:mt-32">
-            <Title name="Nieuwe producten" cn="text-3xl sm:text-4xl" />
+            <Title name="Nieuwe producten" cn="text-4xl sm:text-4xl mt-16 md:mt-[-2rem]" />
             <ProductList slug={"home"} />
             <div className="mx-auto my-16 flex justify-center">
               <Button title="Meer">
