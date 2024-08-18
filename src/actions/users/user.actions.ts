@@ -2,7 +2,6 @@
 
 import { db } from "@/lib/db";
 import { favoriteProducts, userActivities, users } from "@/lib/db/schema";
-import { Order } from "@/lib/types/order";
 import { signInSchema } from "@/lib/types/signin";
 import { signUpSchema } from "@/lib/types/signup";
 import crypto from "crypto";
@@ -499,7 +498,7 @@ export const verifyEmail = async (emailVerificationToken: string) => {
     });
 
     // send the admin a notification
-    const emailHtml = `
+    const adminEmailHtml = `
         <div>
           <h1> Nieuwe account aanvraag voor: <b> ${existingUser.email} </b></h1>
           <p> Er is een nieuwe account aanvraag die goedgekeurd moeten worden, klik op onderstaande link: </p>
@@ -513,8 +512,24 @@ export const verifyEmail = async (emailVerificationToken: string) => {
       from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
       to: [process.env.ADMIN_EMAIL!],
       subject: "Account bevestigen",
-      text: emailHtml,
-      html: emailHtml,
+      text: adminEmailHtml,
+      html: adminEmailHtml,
+    });
+
+    // send the customer an update
+    const customerEmailHtml = `
+          <div>
+            <h1> Wacht op goedkeuring voor: <b> ${existingUser.email} </b></h1>
+            <p> Nog even geduld, zodra uw account is goedgekeurd krijgt u bericht en kunt u verder met bestellen. </p>
+          </div>
+        `;
+
+    await sendEmail({
+      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
+      to: [process.env.ADMIN_EMAIL!],
+      subject: "Account bevestigen",
+      text: customerEmailHtml,
+      html: customerEmailHtml,
     });
 
     return {
