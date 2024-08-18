@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { users } from "@/lib/db/schema";
+import { userActivities, users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 const updateStatusSchema = z.object({
@@ -80,6 +80,10 @@ export async function DELETE(request: NextRequest, { params }: { params: { userI
       return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
     }
 
+    // Delete related records in user_activities
+    await db.delete(userActivities).where(eq(userActivities.userId, userId)).execute();
+
+    // Delete the actual user
     await db.delete(users).where(eq(users.id, userId)).execute();
 
     const response = NextResponse.json({ success: true, message: "User deleted successfully" });
