@@ -13,12 +13,12 @@ type Props = {
 
 const page = async ({ params: { slug } }: Props) => {
   const products = await fetchProductsNoStore("");
-  const FilteredProducts = products.filter(product => {
+  const FilteredProducts = products.filter(product => {    
     if (slug === "nieuw") {
       return product.isNew
     } else if (slug === "aanbiedingen") {
       return product.inSale;
-    } else if (slug === product.category) {
+    } else if (slug === product.category.toLocaleLowerCase()) {
       return product;
     }
   })

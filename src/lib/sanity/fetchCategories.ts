@@ -4,9 +4,10 @@ export const fetchCategories = async () => {
   const response: Response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getCategories`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
-    next: {
-        revalidate: 60, // ISR
-    },
+    cache: "force-cache",
+    // next: {
+    //     revalidate: 60, // ISR
+    // },
   });
 
   if (!response.ok) {
