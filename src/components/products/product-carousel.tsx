@@ -2,12 +2,12 @@
 
 import { CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Skeleton } from "@/components/ui/skeleton";
 import { fetchProductsNoStore } from "@/lib/sanity/fetchProductsNoStore";
 import { Product as ProductType } from "@/lib/types/product";
 import Autoplay from "embla-carousel-autoplay";
 import { useEffect, useRef, useState } from "react";
 import Product from "./product";
-import { Skeleton } from "@/components/ui/skeleton";
 
 export function CarouselSpacing({ products, cn }: { products?: ProductType[]; cn?: string }) {
   const [fetchedProducts, setFetchedProducts] = useState<ProductType[] | null>(null);
