@@ -189,8 +189,8 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
             className="mt-10 h-60 w-full object-contain"
             src={productImage}
             alt={product.name}
-            width={100}
-            height={100}
+            width={400}
+            height={400}
             priority={true}
             quality={75}
           />
@@ -222,8 +222,8 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
           className="mb-6 mt-12 h-72 w-full object-contain sm:h-96"
           src={productImage}
           alt={product.name}
-          width={100}
-          height={100}
+          width={400}
+          height={400}
           priority={true}
           quality={75}
         />
@@ -268,8 +268,8 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
             className="mt-8 h-60 w-full object-contain"
             src={productImage}
             alt={product.name}
-            width={100}
-            height={100}
+            width={400}
+            height={400}
             priority={true}
             quality={75}
           />
@@ -301,8 +301,8 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
           className="mb-6 mt-12 h-72 w-full object-contain sm:h-96"
           src={productImage}
           alt={product.name}
-          width={100}
-          height={100}
+          width={400}
+          height={400}
           priority={true}
           quality={75}
         />

@@ -105,8 +105,8 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
                         className="hidden h-24 w-24 object-contain md:block"
                         src={urlFor(item.image).url()}
                         alt=""
-                        width={100}
-                        height={100}
+                        width={400}
+                        height={400}
                         priority
                       />
                       <div className="flex flex-1 flex-col text-left md:mx-12 md:text-center">
@@ -132,8 +132,8 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
                         className="hidden h-24 w-24 object-contain sm:block"
                         src={urlFor(item.image).url()}
                         alt=""
-                        width={100}
-                        height={100}
+                        width={400}
+                        height={400}
                         priority
                       />
                       <div className="flex flex-1 flex-col text-left sm:mx-12 sm:text-center">
