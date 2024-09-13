@@ -205,7 +205,7 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
           <CardContent className="flex flex-1 flex-col rounded-2xl">
             <div className="flex w-full flex-1 flex-col items-center justify-between text-center">
               <CardTitle className="mt-12 text-xl font-light md:text-2xl">{product.name}</CardTitle>
-              {session?.user && (
+              {session?.user ? (
                 <div className="self-end">
                   <CardDescription className="flex-1 text-right text-2xl font-semibold">
                     € {formatNumberWithCommaDecimalSeparator(product.price)}
@@ -213,6 +213,13 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
                   <CardDescription className="text-tertiary flex-1 text-right text-sm font-light">
                     € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} doos
                   </CardDescription>
+                </div>
+              ) : (
+                <div className="w-full self-end">
+                  {/* Placeholder for price */}
+                  <CardDescription className="flex-1 text-right text-2xl font-semibold">€ ---</CardDescription>
+                  {/* Placeholder for price per box */}
+                  <CardDescription className="text-tertiary flex-1 text-right text-sm font-light">€ --- doos</CardDescription>
                 </div>
               )}
             </div>
