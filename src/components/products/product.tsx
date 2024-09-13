@@ -23,7 +23,6 @@ interface ProductProps {
 
 const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
   // Hooks
-  const pathname = usePathname();
   const router = useRouter();
   const { decQty, incQty, setQty, qty, onAdd, setShowCart } = useCartContext();
   const { data: session, status } = useSession();
@@ -40,6 +39,7 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
     setProductImage(urlFor(product.image).url());
     setQty(1);
   }, [product, setQty]);
+  
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -70,7 +70,7 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
     };
 
     fetchUserId();
-  }, [session, product._id]);
+  }, []);
 
   // Functions
   const handleToggleFavorite = async () => {

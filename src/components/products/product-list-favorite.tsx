@@ -56,7 +56,7 @@ export default function Favorites() {
     };
 
     fetchFavoriteProducts();
-  }, [session]);
+  }, [session?.user]);
 
   const handleRemoveFavorite = (productId: string) => {
     setFetchedProducts((prevProducts) => prevProducts.filter((product) => product._id !== productId));
