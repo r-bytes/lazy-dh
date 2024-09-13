@@ -130,6 +130,14 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
     navigateTo(router, "/winkelwagen");
   }
 
+  const handleRegister = () => {
+    navigateTo(router, "/auth");
+  };
+
+  function handleLogin(): void {
+    navigateTo(router, "/auth");
+  }
+
   // UI
   const CounterDiv = () => {
     return (
@@ -197,14 +205,16 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
           <CardContent className="flex flex-1 flex-col rounded-2xl">
             <div className="flex w-full flex-1 flex-col items-center justify-between text-center">
               <CardTitle className="mt-12 text-xl font-light md:text-2xl">{product.name}</CardTitle>
-              <div className="self-end">
-                <CardDescription className="flex-1 text-right text-2xl font-semibold">
-                  € {formatNumberWithCommaDecimalSeparator(product.price)}
-                </CardDescription>
-                <CardDescription className="text-tertiary flex-1 text-right text-sm font-light">
-                  € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} doos
-                </CardDescription>
-              </div>
+              {session?.user && (
+                <div className="self-end">
+                  <CardDescription className="flex-1 text-right text-2xl font-semibold">
+                    € {formatNumberWithCommaDecimalSeparator(product.price)}
+                  </CardDescription>
+                  <CardDescription className="text-tertiary flex-1 text-right text-sm font-light">
+                    € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} doos
+                  </CardDescription>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -228,26 +238,52 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
           quality={75}
         />
         {/* Middle */}
-        <DialogHeader className="flex flex-col items-center justify-between rounded-t-3xl bg-zinc-400/50 p-4 dark:bg-zinc-800">
+        <DialogHeader className="mb-[-1rem] flex flex-col items-center justify-between rounded-t-3xl bg-zinc-400/10 p-4 pb-8 dark:bg-zinc-800">
           <div className="">
             <DialogTitle className="text-tertiary mb-4 mt-4 text-center text-lg font-light dark:text-white sm:text-2xl lg:text-3xl">
               {product.name}
             </DialogTitle>
           </div>
           <div className="flex w-full items-center justify-between">
-            <CounterDiv />
-            <PriceDiv />
+            {session?.user ? (
+              <>
+                <CounterDiv />
+                <PriceDiv />
+              </>
+            ) : (
+              <div className="w-full self-end">
+                {/* Placeholder for price */}
+                <CardDescription className="flex-1 text-right text-2xl font-semibold">€ ---</CardDescription>
+                {/* Placeholder for price per box */}
+                <CardDescription className="text-tertiary flex-1 text-right text-sm font-light">€ --- doos</CardDescription>
+                <div className="mt-10 flex items-center justify-center text-xs"> Log in om door te gaan of registreer een nieuw account </div>
+              </div>
+            )}
           </div>
         </DialogHeader>
         {/* Bottom */}
-        <DialogFooter className="mt-2 flex h-16 flex-row justify-between gap-4 rounded-b-lg rounded-t-2xl bg-zinc-100 px-4 dark:bg-zinc-900">
-          <Button type="button" className="addToCart flex-1" onClick={handleBuyNow}>
-            Voeg Toe
-          </Button>
-          <Button type="button" className="goToCart flex-1" onClick={handleCheckout}>
-            Check uit
-          </Button>
-        </DialogFooter>
+
+        {session?.user ? (
+          <DialogFooter className="flex h-16 flex-row justify-between gap-4 rounded-b-lg bg-zinc-400/10 px-4 dark:bg-zinc-800">
+            <Button type="button" className="addToCart flex-1" onClick={handleBuyNow}>
+              Voeg Toe
+            </Button>
+            <Button type="button" className="goToCart flex-1" onClick={handleCheckout}>
+              Check uit
+            </Button>
+          </DialogFooter>
+        ) : (
+          <>
+            <DialogFooter className="flex h-16 flex-row justify-between gap-4 rounded-b-lg bg-zinc-400/10 px-4 dark:bg-zinc-800">
+              <Button type="button" className="addToCart flex-1" onClick={handleRegister}>
+                Registeren
+              </Button>
+              <Button type="button" className="goToCart flex-1" onClick={handleLogin}>
+                Inloggen
+              </Button>
+            </DialogFooter>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   ) : (
@@ -276,14 +312,24 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
           <CardContent className="flex flex-1 flex-col rounded-2xl">
             <div className="flex w-full flex-1 flex-col items-center justify-between text-center">
               <CardTitle className="mt-6 text-xl font-light md:text-2xl">{product.name}</CardTitle>
-              <div className="self-end">
-                <CardDescription className="flex-1 text-right text-2xl font-semibold">
-                  € {formatNumberWithCommaDecimalSeparator(product.price)}
-                </CardDescription>
-                <CardDescription className="text-tertiary flex-1 text-right text-sm font-light">
-                  € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} doos
-                </CardDescription>
-              </div>
+
+              {session?.user ? (
+                <div className="self-end">
+                  <CardDescription className="flex-1 text-right text-2xl font-semibold">
+                    € {formatNumberWithCommaDecimalSeparator(product.price)}
+                  </CardDescription>
+                  <CardDescription className="text-tertiary flex-1 text-right text-sm font-light">
+                    € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} doos
+                  </CardDescription>
+                </div>
+              ) : (
+                <div className="self-end">
+                  {/* Placeholder for price */}
+                  <CardDescription className="flex-1 text-right text-2xl font-semibold">€ ---</CardDescription>
+                  {/* Placeholder for price per box */}
+                  <CardDescription className="text-tertiary flex-1 text-right text-sm font-light">€ --- doos</CardDescription>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -307,26 +353,51 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
           quality={75}
         />
         {/* Middle */}
-        <DialogHeader className="flex flex-col items-center justify-between rounded-t-3xl bg-zinc-400/50 p-4 dark:bg-zinc-800">
+        <DialogHeader className="mb-[-1rem] flex flex-col items-center justify-between rounded-t-3xl bg-zinc-400/10 p-4 pb-8 dark:bg-zinc-800">
           <div className="">
             <DialogTitle className="text-tertiary mb-4 mt-4 text-center text-lg font-light dark:text-white sm:text-2xl lg:text-3xl">
               {product.name}
             </DialogTitle>
           </div>
           <div className="flex w-full items-center justify-between">
-            <CounterDiv />
-            <PriceDiv />
+            {session?.user ? (
+              <>
+                <CounterDiv />
+                <PriceDiv />
+              </>
+            ) : (
+              <div className="w-full self-end">
+                {/* Placeholder for price */}
+                <CardDescription className="flex-1 text-right text-2xl font-semibold">€ ---</CardDescription>
+                {/* Placeholder for price per box */}
+                <CardDescription className="text-tertiary flex-1 text-right text-sm font-light">€ --- doos</CardDescription>
+                <div className="mt-10 flex items-center justify-center text-xs"> Log in om door te gaan of registreer een nieuw account </div>
+              </div>
+            )}
           </div>
         </DialogHeader>
         {/* Bottom */}
-        <DialogFooter className="mt-2 flex h-16 flex-row justify-between gap-4 rounded-b-lg rounded-t-2xl bg-zinc-100 px-4 dark:bg-zinc-900">
-          <Button type="button" className="addToCart flex-1" onClick={handleBuyNow}>
-            Voeg Toe
-          </Button>
-          <Button type="button" className="goToCart flex-1" onClick={handleCheckout}>
-            Check uit
-          </Button>
-        </DialogFooter>
+        {session?.user ? (
+          <DialogFooter className="flex h-16 flex-row justify-between gap-4 rounded-b-lg bg-zinc-400/10 px-4 dark:bg-zinc-800">
+            <Button type="button" className="addToCart flex-1" onClick={handleBuyNow}>
+              Voeg Toe
+            </Button>
+            <Button type="button" className="goToCart flex-1" onClick={handleCheckout}>
+              Check uit
+            </Button>
+          </DialogFooter>
+        ) : (
+          <>
+            <DialogFooter className="flex h-16 flex-row justify-between gap-4 rounded-b-lg bg-zinc-400/10 px-4 dark:bg-zinc-800">
+              <Button type="button" className="addToCart flex-1" onClick={handleRegister}>
+                Registeren
+              </Button>
+              <Button type="button" className="goToCart flex-1" onClick={handleLogin}>
+                Inloggen
+              </Button>
+            </DialogFooter>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   );
