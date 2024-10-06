@@ -10,16 +10,18 @@ import Link from "next/link";
 const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Element> => {
   return (
     <main className="flex flex-col items-center justify-between bg-background">
-      <section id="promotions">
-        <div className="flex flex-col items-center justify-center md:mt-12">
-          <Title name="Aanbiedingen" cn="text-4xl mt-6" />
-          <CarouselSpacing />
-          <div className="mx-auto my-16 flex justify-center">
-            <Button title="Meer">
-              <Link href={"/promoties"}>Bekijk meer</Link>
-            </Button>
+      <section id="promotions" className="w-full max-w-7xl my-20">
+        <Card className="mx-2 px-4 sm:mx-20 md:px-16 xl:mx-12">
+          <div className="mt-2 flex flex-col items-center justify-center md:mt-32">
+            <Title name="Aanbiedingen" cn="text-4xl sm:text-4xl mt-16 md:mt-[-2rem]" />
+            <CarouselSpacing />
+            <div className="mx-auto my-16 flex justify-center">
+              <Button title="Meer" variant="secondary" className="mb-12">
+                <Link href={"/promoties"}>Bekijk meer</Link>
+              </Button>
+            </div>
           </div>
-        </div>
+        </Card>
       </section>
       <section id="new">
         <Card className="mx-2 px-4 sm:mx-20 md:px-16 my-20">
@@ -27,9 +29,12 @@ const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Eleme
             <Title name="Nieuwe producten" cn="text-4xl sm:text-4xl mt-16 md:mt-[-2rem]" />
             <ProductList slug={"home"} />
             <div className="mx-auto my-16 flex justify-center">
-              <Button title="Meer">
+              {/* <Button variant="outline" size="lg" className="mb-12">
                 <Link href={"/nieuwe-producten"}>Bekijk meer</Link>
-              </Button>
+              </Button> */}
+          <Button variant="outline" size="lg" className="mb-12">
+            <Link href="/categorieën">Shop Now</Link>
+          </Button>
             </div>
           </div>
         </Card>

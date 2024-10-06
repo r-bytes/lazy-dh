@@ -2,7 +2,7 @@
 
 import { Product as ProductType } from "@/lib/types/product";
 import { Heart, Minus, Plus } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { FC, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
@@ -14,6 +14,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { urlFor } from "../../../sanity";
+import React from "react";
 
 interface ProductProps {
   product: ProductType;
@@ -204,7 +205,9 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
           />
           <CardContent className="flex flex-1 flex-col rounded-2xl">
             <div className="flex w-full flex-1 flex-col items-center justify-between text-center">
-              <CardTitle className="mt-12 text-xl font-light md:text-2xl">{product.name}</CardTitle>
+              <CardTitle className="mt-12 text-xl font-light md:text-2xl">
+                {product.name.length > 15 ? `${product.name.slice(0, 15)}...` : product.name}
+              </CardTitle>
               {session?.user ? (
                 <div className="self-end">
                   <CardDescription className="flex-1 text-right text-2xl font-semibold">

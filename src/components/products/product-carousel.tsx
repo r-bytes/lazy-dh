@@ -35,37 +35,34 @@ export function CarouselSpacing({ products, cn }: { products?: ProductType[]; cn
   const displayedProducts = products || fetchedProducts;
 
   return (
-    <Carousel
-      className={`mt-12 max-w-96 px-4 sm:max-w-2xl sm:px-10 lg:max-w-5xl xl:max-w-7xl ${cn}`}
-      plugins={[autoplay.current]}
-      onMouseEnter={autoplay.current.stop}
-      onMouseLeave={autoplay.current.reset}
-    >
-      <CarouselContent className="relative px-0">
-        {isLoading
-          ? [...Array(4)].map((_, index) => (
-              <CarouselItem key={index} className={`flex basis-full items-center justify-center sm:block sm:basis-1/4 lg:p-0`}>
-                <CardContent className="flex aspect-square items-center justify-center p-0 sm:mx-4">
-                  <Skeleton className="h-[300px] w-[300px] sm:h-[320px] sm:w-[320px] lg:h-[512px] lg:w-[230px]" />
-                </CardContent>
-              </CarouselItem>
-            ))
-          : displayedProducts?.map((prod) => (
-              <CarouselItem
-                key={prod._id}
-                className={`flex basis-full items-center justify-center sm:block sm:basis-1/2 lg:p-0 ${
-                  displayedProducts?.length && displayedProducts.length > 3 ? "lg:basis-1/4" : "lg:basis-1/3"
-                }`}
-              >
-                <CardContent className="flex aspect-square items-center justify-center p-0 sm:mx-4">
-                  <Product carousel product={prod} />
-                </CardContent>
-              </CarouselItem>
-            ))}
-      </CarouselContent>
+    <div className="relative w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <Carousel
+        className={`mt-12 w-full ${cn}`}
+        plugins={[autoplay.current]}
+        onMouseEnter={autoplay.current.stop}
+        onMouseLeave={autoplay.current.reset}
+      >
+        <CarouselContent className="-ml-2 md:-ml-4">
+          {isLoading
+            ? [...Array(4)].map((_, index) => (
+                <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+                  <CardContent className="flex aspect-square items-center justify-center p-0">
+                    <Skeleton className="h-[32rem] w-full" />
+                  </CardContent>
+                </CarouselItem>
+              ))
+            : displayedProducts?.map((prod) => (
+                <CarouselItem key={prod._id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+                  <CardContent className="flex aspect-square items-center justify-center p-0">
+                    <Product carousel product={prod} />
+                  </CardContent>
+                </CarouselItem>
+              ))}
+        </CarouselContent>
 
-      <CarouselPrevious className="left-[-12px] hidden rounded-full bg-black bg-opacity-20 p-2 text-white sm:block" />
-      <CarouselNext className="right-[-8px] hidden rounded-full bg-black bg-opacity-20 p-2 text-white sm:block" />
-    </Carousel>
+        <CarouselPrevious className="absolute left-0 sm:left-[-40px] lg:left-[-70px] rounded-full bg-black bg-opacity-20 p-2 text-white" />
+        <CarouselNext className="absolute right-0 sm:right-[-40px] lg:right-[-70px] rounded-full bg-black bg-opacity-20 p-2 text-white" />
+      </Carousel>
+    </div>
   );
 }
