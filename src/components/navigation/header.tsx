@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import Title from "../ui/title";
 import { ModeToggle } from "../ui/toggle-mode";
 import TopHeader from "./top-header";
+import React from "react";
 
 // Fonts
 const roboto = Roboto({
@@ -101,11 +102,11 @@ const Header = (props: Props) => {
           {/* Logo */}
           <Link href={"/"}>
             <Image
-              className="mx-auto w-full dark:invert sm:h-52 lg:h-60"
+              className="mx-auto w-full dark:invert sm:h-36 lg:h-44"
               src="/logo.svg"
               alt="Lazy Den Haag Logo"
               width={300}
-              height={20}
+              height={300}
               priority
             />
           </Link>
