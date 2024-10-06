@@ -6,6 +6,7 @@ import { CategoryCard } from "@/components/ui/category/category-card";
 import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
 import Title from "@/components/ui/title";
 import Link from "next/link";
+import Image from "next/image";
 
 const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Element> => {
   return (
@@ -16,7 +17,7 @@ const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Eleme
             <Title name="Aanbiedingen" cn="text-4xl sm:text-4xl mt-16 md:mt-[-2rem]" />
             <CarouselSpacing />
             <div className="mx-auto my-16 flex justify-center">
-              <Button title="Meer" variant="secondary" className="mb-12">
+              <Button title="Meer" className="mb-12">
                 <Link href={"/promoties"}>Bekijk meer</Link>
               </Button>
             </div>
@@ -29,12 +30,9 @@ const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Eleme
             <Title name="Nieuwe producten" cn="text-4xl sm:text-4xl mt-16 md:mt-[-2rem]" />
             <ProductList slug={"home"} />
             <div className="mx-auto my-16 flex justify-center">
-              {/* <Button variant="outline" size="lg" className="mb-12">
+              <Button size="lg" className="mb-12">
                 <Link href={"/nieuwe-producten"}>Bekijk meer</Link>
-              </Button> */}
-          <Button variant="outline" size="lg" className="mb-12">
-            <Link href="/categorieën">Shop Now</Link>
-          </Button>
+              </Button>
             </div>
           </div>
         </Card>
