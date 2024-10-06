@@ -9,7 +9,7 @@ const adminEmails = JSON.parse(process.env.ADMIN_EMAIL!);
 const TestEmailButton = () => {
   const handleSubmit = async () => {
     sendEmail({
-      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
+      from: "Lazo Den Haag Spirits <no-reply@lazodenhaagspirits.nl>",
       to: adminEmails,
       subject: "Test email",
       text: "Test email",

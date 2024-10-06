@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
 
     // Send the PDF as an attachment
     const { data, error } = await resend.emails.send({
-      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
+      from: "Lazo Den Haag Spirits <no-reply@lazodenhaagspirits.nl>",
       to: [email],
       subject: `Bevestingsmail voor bestelling: ${order[0].id} `,
       html: "<p> Bedankt voor uw bestelling! </p> <p> U vindt uw orderbevestiging in de bijlage. </p>",
@@ -115,7 +115,7 @@ export async function POST(request: NextRequest) {
 
     // Copy to admin
     const { data: d, error: e } = await resend.emails.send({
-      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
+      from: "Lazo Den Haag Spirits <no-reply@lazodenhaagspirits.nl>",
       to: adminEmails,
       subject: `Nieuwe bestelling ontvangen: ${order[0].id} `,
       html: emailHtml,

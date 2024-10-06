@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const { data, error } = await resend.emails.send({
-      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
+      from: "Lazo Den Haag Spirits <no-reply@lazodenhaagspirits.nl>",
       to: [email],
       subject: "Wachtwoord wijzigen",
       html: emailHtml,

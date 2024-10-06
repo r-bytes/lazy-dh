@@ -221,7 +221,7 @@ export async function signUp({
       `;
 
     await sendEmail({
-      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
+      from: "Lazo Den Haag Spirits <no-reply@lazodenhaagspirits.nl>",
       to: [email],
       subject: "Emailadres bevestigen",
       text: emailHtml,
@@ -456,7 +456,7 @@ export const sendPickupMail = async (order: OrderType) => {
       `;
 
     await sendEmail({
-      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
+      from: "Lazo Den Haag Spirits <no-reply@lazodenhaagspirits.nl>",
       to: [order[0].userEmail!],
       subject: `Lazo Den Haag - Ophaalbericht voor bestelling: ${order[0].orderId}`,
       text: emailHtml,
@@ -511,7 +511,7 @@ export const verifyEmail = async (emailVerificationToken: string) => {
     const adminEmails = JSON.parse(process.env.ADMIN_EMAIL!);
 
     await sendEmail({
-      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
+      from: "Lazo Den Haag Spirits <no-reply@lazodenhaagspirits.nl>",
       to: adminEmails,
       subject: "Account bevestigen",
       text: adminEmailHtml,
@@ -527,7 +527,7 @@ export const verifyEmail = async (emailVerificationToken: string) => {
         `;
 
     await sendEmail({
-      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
+      from: "Lazo Den Haag Spirits <no-reply@lazodenhaagspirits.nl>",
       to: adminEmails,
       subject: "Account bevestigen",
       text: customerEmailHtml,
@@ -578,7 +578,7 @@ export const sendAdminApprovalMail = async (userId: string) => {
       `;
 
     await sendEmail({
-      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
+      from: "Lazo Den Haag Spirits <no-reply@lazodenhaagspirits.nl>",
       to: [existingUser.email],
       subject: `Account is goedgekeurd`,
       text: emailHtml,
@@ -627,7 +627,7 @@ export const sendAdminOrderMail = async (userId: string) => {
       `;
 
     await sendEmail({
-      from: "Lazo Den Haag Spirits <admin@r-bytes.com>",
+      from: "Lazo Den Haag Spirits <no-reply@lazodenhaagspirits.nl>",
       to: [existingUser.email],
       subject: `Account is goedgekeurd`,
       text: emailHtml,

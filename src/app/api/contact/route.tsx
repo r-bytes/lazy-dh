@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const { data, error } = await resend.emails.send({
-      from: "Website Contact <no-reply@r-bytes.com>",
+      from: "Website Contact <no-reply@lazodenhaagspirits.nl>",
       to: adminEmails,
       subject: "Nieuw contactbericht",
       html: emailHtml,
