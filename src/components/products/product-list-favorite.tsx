@@ -22,31 +22,18 @@ export default function Favorites() {
       if (session && session.user) {
         setIsLoading(true);
         try {
-          const res = await fetch("/api/getUserIdByEmail", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
+          const response = await fetch('/api/favorites', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: session.user.email }),
           });
 
-          if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
           }
 
-          const { userId } = await res.json();
-
-          if (userId) {
-            const productIds = await getFavoriteProductIds(userId);
-
-            if (productIds && productIds.length > 0) {
-              const allProducts = await fetchProducts("");
-              const favoriteProducts = allProducts.filter((product) => productIds.includes(product._id));
-              setFetchedProducts(favoriteProducts);
-            } else {
-              setFetchedProducts([]);
-            }
-          }
+          const favoriteProducts = await response.json();
+          setFetchedProducts(favoriteProducts);
         } catch (error) {
           console.error("Error fetching favorite products:", error);
         } finally {
@@ -56,7 +43,7 @@ export default function Favorites() {
     };
 
     fetchFavoriteProducts();
-  }, [session?.user]);
+  }, [session, session?.user]);
 
   const handleRemoveFavorite = (productId: string) => {
     setFetchedProducts((prevProducts) => prevProducts.filter((product) => product._id !== productId));

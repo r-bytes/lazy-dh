@@ -30,11 +30,11 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
 
   // States
   const [isHoveredOn, setIsHoveredOn] = useState<boolean>(false);
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [productImage, setProductImage] = useState<string>(urlFor(product.image).url());
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [userId, setUserId] = useState<string | null>(null);
+  const [favoriteStatuses, setFavoriteStatuses] = useState<{[productId: string]: boolean}>({});
 
   useEffect(() => {
     setProductImage(urlFor(product.image).url());
@@ -60,10 +60,6 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
 
           const { userId } = await res.json();
           setUserId(userId);
-          // Fetch favorite status
-          const favoriteRes = await fetch(`/api/favorites/status?userId=${userId}&productId=${product._id}`);
-          const { isFavorite } = await favoriteRes.json();
-          setIsFavorite(isFavorite);
         } catch (error) {
           console.error("Error fetching user ID or checking favorite status:", error);
         }
@@ -72,6 +68,34 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
 
     fetchUserId();
   }, []);
+
+  useEffect(() => {
+    const fetchFavoriteStatuses = async () => {
+      if (session?.user?.email) {
+        try {
+          const response = await fetch('/api/favorites/batch-status', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+              email: session.user.email,
+              productIds: [product._id] // Add more product IDs if needed
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const statuses = await response.json();
+          setFavoriteStatuses(statuses);
+        } catch (error) {
+          console.error("Error fetching favorite statuses:", error);
+        }
+      }
+    };
+
+    fetchFavoriteStatuses();
+  }, [session?.user?.email, product._id]);
 
   // Functions
   const handleToggleFavorite = async () => {
@@ -86,12 +110,12 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
     }
 
     const productId = product._id;
-    const newIsFavorite = !isFavorite;
-    setIsFavorite(newIsFavorite);
+    const newIsFavorite = !favoriteStatuses[productId];
+    setFavoriteStatuses(prev => ({ ...prev, [productId]: newIsFavorite }));
 
     try {
       const url = `/api/favorites`;
-      const method = isFavorite ? "DELETE" : "POST";
+      const method = favoriteStatuses[productId] ? "DELETE" : "POST";
 
       const response = await fetch(url, {
         method,
@@ -102,7 +126,7 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to ${isFavorite ? "remove" : "add"} favorite`);
+        throw new Error(`Failed to ${favoriteStatuses[productId] ? "remove" : "add"} favorite`);
       }
 
       toast.success(`${product.name} succesvol ${newIsFavorite ? "toegevoegd aan" : "verwijderd uit"} favorieten.`);
@@ -233,8 +257,8 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
         <Heart
           className="m-4 h-4 w-4 hover:cursor-pointer"
           onClick={handleToggleFavorite}
-          color={isFavorite ? "red" : ""}
-          fill={isFavorite ? "red" : "bg-muted-foreground/30"}
+          color={favoriteStatuses[product._id] ? "red" : ""}
+          fill={favoriteStatuses[product._id] ? "red" : "bg-muted-foreground/30"}
         />
 
         {/* Top */}
@@ -348,8 +372,8 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
         <Heart
           className="m-4 h-4 w-4 hover:cursor-pointer"
           onClick={handleToggleFavorite}
-          color={isFavorite ? "red" : ""}
-          fill={isFavorite ? "red" : "bg-muted-foreground/30"}
+          color={favoriteStatuses[product._id] ? "red" : ""}
+          fill={favoriteStatuses[product._id] ? "red" : "bg-muted-foreground/30"}
         />
 
         {/* Top */}

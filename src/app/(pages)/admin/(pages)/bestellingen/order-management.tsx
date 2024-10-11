@@ -12,6 +12,15 @@ import { Session } from "next-auth";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import BeatLoader from "react-spinners/BeatLoader";
+
+const batchUpdateOrderStatuses = async (updates: { orderId: string; status: string }[]) => {
+  const response = await fetch('/api/orders/batch-update', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ updates }),
+  });
+  return response.json();
+};
 const OrderManagement = ({ session, allOrders }: { session?: Session; allOrders: Order[] }) => {
   const [orders, setOrders] = useState<Order[]>(allOrders);
   const [isLoading, setIsLoading] = useState(true);
