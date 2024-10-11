@@ -3,14 +3,37 @@ import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
 import { fetchCategories } from "@/lib/sanity/fetchCategories";
 import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import { Category } from "@/lib/types/category";
-import Product from "@/lib/types/product";
+import { Product } from "@/lib/types/product";
+
+async function getData(): Promise<{ categories: Category[], products: Product[] } | null> {
+  try {
+    const [categories, products] = await Promise.all([
+      fetchCategories(),
+      fetchProducts("")
+    ]);
+    
+    if (!categories || categories.length === 0 || !products || products.length === 0) {
+      console.error("No categories or products fetched");
+      return null;
+    }
+    return { categories, products };
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null;
+  }
+}
 
 export default async function Page() {
-  const categoryList = await fetchCategories();
+  const data = await getData();
+
+  if (!data) {
+    return <div>Error loading data</div>;
+  }
+
   return (
     <div className="mx-auto flex flex-col items-center justify-between bg-background lg:max-w-7xl lg:p-24">
       <MaxWidthWrapper>
-        <CategoryCard categories={categoryList} />
+        <CategoryCard categories={data.categories} products={data.products} />
       </MaxWidthWrapper>
     </div>
   );

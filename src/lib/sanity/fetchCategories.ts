@@ -4,10 +4,9 @@ export const fetchCategories = async () => {
   const response: Response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getCategories`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
-    cache: "force-cache",
-    // next: {
-    //     revalidate: 60, // ISR
-    // },
+    next: {
+      revalidate: 3600, // Revalidate every hour
+    },
   });
 
   if (!response.ok) {
@@ -15,8 +14,5 @@ export const fetchCategories = async () => {
   }
 
   const data = await response.json();
-
-  const categories: Category[] = data.categories;
-
-  return categories;
+  return data.categories as Category[];
 };

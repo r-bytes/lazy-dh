@@ -4,8 +4,6 @@ import CategoryCardSkeleton from "@/components/products/category-skeleton";
 import ProductList from "@/components/products/product-list";
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { useProductContext } from "@/context/ProductContext";
-import { fetchCategories } from "@/lib/sanity/fetchCategories";
-import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import { Category } from "@/lib/types/category";
 import { Product } from "@/lib/types/product";
 import { capitalizeFirstLetter, cn } from "@/lib/utils";
@@ -29,25 +27,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
   const pathname = usePathname();
   const [currentPath, setCurrentPath] = useState<string>(pathname.replace("/", ""));
   const [productCounts, setProductCounts] = useState<{ [key: string]: number }>({});
-  const { productState, categoryState, filteredProducts, setFilteredProducts, isSearching, setProductState, setCategoryState } =
-    useProductContext();
-  const [loading, setLoading] = useState(true); // State to manage loading
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!products) {
-        const fetchedProducts = await fetchProducts();
-        setProductState(fetchedProducts);
-      }
-      if (!categories) {
-        const fetchedCategories = await fetchCategories();
-        setCategoryState(fetchedCategories);
-      }
-      setLoading(false); // Set loading to false after data is fetched
-    };
-
-    fetchData();
-  }, [products, categories, setProductState, setCategoryState]);
+  const { filteredProducts, setFilteredProducts, isSearching } = useProductContext();
 
   useEffect(() => {
     const counts: { [key: string]: number } = {};
@@ -73,12 +53,10 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
 
     if (products && categories) {
       calculateCounts(products, categories);
-    } else if (productState && categoryState) {
-      calculateCounts(productState, categoryState);
     }
-  }, [categories, products, productState, categoryState]);
+  }, [categories, products]);
 
-  if (loading) {
+  if (!categories || !products) {
     return <CategoryCardSkeleton className={className} {...props} />;
   }
 
@@ -88,12 +66,12 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
         <Title name={slug === "home" ? "Categorieën" : capitalizeFirstLetter(currentPath)} cn="text-4xl mt-12" />
         <CardDescription className="md:text-base">Kies een categorie</CardDescription>
       </CardHeader>
-      <InputForm products={products! || productState!} onSearchChange={setFilteredProducts} />
+      <InputForm products={products!} onSearchChange={setFilteredProducts} />
       {isSearching && <ProductList products={filteredProducts} />}
       {!isSearching && (
         <CardContent className="mt-12 flex flex-col justify-center sm:mx-16 lg:mx-2">
           {slug === "home"
-            ? (categories || categoryState)?.slice(0, 4).map((item, index) => (
+            ? categories?.slice(0, 4).map((item, index) => (
                 <div key={index} className="mx-auto flex w-full text-center lg:w-10/12 lg:text-left">
                   <Link
                     href={`/categorieen/${item.slug}`}
@@ -120,7 +98,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
                   </Link>
                 </div>
               ))
-            : (categories || categoryState)?.map((item, index) => (
+            : (categories)?.map((item, index) => (
                 <div key={index} className="flex text-center lg:text-left">
                   <Link
                     href={`${pathname}/${item.slug}`}
