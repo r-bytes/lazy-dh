@@ -20,16 +20,16 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
 
   // const startY = height - 500;
 
-  // Fetch the logo image from the public directory
+  // Fetch and place the logo image
   const logoUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/logo.png`;
   const logoImageResponse = await fetch(logoUrl);
   const logoImageBytes = new Uint8Array(await logoImageResponse.arrayBuffer());
   const logoImage = await pdfDoc.embedPng(logoImageBytes);
 
-  // Calculate dimensions for the logo placement
-  const logoWidth = 100;
+  // Calculate dimensions for the logo placement (smaller and on the left)
+  const logoWidth = 60; // Reduced size
   const logoHeight = logoImage.height * (logoWidth / logoImage.width);
-  const logoX = width - logoWidth - 20; // 20 points padding from the right edge
+  const logoX = 50; // Left side of the page
   const logoY = height - logoHeight - 20; // 20 points padding from the top edge
 
   // Place the logo image
@@ -40,55 +40,72 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
     height: logoHeight,
   });
 
-  // Title
-  const titleY = logoY - 1; // 10cm below the logo
+  // Company name and slogan
+  const companyNameX = (width - logoWidth - 150) / 2 + logoWidth - 100; // Center between logo and right edge
+  const companyNameY = height - 80; // Slightly lower on the page
+
+  page.drawText("Lazo Den Haag Spirits", {
+    x: companyNameX,
+    y: companyNameY,
+    size: 16,
+    font: boldFont,
+    color: rgb(0, 0, 0),
+  });
+
+  page.drawText("Authentieke Smaken uit Griekenland en Bulgarije", {
+    x: companyNameX,
+    y: companyNameY - 20,
+    size: 10,
+    font: regularFont,
+    color: rgb(0, 0, 0),
+  });
+
+  // Title (Factuur) on the right
   page.drawText("Factuur", {
-    x: 50,
-    y: titleY,
-    size: 18,
+    x: width - 150,
+    y: logoY + logoHeight - 30,
+    size: 24,
     font: boldFont,
     color: rgb(0, 0, 0),
   });
 
   // Address Blocks
-  const addressBlockY = titleY - 10;
+  const addressBlockY = companyNameY - 100; // Adjust this value to move both address blocks down
   const addressDetails = `
     ${invoiceDetails.companyName ? invoiceDetails.companyName : invoiceDetails.invoiceCustomerName}
     ${invoiceDetails.invoiceCustomerAddress}
     ${invoiceDetails.invoiceCustomerPostal} ${invoiceDetails.invoiceCustomerCity}
     ${invoiceDetails.invoiceCustomerCountry}`;
 
-  const shippingDetails = `
-    ${invoiceDetails.companyName ? invoiceDetails.companyName : invoiceDetails.invoiceCustomerName}
-    ${invoiceDetails.shippingCustomerAddress}
-    ${invoiceDetails.shippingCustomerPostal} ${invoiceDetails.shippingCustomerCity}
-    ${invoiceDetails.shippingCustomerCountry}`;
+  const lazoDetails = `
+    Kaapseplein 76
+    2572NG Den Haag
+    info@lazodenhaagspirits.nl
+    070-380 4724 / 06-55 174 175
+    KvK: 71.114.041
+    Btw: NL002364298B87
+    Bank: NL 06 INGB0004 7737 67`;
 
   page.drawText("Factuuradres:", {
     x: 50,
-    y: addressBlockY - 40,
-    size: 10,
-    font: regularFont,
-    lineHeight: 10,
+    y: addressBlockY + 50,
+    size: 8,
+    font: boldFont,
+    lineHeight: 4,
   });
   page.drawText(addressDetails, {
-    x: 43,
-    y: addressBlockY - 50,
+    x: 40,
+    y: addressBlockY + 50,
     size: 8,
     font: regularFont,
     lineHeight: 10,
   });
 
-  page.drawText("Verzendadres:", {
-    x: 400,
-    y: addressBlockY - 40,
-    size: 10,
-    font: regularFont,
-    lineHeight: 10,
-  });
-  page.drawText(shippingDetails, {
-    x: 393,
-    y: addressBlockY - 50,
+  const lazoBlockX = width / 2 + 50; // Center the Lazo block more to the right
+
+  page.drawText(lazoDetails, {
+    x: lazoBlockX + 55,
+    y: addressBlockY + 50,
     size: 8,
     font: regularFont,
     lineHeight: 10,
@@ -99,13 +116,13 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
 
   page.drawText("Referentie:", {
     x: 50,
-    y: referenceY,
-    size: 10,
-    font: regularFont,
+    y: referenceY + 80,
+    size: 8,
+    font: boldFont,
   });
   page.drawText(invoiceDetails.invoiceNumber, {
     x: 50,
-    y: referenceY - 15,
+    y: referenceY + 70,
     size: 8,
     font: regularFont,
   });
@@ -117,44 +134,31 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
   `;
 
   page.drawText(referenceInfoRight, {
-    x: 393,
-    y: referenceY + 11,
+    x: 405,
+    y: referenceY + 90,
     size: 8,
     font: regularFont,
     lineHeight: 10,
   });
 
   // Table Offset and Styles
-  const tableStartY = addressBlockY - 250;
+  const tableStartY = height - 300; // Adjust based on your layout
   const summaryStartY = tableStartY - 300; // Adjust based on content
-  const footerStartY = 50; // Fixed position near the bottom
+  const footerStartY = 70; // Increased to accommodate new text
 
   const fontSize = 8;
   const lineSpacing = 15;
 
-  // Headers for the table
-  const headers = ["Omschrijving", "Aantal", "B.E", "Inhoud", "E.P", "Bruto", "Netto", "BTW-tarief"];
+  // Headers for the table (new order)
+  const headers = ["Aantal", "Omschrijving", "Prijs per stuk", "Aantal in doos", "Totaal"];
 
   // Define the starting positions for each column
-  // Expanded the space for 'Omschrijving' and adjusted other columns accordingly
-  const columnPositions = [
-    50, // Start 'Omschrijving' at 20
-    180, // 'Aantal' starts further out because 'Omschrijving' needs more space
-    250, // 'B.E'
-    300, // 'Inhoud'
-    350, // 'E.P'
-    400, // 'Bruto'
-    450, // 'Netto'
-    500, // 'BTW-tarief' ends before 580 to fit within the page
-  ];
-
-  // Ensure columnPositions are aligned within the page margins if there are adjustments needed
-  const adjustedColumnPositions = columnPositions.map((pos) => pos); // Adjusted for page margin
+  const columnPositions = [50, 100, 300, 400, 500];
 
   // Draw headers in bold
   headers.forEach((header, index) => {
     page.drawText(header, {
-      x: adjustedColumnPositions[index],
+      x: columnPositions[index],
       y: tableStartY,
       size: 10,
       font: boldFont,
@@ -172,34 +176,19 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
 
   let currentY = tableStartY - lineSpacing;
   let totalExVAT = 0;
-  let totalIncVAT = 0;
-  let totalVAT = 0;
 
   // Draw each item row in the table
   orderItemsData.forEach((item: Product) => {
-    const numericPriceExVAT = item.price * item.quantityInBox * item.quantity;
-    const numericPriceIncVAT = item.price * item.quantityInBox * item.quantity * 1.21;
-    const btwPrice = numericPriceIncVAT - numericPriceExVAT;
+    const pricePerPiece = item.price;
+    const totalPrice = pricePerPiece * item.quantity * item.quantityInBox;
+    totalExVAT += totalPrice;
 
-    const VAT = numericPriceExVAT - numericPriceIncVAT;
-    totalExVAT += numericPriceExVAT;
-    totalIncVAT += numericPriceIncVAT;
-    totalVAT += VAT;
-
-    // string
-    const priceExVAT = numericPriceExVAT.toFixed(2).replace(".", ",");
-    const priceIncVAT = numericPriceIncVAT.toFixed(2).replace(".", ",");
-
-    // ["Omschrijving", "Aantal", "B.E", "Inhoud", "E.P", "Bruto", "Netto", "BTW-tarief"];
     const rowData = [
-      item.name,
       item.quantity.toString(),
+      item.name,
+      `€ ${pricePerPiece.toFixed(2).replace(".", ",")}`,
       item.quantityInBox.toString(),
-      item.volume!.toString(),
-      btwPrice.toFixed(2).replace(".", ","),
-      `€ ${priceExVAT}`,
-      `€ ${priceIncVAT}`,
-      "21%",
+      `€ ${totalPrice.toFixed(2).replace(".", ",")}`,
     ];
 
     rowData.forEach((text, colIndex) => {
@@ -218,86 +207,86 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
   // Summary below the table
   // Constants for layout
   const verticalSpacing = 12; // Adjust space between lines
-  const xOffset = 370; // X position for all text elements
+  const xOffset = 500; // X position for right alignment
   const startY = summaryStartY; // Starting Y position for the summary section
-
-  // Draw BTW (VAT) rate text
-  page.drawText(`BTW tarief:                               21%`, {
+  
+  // Draw price excluding VAT (Subtotal)
+  page.drawText(`Subtotaal:`, {
+    x: xOffset - 100,
+    y: startY,
+    size: 8,
+    font: regularFont,
+  });
+  page.drawText(`€ ${totalExVAT.toFixed(2).replace(".", ",")}`, {
     x: xOffset,
     y: startY,
     size: 8,
     font: regularFont,
   });
 
-  // Draw total VAT amount
-  page.drawText(`BTW prijs totaal:                      € ${totalVAT.toFixed(2).replace("-", "").replace(".", ",")}`, {
-    x: xOffset,
-    y: startY - verticalSpacing, // Adjust Y position based on vertical spacing
+  // Draw BTW (VAT) amount
+  const vatAmount = totalExVAT * 0.21;
+  page.drawText(`BTW 21%:`, {
+    x: xOffset - 100,
+    y: startY - verticalSpacing,
     size: 8,
     font: regularFont,
   });
-
-  // Draw price excluding VAT
-  page.drawText(`Price exclusief BTW:               € ${totalExVAT.toFixed(2).replace(".", ",")}`, {
+  page.drawText(`€ ${vatAmount.toFixed(2).replace(".", ",")}`, {
     x: xOffset,
-    y: startY - 2 * verticalSpacing, // Two times the vertical spacing for the next line
+    y: startY - verticalSpacing,
     size: 8,
     font: regularFont,
   });
 
   // Draw total amount to be paid including VAT
-  page.drawText(`Totaal te betalen EUR:           € ${totalIncVAT.toFixed(2).replace(".", ",")}`, {
+  const totalIncVAT = totalExVAT * 1.21;
+  page.drawText(`Totaal:`, {
+    x: xOffset - 100,
+    y: startY - 2 * verticalSpacing,
+    size: 8,
+    font: boldFont,
+  });
+  page.drawText(`€ ${totalIncVAT.toFixed(2).replace(".", ",")}`, {
     x: xOffset,
-    y: startY - 4 * verticalSpacing, // Three times the vertical spacing for the next line
+    y: startY - 2 * verticalSpacing,
     size: 8,
     font: boldFont,
   });
 
-  page.drawText("Betalingstermijn: Betaling binnen 7 dagen", { x: 50, y: summaryStartY - 48, size: 8, font: boldFont });
+  // page.drawText("Betalingstermijn: Betaling binnen 7 dagen", { x: 50, y: summaryStartY - 48, size: 8, font: boldFont });
 
   // Page number
   const pageNumber = "Pagina 1"; // Simple static example
   page.drawText(pageNumber, { x: width / 2 - 25, y: footerStartY + 20, size: 8, font: regularFont });
 
-  // Draw a horizontal line after page number
+  // Payment request text
+  const paymentRequest = `We verzoeken u vriendelijk het bovenstaande totaalbedrag binnen 7 dagen over te maken op rekening: ${process.env.COMPANY_IBAN!}`;
+  const paymentRequestWidth = regularFont.widthOfTextAtSize(paymentRequest, 8);
+  page.drawText(paymentRequest, {
+    x: (width - paymentRequestWidth) / 2,
+    y: footerStartY + - 15,
+    size: 8,
+    font: regularFont,
+    color: rgb(0, 0, 0),
+  });
+
+  const paymentReference = `t.n.v. ${process.env.COMPANY_NAME!}, onder vermelding van het factuurnummer: ${invoiceDetails.invoiceNumber}`;
+  const paymentReferenceWidth = regularFont.widthOfTextAtSize(paymentReference, 8);
+  page.drawText(paymentReference, {
+    x: (width - paymentReferenceWidth) / 2,
+    y: footerStartY - 25,
+    size: 8,
+    font: regularFont,
+    color: rgb(0, 0, 0),
+  });
+
+  // Draw a horizontal line after payment info
   page.drawLine({
     start: { x: 50, y: footerStartY + 15 },
     end: { x: width - 50, y: footerStartY + 15 },
     thickness: 1,
     color: rgb(red, green, blue),
-  });
-
-  // Footer Info
-  const footerInfo = `${process.env.COMPANY_NAME!}, ${process.env.COMPANY_ADDRESS!}, ${process.env.COMPANY_POSTAL!}, ${process.env.COMPANY_CITY!}, ${process.env.COMPANY_COUNTRY!}`;
-  const footerTextWidth = regularFont.widthOfTextAtSize(footerInfo, 8);
-  page.drawText(footerInfo, {
-    x: (width - footerTextWidth) / 2,
-    y: footerStartY,
-    size: 8,
-    font: regularFont,
-    color: rgb(0, 0, 0),
-  });
-
-  // Contact Info
-  const contactInfo = `${process.env.COMPANY_PHONE!}, ${process.env.COMPANY_EMAIL!}`;
-  const contactTextWidth = regularFont.widthOfTextAtSize(contactInfo, 8);
-  page.drawText(contactInfo, {
-    x: (width - contactTextWidth) / 2,
-    y: footerStartY - 10,
-    size: 8,
-    font: regularFont,
-    color: rgb(0, 0, 0),
-  });
-
-  // Registration Info
-  const regInfo = `KVK: ${process.env.COMPANY_KVK_NUMBER!}, BTW-nr: ${process.env.COMPANY_VAT_NUMBER!}, IBAN: ${process.env.COMPANY_IBAN!}`;
-  const regTextWidth = regularFont.widthOfTextAtSize(regInfo, 8);
-  page.drawText(regInfo, {
-    x: (width - regTextWidth) / 2,
-    y: footerStartY - 20,
-    size: 8,
-    font: regularFont,
-    color: rgb(0, 0, 0),
   });
 
   // Yellow Banner
