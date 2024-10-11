@@ -1,19 +1,15 @@
 "use server"
 
+import { createOrderSummaryDocument } from "@/actions/pdf/createOrderSummaryDocument";
+import { updateUserActivity } from "@/actions/users/user.actions";
 import { db } from "@/lib/db";
 import { orderItems, orders, users } from "@/lib/db/schema";
-import Product from "@/lib/types/product";
-import { NextRequest, NextResponse } from "next/server";
-import { PDFDocument, rgb } from "pdf-lib";
-import { Resend } from "resend";
-import { Buffer } from "buffer";
-import { getCurrentFormattedDate } from "@/lib/utils";
-import { createOrderSummaryDocument } from "@/actions/pdf/createOrderSummaryDocument";
-import { User } from "@/lib/types/order";
-import { DatabaseUser } from "@/lib/types/user";
-import { eq } from "drizzle-orm";
 import { InvoiceDetails } from "@/lib/types/invoice";
-import { updateUserActivity } from "@/actions/users/user.actions";
+import Product from "@/lib/types/product";
+import { getCurrentFormattedDate } from "@/lib/utils";
+import { eq } from "drizzle-orm";
+import { NextRequest, NextResponse } from "next/server";
+import { Resend } from "resend";
 
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -144,5 +140,62 @@ export async function POST(request: NextRequest) {
     updateUserActivity(email, "order placed", "failure");
     console.error(error);
     return NextResponse.json({ success: false, message: "Er is iets misgegaan" }, { status: 500 });
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  console.log("PUT request received");
+  const { cartItems, email } = await request.json();
+  console.log("Request data:", { cartItems, email });
+  
+  try {
+    console.log("Querying user from database");
+    const currentUser = await db.query.users.findFirst({
+      where: eq(users.email, email),
+    });
+
+    if (!currentUser) {
+      console.log("User not found");
+      return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
+    }
+    console.log("User found:", currentUser);
+
+    const formattedDate = getCurrentFormattedDate();
+    const tempOrderId = Date.now().toString(); // Temporary order ID
+    console.log("Generated tempOrderId:", tempOrderId);
+
+    const invoiceDetails: InvoiceDetails = {
+      invoiceCustomerName: currentUser.name,
+      invoiceCustomerEmail: currentUser.email,
+      invoiceCustomerAddress: currentUser.address,
+      invoiceCustomerCity: currentUser.city,
+      invoiceCustomerPostal: currentUser.postal,
+      invoiceCustomerPhoneNumber: currentUser.phoneNumber,
+      companyName: currentUser.companyName,
+      vatNumber: currentUser.vatNumber,
+      chamberOfCommerceNumber: currentUser.chamberOfCommerceNumber,
+      orderNumber: tempOrderId,
+      invoiceNumber: `${formattedDate}-${tempOrderId}`,
+      date: formattedDate,
+      invoiceCustomerCountry: "Nederland",
+      shippingCustomerCustomerName: currentUser.name,
+      shippingCustomerCustomerEmail: currentUser.email,
+      shippingCustomerAddress: currentUser.address,
+      shippingCustomerPostal: currentUser.postal,
+      shippingCustomerCity: currentUser.city,
+      shippingCustomerCountry: "Nederland",
+      customerPhoneNumber: null,
+    };
+
+    const outPutPdf = await createOrderSummaryDocument(cartItems, invoiceDetails);
+    console.log("PDF created successfully", outPutPdf);
+    return NextResponse.json({ 
+      success: true, 
+      pdfContent: outPutPdf,
+      filename: `lazo-spirits-concept-factuur-${tempOrderId}-${formattedDate}.pdf`
+    });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ success: false, message: "Er is iets misgegaan bij het genereren van de factuur" }, { status: 500 });
   }
 }
