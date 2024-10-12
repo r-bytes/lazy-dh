@@ -169,7 +169,7 @@ const Checkout = () => {
       </div>
       <div className="mx-auto mt-16 flex w-full items-center justify-center space-x-4">
         {/* Admin only */}
-        {/* <Button onClick={generateInvoice} disabled={invoicePdf !== null || !user?.email}>
+        <Button onClick={generateInvoice} disabled={invoicePdf !== null || !user?.email}>
           Genereer Concept Factuur
         </Button>
         
@@ -178,7 +178,7 @@ const Checkout = () => {
             <Button onClick={viewInvoice}>Bekijk Factuur</Button>
             <Button onClick={downloadInvoice}>Download Factuur</Button>
           </>
-        )} */}
+        )}
 
         <Button type="button" className="btn" onClick={handleCheckout} disabled={!invoicePdf || !user?.email}>
           {isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.logo className="mr-2 h-4 w-4" />}

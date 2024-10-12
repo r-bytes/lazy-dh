@@ -8,6 +8,7 @@ import Title from "@/components/ui/title";
 import Link from "next/link";
 import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import { fetchCategories } from "@/lib/sanity/fetchCategories";
+import SearchBar from "@/components/home/search-bar";
 
 const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Element> => {
   const [categories, products] = await Promise.all([
@@ -17,6 +18,10 @@ const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Eleme
 
   return (
     <main className="flex flex-col items-center justify-between bg-background">
+      <div className="w-full max-w-7xl flex justify-end mt-4 mr-4 flex-col">
+        <SearchBar products={products} />
+      </div>
+
       <section id="promotions" className="w-full max-w-7xl my-20">
         <Card className="mx-2 px-4 sm:mx-20 md:px-16 xl:mx-12">
           <div className="mt-2 flex flex-col items-center justify-center md:mt-32">
