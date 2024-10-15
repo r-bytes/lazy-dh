@@ -30,6 +30,9 @@ const Footer: React.FC<FooterProps> = ({ year = new Date().getFullYear() }) => {
             <a href="/contact" className="text-sm hover:text-primary-hover transition-colors duration-200 hover:underline hover:scale-105 transform">
               Contact
             </a>
+            <a href="/veelgestelde-vragen" className="text-sm hover:text-primary-hover transition-colors duration-200 hover:underline hover:scale-105 transform">
+              Veelgestelde vragen
+            </a>
           </div>
           <div className="mt-8 text-center">
             <p className="text-sm">
