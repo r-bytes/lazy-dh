@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { Product } from "@/lib/types/product";
-import { Input } from "@/components/ui/input";
-import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
-import { Card } from "@/components/ui/card";
-import Title from "@/components/ui/title";
 import ProductList from "@/components/products/product-list";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import Title from "@/components/ui/title";
+import { Product } from "@/lib/types/product";
+import { useState } from "react";
 
 interface SearchBarProps {
   products: Product[];
@@ -32,15 +31,15 @@ const SearchBar: React.FC<SearchBarProps> = ({ products }) => {
 
   return (
     <>
-      <MaxWidthWrapper className="w-screen items-end flex justify-end">
+      <section id="search-input" className="w-full flex justify-end items-center px-10">
         <Input
           type="text"
           placeholder="Zoek producten..."
           value={searchTerm}
           onChange={handleSearch}
-          className="w-full max-w-xs"
+          className="w-full max-w-xs mr-0"
         />
-      </MaxWidthWrapper>
+      </section>
 
       {searchResults.length > 0 ? (
         <section id="search-results" className="w-full max-w-7xl my-20">
