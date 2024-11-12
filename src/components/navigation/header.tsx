@@ -1,6 +1,8 @@
 "use client";
+import SearchBar from "@/components/home/search-bar";
 import { useAuthContext } from "@/context/AuthContext";
-import { useCartContext } from "@/context/CartContext";
+import { fetchProducts } from "@/lib/sanity/fetchProducts";
+import { Product } from "@/lib/types/product";
 import { navigateTo } from "@/lib/utils";
 import { CircleX, Fingerprint, MenuIcon, ShoppingBag } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -12,7 +14,7 @@ import { useEffect, useState } from "react";
 import Title from "../ui/title";
 import { ModeToggle } from "../ui/toggle-mode";
 import TopHeader from "./top-header";
-import React from "react";
+import { useCartContext } from "@/context/CartContext";
 
 // Fonts
 const roboto = Roboto({
@@ -37,25 +39,35 @@ const NAVIGATION_LIST: NavigationItem[] = [
   { title: "Categorieën", order: 0 },
   { title: "Account", order: 1, requiresAuth: false },
   { title: "Acties", order: 2 },
-  { title: "Winkelwagen", order: 3 },
+  // { title: "Winkelwagen", order: 3 },
 ];
 
 const Header = (props: Props) => {
   // Hooks
   const { data: session, status } = useSession();
+  const { isAdminApproved } = useAuthContext();
   const { totalQuantities } = useCartContext();
-  const { authorizedEmails } = useAuthContext();
   const router = useRouter();
 
   // States
   const [currentPath, setCurrentPath] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
 
   const pathName = usePathname();
 
   useEffect(() => {
     setCurrentPath(pathName.replace("/", ""));
   }, [pathName]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedProducts = await fetchProducts();
+      setProducts(fetchedProducts);
+    };
+
+    fetchData();
+  }, []);
 
   // Functions
   const ShoppingCart = ({ cn }: { cn?: string }) => {
@@ -84,6 +96,7 @@ const Header = (props: Props) => {
       </button>
     );
   };
+
   const AdminPageNoIcon = ({ cn }: { cn?: string }) => {
     return (
       <li key={cn} className={`font-semibold tracking-wide hover:cursor-pointer hover:text-primary`}>
@@ -112,11 +125,12 @@ const Header = (props: Props) => {
           </Link>
           {/* Hamburger Menu for Small Screens */}
           <button className="flex w-full items-end justify-end pr-4 sm:pr-8 lg:hidden" onClick={() => setMenuOpen(!menuOpen)}>
-            <MenuIcon size={24} /> {/* Use MenuIcon from Lucid */}
+            <MenuIcon size={24} />
           </button>
           {/* Shopping Cart */}
           <ShoppingCart cn={"lg:hidden hover:text-primary"} />
         </div>
+        <SearchBar products={products} />
 
         {/* Mobile Navigation Menu */}
         <div className={`lg:hidden ${menuOpen ? "fixed inset-0 z-50 min-h-screen bg-zinc-100 dark:bg-black" : "hidden"}`}>
@@ -125,7 +139,7 @@ const Header = (props: Props) => {
               <CircleX onClick={() => setMenuOpen(false)} className="h-12 w-full p-2 text-right text-muted-foreground hover:cursor-pointer" />
             </div>
             <ul className="flex w-screen flex-1 flex-col items-center justify-center gap-8">
-              {session && status === "authenticated" && authorizedEmails.includes(session.user?.email!) && <AdminPageNoIcon cn={session.user?.id} />}
+              {session && status === "authenticated" && isAdminApproved && <AdminPageNoIcon cn={session.user?.id} />}
               {NAVIGATION_LIST.map((item, index, arr) => (
                 <li key={item.order} className={`font-semibold tracking-wide hover:cursor-pointer hover:text-primary`}>
                   <Link
@@ -175,7 +189,7 @@ const Header = (props: Props) => {
               )}
             </ul>
           </div>
-          {session && status === "authenticated" && authorizedEmails.includes(session.user?.email!) && <AdminPage cn="hover:text-primary mr-4" />}
+          {session && status === "authenticated" && isAdminApproved && <AdminPage cn="hover:text-primary mr-4" />}
           <ModeToggle cn="mr-4" />
           <ShoppingCart cn="mr-10" />
         </div>
