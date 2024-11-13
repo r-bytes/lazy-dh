@@ -2,10 +2,8 @@
 
 import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema";
-import { getCurrentFormattedDate } from "@/lib/utils";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
 
 export async function POST(request: NextRequest) {
   const { email } = await request.json();

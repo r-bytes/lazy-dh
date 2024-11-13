@@ -2,7 +2,7 @@
 
 import { User } from "next-auth";
 import { useSession } from "next-auth/react";
-import React, { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import React, { createContext, Dispatch, SetStateAction, useContext, useEffect, useState, useCallback } from "react";
 
 type ContextProps = {
   user: User | null;
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const { data: session, status } = useSession();
 
-  const checkAdminApproval = async (email: string) => {
+  const checkAdminApproval = useCallback(async (email: string) => {
     if (email) {      
       try {
         const response = await fetch("/api/getUserApprovalStatus", {
@@ -45,32 +45,28 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         });
         const data = await response.json();
 
-        if (data.success && data.message === "Account is goedgekeurd") {          
-          setIsAdminApproved(true);
-        } else {
-          setIsAdminApproved(false);
-        }
+        setIsAdminApproved(data.success && data.message === "Account is goedgekeurd");
       } catch (error) {
-        
         console.error("Failed to fetch admin approval status:", error);
         setIsAdminApproved(false);
       }
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (status === "authenticated" && session?.user) {
       setIsAuthenticated(true);
       setUser(session.user);
 
-      session.user.email && checkAdminApproval(session.user.email);
-
+      if (session.user.email) {
+        checkAdminApproval(session.user.email);
+      }
     } else {
       setIsAuthenticated(false);
       setUser(null);
       setIsAdminApproved(false);
     }
-  }, [session, status]);
+  }, [session?.user, status, checkAdminApproval]);
 
   return (
     <AuthContext.Provider

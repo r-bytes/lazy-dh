@@ -1,20 +1,20 @@
 "use client";
 
-import { Product as ProductType } from "@/lib/types/product";
-import { Heart, Minus, Plus } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { FC, useEffect, useState } from "react";
-import { Button } from "../ui/button";
-import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
-
+import { addFavoriteProduct, getUserIdFromEmail, removeFavoriteProduct } from "@/actions/users/user.actions";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useCartContext } from "@/context/CartContext";
-import { formatNumberWithCommaDecimalSeparator, navigateTo } from "@/lib/utils";
+import { checkFavoriteStatus } from "@/lib/db/data";
+import { Product as ProductType } from "@/lib/types/product";
+import { debounce, formatNumberWithCommaDecimalSeparator, navigateTo } from "@/lib/utils";
+import { Heart, Minus, Plus } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { urlFor } from "../../../sanity";
-import React from "react";
+import { Button } from "../ui/button";
+import { Card, CardContent, CardDescription, CardTitle } from "../ui/card";
 
 interface ProductProps {
   product: ProductType;
@@ -23,84 +23,53 @@ interface ProductProps {
 }
 
 const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
-  // Hooks
   const router = useRouter();
   const { decQty, incQty, setQty, qty, onAdd, setShowCart } = useCartContext();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
-  // States
   const [isHoveredOn, setIsHoveredOn] = useState<boolean>(false);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [productImage, setProductImage] = useState<string>(urlFor(product.image).url());
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-  const [userId, setUserId] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setProductImage(urlFor(product.image).url());
     setQty(1);
   }, [product, setQty]);
-  
 
   useEffect(() => {
-    const fetchUserId = async () => {
-      if (session && session.user) {
-        try {
-          const res = await fetch("/api/getUserIdByEmail", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email: session.user.email }),
-          });
+    const fetchFavoriteStatus = async () => {
+      const userId = await getUserIdFromEmail(session?.user?.email!);
 
-          if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-          }
+      if (!userId) {
+        throw new Error("User not found");
+      }
 
-          const { userId } = await res.json();
-          setUserId(userId);
-          // Fetch favorite status
-          const favoriteRes = await fetch(`/api/favorites/status?userId=${userId}&productId=${product._id}`);
-          const { isFavorite } = await favoriteRes.json();
-          setIsFavorite(isFavorite);
-        } catch (error) {
-          console.error("Error fetching user ID or checking favorite status:", error);
-        }
+        setLoading(true);
+      try {
+        const isFavorite = await checkFavoriteStatus(userId, product._id);
+        setIsFavorite(isFavorite);
+      } catch (error) {
+        console.error("Error fetching favorite status:", error);
+      } finally {
+        setLoading(false);
       }
     };
+    fetchFavoriteStatus();
+  }, [session, product._id]);
 
-    fetchUserId();
-  }, []);
-
-  // Functions
-  const handleToggleFavorite = async () => {
+  const handleToggleFavorite = debounce(async () => {
     if (!session?.user?.email) {
       toast.error("Je moet eerst inloggen...");
       return;
     }
+    const userId = await getUserIdFromEmail(session?.user?.email);
 
     if (!userId) {
-      try {
-        const res = await fetch("/api/getUserIdByEmail", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email: session.user.email }),
-        });
-
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-
-        const { userId: fetchedUserId } = await res.json();
-        setUserId(fetchedUserId);
-      } catch (error) {
-        console.error("Error fetching user ID:", error);
-        toast.error("Er is iets misgegaan bij het ophalen van de gebruiker-ID.");
-        return;
-      }
+      toast.error("Er is iets fout gegaan bij het ophalen van je gebruikers Id...");
+      return;
     }
 
     const productId = product._id;
@@ -108,32 +77,29 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
     setIsFavorite(newIsFavorite);
 
     try {
-      const url = `/api/favorites`;
-      const method = isFavorite ? "DELETE" : "POST";
-
-      const response = await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId, productId }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to ${isFavorite ? "remove" : "add"} favorite`);
-      }
-
-      toast.success(`${product.name} succesvol ${newIsFavorite ? "toegevoegd aan" : "verwijderd uit"} favorieten.`);
-
-      // Call the onRemoveFavorite callback if the product is removed from favorites and the callback exists
-      if (!newIsFavorite && onRemoveFavorite) {
-        onRemoveFavorite(productId);
+      if (newIsFavorite) {
+        // Add to favorites
+        const response = await addFavoriteProduct(userId, productId);
+        if (!response.success) {
+          throw new Error(response.message);
+        }
+        toast.success(`${product.name} succesvol toegevoegd aan favorieten.`);
+      } else {
+        // Remove from favorites
+        const response = await removeFavoriteProduct(userId, productId);
+        if (!response.success) {
+          throw new Error(response.message);
+        }
+        toast.success(`${product.name} succesvol verwijderd uit favorieten.`);
+        if (onRemoveFavorite) {
+          onRemoveFavorite(productId);
+        }
       }
     } catch (error) {
       console.error("Error toggling favorite:", error);
       toast.error("Er is iets misgegaan bij het wijzigen van favorieten.");
     }
-  };
+  }, 300);
 
   const handleBuyNow = () => {
     onAdd(product, qty);
@@ -142,20 +108,18 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
     setIsDialogOpen(false);
   };
 
-  function handleCheckout(): void {
-    console.log("qty", qty);
-
+  const handleCheckout = () => {
     onAdd(product, qty);
     navigateTo(router, "/winkelwagen");
-  }
+  };
 
   const handleRegister = () => {
     navigateTo(router, "/auth");
   };
 
-  function handleLogin(): void {
+  const handleLogin = () => {
     navigateTo(router, "/auth");
-  }
+  };
 
   // UI
   const CounterDiv = () => {
@@ -200,7 +164,6 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
 
   return carousel ? (
     <Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)}>
-      {/* Conditionally add asChild based on isHoveredOn state */}
       <DialogTrigger {...(!isHoveredOn || !isFocused ? { asChild: true } : {})}>
         <Card
           onFocus={() => setIsFocused(true)}
@@ -316,7 +279,6 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
     </Dialog>
   ) : (
     <Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)}>
-      {/* Conditionally add asChild based on isHoveredOn state */}
       <DialogTrigger {...(!isHoveredOn || !isFocused ? { asChild: true } : {})}>
         <Card
           onFocus={() => setIsFocused(true)}

@@ -1,9 +1,8 @@
 "use server"
 import { sql } from "@vercel/postgres";
 import { unstable_noStore as noStore } from "next/cache";
-import { DatabaseUser } from "../types/user";
 import { Order } from "../types/order";
-import Product from "../types/product";
+import { DatabaseUser } from "../types/user";
 
 export const fetchAllUsers = async (): Promise<DatabaseUser[]> => {
   noStore();
@@ -162,5 +161,46 @@ export async function getFavoriteProductIds(userId: string): Promise<string[]> {
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch favorite product IDs");
+  }
+}
+
+export async function addFavorite(userId: string, productId: string): Promise<boolean> {
+  noStore();
+  if (!userId || !productId) {
+    throw new Error("User ID and Product ID are required");
+  }
+
+  try {
+    const query = `
+      INSERT INTO favorite_products (user_id, product_id)
+      VALUES ($1, $2)
+      ON CONFLICT (user_id, product_id) DO NOTHING; -- Prevents duplicate entries
+    `;
+
+    await sql.query(query, [userId, productId]);
+    return true; // Successfully added
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to add favorite product");
+  }
+}
+
+export async function removeFavorite(userId: string, productId: string): Promise<boolean> {
+  noStore();
+  if (!userId || !productId) {
+    throw new Error("User ID and Product ID are required");
+  }
+
+  try {
+    const query = `
+      DELETE FROM favorite_products
+      WHERE user_id = $1 AND product_id = $2;
+    `;
+
+    await sql.query(query, [userId, productId]);
+    return true; // Successfully removed
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to remove favorite product");
   }
 }

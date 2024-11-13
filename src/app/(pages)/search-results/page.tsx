@@ -6,7 +6,8 @@ import { Card } from "@/components/ui/card";
 import Title from "@/components/ui/title";
 import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import { Product } from "@/lib/types/product";
-import { useEffect, useState } from "react";
+import { debounce } from "@/lib/utils";
+import { useCallback, useEffect, useState } from "react";
 
 interface SearchResultsProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -17,20 +18,26 @@ const SearchResults = ({ searchParams }: SearchResultsProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (product) {
-        const allProducts = await fetchProducts();
-        const filteredProducts = allProducts.filter((productItem: Product) =>
-          typeof productItem.name === 'string' && productItem.name.toLowerCase().includes((product as string).toLowerCase())
-        );
-        setProducts(filteredProducts);
-      }
-      setIsLoading(false);
-    };
-
-    fetchData();
+  const fetchData = useCallback(async () => {
+    if (product) {
+      setIsLoading(true); // Start loading
+      const allProducts = await fetchProducts();
+      const filteredProducts = allProducts.filter((productItem: Product) =>
+        typeof productItem.name === 'string' && productItem.name.toLowerCase().includes((product as string).toLowerCase())
+      );
+      setProducts(filteredProducts);
+      setIsLoading(false); // End loading
+    } else {
+      setProducts([]); // Clear products if no product is specified
+      setIsLoading(false); // End loading
+    }
   }, [product]);
+
+  const debouncedFetchData = useCallback(debounce(fetchData, 300), [fetchData]);
+
+  useEffect(() => {
+    debouncedFetchData();
+  }, [product, debouncedFetchData]);
 
   return (
     <main className="flex flex-col items-center justify-between bg-background">

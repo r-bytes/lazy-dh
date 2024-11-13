@@ -3,47 +3,22 @@
 import ProductList from "@/components/products/product-list";
 import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
 import Title from "@/components/ui/title";
-import { getFavoriteProductIds } from "@/lib/db/data";
-import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import Product from "@/lib/types/product";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import BeatLoader from "react-spinners/BeatLoader";
 import { CardDescription } from "../ui/card";
 
-export default function Favorites() {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+export default function Favorites({ favoriteProducts, loading }: { favoriteProducts: Product[]; loading: boolean }) {
+  const [isLoading, setIsLoading] = useState<boolean>(loading);
   const [color, setColor] = useState("#facc15");
-  const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
+  const [fetchedProducts, setFetchedProducts] = useState<Product[]>(favoriteProducts);
   const { data: session } = useSession();
 
   useEffect(() => {
-    const fetchFavoriteProducts = async () => {
-      if (session && session.user) {
-        setIsLoading(true);
-        try {
-          const response = await fetch('/api/favorites', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: session.user.email }),
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const favoriteProducts = await response.json();
-          setFetchedProducts(favoriteProducts);
-        } catch (error) {
-          console.error("Error fetching favorite products:", error);
-        } finally {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    fetchFavoriteProducts();
-  }, [session, session?.user]);
+    setFetchedProducts(favoriteProducts);
+    setIsLoading(loading);
+  }, [favoriteProducts, loading]);
 
   const handleRemoveFavorite = (productId: string) => {
     setFetchedProducts((prevProducts) => prevProducts.filter((product) => product._id !== productId));

@@ -1,11 +1,12 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { favoriteProducts, userActivities, users } from "@/lib/db/schema";
+import { addFavorite, removeFavorite } from "@/lib/db/data";
+import { userActivities, users } from "@/lib/db/schema";
 import { signInSchema } from "@/lib/types/signin";
 import { signUpSchema } from "@/lib/types/signup";
 import crypto from "crypto";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { signIn } from "../../../auth";
 import { sendEmail } from "../email/sendEmail";
 const bcrypt = require("bcryptjs");
@@ -395,26 +396,37 @@ export const updateUserActivity = async (email: string, activityType: string, ac
 
 // Product functions
 export const addFavoriteProduct = async (userId: string, productId: string) => {
+  console.log(userId);
+  console.log(productId);
+  
   try {
-    await db.insert(favoriteProducts).values({
-      userId,
-      productId,
-    });
-    return { success: true, message: "Product succesvol toegevoegd aan favorieten", data: { productId, userId } };
+    const success = await addFavorite(userId, productId);
+    return {
+      success,
+      message: success ? "Product successfully added to favorites" : "Failed to add product to favorites",
+    };
   } catch (error) {
     console.error("Error adding favorite product:", error);
-    return { success: false, message: "Er is iets misgegaan" };
+    return {
+      success: false,
+      message: "Error adding favorite product",
+    };
   }
 };
 
 export const removeFavoriteProduct = async (userId: string, productId: string) => {
   try {
-    await db.delete(favoriteProducts).where(and(eq(favoriteProducts.userId, userId), eq(favoriteProducts.productId, productId)));
-
-    return { success: true, message: "Product succesvol verwijderd uit favorieten" };
+    const success = await removeFavorite(userId, productId);
+    return {
+      success,
+      message: success ? "Product successfully removed from favorites" : "Failed to remove product from favorites",
+    };
   } catch (error) {
     console.error("Error removing favorite product:", error);
-    return { success: false, message: "Er is iets misgegaan" };
+    return {
+      success: false,
+      message: "Error removing favorite product",
+    };
   }
 };
 
@@ -644,5 +656,30 @@ export const sendAdminOrderMail = async (userId: string) => {
       success: false,
       message: "Er is een fout opgetreden bij het verwerken van uw verzoek.",
     };
+  }
+};
+
+/**
+ * Retrieves the user ID based on the provided email.
+ * @param email The email of the user whose ID is to be retrieved.
+ * @returns The user ID if found, otherwise null.
+ */
+export const getUserIdFromEmail = async (email: string) => {
+  try {
+    console.log(`Attempting to find user ID for email: ${email}`);
+    const existingUser = await db.query.users.findFirst({
+      where: eq(users.email, email),
+    });
+
+    if (!existingUser) {
+      console.log("No user found with the given email.");
+      return null;
+    }
+
+    console.log(`Found user ID: ${existingUser.id}`);
+    return existingUser.id;
+  } catch (error) {
+    console.error("Error fetching user ID from database:", error);
+    return null;
   }
 };
