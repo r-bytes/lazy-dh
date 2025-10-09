@@ -1,6 +1,7 @@
 "use client";
 import SearchBar from "@/components/home/search-bar";
 import { useAuthContext } from "@/context/AuthContext";
+import { useCartContext } from "@/context/CartContext";
 import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import { Product } from "@/lib/types/product";
 import { navigateTo } from "@/lib/utils";
@@ -14,7 +15,6 @@ import { useEffect, useState } from "react";
 import Title from "../ui/title";
 import { ModeToggle } from "../ui/toggle-mode";
 import TopHeader from "./top-header";
-import { useCartContext } from "@/context/CartContext";
 
 // Fonts
 const roboto = Roboto({
@@ -110,7 +110,7 @@ const Header = (props: Props) => {
   return (
     <>
       <TopHeader text="Let op! Alle prijzen op de website zijn exclusief BTW." />
-      <div className={`z-10 mx-auto w-full max-w-7xl items-center justify-between text-sm tracking-wide sm:flex sm:flex-col lg:flex-row`}>
+      <div className={`z-10 w-full items-center justify-between bg-gray-50 text-sm tracking-wide dark:bg-gray-900 sm:flex sm:flex-col lg:flex-row`}>
         <div className="mx-auto mt-0 flex w-full items-center justify-between p-8 sm:mx-16">
           {/* Logo */}
           <Link href={"/"}>
@@ -133,15 +133,21 @@ const Header = (props: Props) => {
         <SearchBar products={products} />
 
         {/* Mobile Navigation Menu */}
-        <div className={`lg:hidden ${menuOpen ? "fixed inset-0 z-50 min-h-screen bg-zinc-100 dark:bg-black" : "hidden"}`}>
+        <div className={`lg:hidden ${menuOpen ? "fixed inset-0 z-50 min-h-screen bg-gray-50 dark:bg-gray-900" : "hidden"}`}>
           <div className="flex h-screen flex-col items-center justify-between gap-4">
-            <div className="w-screen hover:bg-zinc-200 dark:hover:bg-zinc-900">
-              <CircleX onClick={() => setMenuOpen(false)} className="h-12 w-full p-2 text-right text-muted-foreground hover:cursor-pointer" />
+            <div className="w-screen hover:bg-gray-100 dark:hover:bg-gray-800">
+              <CircleX
+                onClick={() => setMenuOpen(false)}
+                className="h-12 w-full p-2 text-right text-slate-600 hover:cursor-pointer dark:text-gray-400"
+              />
             </div>
             <ul className="flex w-screen flex-1 flex-col items-center justify-center gap-8">
               {session && status === "authenticated" && isAdminApproved && <AdminPageNoIcon cn={session.user?.id} />}
               {NAVIGATION_LIST.map((item, index, arr) => (
-                <li key={item.order} className={`font-semibold tracking-wide hover:cursor-pointer hover:text-primary`}>
+                <li
+                  key={item.order}
+                  className={`font-semibold tracking-wide text-slate-700 transition-colors hover:cursor-pointer hover:text-slate-900 dark:text-gray-300 dark:hover:text-white`}
+                >
                   <Link
                     className={`${roboto.className} tracking-wider`}
                     onClick={() => setMenuOpen(false)}
@@ -167,12 +173,12 @@ const Header = (props: Props) => {
                     className={`font-semibold tracking-wide hover:cursor-pointer hover:text-primary
                     ${
                       index === arr.length - 2
-                        ? "text-tertiary mr-8 rounded-md bg-primary px-3 py-2 hover:scale-105 hover:text-secondary-foreground dark:text-background dark:hover:bg-primary-foreground/30 dark:hover:text-primary"
+                        ? "mr-8 rounded-md bg-yellow-400 px-3 py-2 text-black transition-colors hover:bg-yellow-500 hover:text-black"
                         : currentPath.toLowerCase() === item.title.replace("ë", "e").toLowerCase()
-                          ? "border-b-2 border-primary pb-2"
+                          ? "border-b-2 border-slate-900 pb-2 dark:border-white"
                           : item.requiresAuth && !session
                             ? "text-gray-500 hover:cursor-not-allowed"
-                            : ""
+                            : "text-slate-700 transition-colors hover:text-slate-900 dark:text-gray-300 dark:hover:text-white"
                     }
                   `}
                   >

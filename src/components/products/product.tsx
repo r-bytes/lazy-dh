@@ -33,43 +33,77 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
   const [productImage, setProductImage] = useState<string>(urlFor(product.image).url());
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [hasFetchedFavorite, setHasFetchedFavorite] = useState<boolean>(false);
 
   useEffect(() => {
     setProductImage(urlFor(product.image).url());
     setQty(1);
   }, [product, setQty]);
 
-  useEffect(() => {
-    const fetchFavoriteStatus = async () => {
-      const userId = await getUserIdFromEmail(session?.user?.email!);
+  // DISABLED: This causes infinite loops when multiple products are rendered
+  // Favorite status will only be checked on user interaction
+  // useEffect(() => {
+  //   const fetchFavoriteStatus = async () => {
+  //     if (!session?.user?.email || session.user.email === "undefined") {
+  //       setIsFavorite(false);
+  //       setHasFetchedFavorite(true);
+  //       return;
+  //     }
 
-      if (!userId) {
-        throw new Error("User not found");
-      }
+  //     if (loading || hasFetchedFavorite) {
+  //       return;
+  //     }
 
-        setLoading(true);
-      try {
-        const isFavorite = await checkFavoriteStatus(userId, product._id);
-        setIsFavorite(isFavorite);
-      } catch (error) {
-        console.error("Error fetching favorite status:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchFavoriteStatus();
-  }, [session, product._id]);
+  //     setLoading(true);
+  //     try {
+  //       const userId = await getUserIdFromEmail(session.user.email);
+
+  //       if (!userId) {
+  //         setIsFavorite(false);
+  //         setHasFetchedFavorite(true);
+  //         return;
+  //       }
+
+  //       const isFavorite = await checkFavoriteStatus(userId, product._id);
+  //       setIsFavorite(isFavorite);
+  //       setHasFetchedFavorite(true);
+  //     } catch (error) {
+  //       console.error("Error fetching favorite status:", error);
+  //       setIsFavorite(false);
+  //       setHasFetchedFavorite(true);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   const timeoutId = setTimeout(fetchFavoriteStatus, 100);
+  //   return () => clearTimeout(timeoutId);
+  // }, [session?.user?.email, product._id]);
 
   const handleToggleFavorite = debounce(async () => {
-    if (!session?.user?.email) {
+    if (!session?.user?.email || session.user.email === "undefined") {
       toast.error("Je moet eerst inloggen...");
       return;
     }
-    const userId = await getUserIdFromEmail(session?.user?.email);
+
+    const userId = await getUserIdFromEmail(session.user.email);
 
     if (!userId) {
       toast.error("Er is iets fout gegaan bij het ophalen van je gebruikers Id...");
       return;
+    }
+
+    // If we haven't fetched the favorite status yet, fetch it first
+    if (!hasFetchedFavorite) {
+      try {
+        const currentIsFavorite = await checkFavoriteStatus(userId, product._id);
+        setIsFavorite(currentIsFavorite);
+        setHasFetchedFavorite(true);
+        // Don't toggle on first click, just show current status
+        return;
+      } catch (error) {
+        console.error("Error fetching favorite status:", error);
+      }
     }
 
     const productId = product._id;
@@ -98,6 +132,8 @@ const Product: FC<ProductProps> = ({ product, carousel, onRemoveFavorite }) => {
     } catch (error) {
       console.error("Error toggling favorite:", error);
       toast.error("Er is iets misgegaan bij het wijzigen van favorieten.");
+      // Revert the state on error
+      setIsFavorite(!newIsFavorite);
     }
   }, 300);
 

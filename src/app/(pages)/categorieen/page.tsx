@@ -5,13 +5,10 @@ import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import { Category } from "@/lib/types/category";
 import { Product } from "@/lib/types/product";
 
-async function getData(): Promise<{ categories: Category[], products: Product[] } | null> {
+async function getData(): Promise<{ categories: Category[]; products: Product[] } | null> {
   try {
-    const [categories, products] = await Promise.all([
-      fetchCategories(),
-      fetchProducts("")
-    ]);
-    
+    const [categories, products] = await Promise.all([fetchCategories(), fetchProducts("")]);
+
     if (!categories || categories.length === 0 || !products || products.length === 0) {
       console.error("No categories or products fetched");
       return null;
@@ -31,7 +28,7 @@ export default async function Page() {
   }
 
   return (
-    <div className="mx-auto flex flex-col items-center justify-between bg-background lg:max-w-7xl lg:p-24">
+    <div className="flex w-full flex-col items-center justify-between bg-background p-6 dark:bg-gray-900 lg:p-12">
       <MaxWidthWrapper>
         <CategoryCard categories={data.categories} products={data.products} />
       </MaxWidthWrapper>

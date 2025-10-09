@@ -2,18 +2,17 @@
 
 import CategoryCardSkeleton from "@/components/products/category-skeleton";
 import ProductList from "@/components/products/product-list";
-import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useProductContext } from "@/context/ProductContext";
 import { Category } from "@/lib/types/category";
 import { Product } from "@/lib/types/product";
-import { capitalizeFirstLetter, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { urlFor } from "../../../../sanity";
 import { Button } from "../button";
-import Title from "../title";
 import { InputForm } from "./search-input";
 
 type CardProps = React.ComponentProps<typeof Card>;
@@ -25,7 +24,6 @@ interface CategoryCardProps extends Omit<CardProps, "children"> {
 
 export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categories, products, slug, ...props }) => {
   const pathname = usePathname();
-  const [currentPath, setCurrentPath] = useState<string>(pathname.replace("/", ""));
   const [productCounts, setProductCounts] = useState<{ [key: string]: number }>({});
   const { filteredProducts, setFilteredProducts, isSearching } = useProductContext();
 
@@ -63,8 +61,8 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
   return (
     <Card className={cn("w-full", className)} {...props}>
       <CardHeader className="mb-4 text-center">
-        <Title name={slug === "home" ? "Categorieën" : capitalizeFirstLetter(currentPath)} cn="text-4xl mt-12" />
-        <CardDescription className="md:text-base">Kies een categorie</CardDescription>
+        {/* <Title name={slug === "home" ? "Categorieën" : capitalizeFirstLetter(currentPath)} cn="text-4xl mt-12" /> */}
+        {/* <CardDescription className="md:text-base">Kies een categorie</CardDescription> */}
       </CardHeader>
       <InputForm products={products!} onSearchChange={setFilteredProducts} />
       {isSearching && <ProductList products={filteredProducts} />}
@@ -98,7 +96,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
                   </Link>
                 </div>
               ))
-            : (categories)?.map((item, index) => (
+            : categories?.map((item, index) => (
                 <div key={index} className="flex text-center lg:text-left">
                   <Link
                     href={`${pathname}/${item.slug}`}

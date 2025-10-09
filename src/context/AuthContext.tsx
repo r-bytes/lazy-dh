@@ -2,7 +2,7 @@
 
 import { User } from "next-auth";
 import { useSession } from "next-auth/react";
-import React, { createContext, Dispatch, SetStateAction, useContext, useEffect, useState, useCallback } from "react";
+import React, { createContext, Dispatch, SetStateAction, useCallback, useContext, useEffect, useState } from "react";
 
 type ContextProps = {
   user: User | null;
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { data: session, status } = useSession();
 
   const checkAdminApproval = useCallback(async (email: string) => {
-    if (email) {      
+    if (email && email !== "undefined") {
       try {
         const response = await fetch("/api/getUserApprovalStatus", {
           method: "POST",
@@ -54,19 +54,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    if (status === "authenticated" && session?.user) {
+    if (status === "authenticated" && session?.user && session.user.email) {
       setIsAuthenticated(true);
       setUser(session.user);
-
-      if (session.user.email) {
-        checkAdminApproval(session.user.email);
-      }
+      checkAdminApproval(session.user.email);
     } else {
       setIsAuthenticated(false);
       setUser(null);
       setIsAdminApproved(false);
     }
-  }, [session?.user, status, checkAdminApproval]);
+  }, [session?.user?.email, status, checkAdminApproval]);
 
   return (
     <AuthContext.Provider

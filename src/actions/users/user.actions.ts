@@ -398,7 +398,7 @@ export const updateUserActivity = async (email: string, activityType: string, ac
 export const addFavoriteProduct = async (userId: string, productId: string) => {
   console.log(userId);
   console.log(productId);
-  
+
   try {
     const success = await addFavorite(userId, productId);
     return {
@@ -666,6 +666,12 @@ export const sendAdminOrderMail = async (userId: string) => {
  */
 export const getUserIdFromEmail = async (email: string) => {
   try {
+    // Block invalid emails early
+    if (!email || email === "undefined" || email === "null" || email === "") {
+      console.log("Blocking getUserIdFromEmail with invalid email:", email);
+      return null;
+    }
+
     console.log(`Attempting to find user ID for email: ${email}`);
     const existingUser = await db.query.users.findFirst({
       where: eq(users.email, email),

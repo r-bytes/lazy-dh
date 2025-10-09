@@ -8,8 +8,10 @@ export async function POST(request: NextRequest) {
   try {
     const { email, productId } = await request.json();
 
-    if (!email || !productId) {
-      return NextResponse.json({ success: false, message: "Email and productId are required" }, { status: 400 });
+    // Block all requests with invalid email
+    if (!email || email === "undefined" || email === "null" || email === "" || !productId) {
+      console.log("Blocking getUserData request with invalid email:", email);
+      return NextResponse.json({ success: false, message: "Invalid email or productId" }, { status: 400 });
     }
 
     // Fetch user by email

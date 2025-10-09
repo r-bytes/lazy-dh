@@ -1,14 +1,16 @@
 import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema";
-import { NextRequest, NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
     const { email } = await request.json();
 
-    if (!email) {
-      return NextResponse.json({ success: false, message: "Email is required" }, { status: 400 });
+    // Block all requests with invalid email
+    if (!email || email === "undefined" || email === "null" || email === "") {
+      console.log("Blocking request with invalid email:", email);
+      return NextResponse.json({ success: false, message: "Invalid email" }, { status: 400 });
     }
 
     const user = await db.query.users.findFirst({
