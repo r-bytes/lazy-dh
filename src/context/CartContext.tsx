@@ -20,7 +20,7 @@ type ContextProps = {
   setCartItems: (value: React.SetStateAction<Product[]>) => void;
   setTotalQuantities: (value: React.SetStateAction<number>) => void;
   setTotalPrice: (value: React.SetStateAction<number>) => void;
-  emptyCartItems (): void;
+  emptyCartItems(): void;
 };
 
 export const CartContext = createContext<ContextProps>({
@@ -39,7 +39,7 @@ export const CartContext = createContext<ContextProps>({
   setCartItems: () => {},
   setTotalQuantities: () => {},
   setTotalPrice: () => {},
-  emptyCartItems : () => {},
+  emptyCartItems: () => {},
 });
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
@@ -92,6 +92,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price * foundProduct.quantity * foundProduct.quantityInBox);
       setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - foundProduct.quantity);
       setCartItems(newCartItems);
+      toast.success(`${foundProduct.name} verwijderd uit winkelwagen`);
     }
   };
 
@@ -99,13 +100,24 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     const foundProduct = cartItems.find((item) => item._id === id);
     if (foundProduct) {
       const updatedQuantity = value === "inc" ? foundProduct.quantity + 1 : Math.max(foundProduct.quantity - 1, 0);
-      const newCartItems = cartItems.map((item) => (item._id === id ? { ...item, quantity: updatedQuantity } : item));
-      setCartItems(newCartItems);
-      setTotalPrice(
-        (prevTotalPrice) =>
-          prevTotalPrice + (value === "inc" ? foundProduct.price * foundProduct.quantityInBox : -foundProduct.price * foundProduct.quantityInBox)
-      );
-      setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + (value === "inc" ? 1 : -1));
+
+      // If quantity becomes 0, remove the item from cart
+      if (updatedQuantity === 0) {
+        const newCartItems = cartItems.filter((item) => item._id !== id);
+        setCartItems(newCartItems);
+        setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price * foundProduct.quantity * foundProduct.quantityInBox);
+        setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - foundProduct.quantity);
+        toast.success(`${foundProduct.name} verwijderd uit winkelwagen`);
+      } else {
+        // Update quantity and prices
+        const newCartItems = cartItems.map((item) => (item._id === id ? { ...item, quantity: updatedQuantity } : item));
+        setCartItems(newCartItems);
+
+        // Calculate price difference based on quantity change
+        const quantityDifference = updatedQuantity - foundProduct.quantity;
+        setTotalPrice((prevTotalPrice) => prevTotalPrice + quantityDifference * foundProduct.price * foundProduct.quantityInBox);
+        setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantityDifference);
+      }
     }
   };
 
@@ -122,8 +134,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     if (localStorageExists) {
       window.localStorage.removeItem("spacejelly_cart");
     }
-
-  }
+  };
 
   return (
     <CartContext.Provider
