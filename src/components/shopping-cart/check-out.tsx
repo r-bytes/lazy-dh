@@ -1,35 +1,32 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { User } from "next-auth";
-import toast from "react-hot-toast";
-import { Button } from "../ui/button";
-import { Icons } from "../icons";
+import { useAuthContext } from "@/context/AuthContext";
 import { useCartContext } from "@/context/CartContext";
 import { formatNumberWithCommaDecimalSeparator, navigateTo } from "@/lib/utils";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { Icons } from "../icons";
+import { Button } from "../ui/button";
 
 const Checkout = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [user, setUser] = useState<User | null>(null);
   const [invoicePdf, setInvoicePdf] = useState<string | null>(null);
   const [invoiceFilename, setInvoiceFilename] = useState<string | null>(null);
 
   const { totalPrice, cartItems, emptyCartItems } = useCartContext();
+  const { authorizedEmails } = useAuthContext();
   const { data: session, status } = useSession();
   const router = useRouter();
-
-  useEffect(() => {
-    if (session?.user) {
-      setUser(session.user);
-    }
-  }, [session]);
 
   // Calculate VAT at 21%
   const VAT = totalPrice * 0.21;
   const totalPriceWithVAT = totalPrice + VAT;
 
+  // Check if current user is admin
+  const isAdmin = session?.user?.email && authorizedEmails.includes(session.user.email);
+
   const generateInvoice = async () => {
-    if (!user?.email) {
+    if (!session?.user?.email) {
       toast.error("Gebruiker niet ingelogd");
       return;
     }
@@ -38,7 +35,7 @@ const Checkout = () => {
       const response = await fetch("/api/checkout", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cartItems, email: user.email }),
+        body: JSON.stringify({ cartItems, email: session.user.email }),
       });
 
       const data = await response.json();
@@ -59,7 +56,12 @@ const Checkout = () => {
 
   const viewInvoice = () => {
     if (invoicePdf) {
-      const blob = new Blob([Buffer.from(invoicePdf, "base64")], { type: "application/pdf" });
+      const binaryString = atob(invoicePdf);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      const blob = new Blob([bytes], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       window.open(url, "_blank");
     }
@@ -67,7 +69,12 @@ const Checkout = () => {
 
   const downloadInvoice = () => {
     if (invoicePdf && invoiceFilename) {
-      const blob = new Blob([Buffer.from(invoicePdf, "base64")], { type: "application/pdf" });
+      const binaryString = atob(invoicePdf);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      const blob = new Blob([bytes], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -80,7 +87,7 @@ const Checkout = () => {
   };
 
   const handleCheckout = async () => {
-    if (!user?.email) {
+    if (!session?.user?.email) {
       toast.error("Gebruiker niet ingelogd");
       return;
     }
@@ -95,7 +102,7 @@ const Checkout = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: user.email }),
+        body: JSON.stringify({ email: session.user.email }),
       });
 
       if (!userIdResponse.ok) {
@@ -131,7 +138,7 @@ const Checkout = () => {
           userId,
           cartItems,
           totalPrice: totalPriceWithVAT,
-          email: user.email,
+          email: session.user.email,
         }),
       });
 
@@ -168,19 +175,23 @@ const Checkout = () => {
         <h3 className="mr-2 tracking-wide"> € {formatNumberWithCommaDecimalSeparator(totalPriceWithVAT)} </h3>
       </div>
       <div className="mx-auto mt-16 flex w-full items-center justify-center space-x-4">
-        {/* Admin only */}
-        <Button onClick={generateInvoice} disabled={invoicePdf !== null || !user?.email}>
-          Genereer Concept Factuur
-        </Button>
-        
-        {invoicePdf && (
+        {/* Admin only - only show for admins */}
+        {isAdmin && (
           <>
-            <Button onClick={viewInvoice}>Bekijk Factuur</Button>
-            <Button onClick={downloadInvoice}>Download Factuur</Button>
+            <Button onClick={generateInvoice} disabled={invoicePdf !== null || !session?.user?.email}>
+              Genereer Concept Factuur
+            </Button>
+
+            {invoicePdf && (
+              <>
+                <Button onClick={viewInvoice}>Bekijk Factuur</Button>
+                <Button onClick={downloadInvoice}>Download Factuur</Button>
+              </>
+            )}
           </>
         )}
 
-        <Button type="button" className="btn" onClick={handleCheckout} disabled={!invoicePdf || !user?.email}>
+        <Button type="button" className="btn" onClick={handleCheckout} disabled={!session?.user?.email || isLoading}>
           {isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.logo className="mr-2 h-4 w-4" />}
           Bestelling Plaatsen
         </Button>
