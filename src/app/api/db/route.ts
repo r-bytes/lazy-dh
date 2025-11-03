@@ -118,6 +118,58 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true, data: userOrders }, { headers: corsHeaders });
     }
 
+    if (action === 'getOrderById') {
+      const { orderId, userId } = params || {};
+      
+      if (!orderId) {
+        return NextResponse.json({ success: false, message: 'orderId is required' }, { status: 400, headers: corsHeaders });
+      }
+
+      // Fetch single order with order items
+      const orderResult = await db
+        .select({
+          orderId: orders.id,
+          userId: orders.userId,
+          orderDate: orders.orderDate,
+          totalAmount: orders.totalAmount,
+          status: orders.status,
+          orderItems: sql`
+            COALESCE(
+              json_agg(
+                json_build_object(
+                  'name', ${orderItems.name},
+                  'quantity', ${orderItems.quantity},
+                  'quantityInBox', ${orderItems.quantityInBox},
+                  'volume', ${orderItems.volume},
+                  'percentage', ${orderItems.percentage},
+                  'price', ${orderItems.price},
+                  'imgUrl', ${orderItems.imgUrl}
+                )
+              ) FILTER (WHERE ${orderItems.orderId} IS NOT NULL),
+              '[]'
+            )`,
+        })
+        .from(orders)
+        .leftJoin(orderItems, eq(orderItems.orderId, orders.id))
+        .where(eq(orders.id, parseInt(orderId, 10)))
+        .groupBy(orders.id, orders.userId, orders.orderDate, orders.totalAmount, orders.status)
+        .limit(1);
+
+      // Check if order exists
+      if (!orderResult || orderResult.length === 0) {
+        return NextResponse.json({ success: false, message: 'Order not found' }, { status: 404, headers: corsHeaders });
+      }
+
+      const order = orderResult[0];
+
+      // If userId is provided, verify that the order belongs to the user
+      if (userId && order.userId !== userId) {
+        return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 403, headers: corsHeaders });
+      }
+
+      return NextResponse.json({ success: true, data: order }, { headers: corsHeaders });
+    }
+
     if (action === 'getUserFavorites') {
       const { userId } = params || {};
       
@@ -342,6 +394,115 @@ export async function POST(request: NextRequest) {
         console.error('Error verifying reset token:', error);
         return NextResponse.json(
           { success: false, message: error.message || 'Failed to verify token' },
+          { status: 500, headers: corsHeaders }
+        );
+      }
+    }
+
+    if (action === 'signup') {
+      const {
+        name,
+        email,
+        password,
+        address,
+        postal,
+        city,
+        phoneNumber,
+        companyName,
+        vatNumber,
+        chamberOfCommerceNumber,
+      } = params || {};
+
+      // Validate required fields
+      if (!name || !email || !password || !address || !postal || !city || !phoneNumber) {
+        return NextResponse.json(
+          { success: false, message: 'Alle verplichte velden moeten ingevuld zijn' },
+          { status: 400, headers: corsHeaders }
+        );
+      }
+
+      // Validate password strength
+      if (password.length < 8) {
+        return NextResponse.json(
+          { success: false, message: 'Wachtwoord moet minimaal 8 tekens lang zijn' },
+          { status: 400, headers: corsHeaders }
+        );
+      }
+
+      if (!/[A-Z]/.test(password)) {
+        return NextResponse.json(
+          { success: false, message: 'Wachtwoord moet een hoofdletter bevatten' },
+          { status: 400, headers: corsHeaders }
+        );
+      }
+
+      if (!/[0-9]/.test(password)) {
+        return NextResponse.json(
+          { success: false, message: 'Wachtwoord moet een nummer bevatten' },
+          { status: 400, headers: corsHeaders }
+        );
+      }
+
+      try {
+        // Check if user already exists
+        const existingUser = await db.query.users.findFirst({
+          where: eq(users.email, email.toLowerCase()),
+        });
+
+        if (existingUser) {
+          return NextResponse.json(
+            { success: false, message: 'Email is al geregistreerd' },
+            { status: 400, headers: corsHeaders }
+          );
+        }
+
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Generate email verification token
+        const emailVerificationToken = crypto.randomBytes(12).toString('base64url');
+
+        // Create user
+        const newUser = await db
+          .insert(users)
+          .values({
+            name,
+            email: email.toLowerCase(),
+            password: hashedPassword,
+            address,
+            postal,
+            city,
+            phoneNumber,
+            companyName: companyName || null,
+            vatNumber: vatNumber || null,
+            chamberOfCommerceNumber: chamberOfCommerceNumber || null,
+            emailVerified: false,
+            emailVerificationToken,
+            adminApproved: false,
+          })
+          .returning({
+            id: users.id,
+            email: users.email,
+            name: users.name,
+          });
+
+        // TODO: Send verification email
+
+        return NextResponse.json(
+          {
+            success: true,
+            data: {
+              id: newUser[0].id,
+              email: newUser[0].email,
+              name: newUser[0].name,
+            },
+          },
+          { headers: corsHeaders }
+        );
+      } catch (error: any) {
+        console.error('Signup error:', error);
+        return NextResponse.json(
+          { success: false, message: error.message || 'Fout bij registreren' },
           { status: 500, headers: corsHeaders }
         );
       }
