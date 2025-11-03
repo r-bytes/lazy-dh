@@ -1,6 +1,6 @@
 import { InvoiceDetails } from "@/lib/types/invoice";
 import Product from "@/lib/types/product";
-import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
+import { PDFDocument, PDFPage, rgb, StandardFonts } from "pdf-lib";
 
 export async function createOrderSummaryDocument(orderItemsData: Product[], invoiceDetails: InvoiceDetails) {
   console.log("==========>", orderItemsData);
@@ -18,66 +18,129 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
   const regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
   const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
-  // const startY = height - 500;
-
   // Fetch and place the logo image
-  const logoUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/logo.png`;
-  const logoImageResponse = await fetch(logoUrl);
-  const logoImageBytes = new Uint8Array(await logoImageResponse.arrayBuffer());
-  const logoImage = await pdfDoc.embedPng(logoImageBytes);
+  let logoImage;
+  try {
+    const logoUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/logo.png`;
+    const logoImageResponse = await fetch(logoUrl);
+    if (logoImageResponse.ok) {
+      const contentType = logoImageResponse.headers.get("content-type");
+      const logoImageBytes = new Uint8Array(await logoImageResponse.arrayBuffer());
 
-  // Calculate dimensions for the logo placement (smaller and on the left)
-  const logoWidth = 60; // Reduced size
-  const logoHeight = logoImage.height * (logoWidth / logoImage.width);
-  const logoX = 50; // Left side of the page
-  const logoY = height - logoHeight - 20; // 20 points padding from the top edge
+      // Determine image type from content-type header or try both
+      if (contentType?.includes("png")) {
+        try {
+          logoImage = await pdfDoc.embedPng(logoImageBytes);
+        } catch (error) {
+          console.warn("Failed to embed PNG, trying JPG:", error);
+          try {
+            logoImage = await pdfDoc.embedJpg(logoImageBytes);
+          } catch {
+            // Skip logo if both fail
+          }
+        }
+      } else if (contentType?.includes("jpeg") || contentType?.includes("jpg")) {
+        try {
+          logoImage = await pdfDoc.embedJpg(logoImageBytes);
+        } catch (error) {
+          console.warn("Failed to embed JPG:", error);
+        }
+      } else {
+        // Try PNG first, then JPG
+        try {
+          logoImage = await pdfDoc.embedPng(logoImageBytes);
+        } catch {
+          try {
+            logoImage = await pdfDoc.embedJpg(logoImageBytes);
+          } catch {
+            // Skip logo if both fail
+          }
+        }
+      }
+    }
+  } catch (error) {
+    console.warn("Could not load logo image, continuing without logo:", error);
+    // Continue without logo if it fails
+  }
 
-  // Place the logo image
-  page.drawImage(logoImage, {
-    x: logoX,
-    y: logoY,
-    width: logoWidth,
-    height: logoHeight,
+  // Constants
+  const logoWidth = 60;
+  let logoHeight = 0;
+  let logoY = height - 20;
+  if (logoImage) {
+    logoHeight = logoImage.height * (logoWidth / logoImage.width);
+    logoY = height - logoHeight - 20;
+  }
+
+  // Layout constants
+  const headerHeight = 300; // Space for header content
+  const footerHeight = 150; // Space for footer content
+  const tableStartY = height - headerHeight;
+  const minTableEndY = footerHeight; // Minimum Y position before needing new page
+  const lineSpacing = 15;
+  const fontSize = 8;
+  const columnPositions = [50, 100, 300, 400, 500];
+  const headers = ["Aantal", "Omschrijving", "Prijs per stuk", "Aantal in doos", "Totaal"];
+
+  // Calculate total
+  let totalExVAT = 0;
+  orderItemsData.forEach((item: Product) => {
+    const totalPrice = item.price * item.quantity * item.quantityInBox;
+    totalExVAT += totalPrice;
   });
 
-  // Company name and slogan
-  const companyNameX = (width - logoWidth - 150) / 2 + logoWidth - 100; // Center between logo and right edge
-  const companyNameY = height - 80; // Slightly lower on the page
+  // Function to draw header on a page
+  const drawHeader = (page: PDFPage, pageNumber: number, totalPages: number) => {
+    const logoX = 50;
+    const companyNameX = logoImage ? (width - logoWidth - 150) / 2 + logoWidth - 100 : width / 2 - 100;
+    const companyNameY = height - 80;
 
-  page.drawText("Lazo Den Haag Spirits", {
-    x: companyNameX,
-    y: companyNameY,
-    size: 16,
-    font: boldFont,
-    color: rgb(0, 0, 0),
-  });
+    // Draw logo if available
+    if (logoImage && pageNumber === 1) {
+      page.drawImage(logoImage, {
+        x: logoX,
+        y: logoY,
+        width: logoWidth,
+        height: logoHeight,
+      });
+    }
 
-  page.drawText("Authentieke Smaken uit Griekenland en Bulgarije", {
-    x: companyNameX,
-    y: companyNameY - 20,
-    size: 10,
-    font: regularFont,
-    color: rgb(0, 0, 0),
-  });
+    // Company name and slogan (only on first page)
+    if (pageNumber === 1) {
+      page.drawText("Lazo Den Haag Spirits", {
+        x: companyNameX,
+        y: companyNameY,
+        size: 16,
+        font: boldFont,
+        color: rgb(0, 0, 0),
+      });
 
-  // Title (Factuur) on the right
-  page.drawText("Factuur", {
-    x: width - 150,
-    y: logoY + logoHeight - 30,
-    size: 24,
-    font: boldFont,
-    color: rgb(0, 0, 0),
-  });
+      page.drawText("Authentieke Smaken uit Griekenland en Bulgarije", {
+        x: companyNameX,
+        y: companyNameY - 20,
+        size: 10,
+        font: regularFont,
+        color: rgb(0, 0, 0),
+      });
 
-  // Address Blocks
-  const addressBlockY = companyNameY - 100; // Adjust this value to move both address blocks down
-  const addressDetails = `
+      // Title (Factuur) on the right
+      page.drawText("Factuur", {
+        x: width - 150,
+        y: logoY + logoHeight - 30,
+        size: 24,
+        font: boldFont,
+        color: rgb(0, 0, 0),
+      });
+
+      // Address Blocks (only on first page)
+      const addressBlockY = companyNameY - 100;
+      const addressDetails = `
     ${invoiceDetails.companyName ? invoiceDetails.companyName : invoiceDetails.invoiceCustomerName}
     ${invoiceDetails.invoiceCustomerAddress}
     ${invoiceDetails.invoiceCustomerPostal} ${invoiceDetails.invoiceCustomerCity}
     ${invoiceDetails.invoiceCustomerCountry}`;
 
-  const lazoDetails = `
+      const lazoDetails = `
     Kaapseplein 76
     2572NG Den Haag
     info@lazodenhaagspirits.nl
@@ -86,102 +149,230 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
     Btw: NL002364298B87
     Bank: NL 06 INGB0004 7737 67`;
 
-  page.drawText("Factuuradres:", {
-    x: 50,
-    y: addressBlockY + 50,
-    size: 8,
-    font: boldFont,
-    lineHeight: 4,
-  });
-  page.drawText(addressDetails, {
-    x: 40,
-    y: addressBlockY + 50,
-    size: 8,
-    font: regularFont,
-    lineHeight: 10,
-  });
+      page.drawText("Factuuradres:", {
+        x: 50,
+        y: addressBlockY + 50,
+        size: 8,
+        font: boldFont,
+      });
+      page.drawText(addressDetails, {
+        x: 40,
+        y: addressBlockY + 50,
+        size: 8,
+        font: regularFont,
+        lineHeight: 10,
+      });
 
-  const lazoBlockX = width / 2 + 50; // Center the Lazo block more to the right
+      const lazoBlockX = width / 2 + 50;
+      page.drawText(lazoDetails, {
+        x: lazoBlockX + 55,
+        y: addressBlockY + 50,
+        size: 8,
+        font: regularFont,
+        lineHeight: 10,
+      });
 
-  page.drawText(lazoDetails, {
-    x: lazoBlockX + 55,
-    y: addressBlockY + 50,
-    size: 8,
-    font: regularFont,
-    lineHeight: 10,
-  });
+      // Reference info (only on first page)
+      const referenceY = addressBlockY - 150;
+      page.drawText("Referentie:", {
+        x: 50,
+        y: referenceY + 80,
+        size: 8,
+        font: boldFont,
+      });
+      page.drawText(invoiceDetails.invoiceNumber, {
+        x: 50,
+        y: referenceY + 70,
+        size: 8,
+        font: regularFont,
+      });
 
-  // Additional Info Blocks
-  const referenceY = addressBlockY - 150;
-
-  page.drawText("Referentie:", {
-    x: 50,
-    y: referenceY + 80,
-    size: 8,
-    font: boldFont,
-  });
-  page.drawText(invoiceDetails.invoiceNumber, {
-    x: 50,
-    y: referenceY + 70,
-    size: 8,
-    font: regularFont,
-  });
-
-  const referenceInfoRight = `
+      const referenceInfoRight = `
     Opdracht: ${invoiceDetails.orderNumber}
     Factuur: ${invoiceDetails.invoiceNumber}
     Factuurdatum: ${invoiceDetails.date}
   `;
 
-  page.drawText(referenceInfoRight, {
-    x: 405,
-    y: referenceY + 90,
-    size: 8,
-    font: regularFont,
-    lineHeight: 10,
-  });
+      page.drawText(referenceInfoRight, {
+        x: 405,
+        y: referenceY + 90,
+        size: 8,
+        font: regularFont,
+        lineHeight: 10,
+      });
+    }
 
-  // Table Offset and Styles
-  const tableStartY = height - 300; // Adjust based on your layout
-  const summaryStartY = tableStartY - 300; // Adjust based on content
-  const footerStartY = 70; // Increased to accommodate new text
+    // Table headers (on every page)
+    const tableHeaderY = pageNumber === 1 ? tableStartY : height - 50;
+    headers.forEach((header, index) => {
+      page.drawText(header, {
+        x: columnPositions[index],
+        y: tableHeaderY,
+        size: 10,
+        font: boldFont,
+        color: rgb(0, 0, 0),
+      });
+    });
 
-  const fontSize = 8;
-  const lineSpacing = 15;
+    // Draw a horizontal line after headers
+    page.drawLine({
+      start: { x: 50, y: tableHeaderY - 5 },
+      end: { x: width - 50, y: tableHeaderY - 5 },
+      thickness: 0.5,
+      color: rgb(0, 0, 0),
+    });
 
-  // Headers for the table (new order)
-  const headers = ["Aantal", "Omschrijving", "Prijs per stuk", "Aantal in doos", "Totaal"];
+    return tableHeaderY - lineSpacing;
+  };
 
-  // Define the starting positions for each column
-  const columnPositions = [50, 100, 300, 400, 500];
+  // Function to draw footer on a page
+  const drawFooter = (page: PDFPage, pageNumber: number, totalPages: number, isLastPage: boolean) => {
+    const footerStartY = 70;
 
-  // Draw headers in bold
-  headers.forEach((header, index) => {
-    page.drawText(header, {
-      x: columnPositions[index],
-      y: tableStartY,
-      size: 10,
+    // Page number
+    const pageNumberText = `Pagina ${pageNumber} van ${totalPages}`;
+    page.drawText(pageNumberText, {
+      x: width / 2 - 40,
+      y: footerStartY + 20,
+      size: 8,
+      font: regularFont,
+    });
+
+    // Only draw payment info on last page
+    if (isLastPage) {
+      // Payment request text
+      const paymentRequest = `We verzoeken u vriendelijk het bovenstaande totaalbedrag binnen 7 dagen over te maken op rekening: ${process.env.COMPANY_IBAN!}`;
+      const paymentRequestWidth = regularFont.widthOfTextAtSize(paymentRequest, 8);
+      page.drawText(paymentRequest, {
+        x: (width - paymentRequestWidth) / 2,
+        y: footerStartY - 15,
+        size: 8,
+        font: regularFont,
+        color: rgb(0, 0, 0),
+      });
+
+      const paymentReference = `t.n.v. ${process.env.COMPANY_NAME!}, onder vermelding van het factuurnummer: ${invoiceDetails.invoiceNumber}`;
+      const paymentReferenceWidth = regularFont.widthOfTextAtSize(paymentReference, 8);
+      page.drawText(paymentReference, {
+        x: (width - paymentReferenceWidth) / 2,
+        y: footerStartY - 35,
+        size: 8,
+        font: regularFont,
+        color: rgb(0, 0, 0),
+      });
+
+      // Draw a horizontal line after payment info
+      page.drawLine({
+        start: { x: 50, y: footerStartY + 15 },
+        end: { x: width - 50, y: footerStartY + 15 },
+        thickness: 1,
+        color: rgb(red, green, blue),
+      });
+    }
+
+    // Yellow Banner (on every page)
+    const bannerHeight = 20;
+    const bannerY = -1;
+    page.drawRectangle({
+      x: 0,
+      y: bannerY,
+      width: width,
+      height: bannerHeight,
+      color: rgb(red, green, blue),
+    });
+    const bannerText = process.env.NEXT_PUBLIC_BASE_URL! || "http://localhost:3000";
+    const bannerTextWidth = regularFont.widthOfTextAtSize(bannerText, 8);
+    page.drawText(bannerText, {
+      x: (width - bannerTextWidth) / 2,
+      y: bannerY + (bannerHeight - 8) / 2,
+      size: 8,
       font: boldFont,
       color: rgb(0, 0, 0),
     });
-  });
+  };
 
-  // Draw a horizontal line after headers
-  page.drawLine({
-    start: { x: 50, y: tableStartY - 5 },
-    end: { x: width - 50, y: tableStartY - 5 },
-    thickness: 0.5,
-    color: rgb(0, 0, 0),
-  });
+  // Function to draw summary (only on last page)
+  const drawSummary = (page: PDFPage, currentY: number) => {
+    const verticalSpacing = 12;
+    const xOffset = 500;
+    const summaryY = Math.max(currentY - 30, minTableEndY + 60); // Ensure summary doesn't overlap with footer
 
-  let currentY = tableStartY - lineSpacing;
-  let totalExVAT = 0;
+    const vatAmount = totalExVAT * 0.21;
+    const totalIncVAT = totalExVAT * 1.21;
 
-  // Draw each item row in the table
-  orderItemsData.forEach((item: Product) => {
+    // Draw price excluding VAT (Subtotal)
+    page.drawText(`Subtotaal:`, {
+      x: xOffset - 100,
+      y: summaryY,
+      size: 8,
+      font: regularFont,
+    });
+    page.drawText(`€ ${totalExVAT.toFixed(2).replace(".", ",")}`, {
+      x: xOffset,
+      y: summaryY,
+      size: 8,
+      font: regularFont,
+    });
+
+    // Draw BTW (VAT) amount
+    page.drawText(`BTW 21%:`, {
+      x: xOffset - 100,
+      y: summaryY - verticalSpacing,
+      size: 8,
+      font: regularFont,
+    });
+    page.drawText(`€ ${vatAmount.toFixed(2).replace(".", ",")}`, {
+      x: xOffset,
+      y: summaryY - verticalSpacing,
+      size: 8,
+      font: regularFont,
+    });
+
+    // Draw total amount to be paid including VAT
+    page.drawText(`Totaal:`, {
+      x: xOffset - 100,
+      y: summaryY - 2 * verticalSpacing,
+      size: 8,
+      font: boldFont,
+    });
+    page.drawText(`€ ${totalIncVAT.toFixed(2).replace(".", ",")}`, {
+      x: xOffset,
+      y: summaryY - 2 * verticalSpacing,
+      size: 8,
+      font: boldFont,
+    });
+  };
+
+  // Create first page
+  let currentPage = pdfDoc.addPage([width, height]);
+  let pageNumber = 1;
+  let currentY = drawHeader(currentPage, pageNumber, 0); // Will update totalPages later
+  let itemsPerPage = 0;
+  const maxItemsPerPage = Math.floor((tableStartY - minTableEndY) / lineSpacing);
+
+  // Calculate how many pages we need
+  const totalPages = Math.ceil(orderItemsData.length / maxItemsPerPage);
+  const actualMaxItemsPerPage = Math.ceil(orderItemsData.length / totalPages);
+
+  // Redraw header with correct total pages
+  currentY = drawHeader(currentPage, pageNumber, totalPages);
+
+  // Draw items
+  orderItemsData.forEach((item: Product, index: number) => {
+    // Check if we need a new page
+    if (itemsPerPage >= actualMaxItemsPerPage && currentY < minTableEndY + 100) {
+      // Draw footer on current page
+      drawFooter(currentPage, pageNumber, totalPages, false);
+
+      // Create new page
+      currentPage = pdfDoc.addPage([width, height]);
+      pageNumber++;
+      itemsPerPage = 0;
+      currentY = drawHeader(currentPage, pageNumber, totalPages);
+    }
+
     const pricePerPiece = item.price;
     const totalPrice = pricePerPiece * item.quantity * item.quantityInBox;
-    totalExVAT += totalPrice;
 
     const rowData = [
       item.quantity.toString(),
@@ -192,7 +383,7 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
     ];
 
     rowData.forEach((text, colIndex) => {
-      page.drawText(text, {
+      currentPage.drawText(text, {
         x: columnPositions[colIndex],
         y: currentY,
         size: fontSize,
@@ -202,117 +393,18 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
     });
 
     currentY -= lineSpacing;
+    itemsPerPage++;
   });
 
-  // Summary below the table
-  // Constants for layout
-  const verticalSpacing = 12; // Adjust space between lines
-  const xOffset = 500; // X position for right alignment
-  const startY = summaryStartY; // Starting Y position for the summary section
-  
-  // Draw price excluding VAT (Subtotal)
-  page.drawText(`Subtotaal:`, {
-    x: xOffset - 100,
-    y: startY,
-    size: 8,
-    font: regularFont,
-  });
-  page.drawText(`€ ${totalExVAT.toFixed(2).replace(".", ",")}`, {
-    x: xOffset,
-    y: startY,
-    size: 8,
-    font: regularFont,
-  });
+  // Draw summary on last page
+  drawSummary(currentPage, currentY);
 
-  // Draw BTW (VAT) amount
-  const vatAmount = totalExVAT * 0.21;
-  page.drawText(`BTW 21%:`, {
-    x: xOffset - 100,
-    y: startY - verticalSpacing,
-    size: 8,
-    font: regularFont,
-  });
-  page.drawText(`€ ${vatAmount.toFixed(2).replace(".", ",")}`, {
-    x: xOffset,
-    y: startY - verticalSpacing,
-    size: 8,
-    font: regularFont,
-  });
+  // Draw footer on last page
+  drawFooter(currentPage, pageNumber, totalPages, true);
 
-  // Draw total amount to be paid including VAT
-  const totalIncVAT = totalExVAT * 1.21;
-  page.drawText(`Totaal:`, {
-    x: xOffset - 100,
-    y: startY - 2 * verticalSpacing,
-    size: 8,
-    font: boldFont,
-  });
-  page.drawText(`€ ${totalIncVAT.toFixed(2).replace(".", ",")}`, {
-    x: xOffset,
-    y: startY - 2 * verticalSpacing,
-    size: 8,
-    font: boldFont,
-  });
-
-  // page.drawText("Betalingstermijn: Betaling binnen 7 dagen", { x: 50, y: summaryStartY - 48, size: 8, font: boldFont });
-
-  // Page number
-  const pageNumber = "Pagina 1"; // Simple static example
-  page.drawText(pageNumber, { x: width / 2 - 25, y: footerStartY + 20, size: 8, font: regularFont });
-
-  // Payment request text
-  const paymentRequest = `We verzoeken u vriendelijk het bovenstaande totaalbedrag binnen 7 dagen over te maken op rekening: ${process.env.COMPANY_IBAN!}`;
-  const paymentRequestWidth = regularFont.widthOfTextAtSize(paymentRequest, 8);
-  page.drawText(paymentRequest, {
-    x: (width - paymentRequestWidth) / 2,
-    y: footerStartY + - 15,
-    size: 8,
-    font: regularFont,
-    color: rgb(0, 0, 0),
-  });
-
-  const paymentReference = `t.n.v. ${process.env.COMPANY_NAME!}, onder vermelding van het factuurnummer: ${invoiceDetails.invoiceNumber}`;
-  const paymentReferenceWidth = regularFont.widthOfTextAtSize(paymentReference, 8);
-  page.drawText(paymentReference, {
-    x: (width - paymentReferenceWidth) / 2,
-    y: footerStartY - 25,
-    size: 8,
-    font: regularFont,
-    color: rgb(0, 0, 0),
-  });
-
-  // Draw a horizontal line after payment info
-  page.drawLine({
-    start: { x: 50, y: footerStartY + 15 },
-    end: { x: width - 50, y: footerStartY + 15 },
-    thickness: 1,
-    color: rgb(red, green, blue),
-  });
-
-  // Yellow Banner
-  const bannerHeight = 20;
-  const bannerY = -1; // Near the very bottom
-
-  page.drawRectangle({
-    x: 0,
-    y: bannerY,
-    width: width,
-    height: bannerHeight,
-    color: rgb(red, green, blue), // Yellow color
-  });
-  const bannerText = process.env.NEXT_PUBLIC_BASE_URL! || "http://localhost:3000";
-  const bannerTextWidth = regularFont.widthOfTextAtSize(bannerText, 8);
-  page.drawText(bannerText, {
-    x: (width - bannerTextWidth) / 2,
-    y: bannerY + (bannerHeight - 8) / 2, // Center text vertically within the banner
-    size: 8,
-    font: boldFont,
-    color: rgb(0, 0, 0), // Text color
-  });
-
-  // Save the PDF document as bytes and convert to Base64 (if necessary)
+  // Save the PDF document as bytes and convert to Base64
   const pdfBytes = await pdfDoc.save();
   const base64pdf = Buffer.from(pdfBytes).toString("base64");
 
-  return base64pdf; // Optionally return this value if needed elsewhere
+  return base64pdf;
 }
