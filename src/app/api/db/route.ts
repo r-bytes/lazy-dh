@@ -125,49 +125,79 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ success: false, message: 'orderId is required' }, { status: 400, headers: corsHeaders });
       }
 
-      // Fetch single order with order items
-      const orderResult = await db
-        .select({
-          orderId: orders.id,
-          userId: orders.userId,
-          orderDate: orders.orderDate,
-          totalAmount: orders.totalAmount,
-          status: orders.status,
-          orderItems: sql`
-            COALESCE(
-              json_agg(
-                json_build_object(
-                  'name', ${orderItems.name},
-                  'quantity', ${orderItems.quantity},
-                  'quantityInBox', ${orderItems.quantityInBox},
-                  'volume', ${orderItems.volume},
-                  'percentage', ${orderItems.percentage},
-                  'price', ${orderItems.price},
-                  'imgUrl', ${orderItems.imgUrl}
-                )
-              ) FILTER (WHERE ${orderItems.orderId} IS NOT NULL),
-              '[]'
-            )`,
-        })
-        .from(orders)
-        .leftJoin(orderItems, eq(orderItems.orderId, orders.id))
-        .where(eq(orders.id, parseInt(orderId, 10)))
-        .groupBy(orders.id, orders.userId, orders.orderDate, orders.totalAmount, orders.status)
-        .limit(1);
+      try {
+        // Parse orderId to integer (database uses serial/integer for order.id)
+        const parsedOrderId = parseInt(String(orderId), 10);
+        
+        if (isNaN(parsedOrderId)) {
+          return NextResponse.json(
+            { success: false, message: 'Invalid order ID format' },
+            { status: 400, headers: corsHeaders }
+          );
+        }
 
-      // Check if order exists
-      if (!orderResult || orderResult.length === 0) {
-        return NextResponse.json({ success: false, message: 'Order not found' }, { status: 404, headers: corsHeaders });
+        console.log('Fetching order by id:', parsedOrderId, 'for user:', userId);
+
+        // First, check if order exists and get basic info
+        const orderBasic = await db.query.orders.findFirst({
+          where: eq(orders.id, parsedOrderId),
+        });
+
+        if (!orderBasic) {
+          console.log('Order not found in database:', parsedOrderId);
+          return NextResponse.json(
+            { success: false, message: 'Order not found' },
+            { status: 404, headers: corsHeaders }
+          );
+        }
+
+        // If userId is provided, verify that the order belongs to the user
+        // Skip check for temp users (users with IDs starting with 'temp-')
+        if (userId && !userId.startsWith('temp-') && orderBasic.userId !== userId) {
+          console.log('Order does not belong to user:', orderBasic.userId, 'vs', userId);
+          return NextResponse.json(
+            { success: false, message: 'Unauthorized: This order does not belong to you' },
+            { status: 403, headers: corsHeaders }
+          );
+        }
+
+        // Fetch order items separately
+        const orderItemsList = await db.query.orderItems.findMany({
+          where: eq(orderItems.orderId, parsedOrderId),
+        });
+
+        // Format order items
+        const formattedOrderItems = orderItemsList.map(item => ({
+          name: item.name || '',
+          quantity: item.quantity || 0,
+          quantityInBox: item.quantityInBox || 0,
+          volume: item.volume || '',
+          percentage: item.percentage || '',
+          price: parseFloat(item.price?.toString() || '0'),
+          imgUrl: item.imgUrl || '',
+        }));
+
+        // Build response object matching getUserOrders structure
+        const order = {
+          orderId: orderBasic.id,
+          userId: orderBasic.userId,
+          orderDate: orderBasic.orderDate,
+          totalAmount: orderBasic.totalAmount?.toString() || '0',
+          status: orderBasic.status,
+          orderItems: formattedOrderItems.length > 0 ? formattedOrderItems : null,
+        };
+
+        console.log('Order found:', order.orderId, 'with', formattedOrderItems.length, 'items');
+
+        return NextResponse.json({ success: true, data: order }, { headers: corsHeaders });
+      } catch (error: any) {
+        console.error('Error fetching order by id:', error);
+        console.error('Error stack:', error.stack);
+        return NextResponse.json(
+          { success: false, message: error.message || 'Failed to fetch order' },
+          { status: 500, headers: corsHeaders }
+        );
       }
-
-      const order = orderResult[0];
-
-      // If userId is provided, verify that the order belongs to the user
-      if (userId && order.userId !== userId) {
-        return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 403, headers: corsHeaders });
-      }
-
-      return NextResponse.json({ success: true, data: order }, { headers: corsHeaders });
     }
 
     if (action === 'getUserFavorites') {
