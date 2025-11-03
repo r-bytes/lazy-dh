@@ -1,10 +1,8 @@
 import { InvoiceDetails } from "@/lib/types/invoice";
 import Product from "@/lib/types/product";
-import { PDFDocument, PDFPage, rgb, StandardFonts } from "pdf-lib";
+import { PDFDocument, PDFImage, PDFPage, rgb, StandardFonts } from "pdf-lib";
 
 export async function createOrderSummaryDocument(orderItemsData: Product[], invoiceDetails: InvoiceDetails) {
-  console.log("==========>", orderItemsData);
-
   // Create a new PDF document
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([595.28, 841.89]); // A4 size in points
@@ -19,7 +17,7 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
   const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
   // Fetch and place the logo image
-  let logoImage;
+  let logoImage: PDFImage | undefined;
   try {
     const logoUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/logo.png`;
     const logoImageResponse = await fetch(logoUrl);
