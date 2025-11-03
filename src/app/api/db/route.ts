@@ -2,10 +2,10 @@
 // Plaats dit in je webapp als een aparte API route die alleen database queries doet
 
 import { db } from '@/lib/db';
-import { addFavorite, getFavoriteProductIds, removeFavorite } from '@/lib/db/data';
-import { orderItems, orders, users } from '@/lib/db/schema';
+import { getFavoriteProductIds } from '@/lib/db/data';
+import { favoriteProducts, orderItems, orders, users } from '@/lib/db/schema';
 import crypto from 'crypto';
-import { eq, sql } from 'drizzle-orm';
+import { and, eq, sql } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
@@ -148,8 +148,28 @@ export async function POST(request: NextRequest) {
       }
 
       try {
-        const result = await addFavorite(userId, productId);
-        return NextResponse.json({ success: result }, { headers: corsHeaders });
+        // Check if favorite already exists first
+        const existing = await db.query.favoriteProducts.findFirst({
+          where: and(
+            eq(favoriteProducts.userId, userId),
+            eq(favoriteProducts.productId, productId)
+          ),
+        });
+
+        if (existing) {
+          // Already favorited, return success
+          return NextResponse.json({ success: true }, { headers: corsHeaders });
+        }
+
+        // Insert new favorite
+        await db
+          .insert(favoriteProducts)
+          .values({
+            userId: userId,
+            productId: productId,
+          });
+        
+        return NextResponse.json({ success: true }, { headers: corsHeaders });
       } catch (error: any) {
         console.error('Error adding favorite:', error);
         return NextResponse.json(
@@ -170,8 +190,17 @@ export async function POST(request: NextRequest) {
       }
 
       try {
-        const result = await removeFavorite(userId, productId);
-        return NextResponse.json({ success: result }, { headers: corsHeaders });
+        // Use Drizzle to delete favorite
+        await db
+          .delete(favoriteProducts)
+          .where(
+            and(
+              eq(favoriteProducts.userId, userId),
+              eq(favoriteProducts.productId, productId)
+            )
+          );
+        
+        return NextResponse.json({ success: true }, { headers: corsHeaders });
       } catch (error: any) {
         console.error('Error removing favorite:', error);
         return NextResponse.json(
