@@ -2,6 +2,7 @@
 // Plaats dit in je webapp als een aparte API route die alleen database queries doet
 
 import { db } from '@/lib/db';
+import { addFavorite, getFavoriteProductIds, removeFavorite } from '@/lib/db/data';
 import { orderItems, orders, users } from '@/lib/db/schema';
 import { eq, sql } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
@@ -108,6 +109,69 @@ export async function POST(request: NextRequest) {
         .orderBy(sql`${orders.orderDate} DESC`);
 
       return NextResponse.json({ success: true, data: userOrders }, { headers: corsHeaders });
+    }
+
+    if (action === 'getUserFavorites') {
+      const { userId } = params || {};
+      
+      if (!userId) {
+        return NextResponse.json({ success: false, message: 'userId is required' }, { status: 400, headers: corsHeaders });
+      }
+
+      try {
+        const favoriteIds = await getFavoriteProductIds(userId);
+        return NextResponse.json({ success: true, data: favoriteIds }, { headers: corsHeaders });
+      } catch (error: any) {
+        console.error('Error fetching favorites:', error);
+        return NextResponse.json(
+          { success: false, message: error.message || 'Failed to fetch favorites' },
+          { status: 500, headers: corsHeaders }
+        );
+      }
+    }
+
+    if (action === 'addFavorite') {
+      const { userId, productId } = params || {};
+      
+      if (!userId || !productId) {
+        return NextResponse.json(
+          { success: false, message: 'userId and productId are required' },
+          { status: 400, headers: corsHeaders }
+        );
+      }
+
+      try {
+        const result = await addFavorite(userId, productId);
+        return NextResponse.json({ success: result }, { headers: corsHeaders });
+      } catch (error: any) {
+        console.error('Error adding favorite:', error);
+        return NextResponse.json(
+          { success: false, message: error.message || 'Failed to add favorite' },
+          { status: 500, headers: corsHeaders }
+        );
+      }
+    }
+
+    if (action === 'removeFavorite') {
+      const { userId, productId } = params || {};
+      
+      if (!userId || !productId) {
+        return NextResponse.json(
+          { success: false, message: 'userId and productId are required' },
+          { status: 400, headers: corsHeaders }
+        );
+      }
+
+      try {
+        const result = await removeFavorite(userId, productId);
+        return NextResponse.json({ success: result }, { headers: corsHeaders });
+      } catch (error: any) {
+        console.error('Error removing favorite:', error);
+        return NextResponse.json(
+          { success: false, message: error.message || 'Failed to remove favorite' },
+          { status: 500, headers: corsHeaders }
+        );
+      }
     }
 
     return NextResponse.json({ success: false, message: 'Invalid action' }, { status: 400, headers: corsHeaders });
