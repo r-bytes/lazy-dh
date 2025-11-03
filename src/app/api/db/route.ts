@@ -4,8 +4,15 @@
 import { db } from '@/lib/db';
 import { addFavorite, getFavoriteProductIds, removeFavorite } from '@/lib/db/data';
 import { orderItems, orders, users } from '@/lib/db/schema';
+import crypto from 'crypto';
 import { eq, sql } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
+import { Resend } from 'resend';
+
+// @ts-ignore - bcryptjs doesn't have types
+const bcrypt = require('bcryptjs');
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // CORS headers voor mobile app
 const corsHeaders = {
@@ -169,6 +176,212 @@ export async function POST(request: NextRequest) {
         console.error('Error removing favorite:', error);
         return NextResponse.json(
           { success: false, message: error.message || 'Failed to remove favorite' },
+          { status: 500, headers: corsHeaders }
+        );
+      }
+    }
+
+    if (action === 'requestPasswordReset') {
+      const { email } = params || {};
+      
+      if (!email) {
+        return NextResponse.json(
+          { success: false, message: 'email is required' },
+          { status: 400, headers: corsHeaders }
+        );
+      }
+
+      try {
+        const user = await db.query.users.findFirst({
+          where: eq(users.email, email.toLowerCase()),
+        });
+
+        if (!user) {
+          // Don't reveal if user exists for security
+          return NextResponse.json(
+            { success: true, message: 'Reset link is verstuurd naar je email' },
+            { headers: corsHeaders }
+          );
+        }
+
+        const resetPasswordToken = crypto.randomBytes(12).toString('base64url');
+        const today = new Date();
+        const expiryDate = new Date(today.setDate(today.getDate() + 1));
+
+        await db.update(users)
+          .set({
+            resetPasswordToken: resetPasswordToken,
+            resetPasswordTokenExpiry: expiryDate,
+          })
+          .where(eq(users.id, user.id));
+
+        // Send email with reset link
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.lazodenhaagspirits.nl';
+        const resetLink = `${baseUrl}/account/reset-password?token=${resetPasswordToken}`;
+        
+        const emailHtml = `
+          <div>
+            <h1>Wachtwoord wijzigen voor: <b>${user.email}</b></h1>
+            <p>Om je wachtwoord te resetten, klik op onderstaande link en volg de instructies:</p>
+            <a href="${resetLink}" target="_blank">
+              Klik hier om uw wachtwoord te resetten
+            </a>
+            <p style="margin-top: 20px; font-size: 12px; color: #666;">
+              Als je deze link niet kunt gebruiken, kopieer en plak deze URL in je browser:<br/>
+              ${resetLink}
+            </p>
+            <p style="margin-top: 10px; font-size: 12px; color: #666;">
+              Deze link is 24 uur geldig.
+            </p>
+          </div>
+        `;
+
+        try {
+          const { data, error } = await resend.emails.send({
+            from: 'Lazo Den Haag Spirits <no-reply@lazodenhaagspirits.nl>',
+            to: [user.email],
+            subject: 'Wachtwoord wijzigen',
+            html: emailHtml,
+          });
+
+          if (error) {
+            console.error('Email sending error:', error);
+            // Don't fail the request if email fails, user can request again
+            console.warn('Password reset token created but email failed to send:', resetPasswordToken);
+          }
+        } catch (emailError) {
+          console.error('Error in sending password reset email:', emailError);
+          // Don't fail the request if email fails
+        }
+
+        return NextResponse.json(
+          { success: true, message: 'Reset link is verstuurd naar je email' },
+          { headers: corsHeaders }
+        );
+      } catch (error: any) {
+        console.error('Error requesting password reset:', error);
+        return NextResponse.json(
+          { success: false, message: error.message || 'Failed to request password reset' },
+          { status: 500, headers: corsHeaders }
+        );
+      }
+    }
+
+    if (action === 'verifyResetToken') {
+      const { token } = params || {};
+      
+      if (!token) {
+        return NextResponse.json(
+          { success: false, message: 'token is required' },
+          { status: 400, headers: corsHeaders }
+        );
+      }
+
+      try {
+        const user = await db.query.users.findFirst({
+          where: eq(users.resetPasswordToken, token),
+        });
+
+        if (!user) {
+          return NextResponse.json(
+            { success: false, message: 'Token is ongeldig' },
+            { headers: corsHeaders }
+          );
+        }
+
+        const expiryDate = user.resetPasswordTokenExpiry;
+        if (!expiryDate) {
+          return NextResponse.json(
+            { success: false, message: 'Token is verlopen' },
+            { headers: corsHeaders }
+          );
+        }
+
+        const today = new Date();
+        if (today > expiryDate) {
+          return NextResponse.json(
+            { success: false, message: 'Token is verlopen' },
+            { headers: corsHeaders }
+          );
+        }
+
+        return NextResponse.json(
+          { success: true, message: 'Token is geldig' },
+          { headers: corsHeaders }
+        );
+      } catch (error: any) {
+        console.error('Error verifying reset token:', error);
+        return NextResponse.json(
+          { success: false, message: error.message || 'Failed to verify token' },
+          { status: 500, headers: corsHeaders }
+        );
+      }
+    }
+
+    if (action === 'resetPassword') {
+      const { token, newPassword } = params || {};
+      
+      if (!token || !newPassword) {
+        return NextResponse.json(
+          { success: false, message: 'token and newPassword are required' },
+          { status: 400, headers: corsHeaders }
+        );
+      }
+
+      if (newPassword.length < 8) {
+        return NextResponse.json(
+          { success: false, message: 'Wachtwoord moet minimaal 8 tekens lang zijn' },
+          { status: 400, headers: corsHeaders }
+        );
+      }
+
+      try {
+        const user = await db.query.users.findFirst({
+          where: eq(users.resetPasswordToken, token),
+        });
+
+        if (!user) {
+          return NextResponse.json(
+            { success: false, message: 'Token is ongeldig' },
+            { headers: corsHeaders }
+          );
+        }
+
+        const expiryDate = user.resetPasswordTokenExpiry;
+        if (!expiryDate) {
+          return NextResponse.json(
+            { success: false, message: 'Token is verlopen' },
+            { headers: corsHeaders }
+          );
+        }
+
+        const today = new Date();
+        if (today > expiryDate) {
+          return NextResponse.json(
+            { success: false, message: 'Token is verlopen' },
+            { headers: corsHeaders }
+          );
+        }
+
+        // Hash the new password
+        const passwordHash = await bcrypt.hash(newPassword, 10);
+
+        await db.update(users)
+          .set({
+            password: passwordHash,
+            resetPasswordToken: null,
+            resetPasswordTokenExpiry: null,
+          })
+          .where(eq(users.id, user.id));
+
+        return NextResponse.json(
+          { success: true, message: 'Wachtwoord succesvol gereset' },
+          { headers: corsHeaders }
+        );
+      } catch (error: any) {
+        console.error('Error resetting password:', error);
+        return NextResponse.json(
+          { success: false, message: error.message || 'Failed to reset password' },
           { status: 500, headers: corsHeaders }
         );
       }
