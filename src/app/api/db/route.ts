@@ -516,7 +516,31 @@ export async function POST(request: NextRequest) {
             name: users.name,
           });
 
-        // TODO: Send verification email
+        // Send verification email to user (same as webapp signUp function)
+        try {
+          const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.lazodenhaagspirits.nl';
+          const emailHtml = `
+            <div>
+              <h1> Bevestig uw emailadres voor: <b>${email}</b></h1>
+              <p> Om uw account aanvraag door te zetten dien je dit emailadres te verifiëren, klik op onderstaande link:</p>
+              <a href="${baseUrl}/account/registreer/bevestig-email?token=${emailVerificationToken}" target="_blank">
+                Klik hier om uw emailadres te bevestigen
+              </a>
+            </div>
+          `;
+
+          await resend.emails.send({
+            from: "Lazo Den Haag Spirits <no-reply@lazodenhaagspirits.nl>",
+            to: [email.toLowerCase()],
+            subject: "Emailadres bevestigen",
+            html: emailHtml,
+          });
+
+          console.log('Verification email sent to:', email);
+        } catch (emailError: any) {
+          console.error('Failed to send verification email:', emailError);
+          // Don't fail the signup if email fails, but log it
+        }
 
         return NextResponse.json(
           {
@@ -602,6 +626,90 @@ export async function POST(request: NextRequest) {
         console.error('Error resetting password:', error);
         return NextResponse.json(
           { success: false, message: error.message || 'Failed to reset password' },
+          { status: 500, headers: corsHeaders }
+        );
+      }
+    }
+
+    if (action === 'verifyEmail') {
+      const { token } = params || {};
+      
+      if (!token) {
+        return NextResponse.json(
+          { success: false, message: 'token is required' },
+          { status: 400, headers: corsHeaders }
+        );
+      }
+
+      try {
+        const existingUser = await db.query.users.findFirst({
+          where: eq(users.emailVerificationToken, token),
+        });
+
+        if (!existingUser) {
+          return NextResponse.json(
+            { success: false, message: 'Gebruiker niet gevonden' },
+            { status: 400, headers: corsHeaders }
+          );
+        }
+
+        // Update the user in the database
+        await db.update(users).set({
+          emailVerified: true,
+          emailVerificationToken: null,
+        }).where(eq(users.id, existingUser.id));
+
+        // Send the admin a notification (same as webapp verifyEmail function)
+        try {
+          const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.lazodenhaagspirits.nl';
+          const adminEmailHtml = `
+            <div>
+              <h1> Nieuwe account aanvraag voor: <b> ${existingUser.email} </b></h1>
+              <p> Er is een nieuwe account aanvraag die goedgekeurd moeten worden, klik op onderstaande link: </p>
+              <a href="${baseUrl}/admin/accounts?token=${existingUser.id}" target="_blank">
+                Klik hier het nieuwe account te checken en goed te keuren
+              </a>
+            </div>
+          `;
+
+          const adminEmails = JSON.parse(process.env.ADMIN_EMAIL || '[]');
+
+          await resend.emails.send({
+            from: "Lazo Den Haag Spirits <no-reply@lazodenhaagspirits.nl>",
+            to: adminEmails,
+            subject: "Account bevestigen",
+            html: adminEmailHtml,
+          });
+
+          // Send the customer an update
+          const customerEmailHtml = `
+            <div>
+              <h1> Wacht op goedkeuring voor: <b> ${existingUser.email} </b></h1>
+              <p> Nog even geduld, zodra uw account is goedgekeurd krijgt u bericht en kunt u verder met bestellen. </p>
+            </div>
+          `;
+
+          await resend.emails.send({
+            from: "Lazo Den Haag Spirits <no-reply@lazodenhaagspirits.nl>",
+            to: [existingUser.email],
+            subject: "Account bevestigen",
+            html: customerEmailHtml,
+          });
+
+          console.log('Admin notification email sent for:', existingUser.email);
+        } catch (emailError: any) {
+          console.error('Failed to send admin notification email:', emailError);
+          // Don't fail the verification if email fails, but log it
+        }
+
+        return NextResponse.json(
+          { success: true, message: 'Emailadres is bevestigd' },
+          { headers: corsHeaders }
+        );
+      } catch (error: any) {
+        console.error('Verify email error:', error);
+        return NextResponse.json(
+          { success: false, message: error.message || 'Fout bij verifiëren van email' },
           { status: 500, headers: corsHeaders }
         );
       }
