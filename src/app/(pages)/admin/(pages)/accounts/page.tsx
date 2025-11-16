@@ -34,13 +34,15 @@ const UserManagementPage = ({ searchParams }: UserManagementPageProps) => {
   const userIdFromProps = searchParams.token as string;
 
   return (
-    <MaxWidthWrapper className="mx-auto flex flex-col md:px-8">
+    <MaxWidthWrapper className="mx-auto flex flex-col md:px-4 lg:px-8">
       {isLoading ? (
         <div className="my-32 flex items-center justify-center">
           <BeatLoader color={color} loading={isLoading} size={20} aria-label="Loading Spinner" />
         </div>
       ) : (
-        <UserManagement allUsers={users} userId={userIdFromProps} />
+        <div className="w-full">
+          <UserManagement allUsers={users} userId={userIdFromProps} />
+        </div>
       )}
     </MaxWidthWrapper>
   );

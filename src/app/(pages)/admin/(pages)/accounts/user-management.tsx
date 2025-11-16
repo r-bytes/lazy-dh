@@ -107,58 +107,105 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
           {showApproved ? <EyeOff /> : <EyeIcon />}
         </Button>
       </div>
-      <Table className="w-full min-w-fit">
-        <TableHeader>
-          <TableRow className="min-w-fit">
-            <TableCell className="min-w-fit">Naam</TableCell>
-            <TableCell className="min-w-fit">Email</TableCell>
-            <TableCell className="min-w-fit">Adres</TableCell>
-            <TableCell className="min-w-fit">Postcode</TableCell>
-            <TableCell className="min-w-fit">Stad</TableCell>
-            <TableCell className="min-w-fit">Tel</TableCell>
-            <TableCell className="min-w-fit">Bedrijf</TableCell>
-            <TableCell className="min-w-fit">BTW</TableCell>
-            <TableCell className="min-w-fit">KVK</TableCell>
-            <TableCell className="min-w-fit">Status</TableCell>
-            <TableCell className="min-w-fit">Acties</TableCell>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {users
-            .filter((user) => !showApproved || !user.admin_approved || !authorizedEmails.includes(user.email))
-            .map((user) => (
-              <TableRow key={user.id} className={!editedUsers[user.id] ? "bg-primary/20" : ""}>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.address}</TableCell>
-                <TableCell>{user.postal}</TableCell>
-                <TableCell className="min-w-fit">{user.city}</TableCell>
-                <TableCell>{user.phoneNumber}</TableCell>
-                <TableCell>{user.companyName}</TableCell>
-                <TableCell>{user.vatNumber}</TableCell>
-                <TableCell>{user.chamberOfCommerceNumber}</TableCell>
-                <TableCell>{editedUsers[user.id] ? "Goedgekeurd" : "Nieuw"}</TableCell>
-                <TableCell className="mr-0 flex flex-col justify-end pr-0">
-                  <Button
-                    className="mb-2 w-32 bg-primary/70 font-bold text-black/70 hover:bg-primary dark:text-secondary dark:hover:text-secondary"
-                    onClick={() => toggleApproval(user.id)}
-                  >
-                    {isSaving[user.id] ? (
-                      <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                    ) : editedUsers[user.id] ? (
-                      "Intrekken"
-                    ) : (
-                      "Goedkeuren"
-                    )}
-                  </Button>
-                  <Button variant="destructive" className="w-32 hover:bg-red-700" onClick={() => confirmDeleteUser(user.id)}>
-                    {isDeleting[user.id] ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : "Verwijderen"}
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
+      <div className="w-full">
+        <Table className="w-full">
+          <TableHeader>
+            <TableRow>
+              <TableCell className="w-[35%]">Gebruiker</TableCell>
+              <TableCell className="w-[25%]">Contact</TableCell>
+              <TableCell className="w-[20%]">Bedrijfsinfo</TableCell>
+              <TableCell className="w-[10%]">Status</TableCell>
+              <TableCell className="w-[10%] text-right">Acties</TableCell>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {users
+              .filter((user) => !showApproved || !user.admin_approved || !authorizedEmails.includes(user.email))
+              .map((user) => (
+                <TableRow key={user.id} className={!editedUsers[user.id] ? "bg-primary/20" : ""}>
+                  {/* Gebruiker kolom - 2 regels */}
+                  <TableCell className="align-top">
+                    <div className="space-y-1">
+                      <div className="font-semibold">{user.name || "-"}</div>
+                      <div className="text-sm text-muted-foreground break-words">{user.email}</div>
+                    </div>
+                  </TableCell>
+                  
+                  {/* Contact kolom - 2 regels */}
+                  <TableCell className="align-top">
+                    <div className="space-y-1">
+                      <div className="text-sm break-words">
+                        {user.address && (
+                          <>
+                            {user.address}
+                            {user.postal && `, ${user.postal}`}
+                            {user.city && ` ${user.city}`}
+                          </>
+                        )}
+                        {!user.address && !user.postal && !user.city && "-"}
+                      </div>
+                      {user.phoneNumber && (
+                        <div className="text-sm text-muted-foreground">{user.phoneNumber}</div>
+                      )}
+                    </div>
+                  </TableCell>
+                  
+                  {/* Bedrijfsinfo kolom - 2 regels */}
+                  <TableCell className="align-top">
+                    <div className="space-y-1">
+                      {user.companyName && (
+                        <div className="text-sm font-medium break-words">{user.companyName}</div>
+                      )}
+                      <div className="text-xs text-muted-foreground space-y-0.5">
+                        {user.vatNumber && <div>BTW: {user.vatNumber}</div>}
+                        {user.chamberOfCommerceNumber && <div>KVK: {user.chamberOfCommerceNumber}</div>}
+                        {!user.companyName && !user.vatNumber && !user.chamberOfCommerceNumber && "-"}
+                      </div>
+                    </div>
+                  </TableCell>
+                  
+                  {/* Status kolom */}
+                  <TableCell className="align-top">
+                    <span className={`inline-block rounded-full px-2 py-1 text-xs font-semibold ${
+                      editedUsers[user.id] 
+                        ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" 
+                        : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
+                    }`}>
+                      {editedUsers[user.id] ? "Goedgekeurd" : "Nieuw"}
+                    </span>
+                  </TableCell>
+                  
+                  {/* Acties kolom */}
+                  <TableCell className="align-top text-right">
+                    <div className="flex flex-col gap-2 items-end">
+                      <Button
+                        className="bg-primary/70 font-bold text-black/70 hover:bg-primary dark:text-secondary dark:hover:text-secondary"
+                        onClick={() => toggleApproval(user.id)}
+                        size="sm"
+                      >
+                        {isSaving[user.id] ? (
+                          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                        ) : editedUsers[user.id] ? (
+                          "Intrekken"
+                        ) : (
+                          "Goedkeuren"
+                        )}
+                      </Button>
+                      <Button 
+                        variant="destructive" 
+                        className="hover:bg-red-700" 
+                        onClick={() => confirmDeleteUser(user.id)}
+                        size="sm"
+                      >
+                        {isDeleting[user.id] ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : "Verwijderen"}
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </div>
       <Dialog open={!!deleteUserId} onOpenChange={(open) => !open && setDeleteUserId(null)}>
         <DialogTrigger />
         <DialogContent className="border-none bg-zinc-800">
