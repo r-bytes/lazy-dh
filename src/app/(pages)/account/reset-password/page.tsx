@@ -1,5 +1,8 @@
+import Header from "@/components/navigation/header";
 import ChangePasswordForm from "@/components/ui/account/reset-password/change-password-form";
 import ResetPasswordForm from "@/components/ui/account/reset-password/reset-password-form";
+import { Card } from "@/components/ui/card";
+import { Section } from "@/components/ui/section";
 import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
@@ -11,19 +14,38 @@ interface ResetPasswordPageProps {
 }
 
 const ResetPasswordPage = async ({ searchParams }: ResetPasswordPageProps) => {
+  let user = null;
   if (searchParams.token) {
-    const user = await db.query.users.findFirst({
+    user = await db.query.users.findFirst({
       where: eq(users.resetPasswordToken, searchParams.token as string),
     });
-
-    if (!user) {
-      return <div className="flex items-center justify-center">Invalid token</div>;
-    }
-
-    return <ChangePasswordForm resetPasswordToken={searchParams.token as string} />;
-  } else {
-    return <ResetPasswordForm />;
   }
+
+  return (
+    <>
+      {/* Header */}
+      <div className="bg-hero-light dark:bg-hero-dark">
+        <Header />
+      </div>
+      <Section variant="default" spacing="lg">
+        <div className="mx-auto max-w-md">
+          <Card className="bg-surface p-4 shadow-lg sm:p-6">
+            {searchParams.token ? (
+              <>
+                {!user ? (
+                  <div className="text-center text-destructive">Invalid token</div>
+                ) : (
+                  <ChangePasswordForm resetPasswordToken={searchParams.token as string} />
+                )}
+              </>
+            ) : (
+              <ResetPasswordForm />
+            )}
+          </Card>
+        </div>
+      </Section>
+    </>
+  );
 };
 
 export default ResetPasswordPage;

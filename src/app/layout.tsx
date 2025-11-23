@@ -31,7 +31,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <AuthProvider>
                   <CookieBanner />
                   <Toaster />
-                  <Header />
                   {/* Main content area that will grow to push the footer to the bottom */}
                   <main className="flex-grow">{children}</main>
                   <Footer />

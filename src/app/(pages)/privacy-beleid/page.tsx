@@ -1,3 +1,7 @@
+import Header from "@/components/navigation/header";
+import { Section } from "@/components/ui/section";
+import { SectionHeader } from "@/components/ui/section-header";
+import { Shield } from "lucide-react";
 import React from "react";
 
 type Props = {};
@@ -5,8 +9,19 @@ type Props = {};
 const PrivacyPage = (props: Props) => {
   const storeName = "Lazo Spirits Den Haag"
   return (
-    <div className="mx-auto max-w-5xl px-20 py-8 text-center text-muted-foreground md:text-left">
-      <h1 className="mb-6 text-center md:text-left text-3xl font-bold">Gebruiksvoorwaarden en Privacybeleid</h1>
+    <>
+      {/* Header */}
+      <div className="bg-hero-light dark:bg-hero-dark">
+        <Header />
+      </div>
+      <Section variant="default" spacing="lg">
+        <div className="mx-auto max-w-5xl text-center text-text-secondary md:text-left">
+          <SectionHeader
+            badge="Privacy"
+            badgeIcon={<Shield className="h-4 w-4" />}
+            title="Gebruiksvoorwaarden en Privacybeleid"
+            description="Lees onze voorwaarden en privacybeleid"
+          />
 
       {/* Gebruiksvoorwaarden Sectie */}
       <section className="mb-12">
@@ -61,7 +76,9 @@ const PrivacyPage = (props: Props) => {
         <h3 className="mt-4 font-semibold">Toestemming</h3>
         <p>Door gebruik te maken van onze site, stem je in met ons privacybeleid.</p>
       </section>
-    </div>
+        </div>
+      </Section>
+    </>
   );
 };
 

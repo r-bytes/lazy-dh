@@ -1,6 +1,7 @@
 "use client";
 
 import { getUserIdFromEmail } from "@/actions/users/user.actions";
+import Header from "@/components/navigation/header";
 import Favorites from "@/components/products/product-list-favorite";
 import { getFavoriteProductIds } from "@/lib/db/data";
 import { fetchProducts } from "@/lib/sanity/fetchProducts";
@@ -41,5 +42,13 @@ export default function Page() {
     fetchData();
   }, [session]);
 
-  return <Favorites favoriteProducts={favoriteProducts} loading={loading} />;
+  return (
+    <>
+      {/* Header */}
+      <div className="bg-hero-light dark:bg-hero-dark">
+        <Header />
+      </div>
+      <Favorites favoriteProducts={favoriteProducts} loading={loading} />
+    </>
+  );
 }

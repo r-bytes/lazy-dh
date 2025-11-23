@@ -86,11 +86,11 @@ export function UserSignUpForm({ fromCheckout = false }) {
   };
 
   return (
-    <Card className="mx-auto my-8 p-4 shadow-lg">
+    <Card className="bg-surface shadow-lg">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <CardHeader className="ml-3">
-          <CardTitle className="text-left md:text-center"> Nieuwe klant </CardTitle>
-          <CardDescription className="text-left md:text-center"> Vul het formulier in om een nieuw account te maken </CardDescription>
+        <CardHeader>
+          <CardTitle className="text-left md:text-center text-text-primary"> Nieuwe klant </CardTitle>
+          <CardDescription className="text-left md:text-center text-text-secondary"> Vul het formulier in om een nieuw account te maken </CardDescription>
         </CardHeader>
         <CardContent>
           <Accordion type="multiple" defaultValue={["item-1", "item-2", "item-3"]} className="w-full px-2">
@@ -233,8 +233,12 @@ export function UserSignUpForm({ fromCheckout = false }) {
           </div>
         </CardContent>
         <CardFooter>
-          <Button className="ml-3" type="submit" disabled={isLoading || !termsAccepted}>
-            {isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : "Registeer"}
+          <Button 
+            className="w-full bg-accent-yellow text-text-primary hover:bg-accent-yellow-dark" 
+            type="submit" 
+            disabled={isLoading || !termsAccepted}
+          >
+            {isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : "Registreer"}
           </Button>
         </CardFooter>
       </form>

@@ -1,11 +1,33 @@
+import Header from "@/components/navigation/header";
+import { Card } from "@/components/ui/card";
+import { Section } from "@/components/ui/section";
+import { SectionHeader } from "@/components/ui/section-header";
 import { UserSignInForm } from "@/components/ui/sign-in/user-sign-in-form";
+import { CheckCircle } from "lucide-react";
 
 const page = () => {
   return (
-    <div className="max-w-7xl flex flex-col justify-center items-center mx-auto">
-      <h1 className="my-10 text-2xl font-bold"> Log in met uw nieuwe wachtwoord </h1>
-      <UserSignInForm />
-    </div>
+    <>
+      {/* Header */}
+      <div className="bg-hero-light dark:bg-hero-dark">
+        <Header />
+      </div>
+      <Section variant="default" spacing="lg">
+        <div className="mx-auto max-w-md">
+          <Card className="bg-surface p-4 shadow-lg sm:p-6">
+            <SectionHeader
+              badge="Succes"
+              badgeIcon={<CheckCircle className="h-4 w-4" />}
+              title="Wachtwoord Gewijzigd"
+              description="Log in met uw nieuwe wachtwoord"
+            />
+            <div className="mt-6">
+              <UserSignInForm />
+            </div>
+          </Card>
+        </div>
+      </Section>
+    </>
   );
 };
 

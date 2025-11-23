@@ -1,7 +1,10 @@
+import Header from "@/components/navigation/header";
 // import GoogleMapCard from "@/components/google-map-card";
 import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
+import { Section } from "@/components/ui/section";
+import { SectionHeader } from "@/components/ui/section-header";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import Title from "@/components/ui/title";
+import { Building2 } from "lucide-react";
 
 const companyInfo = {
   "Naam": process.env.COMPANY_NAME!,
@@ -14,25 +17,35 @@ const companyInfo = {
 
 const AboutPage = () => {
   return (
-    <MaxWidthWrapper className="mx-auto w-full">
-      <div className="w-full p-10">
-        <Title name="Over ons" />
-        <h4 className="my-4 ml-3 text-center text-base font-light text-muted-foreground">Bedrijfsgegevens</h4>
-
-        <Table className="my-10 w-full min-w-fit">
-          <TableBody>
-            {/* Iterating over the companyInfo object keys to create a row for each entry */}
-            {Object.entries(companyInfo).map(([key, value]) => (
-              <TableRow key={key} className="flex flex-row justify-between">
-                <TableCell className="font-semibold">{key.replace(/([a-z])([A-Z])/g, "$1 $2")}</TableCell>
-                <TableCell>{value}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+    <>
+      {/* Header */}
+      <div className="bg-hero-light dark:bg-hero-dark">
+        <Header />
       </div>
-      {/* <GoogleMapCard /> */}
-    </MaxWidthWrapper>
+      <Section variant="default" spacing="lg">
+        <MaxWidthWrapper className="mx-auto w-full flex flex-col">
+          <SectionHeader
+            align="center"
+            badge="Over Ons"
+            badgeIcon={<Building2 className="h-4 w-4" />}
+            title="Over Ons"
+            description="Bedrijfsgegevens en contactinformatie"
+          />
+          <Table className="my-10 w-full min-w-fit">
+            <TableBody>
+              {/* Iterating over the companyInfo object keys to create a row for each entry */}
+              {Object.entries(companyInfo).map(([key, value]) => (
+                <TableRow key={key} className="flex flex-row justify-between">
+                  <TableCell className="font-semibold text-text-primary">{key.replace(/([a-z])([A-Z])/g, "$1 $2")}</TableCell>
+                  <TableCell className="text-text-secondary">{value}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          {/* <GoogleMapCard /> */}
+        </MaxWidthWrapper>
+      </Section>
+    </>
   );
 };
 

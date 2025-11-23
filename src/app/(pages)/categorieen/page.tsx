@@ -1,9 +1,12 @@
-import { CategoryCard } from "@/components/ui/category/category-card";
-import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
+import { CategoryGrid } from "@/components/ui/category/category-grid";
+import { Section } from "@/components/ui/section";
+import { SectionHeader } from "@/components/ui/section-header";
+import Header from "@/components/navigation/header";
 import { fetchCategories } from "@/lib/sanity/fetchCategories";
 import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import { Category } from "@/lib/types/category";
 import { Product } from "@/lib/types/product";
+import { Sparkles } from "lucide-react";
 
 async function getData(): Promise<{ categories: Category[]; products: Product[] } | null> {
   try {
@@ -28,10 +31,27 @@ export default async function Page() {
   }
 
   return (
-    <div className="flex w-full flex-col items-center justify-between bg-background p-6 dark:bg-gray-900 lg:p-12">
-      <MaxWidthWrapper>
-        <CategoryCard categories={data.categories} products={data.products} />
-      </MaxWidthWrapper>
-    </div>
+    <>
+      {/* Header */}
+      <div className="bg-hero-light dark:bg-hero-dark">
+        <Header />
+      </div>
+
+      {/* Main Content */}
+      <Section variant="default" spacing="lg">
+        <SectionHeader
+          badge="Ontdek"
+          badgeIcon={<Sparkles className="h-4 w-4" />}
+          title="Alle Categorieën"
+          description="Vind precies wat je zoekt door te bladeren in onze zorgvuldig samengestelde categorieën."
+        />
+        <CategoryGrid
+          categories={data.categories}
+          products={data.products}
+          columns={{ mobile: 1, tablet: 2, desktop: 3 }}
+          gap="md"
+        />
+      </Section>
+    </>
   );
 }

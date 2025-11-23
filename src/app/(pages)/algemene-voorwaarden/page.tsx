@@ -1,10 +1,25 @@
+import Header from "@/components/navigation/header";
+import { Section } from "@/components/ui/section";
+import { SectionHeader } from "@/components/ui/section-header";
+import { FileText } from "lucide-react";
 import React from "react";
 
 const TermsAndConditionsPage = () => {
   const storeName = "Lazo Spirits Den Haag"
   return (
-    <div className="max-w-5xl mx-auto px-20 py-8 text-muted-foreground text-center md:text-left">
-      <h1 className="mb-6 text-center md:text-left text-3xl font-bold">Algemene Voorwaarden</h1>
+    <>
+      {/* Header */}
+      <div className="bg-hero-light dark:bg-hero-dark">
+        <Header />
+      </div>
+      <Section variant="default" spacing="lg">
+        <div className="max-w-5xl mx-auto text-text-secondary text-center md:text-left">
+          <SectionHeader
+            badge="Voorwaarden"
+            badgeIcon={<FileText className="h-4 w-4" />}
+            title="Algemene Voorwaarden"
+            description="Lees onze algemene voorwaarden"
+          />
       <section>
         <p>
           Welkom bij {storeName}. Deze Algemene Voorwaarden zijn van toepassing op alle aankopen en diensten aangeboden via onze website: 
@@ -52,7 +67,9 @@ const TermsAndConditionsPage = () => {
         <h2 className="mt-5 text-xl font-semibold">9. Contact</h2>
         <p>Voor vragen over deze voorwaarden kun je contact met ons opnemen via {process.env.COMPANY_EMAIL}.</p>
       </section>
-    </div>
+        </div>
+      </Section>
+    </>
   );
 };
 

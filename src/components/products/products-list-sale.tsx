@@ -1,13 +1,12 @@
 "use client";
 
-import ProductList from "@/components/products/product-list";
-import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
-import Title from "@/components/ui/title";
+import { ProductGrid } from "@/components/products/ProductGrid";
+import { Section } from "@/components/ui/section";
+import { SectionHeader } from "@/components/ui/section-header";
 import { fetchProductsNoStore } from "@/lib/sanity/fetchProductsNoStore";
 import Product from "@/lib/types/product";
+import { Sparkles, Star } from "lucide-react";
 import { useEffect, useState } from "react";
-import BeatLoader from "react-spinners/BeatLoader";
-import { CardDescription } from "../ui/card";
 
 type PromotionsProps = {
   isNew?: boolean;
@@ -17,7 +16,6 @@ type PromotionsProps = {
 export default function Promotions({ isNew, isPromo }: PromotionsProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [fetchedProducts, setFetchedProducts] = useState<Product[]>([]);
-  const [color, setColor] = useState("#facc15");
 
   useEffect(() => {
     const getProducts = async (filterType: string) => {
@@ -49,20 +47,14 @@ export default function Promotions({ isNew, isPromo }: PromotionsProps) {
   }, [isNew, isPromo]);
 
   return (
-    <MaxWidthWrapper className="mx-auto flex flex-col items-center justify-center">
-      <Title name={isNew ? "Nieuwe Producten" : "Aanbiedingen"} cn="text-4xl md:text-5xl mt-12" />
-      <CardDescription className="md:text-base">{isNew ? "Onze nieuwste producten" : "Producten in de aanbieding"}</CardDescription>
-      {isLoading ? (
-        <div className="my-32">
-          <BeatLoader color={color} loading={isLoading} size={20} aria-label="Loading Spinner" />
-        </div>
-      ) : fetchedProducts.length > 0 ? (
-        <ProductList products={fetchedProducts} />
-      ) : (
-        <div className="py-5 text-center">
-          <p>{isNew ? "Geen nieuwe producten beschikbaar" : "Geen producten in de aanbieding"}</p>
-        </div>
-      )}
-    </MaxWidthWrapper>
+    <Section variant="default" spacing="lg">
+      <SectionHeader
+        badge={isNew ? "Nieuw" : "Beperkte Tijd"}
+        badgeIcon={isNew ? <Star className="h-4 w-4" /> : <Sparkles className="h-4 w-4" />}
+        title={isNew ? "Nieuwe Producten" : "Aanbiedingen"}
+        description={isNew ? "Onze nieuwste producten" : "Producten in de aanbieding"}
+      />
+      <ProductGrid products={fetchedProducts} loading={isLoading} />
+    </Section>
   );
 }

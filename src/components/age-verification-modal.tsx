@@ -35,16 +35,16 @@ const AgeVerificationModal: React.FC = () => {
     <Dialog open={isOpen}>
       <DialogOverlay className="fixed inset-0 bg-black bg-opacity-50 z-50" />
       <DialogContent className="fixed flex items-center justify-center border-none bg-transparent">
-        <div className="w-full max-w-md rounded bg-zinc-800 p-6 shadow-lg">
+        <div className="w-full max-w-md rounded bg-surface p-6 shadow-lg text-text-primary">
           <DialogTitle className="text-2xl font-bold">Leeftijdsverificatie</DialogTitle>
           <DialogDescription className="mt-2">
             U moet 18 jaar of ouder zijn om deze site te bezoeken. Bevestig dat u 18 jaar of ouder bent.
           </DialogDescription>
           <div className="mt-4 flex justify-end space-x-4">
-            <Button onClick={handleDeny} className="rounded border-none bg-red-600 px-4 py-2 text-white hover:bg-red-800">
+            <Button onClick={handleDeny} className="rounded border-none bg-red-600 px-4 py-2 text-text-primary hover:bg-red-700">
               Nee
             </Button>
-            <Button onClick={handleConfirm} className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-700">
+            <Button onClick={handleConfirm} className="rounded bg-green-500 px-4 py-2 text-text-primary hover:bg-green-600">
               Ja
             </Button>
           </div>

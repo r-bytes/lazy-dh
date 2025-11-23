@@ -86,11 +86,11 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
 
   return fromCheckout ? (
     <Form {...form}>
-      <Card className="mx-[-1rem] py-8">
+      <Card className="bg-surface">
         <form onSubmit={form.handleSubmit(onSubmit)} className="mt-2 max-w-96 space-y-4 md:max-w-full">
           <CardHeader>
-            <CardTitle className="text-left md:text-center"> Bestaande klant </CardTitle>
-            <CardDescription className="text-left md:text-center"> Log in met je account gegevens </CardDescription>
+            <CardTitle className="text-left md:text-center text-text-primary"> Bestaande klant </CardTitle>
+            <CardDescription className="text-left md:text-center text-text-secondary"> Log in met je account gegevens </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <FormField
@@ -129,7 +129,11 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
             />
           </CardContent>
           <CardFooter>
-            <Button variant="outline" type="submit" disabled={isLoading}>
+            <Button 
+              type="submit" 
+              disabled={isLoading}
+              className="w-full bg-accent-yellow text-text-primary hover:bg-accent-yellow-dark"
+            >
               {isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.logo className="mr-2 h-4 w-4" />}
               Inloggen
             </Button>
@@ -139,7 +143,7 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
     </Form>
   ) : (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="mt-2 max-w-96 space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="email"
@@ -174,7 +178,11 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
             </FormItem>
           )}
         />
-        <Button variant="outline" type="submit" disabled={isLoading}>
+        <Button 
+          type="submit" 
+          disabled={isLoading}
+          className="w-full bg-accent-yellow text-text-primary hover:bg-accent-yellow-dark"
+        >
           {isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.logo className="mr-2 h-4 w-4" />}
           Inloggen
         </Button>

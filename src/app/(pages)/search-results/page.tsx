@@ -1,12 +1,13 @@
 "use client"
 
-import ProductList from "@/components/products/product-list";
-import ProductSkeleton from "@/components/products/product-skeleton";
-import { Card } from "@/components/ui/card";
-import Title from "@/components/ui/title";
+import Header from "@/components/navigation/header";
+import { ProductGrid } from "@/components/products/ProductGrid";
+import { Section } from "@/components/ui/section";
+import { SectionHeader } from "@/components/ui/section-header";
 import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import { Product } from "@/lib/types/product";
 import { debounce } from "@/lib/utils";
+import { Search } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
 interface SearchResultsProps {
@@ -39,25 +40,24 @@ const SearchResults = ({ searchParams }: SearchResultsProps) => {
     debouncedFetchData();
   }, [product, debouncedFetchData]);
 
+  const searchTerm = typeof product === 'string' ? product : '';
+
   return (
-    <main className="flex flex-col items-center justify-between bg-background">
-      <section id="search-results" className="w-full max-w-7xl my-20">
-        <Card className="mx-2 px-4 sm:mx-20 md:px-16 xl:mx-12 min-h-full">
-          <div className="mt-2 flex flex-col items-center justify-center md:mt-32">
-            <Title name={`Zoekresultaten voor "${product}"`} cn="text-4xl sm:text-4xl mt-16 md:mt-[-2rem]" />
-            {isLoading ? (
-              <ProductSkeleton />
-            ) : (
-              products.length > 0 ? (
-                <ProductList slug={"search"} products={products} />
-              ) : (
-                <p className="text-center text-lg text-muted-foreground mb-20">Er zijn geen resultaten gevonden.</p>
-              )
-            )}
-          </div>
-        </Card>
-      </section>
-    </main>
+    <>
+      {/* Header */}
+      <div className="bg-hero-light dark:bg-hero-dark">
+        <Header />
+      </div>
+      <Section variant="default" spacing="lg">
+        <SectionHeader
+          badge="Zoekresultaten"
+          badgeIcon={<Search className="h-4 w-4" />}
+          title={searchTerm ? `Zoekresultaten voor "${searchTerm}"` : "Zoekresultaten"}
+          description={searchTerm ? `Gevonden ${products.length} resultaat${products.length !== 1 ? 'en' : ''} voor "${searchTerm}"` : "Voer een zoekterm in om te beginnen"}
+        />
+        <ProductGrid products={products} loading={isLoading} />
+      </Section>
+    </>
   );
 };
 

@@ -1,12 +1,13 @@
 "use client";
-import SearchBar from "@/components/home/search-bar";
+import { ProductSearch } from "@/components/ui/product-search";
 import { useAuthContext } from "@/context/AuthContext";
 import { useCartContext } from "@/context/CartContext";
 import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import { Product } from "@/lib/types/product";
-import { navigateTo } from "@/lib/utils";
+import { cn, navigateTo } from "@/lib/utils";
 import { CircleX, Fingerprint, MenuIcon, ShoppingBag } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useTheme } from "next-themes";
 import { Roboto } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
@@ -48,13 +49,23 @@ const Header = (props: Props) => {
   const { isAdminApproved } = useAuthContext();
   const { totalQuantities } = useCartContext();
   const router = useRouter();
+  const { theme, resolvedTheme } = useTheme();
 
   // States
   const [currentPath, setCurrentPath] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
+  const [mounted, setMounted] = useState(false);
 
   const pathName = usePathname();
+
+  // Determine which logo to use
+  const isDarkMode = resolvedTheme === "dark" || (resolvedTheme === "system" && typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  const logoSrc = isDarkMode ? "/logo-darkmode.png" : "/logo.png";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     setCurrentPath(pathName.replace("/", ""));
@@ -74,13 +85,16 @@ const Header = (props: Props) => {
     return (
       <button
         type="button"
-        className={`${cn} cart-icon duration-400 relative cursor-pointer border-none bg-transparent text-6xl text-muted-foreground transition-transform ease-in-out`}
+        className={`${cn} relative flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-surface/10`}
         onClick={() => navigateTo(router, "/winkelwagen")}
+        aria-label="Shopping cart"
       >
-        <ShoppingBag className="" />
-        <span className="absolute right-[-16px] top-[-10px] flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-center text-xs font-semibold text-gray-300">
-          <h4>{totalQuantities}</h4>
-        </span>
+        <ShoppingBag className="h-5 w-5 sm:h-6 sm:w-6" />
+        {totalQuantities > 0 && (
+          <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-semibold text-white sm:h-6 sm:w-6 sm:text-xs">
+            {totalQuantities}
+          </span>
+        )}
       </button>
     );
   };
@@ -89,117 +103,158 @@ const Header = (props: Props) => {
     return (
       <button
         type="button"
-        className={`${cn} cart-icon duration-400 relative cursor-pointer border-none bg-transparent text-6xl text-muted-foreground transition-transform ease-in-out`}
+        className={`${cn} flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-surface/10`}
         onClick={() => navigateTo(router, "/admin")}
+        aria-label="Admin panel"
       >
-        <Fingerprint />
+        <Fingerprint className="h-5 w-5 sm:h-6 sm:w-6" />
       </button>
     );
   };
 
-  const AdminPageNoIcon = ({ cn }: { cn?: string }) => {
-    return (
-      <li key={cn} className={`font-semibold tracking-wide hover:cursor-pointer hover:text-primary`}>
-        <Link className={`${roboto.className} tracking-wider`} onClick={() => setMenuOpen(false)} href={"/admin"}>
-          <Title name={"Admin"} />
-        </Link>
-      </li>
-    );
-  };
 
   return (
     <>
       <TopHeader text="Let op! Alle prijzen op de website zijn exclusief BTW." />
-      <div className={`z-10 w-full items-center justify-between bg-gray-50 text-sm tracking-wide dark:bg-gray-900 sm:flex sm:flex-col lg:flex-row`}>
-        <div className="mx-auto mt-0 flex w-full items-center justify-between p-8 sm:mx-16">
-          {/* Logo */}
-          <Link href={"/"}>
-            <Image
-              className="mx-auto w-full dark:invert sm:h-36 lg:h-44"
-              src="/logo.svg"
-              alt="Lazy Den Haag Logo"
-              width={300}
-              height={300}
-              priority
-            />
-          </Link>
-          {/* Hamburger Menu for Small Screens */}
-          <button className="flex w-full items-end justify-end pr-4 sm:pr-8 lg:hidden" onClick={() => setMenuOpen(!menuOpen)}>
-            <MenuIcon size={24} />
-          </button>
-          {/* Shopping Cart */}
-          <ShoppingCart cn={"lg:hidden hover:text-primary"} />
+      <header className="w-full bg-transparent py-3 sm:py-4 md:py-6">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Mobile Layout */}
+          <div className="flex items-center justify-between gap-3 sm:hidden">
+            {/* Logo */}
+            <Link href={"/"} className="flex-shrink-0">
+              {mounted && (
+                <Image
+                  className={cn("h-auto max-h-[50px] w-auto")}
+                  src={logoSrc}
+                  alt="Lazy Den Haag Logo"
+                  width={120}
+                  height={50}
+                  priority
+                />
+              )}
+            </Link>
+            {/* Hamburger Menu & Cart */}
+            <div className="flex items-center gap-3">
+              <ShoppingCart cn="text-text-primary hover:text-text-secondary" />
+              <button
+                className="flex h-10 w-10 items-center justify-center rounded-lg text-text-primary transition-colors hover:bg-surface/10 hover:text-text-secondary"
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-label="Toggle menu"
+              >
+                <MenuIcon size={20} />
+              </button>
+            </div>
+          </div>
+
+          {/* Tablet/Desktop Layout */}
+          <div className="hidden items-center justify-between gap-4 sm:flex lg:gap-6 xl:gap-8">
+            {/* Logo */}
+            <Link href={"/"} className="flex-shrink-0">
+              {mounted && (
+                <Image
+                  className={cn("h-auto w-24 transition-opacity sm:w-28 lg:w-32", !isDarkMode && "opacity-80 brightness-110")}
+                  src={logoSrc}
+                  alt="Lazy Den Haag Logo"
+                  width={128}
+                  height={64}
+                  priority
+                />
+              )}
+            </Link>
+
+            {/* Search Bar - Vertically Centered */}
+            <div className="flex-1 max-w-xl lg:max-w-2xl">
+              <ProductSearch products={products} variant="inline" />
+            </div>
+
+            {/* Desktop Navigation & Actions */}
+            <div className="hidden items-center gap-3 lg:flex lg:gap-4">
+              <div className="flex items-center gap-4 xl:gap-6">
+                {NAVIGATION_LIST.map((item, index, arr) =>
+                  item.requiresAuth && !session && item.title.toLowerCase() === "account" ? null : (
+                    <Link
+                      key={item.order}
+                      href={`/${item.title.replace("ë", "e").toLowerCase() === "acties" ? "promoties" : item.title.replace("ë", "e").toLowerCase()}`}
+                      className={`${roboto.className} whitespace-nowrap text-sm font-semibold tracking-wide text-text-primary transition-colors hover:text-text-secondary xl:text-base
+                        ${
+                          index === arr.length - 2
+                            ? "rounded-md bg-accent-yellow px-3 py-2 text-text-primary transition-colors hover:bg-accent-yellow-dark"
+                            : currentPath.toLowerCase() === item.title.replace("ë", "e").toLowerCase()
+                              ? "border-b-2 border-border pb-2"
+                              : item.requiresAuth && !session
+                                ? "text-text-secondary hover:cursor-not-allowed"
+                                : ""
+                        }
+                      `}
+                    >
+                      {item.requiresAuth && !session ? "" : item.title}
+                    </Link>
+                  )
+                )}
+              </div>
+              {session && status === "authenticated" && isAdminApproved && (
+                <AdminPage cn="text-text-primary hover:text-text-secondary" />
+              )}
+              <ModeToggle cn="" />
+              <ShoppingCart cn="text-text-primary hover:text-text-secondary" />
+            </div>
+          </div>
+
+          {/* Mobile Search Bar */}
+          <div className="mt-3 w-full sm:hidden">
+            <ProductSearch products={products} variant="inline" />
+          </div>
+          <div className="hidden w-full sm:block lg:hidden">
+            <ProductSearch products={products} variant="inline" />
+          </div>
         </div>
-        <SearchBar products={products} />
 
         {/* Mobile Navigation Menu */}
-        <div className={`lg:hidden ${menuOpen ? "fixed inset-0 z-50 min-h-screen bg-gray-50 dark:bg-gray-900" : "hidden"}`}>
-          <div className="flex h-screen flex-col items-center justify-between gap-4">
-            <div className="w-screen hover:bg-gray-100 dark:hover:bg-gray-800">
-              <CircleX
-                onClick={() => setMenuOpen(false)}
-                className="h-12 w-full p-2 text-right text-slate-600 hover:cursor-pointer dark:text-gray-400"
-              />
-            </div>
-            <ul className="flex w-screen flex-1 flex-col items-center justify-center gap-8">
-              {session && status === "authenticated" && isAdminApproved && <AdminPageNoIcon cn={session.user?.id} />}
-              {NAVIGATION_LIST.map((item, index, arr) => (
-                <li
-                  key={item.order}
-                  className={`font-semibold tracking-wide text-slate-700 transition-colors hover:cursor-pointer hover:text-slate-900 dark:text-gray-300 dark:hover:text-white`}
+        {menuOpen && (
+          <div className="fixed inset-0 z-[9999] min-h-screen bg-background-alt sm:hidden">
+            <div className="flex h-screen flex-col">
+              {/* Close Button */}
+              <div className="flex items-center justify-end p-4">
+                <button
+                  onClick={() => setMenuOpen(false)}
+                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-surface/10 text-text-primary transition-colors hover:bg-surface/20"
+                  aria-label="Close menu"
                 >
+                  <CircleX size={20} />
+                </button>
+              </div>
+
+              {/* Navigation Links */}
+              <nav className="flex flex-1 flex-col items-center justify-center gap-6">
+                {session && status === "authenticated" && isAdminApproved && (
                   <Link
-                    className={`${roboto.className} tracking-wider`}
+                    className={`${roboto.className} font-semibold tracking-wide text-text-primary transition-colors hover:text-text-secondary`}
+                    onClick={() => setMenuOpen(false)}
+                    href="/admin"
+                  >
+                    Admin
+                  </Link>
+                )}
+                {NAVIGATION_LIST.map((item) => (
+                  <Link
+                    key={item.order}
+                    className={`${roboto.className} font-semibold tracking-wide text-text-primary transition-colors hover:text-text-secondary`}
                     onClick={() => setMenuOpen(false)}
                     href={`/${item.title.replace("ë", "e").toLowerCase() === "acties" ? "promoties" : item.title.replace("ë", "e").toLowerCase()}`}
                   >
-                    <Title name={item.title} />
+                    {item.title}
                   </Link>
-                </li>
-              ))}
-            </ul>
-            <ModeToggle cn="w-full h-12" />
-          </div>
-        </div>
+                ))}
+              </nav>
 
-        {/* Desktop Navigation */}
-        <div className="mx-auto hidden items-center justify-center sm:w-full sm:max-w-2xl lg:mr-10 lg:flex">
-          <div className="w-full">
-            <ul className="mr-8 flex items-baseline justify-end space-x-6 py-12">
-              {NAVIGATION_LIST.map((item, index, arr) =>
-                item.requiresAuth && !session && item.title.toLowerCase() === "account" ? null : (
-                  <li
-                    key={item.order}
-                    className={`font-semibold tracking-wide hover:cursor-pointer hover:text-primary
-                    ${
-                      index === arr.length - 2
-                        ? "mr-8 rounded-md bg-yellow-400 px-3 py-2 text-black transition-colors hover:bg-yellow-500 hover:text-black"
-                        : currentPath.toLowerCase() === item.title.replace("ë", "e").toLowerCase()
-                          ? "border-b-2 border-slate-900 pb-2 dark:border-white"
-                          : item.requiresAuth && !session
-                            ? "text-gray-500 hover:cursor-not-allowed"
-                            : "text-slate-700 transition-colors hover:text-slate-900 dark:text-gray-300 dark:hover:text-white"
-                    }
-                  `}
-                  >
-                    {item.requiresAuth && !session && item.title.toLowerCase() === "account" ? null : (
-                      <Link
-                        className={`${roboto.className} tracking-wider`}
-                        href={`/${item.title.replace("ë", "e").toLowerCase() === "acties" ? "promoties" : item.title.replace("ë", "e").toLowerCase()}`}
-                      >
-                        {item.requiresAuth && !session ? "" : item.title}
-                      </Link>
-                    )}
-                  </li>
-                )
-              )}
-            </ul>
+              {/* Mode Toggle */}
+              <div className="border-t border-border p-4">
+                <ModeToggle cn="w-full" />
+              </div>
+            </div>
           </div>
-          {session && status === "authenticated" && isAdminApproved && <AdminPage cn="hover:text-primary mr-4" />}
-          <ModeToggle cn="mr-4" />
-          <ShoppingCart cn="mr-10" />
-        </div>
-      </div>
+        )}
+      </header>
     </>
   );
 };

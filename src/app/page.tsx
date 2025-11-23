@@ -1,9 +1,10 @@
-import { ModernCarousel } from "@/components/products/modern-carousel";
-import { SlideCarousel } from "@/components/products/slide-carousel";
+import { HeroSection } from "@/components/home/hero-section";
+import Header from "@/components/navigation/header";
+import { ProductCarousel } from "@/components/products/product-carousel";
 import { Button } from "@/components/ui/button";
-import { CategoryCard } from "@/components/ui/category/category-card";
-import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
-import Title from "@/components/ui/title";
+import { CategoryGrid } from "@/components/ui/category/category-grid";
+import { Section } from "@/components/ui/section";
+import { SectionHeader } from "@/components/ui/section-header";
 import { fetchCategories } from "@/lib/sanity/fetchCategories";
 import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import { ArrowRight, Award, Mail, Sparkles, Star } from "lucide-react";
@@ -15,196 +16,160 @@ const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Eleme
   const saleProducts = products.filter((p) => p.inSale);
   const newProducts = products.filter((p) => p.isNew);
 
+  // Get featured products for hero (first 4 products)
+  const featuredProducts = products.slice(0, 4);
+
   return (
-    <main className="min-h-screen bg-white dark:bg-gray-900">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gray-900 py-20">
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-              <div className="mb-6 inline-flex items-center rounded-full bg-gray-800 px-4 py-2 text-sm font-semibold text-white">
-                <Sparkles className="mr-2 h-4 w-4" />
-                Premium Spirits
-              </div>
-              <div className="mb-6 inline-flex items-center rounded-full bg-gray-800 px-4 py-2 text-sm font-semibold text-white">
-                <Sparkles className="mr-2 h-4 w-4" />
-                Authentieke Ouzo
-              </div>
-              <div className="mb-6 inline-flex items-center rounded-full bg-gray-800 px-4 py-2 text-sm font-semibold text-white">
-                <Sparkles className="mr-2 h-4 w-4" />
-                Traditionele Rakia
-              </div>
-            </div>
-            <h1 className="mb-6 text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-              Authentieke Smaken uit
-              <span className="block text-slate-300">Bulgarije</span>
-            </h1>
-            <p className="mx-auto mb-8 max-w-2xl text-xl text-slate-300">
-              Ontdek onze exclusieve collectie van traditionele dranken, direct geïmporteerd voor de beste kwaliteit en smaak.
-            </p>
-            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-              <Button size="lg" className="bg-white text-gray-900 hover:bg-gray-100">
-                <Link href="/categorieen" className="flex items-center">
-                  Ontdek Collectie
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button size="lg" variant="default" className="border-white text-black hover:bg-white/10">
-                <Link href="/nieuwe-producten">Nieuwe Producten</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+    <main>
+      {/* Unified Header + Hero Section */}
+      <div className="bg-hero-light dark:bg-hero-dark">
+        <Header />
+        <HeroSection
+          categories={categories}
+          featuredProducts={featuredProducts}
+          title="Authentieke Smaken uit Bulgarije"
+          subtitle="Ontdek onze exclusieve collectie van traditionele dranken, direct geïmporteerd voor de beste kwaliteit en smaak."
+        />
+      </div>
 
       {/* Features Section */}
-      <section className="bg-white py-16 dark:bg-gray-900">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            <div className="text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
-                <Award className="h-8 w-8 text-slate-600" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Premium Kwaliteit</h3>
-              <p className="text-gray-600 dark:text-gray-300">Alleen de beste selectie van traditionele dranken</p>
+      <Section variant="light" spacing="md">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3">
+          <div className="text-center">
+            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted sm:mb-4 sm:h-16 sm:w-16">
+              <Award className="h-6 w-6 text-muted-foreground sm:h-8 sm:w-8" />
             </div>
-            <div className="text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
-                <Star className="h-8 w-8 text-slate-600" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Authentieke Smaak</h3>
-              <p className="text-gray-600 dark:text-gray-300">Direct geïmporteerd voor de originele ervaring</p>
+            <h3 className="mb-2 text-lg font-semibold sm:text-xl">Premium Kwaliteit</h3>
+            <p className="text-sm text-muted-foreground sm:text-base">Alleen de beste selectie van traditionele dranken</p>
+          </div>
+          <div className="text-center">
+            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted sm:mb-4 sm:h-16 sm:w-16">
+              <Star className="h-6 w-6 text-muted-foreground sm:h-8 sm:w-8" />
             </div>
-            <div className="text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
-                <Sparkles className="h-8 w-8 text-slate-600" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Exclusieve Collectie</h3>
-              <p className="text-gray-600 dark:text-gray-300">Unieke producten die je nergens anders vindt</p>
+            <h3 className="mb-2 text-lg font-semibold sm:text-xl">Authentieke Smaak</h3>
+            <p className="text-sm text-muted-foreground sm:text-base">Direct geïmporteerd voor de originele ervaring</p>
+          </div>
+          <div className="text-center">
+            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted sm:mb-4 sm:h-16 sm:w-16">
+              <Sparkles className="h-6 w-6 text-muted-foreground sm:h-8 sm:w-8" />
             </div>
+            <h3 className="mb-2 text-lg font-semibold sm:text-xl">Exclusieve Collectie</h3>
+            <p className="text-sm text-muted-foreground sm:text-base">Unieke producten die je nergens anders vindt</p>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* Aanbiedingen Section */}
       {saleProducts.length > 0 && (
-        <section className="bg-gray-50 py-20 dark:bg-black/60">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-12 text-center">
-              <div className="mb-4 inline-flex items-center rounded-full bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700">
-                <Sparkles className="mr-2 h-4 w-4" />
-                Beperkte Tijd
-              </div>
-              <Title name="Speciale Aanbiedingen" cn="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-muted-foreground" />
-              <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600 dark:text-gray-300">
-                Mis deze geweldige deals niet! Beperkte voorraad beschikbaar.
-              </p>
-            </div>
-            <ModernCarousel products={saleProducts} />
-            <div className="mt-12 text-center">
-              <Button size="lg" className="bg-gray-900 text-white hover:bg-gray-800">
+        <Section variant="default" spacing="lg">
+          <SectionHeader
+            badge="Beperkte Tijd"
+            badgeIcon={<Sparkles className="h-4 w-4" />}
+            title="Speciale Aanbiedingen"
+            description="Mis deze geweldige deals niet! Beperkte voorraad beschikbaar."
+            action={
+              <Button size="lg" className="bg-surface text-text-primary hover:bg-background-alt dark:bg-surface dark:text-text-primary">
                 <Link href="/promoties" className="flex items-center">
                   Alle Aanbiedingen Bekijken
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-            </div>
-          </div>
-        </section>
+            }
+          />
+          <ProductCarousel products={saleProducts} variant="default" />
+        </Section>
       )}
 
       {/* Nieuwe Producten Section */}
       {newProducts.length > 0 && (
-        <section className="bg-white py-20 dark:bg-gray-900">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-12 text-center">
-              <div className="mb-4 inline-flex items-center rounded-full bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700">
-                <Star className="mr-2 h-4 w-4" />
-                Nieuw
-              </div>
-              <Title name="Nieuwe Toevoegingen" cn="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-muted-foreground" />
-              <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600 dark:text-gray-300">
-                Ontdek onze nieuwste aanwinsten en laat je verrassen door nieuwe smaken.
-              </p>
-            </div>
-            <SlideCarousel products={newProducts} />
-            <div className="mt-12 text-center">
-              <Button size="lg" variant="outline" className="border-slate-900 text-gray-900 hover:bg-gray-50">
+        <Section variant="light" spacing="lg">
+          <SectionHeader
+            badge="Nieuw"
+            badgeIcon={<Star className="h-4 w-4" />}
+            title="Nieuwe Toevoegingen"
+            description="Ontdek onze nieuwste aanwinsten en laat je verrassen door nieuwe smaken."
+            action={
+              <Button size="lg" variant="outline">
                 <Link href="/nieuwe-producten" className="flex items-center">
                   Alle Nieuwe Producten
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-            </div>
-          </div>
-        </section>
+            }
+          />
+          <ProductCarousel products={newProducts} variant="minimal" />
+        </Section>
       )}
 
       {/* Categories Section */}
-      <section className="bg-slate-50 py-20 dark:bg-black">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 text-center">
-            <div className="mb-4 inline-flex items-center rounded-full bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700">
-              <Sparkles className="mr-2 h-4 w-4" />
-              Beperkte Tijd
-            </div>
-            <Title name="Ontdek Per Categorie" cn="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-muted-foreground" />
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
-              Vind precies wat je zoekt door te bladeren in onze zorgvuldig samengestelde categorieën.
-            </p>
-          </div>
-          <MaxWidthWrapper className="max-w-[84rem]">
-            <CategoryCard slug="home" categories={categories} products={products} />
-          </MaxWidthWrapper>
+      <Section variant="default" spacing="lg">
+        <SectionHeader
+          badge="Ontdek"
+          badgeIcon={<Sparkles className="h-4 w-4" />}
+          title="Ontdek Per Categorie"
+          description="Vind precies wat je zoekt door te bladeren in onze zorgvuldig samengestelde categorieën."
+        />
+        <CategoryGrid
+          categories={categories}
+          products={products}
+          columns={{ mobile: 1, tablet: 2, desktop: 3 }}
+          gap="md"
+          limit={6}
+        />
+        <div className="mt-8 text-center sm:mt-12">
+          <Button size="lg" variant="outline" className="w-full sm:w-auto">
+            <Link href="/categorieen" className="flex items-center justify-center">
+              Bekijk Alle Categorieën
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
         </div>
-      </section>
+      </Section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-br from-slate-800 via-slate-900 to-black py-20">
-        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <h2 className="text-3xl font-bold text-white sm:text-4xl lg:text-5xl">Klaar om te Ontdekken?</h2>
-              <p className="mx-auto max-w-2xl text-xl text-slate-300">
-                Sluit je aan bij duizenden tevreden klanten die onze premium spirits ontdekken.
-              </p>
-            </div>
+      <Section variant="gradient" spacing="lg" container="md">
+        <div className="space-y-6 text-center sm:space-y-8">
+          <div className="space-y-3 sm:space-y-4">
+            <h2 className="text-2xl font-bold text-text-primary sm:text-3xl lg:text-4xl xl:text-5xl">Klaar om te Ontdekken?</h2>
+            <p className="mx-auto max-w-2xl text-base text-text-secondary sm:text-lg lg:text-xl">
+              Sluit je aan bij duizenden tevreden klanten die onze premium spirits ontdekken.
+            </p>
+          </div>
 
-            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-              <Button size="lg" className="bg-white px-8 py-3 text-sm text-gray-900 hover:bg-gray-100">
-                <Link href="/categorieen" className="flex items-center">
-                  Start Winkelen
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button size="lg" variant="default" className="border-white px-8 py-3 text-sm text-black hover:bg-white/10">
-                <Link href="/contact" className="flex items-center">
-                  <Mail className="mr-2 h-5 w-5" />
-                  Contact Opnemen
-                </Link>
-              </Button>
-            </div>
+          <div className="flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4">
+            <Button size="lg" className="w-full bg-surface px-6 py-3 text-sm text-text-primary hover:bg-background-alt sm:w-auto sm:px-8">
+              <Link href="/categorieen" className="flex items-center justify-center">
+                Start Winkelen
+                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" className="w-full border-border/20 bg-surface/5 px-6 py-3 text-sm text-text-primary backdrop-blur-sm hover:bg-surface/10 sm:w-auto sm:px-8">
+              <Link href="/contact" className="flex items-center justify-center">
+                <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                Contact Opnemen
+              </Link>
+            </Button>
+          </div>
 
-            {/* Trust Indicators */}
-            <div className="border-t border-slate-700 pt-8">
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-white">1000+</div>
-                  <div className="text-sm text-slate-400">Tevreden Klanten</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-white">100+</div>
-                  <div className="text-sm text-slate-400">Premium Producten</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-white">Stand-by</div>
-                  <div className="text-sm text-slate-400">Klantenservice</div>
-                </div>
+          {/* Trust Indicators */}
+          <div className="border-t border-border pt-6 sm:pt-8">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
+              <div className="text-center">
+                <div className="text-xl font-bold text-text-primary sm:text-2xl">1000+</div>
+                <div className="text-xs text-text-secondary sm:text-sm">Tevreden Klanten</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xl font-bold text-text-primary sm:text-2xl">100+</div>
+                <div className="text-xs text-text-secondary sm:text-sm">Premium Producten</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xl font-bold text-text-primary sm:text-2xl">Stand-by</div>
+                <div className="text-xs text-text-secondary sm:text-sm">Klantenservice</div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </Section>
     </main>
   );
 };

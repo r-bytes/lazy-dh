@@ -30,7 +30,7 @@ const CookieBanner: React.FC = () => {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around bg-secondary p-4 bg-zinc-900 text-white">
+    <div className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around bg-surface p-4 text-text-primary">
       <div className="p-8">
         <p>Wij gebruiken cookies om uw ervaring te verbeteren en te analyseren.</p>
         <p>
@@ -41,10 +41,10 @@ const CookieBanner: React.FC = () => {
         </p>
       </div>
       <div>
-        <Button onClick={handleAccept} className="m-2 w-32 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-800">
+        <Button onClick={handleAccept} className="m-2 w-32 rounded bg-green-500 px-4 py-2 text-text-primary hover:bg-green-600">
           Accepteren
         </Button>
-        <Button onClick={handleDecline} className="m-2 w-32 rounded bg-red-500 px-4 py-2 text-white hover:bg-red-800">
+        <Button onClick={handleDecline} className="m-2 w-32 rounded bg-red-500 px-4 py-2 text-text-primary hover:bg-red-600">
           Weigeren
         </Button>
       </div>

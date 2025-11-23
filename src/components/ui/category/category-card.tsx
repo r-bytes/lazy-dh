@@ -1,7 +1,7 @@
 "use client";
 
 import CategoryCardSkeleton from "@/components/products/category-skeleton";
-import ProductList from "@/components/products/product-list";
+import { ProductGrid } from "@/components/products/ProductGrid";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useProductContext } from "@/context/ProductContext";
 import { Category } from "@/lib/types/category";
@@ -65,7 +65,11 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
         {/* <CardDescription className="md:text-base">Kies een categorie</CardDescription> */}
       </CardHeader>
       <InputForm products={products!} onSearchChange={setFilteredProducts} />
-      {isSearching && <ProductList products={filteredProducts} />}
+      {isSearching && (
+        <div className="px-4 py-8">
+          <ProductGrid products={filteredProducts || []} />
+        </div>
+      )}
       {!isSearching && (
         <CardContent className="mt-12 flex flex-col justify-center sm:mx-16 lg:mx-2">
           {slug === "home"
@@ -73,7 +77,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
                 <div key={index} className="mx-auto flex w-full text-center lg:w-10/12 lg:text-left">
                   <Link
                     href={`/categorieen/${item.slug}`}
-                    className="group w-full rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+                    className="group w-full rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-border hover:bg-background-alt"
                     rel="noopener noreferrer"
                   >
                     <div className="flex items-center justify-center px-4">
@@ -100,7 +104,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
                 <div key={index} className="flex text-center lg:text-left">
                   <Link
                     href={`${pathname}/${item.slug}`}
-                    className="group w-full rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+                    className="group w-full rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-border hover:bg-background-alt"
                     rel="noopener noreferrer"
                   >
                     <div className="flex items-center justify-center px-4">

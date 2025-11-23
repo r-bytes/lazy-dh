@@ -1,7 +1,9 @@
 "use client";
 
 import BeatLoader from "react-spinners/BeatLoader";
+import Header from "@/components/navigation/header";
 import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
+import { Section } from "@/components/ui/section";
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
@@ -32,7 +34,11 @@ export default function Page() {
     const handleRedirect = async () => {
       if (status === "unauthenticated") {
         try {
-         navigateTo(router, "/auth");
+          // Prevent redirect loop: only redirect if not already on /auth
+          const currentPath = window.location.pathname;
+          if (!currentPath.startsWith("/auth")) {
+            navigateTo(router, "/auth");
+          }
         } catch (error) {
           toast.error("Er is een fout opgetreden tijdens het doorverwijzen");
         }
@@ -45,16 +51,29 @@ export default function Page() {
   }, [status, router]);
 
   if (status === "loading" || isLoading) {
-    return <LoadingSpinner />;
+    return (
+      <>
+        <div className="bg-hero-light dark:bg-hero-dark">
+          <Header />
+        </div>
+        <LoadingSpinner />
+      </>
+    );
   }
 
   return (
-    <div className="mx-auto flex flex-col items-center justify-between bg-background lg:max-w-7xl lg:p-24">
-      <MaxWidthWrapper>
-        <Suspense fallback={<LoadingSpinner />}>
-          <DynamicAccountCard session={session} />
-        </Suspense>
-      </MaxWidthWrapper>
-    </div>
+    <>
+      {/* Header */}
+      <div className="bg-hero-light dark:bg-hero-dark">
+        <Header />
+      </div>
+      <Section variant="default" spacing="lg">
+        <MaxWidthWrapper className="mx-auto">
+          <Suspense fallback={<LoadingSpinner />}>
+            <DynamicAccountCard session={session} />
+          </Suspense>
+        </MaxWidthWrapper>
+      </Section>
+    </>
   );
 }
