@@ -5,8 +5,9 @@ import { PDFDocument, PDFImage, PDFPage, rgb, StandardFonts } from "pdf-lib";
 export async function createOrderSummaryDocument(orderItemsData: Product[], invoiceDetails: InvoiceDetails) {
   // Create a new PDF document
   const pdfDoc = await PDFDocument.create();
-  const page = pdfDoc.addPage([595.28, 841.89]); // A4 size in points
-  const { width, height } = page.getSize();
+  // A4 size in points (595.28 x 841.89)
+  const width = 595.28;
+  const height = 841.89;
 
   const red = 250 / 255;
   const green = 204 / 255;
@@ -341,19 +342,16 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
     });
   };
 
+  // Calculate how many pages we need first
+  const maxItemsPerPage = Math.floor((tableStartY - minTableEndY) / lineSpacing);
+  const totalPages = Math.max(1, Math.ceil(orderItemsData.length / maxItemsPerPage));
+  const actualMaxItemsPerPage = Math.ceil(orderItemsData.length / totalPages);
+
   // Create first page
   let currentPage = pdfDoc.addPage([width, height]);
   let pageNumber = 1;
-  let currentY = drawHeader(currentPage, pageNumber, 0); // Will update totalPages later
+  let currentY = drawHeader(currentPage, pageNumber, totalPages);
   let itemsPerPage = 0;
-  const maxItemsPerPage = Math.floor((tableStartY - minTableEndY) / lineSpacing);
-
-  // Calculate how many pages we need
-  const totalPages = Math.ceil(orderItemsData.length / maxItemsPerPage);
-  const actualMaxItemsPerPage = Math.ceil(orderItemsData.length / totalPages);
-
-  // Redraw header with correct total pages
-  currentY = drawHeader(currentPage, pageNumber, totalPages);
 
   // Draw items
   orderItemsData.forEach((item: Product, index: number) => {

@@ -13,7 +13,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Title from "../ui/title";
 import { ModeToggle } from "../ui/toggle-mode";
 import TopHeader from "./top-header";
 
