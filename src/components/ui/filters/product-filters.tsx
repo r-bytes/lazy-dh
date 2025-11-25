@@ -15,6 +15,7 @@ export interface ProductFiltersState {
   priceRange: PriceRange;
   volumes: string[];
   percentages: string[];
+  landen: string[];
   inSale: boolean | null;
   isNew: boolean | null;
   inStock: boolean | null;
@@ -141,6 +142,7 @@ export function ProductFilters({
       priceRange: { min: priceRange.min, max: priceRange.max },
       volumes: [],
       percentages: [],
+      landen: [],
       inSale: null,
       isNew: null,
       inStock: null,
@@ -152,6 +154,7 @@ export function ProductFilters({
     filters.categories.length > 0 ||
     filters.volumes.length > 0 ||
     filters.percentages.length > 0 ||
+    filters.landen.length > 0 ||
     filters.inSale !== null ||
     filters.isNew !== null ||
     filters.inStock !== null ||

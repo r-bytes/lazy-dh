@@ -1,18 +1,19 @@
 "use client";
 
+import { PriceRange } from "@/components/ui/filters/price-range-slider";
+import { ProductFiltersState } from "@/components/ui/filters/product-filters";
+import { SortOption, sortProducts } from "@/components/ui/filters/product-sort";
 import { Category } from "@/lib/types/category";
 import { Product } from "@/lib/types/product";
-import { PriceRange } from "@/components/ui/filters/price-range-slider";
-import { SortOption, sortProducts } from "@/components/ui/filters/product-sort";
-import { ProductFiltersState } from "@/components/ui/filters/product-filters";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 const DEFAULT_FILTERS: ProductFiltersState = {
   categories: [],
   priceRange: { min: 0, max: 1000 },
   volumes: [],
   percentages: [],
+  landen: [],
   inSale: null,
   isNew: null,
   inStock: null,
@@ -53,6 +54,13 @@ function filterProducts(products: Product[], filters: ProductFiltersState): Prod
     );
   }
 
+  // Land filter
+  if (filters.landen.length > 0) {
+    filtered = filtered.filter((product) => {
+      return product.land && filters.landen.includes(product.land);
+    });
+  }
+
   // Sale filter
   if (filters.inSale !== null) {
     filtered = filtered.filter((product) => product.inSale === filters.inSale);
@@ -78,6 +86,7 @@ function parseFiltersFromURL(searchParams: URLSearchParams, defaultPriceRange: P
   const categories = searchParams.get("categories")?.split(",").filter(Boolean) || [];
   const volumes = searchParams.get("volumes")?.split(",").filter(Boolean) || [];
   const percentages = searchParams.get("percentages")?.split(",").filter(Boolean) || [];
+  const landen = searchParams.get("landen")?.split(",").filter(Boolean) || [];
   const minPrice = searchParams.get("minPrice") ? Number(searchParams.get("minPrice")) : defaultPriceRange.min;
   const maxPrice = searchParams.get("maxPrice") ? Number(searchParams.get("maxPrice")) : defaultPriceRange.max;
   const inSale = searchParams.get("inSale") === "true" ? true : searchParams.get("inSale") === "false" ? false : null;
@@ -90,6 +99,7 @@ function parseFiltersFromURL(searchParams: URLSearchParams, defaultPriceRange: P
     priceRange: { min: minPrice, max: maxPrice },
     volumes,
     percentages,
+    landen,
     inSale,
     isNew,
     inStock,
@@ -111,6 +121,9 @@ function filtersToURLParams(filters: ProductFiltersState): URLSearchParams {
   }
   if (filters.percentages.length > 0) {
     params.set("percentages", filters.percentages.join(","));
+  }
+  if (filters.landen.length > 0) {
+    params.set("landen", filters.landen.join(","));
   }
   if (filters.priceRange.min !== DEFAULT_FILTERS.priceRange.min) {
     params.set("minPrice", String(filters.priceRange.min));
@@ -262,6 +275,7 @@ export function useProductFilters({
       filters.categories.length > 0 ||
       filters.volumes.length > 0 ||
       filters.percentages.length > 0 ||
+      filters.landen.length > 0 ||
       filters.inSale !== null ||
       filters.isNew !== null ||
       filters.inStock !== null ||

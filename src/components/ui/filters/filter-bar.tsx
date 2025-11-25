@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -10,16 +11,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PriceRange, PriceRangeSlider } from "./price-range-slider";
 import { Category } from "@/lib/types/category";
 import { Product } from "@/lib/types/product";
+import { Filter, X } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useMemo, useState } from "react";
+import { PriceRange, PriceRangeSlider } from "./price-range-slider";
 import { ProductFiltersState } from "./product-filters";
 import { SortOption } from "./product-sort";
-import { cn } from "@/lib/utils";
-import { Filter, X } from "lucide-react";
-import { useMemo, useState } from "react";
-import { useSession } from "next-auth/react";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 
 export interface FilterBarProps {
   /**
@@ -67,6 +66,19 @@ function getUniqueCategoriesFromProducts(products: Product[]): string[] {
 }
 
 /**
+ * Get unique land names from products
+ */
+function getUniqueLandsFromProducts(products: Product[]): string[] {
+  const landSet = new Set<string>();
+  products.forEach((product) => {
+    if (product.land) {
+      landSet.add(product.land);
+    }
+  });
+  return Array.from(landSet).sort();
+}
+
+/**
  * FilterBar Component
  *
  * Horizontal filter bar for category pages with all filter options.
@@ -87,6 +99,11 @@ export function FilterBar({
   // Get unique categories from products (these are the actual category names used in products)
   const productCategories = useMemo(() => {
     return getUniqueCategoriesFromProducts(products);
+  }, [products]);
+
+  // Get unique lands from products
+  const productLands = useMemo(() => {
+    return getUniqueLandsFromProducts(products);
   }, [products]);
 
   // Calculate available ranges
@@ -127,6 +144,10 @@ export function FilterBar({
 
   const handleCategoryChange = (categoryName: string) => {
     updateFilters({ categories: categoryName ? [categoryName] : [] });
+  };
+
+  const handleLandChange = (landName: string) => {
+    updateFilters({ landen: landName ? [landName] : [] });
   };
 
   const handlePriceMinChange = (value: string) => {
@@ -181,6 +202,7 @@ export function FilterBar({
     filters.categories.length > 0 ||
     filters.volumes.length > 0 ||
     filters.percentages.length > 0 ||
+    filters.landen.length > 0 ||
     filters.inSale !== null ||
     filters.isNew !== null ||
     filters.inStock !== null ||
@@ -193,6 +215,7 @@ export function FilterBar({
       priceRange: { min: priceRange.min, max: priceRange.max },
       volumes: [],
       percentages: [],
+      landen: [],
       inSale: null,
       isNew: null,
       inStock: null,
@@ -248,6 +271,35 @@ export function FilterBar({
           </Select>
         </div>
       )}
+
+      {/* Land Filter */}
+      <div className="space-y-2">
+        <Label className="text-sm font-semibold">Land</Label>
+        <Select
+          value={filters.landen[0] || "all"}
+          onValueChange={(value) => handleLandChange(value === "all" ? "" : value)}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Alle landen" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Alle landen</SelectItem>
+            {productLands.length > 0 ? (
+              productLands.map((landName) => (
+                <SelectItem key={landName} value={landName}>
+                  {landName}
+                </SelectItem>
+              ))
+            ) : (
+              <>
+                <SelectItem value="Bulgarije">Bulgarije</SelectItem>
+                <SelectItem value="Griekenland">Griekenland</SelectItem>
+                <SelectItem value="Polen">Polen</SelectItem>
+              </>
+            )}
+          </SelectContent>
+        </Select>
+      </div>
 
       {/* Price Range - Only show when logged in */}
       {isLoggedIn && (
@@ -383,7 +435,7 @@ export function FilterBar({
       {/* Desktop: Horizontal Filter Bar */}
       <div className="hidden lg:block">
         <div className="rounded-lg border border-border bg-surface p-4">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-7">
             {/* Category */}
             {productCategories.length > 0 && (
               <div className="space-y-1">
@@ -406,6 +458,35 @@ export function FilterBar({
                 </Select>
               </div>
             )}
+
+            {/* Land */}
+            <div className="space-y-1">
+              <Label className="text-xs font-semibold text-muted-foreground">Land</Label>
+              <Select
+                value={filters.landen[0] || "all"}
+                onValueChange={(value) => handleLandChange(value === "all" ? "" : value)}
+              >
+                <SelectTrigger className="h-9">
+                  <SelectValue placeholder="Alle" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Alle</SelectItem>
+                  {productLands.length > 0 ? (
+                    productLands.map((landName) => (
+                      <SelectItem key={landName} value={landName}>
+                        {landName}
+                      </SelectItem>
+                    ))
+                  ) : (
+                    <>
+                      <SelectItem value="Bulgarije">Bulgarije</SelectItem>
+                      <SelectItem value="Griekenland">Griekenland</SelectItem>
+                      <SelectItem value="Polen">Polen</SelectItem>
+                    </>
+                  )}
+                </SelectContent>
+              </Select>
+            </div>
 
             {/* Price - Only show when logged in */}
             {isLoggedIn && (
@@ -474,6 +555,15 @@ export function FilterBar({
                     className="h-3.5 w-3.5 rounded border-border text-primary focus:ring-primary"
                   />
                   <span className="text-xs">Sale</span>
+                </label>
+                <label className="flex items-center space-x-1 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={filters.isNew === true}
+                    onChange={(e) => handleIsNewToggle(e.target.checked)}
+                    className="h-3.5 w-3.5 rounded border-border text-primary focus:ring-primary"
+                  />
+                  <span className="text-xs">Nieuw</span>
                 </label>
               </div>
             </div>

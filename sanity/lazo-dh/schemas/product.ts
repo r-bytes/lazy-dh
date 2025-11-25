@@ -38,6 +38,19 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'land',
+      title: 'Land',
+      description: 'Land van herkomst',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Bulgarije', value: 'Bulgarije'},
+          {title: 'Griekenland', value: 'Griekenland'},
+          {title: 'Polen', value: 'Polen'},
+        ],
+      },
+    }),
+    defineField({
       name: 'quantityInBox',
       title: 'Aantal in Doos',
       description: 'Aantal flessen in doos',

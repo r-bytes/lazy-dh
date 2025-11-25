@@ -9,6 +9,7 @@ export interface Product extends SanityDocument {
   price: number;
   volume?: number;
   percentage?: number;
+  land?: string;
   inStock: boolean;
   inSale: boolean;
   isNew: boolean;

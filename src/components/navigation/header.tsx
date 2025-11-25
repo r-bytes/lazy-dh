@@ -177,7 +177,7 @@ const Header = (props: Props) => {
                       className={`${roboto.className} whitespace-nowrap text-sm font-semibold tracking-wide text-text-primary transition-colors hover:text-text-secondary xl:text-base
                         ${
                           index === arr.length - 2
-                            ? "rounded-md bg-accent-yellow px-3 py-2 text-text-primary transition-colors hover:bg-accent-yellow-dark"
+                            ? "rounded-md bg-accent-yellow px-3 py-2 text-text-primary transition-colors hover:bg-accent-yellow-dark dark:text-black"
                             : currentPath.toLowerCase() === item.title.replace("ë", "e").toLowerCase()
                               ? "border-b-2 border-border pb-2"
                               : item.requiresAuth && !session
