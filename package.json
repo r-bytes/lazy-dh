@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "backup:sanity": "tsx scripts/backup-sanity.ts",
+    "migrate:images": "tsx scripts/migrate-images.ts"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.4.1",
@@ -83,6 +85,7 @@
     "node-loader": "^2.0.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.7.0",
     "typescript": "^5.4.5"
   }
 }
