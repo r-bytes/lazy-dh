@@ -24,9 +24,12 @@ if (!dataset) {
   throw new Error('Missing environment variable: NEXT_PUBLIC_SANITY_DATASET')
 }
 
+// TypeScript: After the checks above, projectId is guaranteed to be a string
+const safeProjectId: string = projectId
+
 // Create Sanity client (read-only operations)
 const client = createClient({
-  projectId,
+  projectId: safeProjectId,
   dataset,
   apiVersion,
   useCdn: false,
@@ -66,7 +69,7 @@ async function fetchAllDocuments(): Promise<any[]> {
 async function backupSanity(): Promise<void> {
   try {
     console.log('📦 Starting Sanity backup...')
-    console.log(`   Project ID: ${projectId}`)
+    console.log(`   Project ID: ${safeProjectId}`)
     console.log(`   Dataset: ${dataset}`)
     console.log(`   API Version: ${apiVersion}`)
     console.log('')
@@ -80,7 +83,7 @@ async function backupSanity(): Promise<void> {
       documents,
       timestamp: new Date().toISOString(),
       dataset,
-      projectId,
+      projectId: safeProjectId,
     }
 
     // Generate filename with timestamp

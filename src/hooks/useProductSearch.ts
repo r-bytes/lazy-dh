@@ -1,8 +1,7 @@
 "use client";
 
 import { Product } from "@/lib/types/product";
-import { debounce } from "@/lib/utils";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 export interface UseProductSearchOptions {
   /**
@@ -83,18 +82,24 @@ export function useProductSearch({
 }: UseProductSearchOptions): UseProductSearchReturn {
   const [query, setQueryState] = useState<string>("");
   const [debouncedQuery, setDebouncedQuery] = useState<string>("");
+  const timeoutRef = useRef<NodeJS.Timeout>();
 
   // Debounce the query
-  const debouncedSetQuery = useCallback(
-    debounce((value: string) => {
-      setDebouncedQuery(value);
-    }, debounceMs),
-    [debounceMs]
-  );
-
   useEffect(() => {
-    debouncedSetQuery(query);
-  }, [query, debouncedSetQuery]);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    
+    timeoutRef.current = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, debounceMs);
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [query, debounceMs]);
 
   // Filter products based on search query
   const filteredProducts = useMemo(() => {
