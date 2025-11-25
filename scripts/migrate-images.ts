@@ -38,13 +38,17 @@ if (!token) {
   throw new Error('Missing environment variable: SANITY_API_TOKEN (required for uploading assets)')
 }
 
+// TypeScript: After the checks above, projectId is guaranteed to be a string
+const safeProjectId: string = projectId
+const safeToken: string = token
+
 // Create Sanity client with write token
 const client = createClient({
-  projectId,
+  projectId: safeProjectId,
   dataset,
   apiVersion,
   useCdn: false,
-  token,
+  token: safeToken,
 })
 
 interface UploadResult {
@@ -218,7 +222,7 @@ async function migrateImages(): Promise<void> {
       totalFailed: failed.length,
       timestamp: new Date().toISOString(),
       dataset,
-      projectId,
+      projectId: safeProjectId,
       uploaded: successful.map(r => ({
         file: r.file,
         assetId: r.assetId!,
