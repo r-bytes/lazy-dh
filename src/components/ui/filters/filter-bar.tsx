@@ -569,21 +569,23 @@ export function FilterBar({
             </div>
 
             {/* Results & Reset */}
-            <div className="flex items-end justify-between md:col-span-2 lg:col-span-1 xl:col-span-2">
-              <div className="text-xs text-muted-foreground">
-                {filteredCount} van {totalCount}
-              </div>
+            <div className="flex flex-col items-end justify-between md:col-span-2 lg:col-span-1 xl:col-span-2">
+              {/* Reset button - top right */}
               {hasActiveFilters && (
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="sm"
                   onClick={resetFilters}
-                  className="h-8 text-xs"
+                  className="h-8 text-xs mb-auto"
                 >
                   <X className="mr-1 h-3 w-3" />
                   Reset
                 </Button>
               )}
+              {/* Results count - bottom right */}
+              <div className="text-xs text-muted-foreground text-right mt-auto">
+                {filteredCount} van {totalCount}
+              </div>
             </div>
           </div>
         </div>

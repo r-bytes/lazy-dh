@@ -93,7 +93,7 @@ export function ProductDialog({ product, open, onOpenChange, onRemoveFavorite }:
           >
             <Minus className="h-4 w-4" />
           </button>
-          <span className="flex w-8 items-center justify-center border-y border-muted-foreground/40 text-center text-sm">{quantity}</span>
+          <span className="flex min-w-12 items-center justify-center border-y border-muted-foreground/40 text-center text-sm min-h-8">{quantity}</span>
           <button
             type="button"
             className="flex h-8 w-12 items-center justify-center border border-muted-foreground/40 text-center text-green-700 transition-colors hover:bg-muted"
@@ -114,7 +114,7 @@ export function ProductDialog({ product, open, onOpenChange, onRemoveFavorite }:
         <button
           type="button"
           onClick={toggleFavorite}
-          className="absolute right-4 top-4 z-10 rounded-full p-2 transition-colors hover:bg-background-alt/20"
+          className="absolute left-4 top-4 z-10 rounded-full p-2 transition-colors hover:bg-background-alt/20"
           aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
         >
           <Heart className={`h-5 w-5 ${isFavorite ? "fill-red-500 text-red-500" : "text-muted-foreground"}`} />
