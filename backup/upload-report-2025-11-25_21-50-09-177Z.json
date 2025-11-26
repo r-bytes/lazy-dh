@@ -1,0 +1,15 @@
+{
+  "totalUploaded": 1,
+  "totalFailed": 0,
+  "timestamp": "2025-11-25T21:50:09.172Z",
+  "dataset": "production",
+  "projectId": "rx2p8wni",
+  "uploaded": [
+    {
+      "file": "Krupnik Pistacja Mleczna 16_ 12x0.5l.jpg",
+      "assetId": "image-f72f85e415bc378a89e97d6afba93a42fe111320-800x800-jpg",
+      "productId": "rGOWBGshtJ6S3rxXTKCpnM"
+    }
+  ],
+  "failed": []
+}

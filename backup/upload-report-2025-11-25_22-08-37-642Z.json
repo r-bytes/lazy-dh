@@ -1,0 +1,15 @@
+{
+  "totalUploaded": 1,
+  "totalFailed": 0,
+  "timestamp": "2025-11-25T22:08:37.632Z",
+  "dataset": "production",
+  "projectId": "rx2p8wni",
+  "uploaded": [
+    {
+      "file": "Soplica Citroen 0,5l _ Alc.26_.png",
+      "assetId": "image-eb210d1a2d157f55a8976c961cbd6e82a9e268ff-474x730-png",
+      "productId": "drafts.product-309-1764108516614"
+    }
+  ],
+  "failed": []
+}

@@ -12,7 +12,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 
 // Import environment variables
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'rx2p8wni'
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
 const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-06-08'
 

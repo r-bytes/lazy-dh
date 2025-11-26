@@ -18,13 +18,27 @@ import * as path from 'path'
 // CONFIGURATION
 // ============================================================================
 // TODO: Set this to the absolute path of your images folder
-const IMAGES_DIR = '/ABSOLUTE/PATH/HERE'
+const IMAGES_DIR = '/Users/rvelse/Desktop/personal/lazo/lazo-nieuweproducten/test'
+
+// Default product values (can be customized)
+const DEFAULT_PRODUCT_VALUES = {
+  category: '', // Options: Likeur, Ouzo, Rakia, Whisky, Wijn, Wodka
+  land: 'Polen', // Options: Bulgarije, Griekenland, Polen
+  price: 0, // Default price (you can change this)
+  volume: '70cl', // Options: 20cl, 50cl, 70cl, 100cl, 175cl, 200cl
+  percentage: '40%', // Options: 12%, 25%, 35%, 36%, 37.5%, 38%, 40%, 42.5%, 43%, 47%
+  quantityInBox: 6,
+  inStock: true,
+  inSale: false,
+  isNew: true, // Set to true for new products
+  draft: true,
+}
 
 // Import environment variables
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'rx2p8wni'
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
 const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-06-08'
-const token = process.env.SANITY_API_TOKEN // Required for uploading assets
+const token = process.env.SANITY_API_TOKEN || 'skAKbEBNaX9WBlNIdQFQfgxdxd6wc7kzt9zyDlxhIL5zIMYq5JGBktcSgpXx2mKlte5JZBS2O4erqYBTI8Vd9lYC9UBxZgqnzxySbkaZy1gnwd4943Avwnri5Fm6GPXSfp2Fje6X1O2SLgKniHZT1Mw8fXR14EuafZO7aAg0SQCNIwi2cdMK'
 
 if (!projectId) {
   throw new Error('Missing environment variable: NEXT_PUBLIC_SANITY_PROJECT_ID')
@@ -54,6 +68,7 @@ const client = createClient({
 interface UploadResult {
   file: string
   assetId: string | null
+  productId: string | null
   success: boolean
   error?: string
 }
@@ -67,6 +82,7 @@ interface UploadReport {
   uploaded: Array<{
     file: string
     assetId: string
+    productId: string
   }>
   failed: Array<{
     file: string
@@ -101,11 +117,76 @@ function getFilenameWithoutExtension(filepath: string): string {
 }
 
 /**
- * Upload a single image to Sanity
+ * Get the highest productId from existing products
  */
-async function uploadImage(filepath: string): Promise<UploadResult> {
+async function getNextProductId(): Promise<number> {
+  try {
+    const query = `*[_type == "product"] | order(productId desc) [0].productId`
+    const maxProductId = await client.fetch(query)
+    return maxProductId ? maxProductId + 1 : 1
+  } catch (error) {
+    console.warn('⚠️  Could not fetch max productId, starting from 1')
+    return 1
+  }
+}
+
+/**
+ * Create a product document in Sanity
+ */
+async function createProduct(
+  assetId: string,
+  productName: string,
+  productId: number
+): Promise<string | null> {
+  try {
+    // Generate a unique ID for the product
+    // If draft is true, prefix with "drafts." to make it unpublished
+    const baseId = `product-${productId}-${Date.now()}`
+    const documentId = DEFAULT_PRODUCT_VALUES.draft ? `drafts.${baseId}` : baseId
+
+    const product = {
+      _id: documentId,
+      _type: 'product',
+      name: productName,
+      image: {
+        _type: 'image',
+        asset: {
+          _type: 'reference',
+          _ref: assetId,
+        },
+      },
+      category: DEFAULT_PRODUCT_VALUES.category || undefined,
+      land: DEFAULT_PRODUCT_VALUES.land || undefined,
+      price: DEFAULT_PRODUCT_VALUES.price,
+      volume: DEFAULT_PRODUCT_VALUES.volume,
+      percentage: DEFAULT_PRODUCT_VALUES.percentage,
+      quantityInBox: DEFAULT_PRODUCT_VALUES.quantityInBox,
+      quantity: 0,
+      productId: productId,
+      inStock: DEFAULT_PRODUCT_VALUES.inStock,
+      inSale: DEFAULT_PRODUCT_VALUES.inSale,
+      isNew: DEFAULT_PRODUCT_VALUES.isNew,
+    }
+
+    const created = await client.create(product)
+    const status = DEFAULT_PRODUCT_VALUES.draft ? 'draft (unpublished)' : 'published'
+    console.log(`   📝 Created as ${status}`)
+    return created._id
+  } catch (error: any) {
+    console.error(`   ❌ Failed to create product: ${error?.message || 'Unknown error'}`)
+    return null
+  }
+}
+
+/**
+ * Upload a single image to Sanity and create a product
+ */
+async function uploadImageAndCreateProduct(
+  filepath: string,
+  nextProductId: number
+): Promise<UploadResult> {
   const filename = path.basename(filepath)
-  const title = getFilenameWithoutExtension(filepath)
+  const productName = getFilenameWithoutExtension(filepath)
 
   try {
     console.log(`   📤 Uploading: ${filename}...`)
@@ -124,15 +205,32 @@ async function uploadImage(filepath: string): Promise<UploadResult> {
       .patch(asset._id)
       .set({
         originalFilename: filename,
-        title: title,
+        title: productName,
       })
       .commit()
 
-    console.log(`   ✅ Success: ${filename} → ${asset._id}`)
+    console.log(`   ✅ Image uploaded: ${filename} → ${asset._id}`)
+
+    // Create product document
+    console.log(`   📦 Creating product: ${productName}...`)
+    const productId = await createProduct(asset._id, productName, nextProductId)
+
+    if (!productId) {
+      return {
+        file: filename,
+        assetId: asset._id,
+        productId: null,
+        success: false,
+        error: 'Failed to create product document',
+      }
+    }
+
+    console.log(`   ✅ Product created: ${productName} → ${productId}`)
     
     return {
       file: filename,
       assetId: asset._id,
+      productId: productId,
       success: true,
     }
   } catch (error: any) {
@@ -142,6 +240,7 @@ async function uploadImage(filepath: string): Promise<UploadResult> {
     return {
       file: filename,
       assetId: null,
+      productId: null,
       success: false,
       error: errorMessage,
     }
@@ -179,7 +278,7 @@ async function migrateImages(): Promise<void> {
     console.log('')
 
     // Validate images directory
-    if (IMAGES_DIR === '/ABSOLUTE/PATH/HERE') {
+    if (!IMAGES_DIR || IMAGES_DIR.trim() === '') {
       throw new Error('Please set the IMAGES_DIR constant to your images folder path')
     }
 
@@ -198,18 +297,29 @@ async function migrateImages(): Promise<void> {
     console.log(`📁 Found ${imageFiles.length} image file(s)`)
     console.log('')
 
-    // Upload each image
+    // Get the next productId to use
+    console.log('🔍 Getting next productId...')
+    let currentProductId = await getNextProductId()
+    console.log(`   Starting from productId: ${currentProductId}`)
+    console.log('')
+
+    // Upload each image and create product
     const results: UploadResult[] = []
     
     for (let i = 0; i < imageFiles.length; i++) {
       const filepath = imageFiles[i]
       console.log(`[${i + 1}/${imageFiles.length}]`)
-      const result = await uploadImage(filepath)
+      const result = await uploadImageAndCreateProduct(filepath, currentProductId)
       results.push(result)
+      
+      // Increment productId for next product
+      if (result.success) {
+        currentProductId++
+      }
       
       // Small delay to avoid rate limiting
       if (i < imageFiles.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 100))
+        await new Promise(resolve => setTimeout(resolve, 200))
       }
     }
 
@@ -226,6 +336,7 @@ async function migrateImages(): Promise<void> {
       uploaded: successful.map(r => ({
         file: r.file,
         assetId: r.assetId!,
+        productId: r.productId!,
       })),
       failed: failed.map(r => ({
         file: r.file,

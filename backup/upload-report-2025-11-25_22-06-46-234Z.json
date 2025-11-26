@@ -1,0 +1,1050 @@
+{
+  "totalUploaded": 207,
+  "totalFailed": 1,
+  "timestamp": "2025-11-25T22:06:46.228Z",
+  "dataset": "production",
+  "projectId": "rx2p8wni",
+  "uploaded": [
+    {
+      "file": "Bialy_Bocian_02l.png",
+      "assetId": "image-fe261f04de6b3b50e351f32d9c42a890c3aa4518-229x606-png",
+      "productId": "drafts.product-102-1764107736894"
+    },
+    {
+      "file": "Bialy_Bocian_05l.png",
+      "assetId": "image-94b5cdc2a521e5088c27a66da7cdddab99cccd8f-500x500-png",
+      "productId": "drafts.product-103-1764107740021"
+    },
+    {
+      "file": "Bialy_Bocian_07l.png",
+      "assetId": "image-94b5cdc2a521e5088c27a66da7cdddab99cccd8f-500x500-png",
+      "productId": "drafts.product-104-1764107743073"
+    },
+    {
+      "file": "Bialy_Bocian_1l.png",
+      "assetId": "image-29a568b425d48adbc1a16e78856cfaf620498c0e-500x500-png",
+      "productId": "drafts.product-105-1764107746106"
+    },
+    {
+      "file": "Carlo Rossi Refresh Tropical Moscato 750ml.png",
+      "assetId": "image-2f8988f9bc76c6d419fba0c6e0d8c0540c533460-474x730-png",
+      "productId": "drafts.product-106-1764107749133"
+    },
+    {
+      "file": "Carlo Rossi Refresh Watermelon 750ml.png",
+      "assetId": "image-319484c7704aaa71791d3aae022730eb59c9a755-474x730-png",
+      "productId": "drafts.product-107-1764107752501"
+    },
+    {
+      "file": "Carlo Rossi White Moscato 750ml.png",
+      "assetId": "image-e8febbadc1bb1caa6dfa2b2a9927602300acbe35-358x405-png",
+      "productId": "drafts.product-108-1764107755559"
+    },
+    {
+      "file": "Carlo_Rossi_Intense_Sweet_Blackberry_750.png",
+      "assetId": "image-50470ca9beb3c67dc535e4923c773717aea4f0d4-200x500-png",
+      "productId": "drafts.product-109-1764107758566"
+    },
+    {
+      "file": "Carlo_Rossi_Intense_Sweet_Concord.png",
+      "assetId": "image-d4546cf9f8e528ca6c92f5ca64883717f5722fd5-258x960-png",
+      "productId": "drafts.product-110-1764107761587"
+    },
+    {
+      "file": "Carlo_Rossi_Pink_Moscato_750ml.png",
+      "assetId": "image-99fd5428eaa8ba3a9be7644c791c71018a202144-442x565-png",
+      "productId": "drafts.product-111-1764107764631"
+    },
+    {
+      "file": "Carlo_Rossi_Red_750ml.png",
+      "assetId": "image-383b6236012d19470edfbb5cfab3024232ce9f77-317x786-png",
+      "productId": "drafts.product-112-1764107767648"
+    },
+    {
+      "file": "Carlo_Rossi_Refresh_Mixed_Berry_750ml.png",
+      "assetId": "image-5a9c0d78d61058ff0ec2f88abce9871d64a5c64f-439x568-png",
+      "productId": "drafts.product-113-1764107770706"
+    },
+    {
+      "file": "Carlo_Rossi_Refresh_Pomegranate_750ml.png",
+      "assetId": "image-627c5b4e7cb06e7646203b67f3f073afb54ca890-439x568-png",
+      "productId": "drafts.product-114-1764107773743"
+    },
+    {
+      "file": "Carlo_Rossi_Refresh_Strawberry_750ml.png",
+      "assetId": "image-6046d9d6e9f108e507a04cb5b9a75e14db1556df-500x500-png",
+      "productId": "drafts.product-115-1764107776839"
+    },
+    {
+      "file": "Carlo_Rossi_Refresh_Sweet_Citrus_750ml.png",
+      "assetId": "image-9a415d92e444d97abd17c4bbd8c896077d3bd7df-250x996-png",
+      "productId": "drafts.product-116-1764107779818"
+    },
+    {
+      "file": "Carlo_Rossi_Rose_750ml.png",
+      "assetId": "image-8a5846737fa785b7180e8544caf0b79ebb250291-317x786-png",
+      "productId": "drafts.product-117-1764107782828"
+    },
+    {
+      "file": "Carlo_Rossi_Sweet_Red_750ml.png",
+      "assetId": "image-82d91d8f7c27287cdc1d2d107a205a7c3d02a19b-317x786-png",
+      "productId": "drafts.product-118-1764107785867"
+    },
+    {
+      "file": "Carlo_Rossi_White_750ml.png",
+      "assetId": "image-907aebc3b50f5edd28002e8d54eb0177c45f6b3a-500x500-png",
+      "productId": "drafts.product-119-1764107788883"
+    },
+    {
+      "file": "Debowa_Polska_Military_0_5l___Alc_40_.png",
+      "assetId": "image-1e5d91a16c1456a24733233c3cf3d9b5e4ecc159-275x905-png",
+      "productId": "drafts.product-120-1764107791914"
+    },
+    {
+      "file": "Debowa_Polska_Military_0_7l___Alc_40_.png",
+      "assetId": "image-077c5a4393902e92d565669755dd0bfff476e53d-128x400-png",
+      "productId": "drafts.product-121-1764107794936"
+    },
+    {
+      "file": "Debowa_Polska_Military_1_0l___Alc_40_.png",
+      "assetId": "image-d1ee639e98dafaef38806a2f33bd4f0ca5d3a81c-245x1019-png",
+      "productId": "drafts.product-122-1764107797961"
+    },
+    {
+      "file": "Extra Zytnia 0,5l _ Alc 40_.png",
+      "assetId": "image-1c34ab07b371a496500ccc93bb29fadac95dcfbb-600x600-png",
+      "productId": "drafts.product-123-1764107800973"
+    },
+    {
+      "file": "Extra_Zytnia_0_2l___Alc_40_.png",
+      "assetId": "image-4e37dd0f950f0923411e31102014d280dd97095b-300x300-png",
+      "productId": "drafts.product-124-1764107804037"
+    },
+    {
+      "file": "Extra_Zytnia_0_7l___Alc_40_.png",
+      "assetId": "image-1c8644308daba1a4941b61d71949336dc8746dbb-500x500-png",
+      "productId": "drafts.product-125-1764107807408"
+    },
+    {
+      "file": "Extra_Zytnia_100ml___Alc_40_.png",
+      "assetId": "image-a96143b9664b3873afbeb51e240127fc4cf1012c-136x265-png",
+      "productId": "drafts.product-126-1764107810628"
+    },
+    {
+      "file": "Extra_Zytnia_1l___Alc_40_.png",
+      "assetId": "image-3ebedc8e500bb5135272c469db18c5a5a110e1bd-447x559-png",
+      "productId": "drafts.product-127-1764107813599"
+    },
+    {
+      "file": "Gin_Lubuski_6_x_0_7l___Alc37_5_.png",
+      "assetId": "image-4b79dd5c8a378b359f5caedf4bc1cf5f48bd332b-275x907-png",
+      "productId": "drafts.product-128-1764107816650"
+    },
+    {
+      "file": "Gin_Lubuski_Fresh_Lime_0.5l___37.5_.png",
+      "assetId": "image-0fd9c2b581b68cbfd94ca6fc05ea3adb1e5cb18c-274x910-png",
+      "productId": "drafts.product-129-1764107819669"
+    },
+    {
+      "file": "Gin_Lubuski_Grapefruit_0.5l___37.5_.png",
+      "assetId": "image-6174ca3108c89ba786c87f3a53abe9698796f081-276x629-png",
+      "productId": "drafts.product-130-1764107823175"
+    },
+    {
+      "file": "Krupnik 0,5l.png",
+      "assetId": "image-b210432a23a44a932d126aa60670fa7c703a1e0c-171x539-png",
+      "productId": "drafts.product-131-1764107826564"
+    },
+    {
+      "file": "Krupnik 0,7l.png",
+      "assetId": "image-cb6ae184f9e5b498b38ea39dc72b6e249e74ee3f-186x586-png",
+      "productId": "drafts.product-132-1764107829596"
+    },
+    {
+      "file": "Krupnik 90 ml.png",
+      "assetId": "image-d1b8070153cff868bf195aec0280898a1604ccc8-167x290-png",
+      "productId": "drafts.product-133-1764107832767"
+    },
+    {
+      "file": "Krupnik Cytrynowy 12x0,5l.png",
+      "assetId": "image-89afff51817f448aeb6f4e35a009702c63af1769-192x606-png",
+      "productId": "drafts.product-134-1764107835794"
+    },
+    {
+      "file": "Krupnik Cytrynowy 20x0,2l.png",
+      "assetId": "image-b7150701ffa7eb2650c2eb9bb9e235b17c078b71-175x471-png",
+      "productId": "drafts.product-135-1764107838821"
+    },
+    {
+      "file": "Krupnik Espresso Martini 16_ 12x0,5l.png",
+      "assetId": "image-ed0bff08d1c1617745d68ca3a2c5be6dfcefafe5-590x2000-png",
+      "productId": "drafts.product-136-1764107842309"
+    },
+    {
+      "file": "Krupnik Grasshopper 16_ 12x0,5l.png",
+      "assetId": "image-398b8e89595f0aeec9e3c7a71d2f626452828e68-590x2000-png",
+      "productId": "drafts.product-137-1764107846894"
+    },
+    {
+      "file": "Krupnik Kweepeer 28_ 16_100ml.png",
+      "assetId": "image-5e611f1a8a758933f05516382d954da85fa5a099-187x323-png",
+      "productId": "drafts.product-138-1764107849926"
+    },
+    {
+      "file": "Krupnik OLD Liqueur 0,5l_6 _ 38_.png",
+      "assetId": "image-124f80c57957717046f21411b268813d1507a87f-219x423-png",
+      "productId": "drafts.product-139-1764107853034"
+    },
+    {
+      "file": "Krupnik Orzechowy 12x0,5l ___Alc 28____.png",
+      "assetId": "image-9610517720ed2cede68e8cbcdac3846f2a13efa9-160x505-png",
+      "productId": "drafts.product-140-1764107855978"
+    },
+    {
+      "file": "Krupnik Orzechowy 20x0,2l ___Alc 28____.png",
+      "assetId": "image-6873b3e78962cc7668e90f8fc8ab2f12d14ae8bb-160x430-png",
+      "productId": "drafts.product-141-1764107859025"
+    },
+    {
+      "file": "Krupnik Pigwowy 12x0,5l ___Alc 30____.png",
+      "assetId": "image-e723fbf982625fdecd97771ad0f2027c42556c4a-202x637-png",
+      "productId": "drafts.product-142-1764107862053"
+    },
+    {
+      "file": "Krupnik Pigwowy 20x0,2l ___Alc 28____.png",
+      "assetId": "image-439d3f94bde19db8a9705884d30eb7520cf2d272-182x491-png",
+      "productId": "drafts.product-143-1764107865089"
+    },
+    {
+      "file": "Krupnik Pinacolada 16_ 12x0,5l.png",
+      "assetId": "image-11edf5b071e6753da55dbbfa50f0a77625ae4c52-590x2000-png",
+      "productId": "drafts.product-144-1764107868482"
+    },
+    {
+      "file": "Krupnik Sliwkowy 12x0,5l ___Alc 28____.png",
+      "assetId": "image-f9524dda9b04ced38cda9b47edb94c77488fe726-196x618-png",
+      "productId": "drafts.product-145-1764107871523"
+    },
+    {
+      "file": "Krupnik Sliwkowy 28_ 16_100ml.png",
+      "assetId": "image-017e734f33e68f4d485ea32c923da96b81bde7c3-192x333-png",
+      "productId": "drafts.product-146-1764107874555"
+    },
+    {
+      "file": "Krupnik Wisniowy 16x90ml alc. 26_.png",
+      "assetId": "image-7d49f561a8a06af9a1dd0e1e80c9a2748d9396a7-173x301-png",
+      "productId": "drafts.product-147-1764107877952"
+    },
+    {
+      "file": "Krupnik Wisniowy 20x0,2l ___Alc 26____.png",
+      "assetId": "image-2abb68acbddeed5246e652c7f5c8f559e8a50587-170x460-png",
+      "productId": "drafts.product-148-1764107881224"
+    },
+    {
+      "file": "Krupnik Zoute Karamel 0,5l _Alc16_.png",
+      "assetId": "image-fc3e55dc1883488e821e67bf014f6784eafd435a-176x470-png",
+      "productId": "drafts.product-149-1764107884202"
+    },
+    {
+      "file": "Krupnik_1l.png",
+      "assetId": "image-8713601598d419d3b056d87ed1ba4086b8765a30-250x250-png",
+      "productId": "drafts.product-150-1764107887683"
+    },
+    {
+      "file": "Krupnik_20x0_2l.png",
+      "assetId": "image-b51c11601071ead4175e9b1259137f0321fd131d-500x500-png",
+      "productId": "drafts.product-151-1764107890695"
+    },
+    {
+      "file": "Krupnik_Cappuccino_Mleczne_12x500ml.png",
+      "assetId": "image-01341c64b0778a7a12fcf4286ed22231e3394d22-305x817-png",
+      "productId": "drafts.product-152-1764107893722"
+    },
+    {
+      "file": "Krupnik_Cytrynowy_28__16_100ml.png",
+      "assetId": "image-7467ab20f37d121f16edfc29b7e215db05b1adab-415x601-png",
+      "productId": "drafts.product-153-1764107896736"
+    },
+    {
+      "file": "Krupnik_Kokos_Mleczny_12x500ml___Alc16_.png",
+      "assetId": "image-b56d447041eb60411f6dfa3bb2e40e894b2f6acf-305x817-png",
+      "productId": "drafts.product-154-1764107899772"
+    },
+    {
+      "file": "Krupnik_Malina_Mleczna_16__12x0.5l.png",
+      "assetId": "image-293acc84f988eba3aa43aaa54ad09b721d0ad158-500x500-png",
+      "productId": "drafts.product-155-1764107902812"
+    },
+    {
+      "file": "Krupnik_Mango_Mleczny_16__12x0_5l.png",
+      "assetId": "image-250f0795dbb512e826696a5edd7ddcb5652b9f94-438x570-png",
+      "productId": "drafts.product-156-1764107905843"
+    },
+    {
+      "file": "Krupnik_Orzechowy_28__16_100ml__Krupnik_Orzechowy_28__16_100ml.png",
+      "assetId": "image-ff652dd12baba879d0df676bac9051e62078213f-467x534-png",
+      "productId": "drafts.product-157-1764107908857"
+    },
+    {
+      "file": "Krupnik_Pistacja_Mleczna_16__12x0.5l.png",
+      "assetId": "image-4677d75a201b2f7afd2c5dd88ba59b216800c72f-500x500-png",
+      "productId": "drafts.product-158-1764107911891"
+    },
+    {
+      "file": "Krupnik_Tradycyjny_Gorzki_12x0_5l___Alc_32_.png",
+      "assetId": "image-1ba6e3d7c1bdad72b60d70e8fb269dcfbbce9a8f-275x906-png",
+      "productId": "drafts.product-159-1764107915238"
+    },
+    {
+      "file": "Krupnik_Wisniowy_12x0_5l____Alc_28____.png",
+      "assetId": "image-c80bd4897678ddb3b00d024f235e941b2fb8a624-180x180-png",
+      "productId": "drafts.product-160-1764107918469"
+    },
+    {
+      "file": "Lubelska Kersen 0,2l _ Alc 28_.png",
+      "assetId": "image-8eed23b619101ccacc52f6a3b96fe3ac8a33f923-1000x1000-png",
+      "productId": "drafts.product-161-1764107921507"
+    },
+    {
+      "file": "Lubelska_Citroen_0_5l___Alc_28_.png",
+      "assetId": "image-0db791dff0cf41dfdb3dfaa614f08c10c8fade72-326x591-png",
+      "productId": "drafts.product-162-1764107924537"
+    },
+    {
+      "file": "Lubelska_Cranberry_0_5l___Alc_28_.png",
+      "assetId": "image-3d4da2d6aa9bb8873ce86a17f1f037628524000c-385x440-png",
+      "productId": "drafts.product-163-1764107927622"
+    },
+    {
+      "file": "Lubelska_Grapefruit_0_2l___Alc._25_.png",
+      "assetId": "image-2685b51defeec9b8953e31e320abb5b34cdd1743-442x565-png",
+      "productId": "drafts.product-164-1764107930589"
+    },
+    {
+      "file": "Lubelska_Hemp_Lime_Mint_0_5l__Alc._25_.png",
+      "assetId": "image-825b936023046a59d4435dc4995a48ca72e4e839-319x782-png",
+      "productId": "drafts.product-165-1764107933607"
+    },
+    {
+      "file": "Lubelska_Hemp_Lime_Mint_16_90ml__Alc._25_.png",
+      "assetId": "image-17f82865defffab80f098ab55730c2ffc45eff2d-408x612-png",
+      "productId": "drafts.product-166-1764107936633"
+    },
+    {
+      "file": "Lubelska_Kersen_0_5l___Alc_28_.png",
+      "assetId": "image-0856a01d566a97f738545b5921501f1cc6c77685-442x565-png",
+      "productId": "drafts.product-167-1764107940074"
+    },
+    {
+      "file": "Lubelska_Kersen_100ml_16___Alc._28_.png",
+      "assetId": "image-a7e6fe1c80e6cb9e846b1b65619380c50dc5b439-369x676-png",
+      "productId": "drafts.product-168-1764107943455"
+    },
+    {
+      "file": "Lubelska_Peer_0_2l___Alc._28_.png",
+      "assetId": "image-acdf851a43d74c167e2436ad64956cda66f80e83-500x500-png",
+      "productId": "drafts.product-169-1764107946481"
+    },
+    {
+      "file": "Lubelska_Peer_0_5l___Alc_25_.png",
+      "assetId": "image-e7680f6875d2ec104c624e83367b2f9fb9e8a816-438x569-png",
+      "productId": "drafts.product-170-1764107949523"
+    },
+    {
+      "file": "Lubelska_Peer_90ml_16___Alc._25_.png",
+      "assetId": "image-3e14cba8837d28f352ca3e96e7002f608f3e00d7-235x407-png",
+      "productId": "drafts.product-171-1764107952543"
+    },
+    {
+      "file": "Lubelska_Pomegranate_0_2l___Alc_28_.png",
+      "assetId": "image-6b28a63c7bda9d182515c80e7b2591a722ca5a0b-500x500-png",
+      "productId": "drafts.product-172-1764107955788"
+    },
+    {
+      "file": "Lubelska_Zwarte_bessen_0_5l___Alc_28_.png",
+      "assetId": "image-ddb45e72ff7d1fd9526573b632964983b65aeab4-474x474-png",
+      "productId": "drafts.product-173-1764107958802"
+    },
+    {
+      "file": "Oginski_Vodka_0_5_l__Alc_40_.png",
+      "assetId": "image-d52408aa0bd39716c4134b744d3e57af4c34d40a-385x440-png",
+      "productId": "drafts.product-174-1764107961841"
+    },
+    {
+      "file": "Oginski_Vodka_0_7l__Alc_40_.png",
+      "assetId": "image-8998483e9c4021ac12b0036c167533d5439c8766-238x1050-png",
+      "productId": "drafts.product-175-1764107964861"
+    },
+    {
+      "file": "Pan_Tadeusz_wodka_0.5l___Alc_40_.png",
+      "assetId": "image-853e730a15a639bf82d4061e5c49c23bea851b88-474x474-png",
+      "productId": "drafts.product-176-1764107967871"
+    },
+    {
+      "file": "Pan_Tadeusz_wodka_0.7l___Alc_40_.png",
+      "assetId": "image-6ad4cfee64d8f62340ee49dfb3a354c2b655ee61-288x668-png",
+      "productId": "drafts.product-177-1764107970906"
+    },
+    {
+      "file": "Rajska_Citroen_en_Limoen_100ml_12___Alc_25_.png",
+      "assetId": "image-af66d37a62f44677ef9edbf9aea4b1de0d8c5ca7-500x500-png",
+      "productId": "drafts.product-178-1764107974323"
+    },
+    {
+      "file": "Rajska_Citroen_en_Mango_100ml_12___Alc_25_.png",
+      "assetId": "image-cafa08d94223832f4a97ab475975a868bfc590f9-500x500-png",
+      "productId": "drafts.product-179-1764107977366"
+    },
+    {
+      "file": "SOPLICA Gorzka Mieta 90ml _ Alc 28_.png",
+      "assetId": "image-f1cdabaa7f3eb7bbb2344a133a98f18dfdf62430-2100x2972-png",
+      "productId": "drafts.product-180-1764107980981"
+    },
+    {
+      "file": "SOPLICA Gorzka Traditional 90ml _ Alc 32_.png",
+      "assetId": "image-b9732e81c0fb8cedb0892d5e018168404c13e3d6-2100x2972-png",
+      "productId": "drafts.product-181-1764107984405"
+    },
+    {
+      "file": "SOPLICA Gorzka Tradycyjna 0,5l_Alc.32_.png",
+      "assetId": "image-c4cef313671f0e2505e1d8d57dd4b2e9e149c520-475x1536-png",
+      "productId": "drafts.product-182-1764107987812"
+    },
+    {
+      "file": "SOPLICA Gorzka z Mieta 0,5l_Alc.28_.png",
+      "assetId": "image-97e71f708fc630179e8c16632cbb31ba2494572e-398x1536-png",
+      "productId": "drafts.product-183-1764107991057"
+    },
+    {
+      "file": "STOCK_Prestige_0_7l___Alc_40_.png",
+      "assetId": "image-9f914f635fbe6854bfb31069b8328dcc78ceb701-263x947-png",
+      "productId": "drafts.product-184-1764107994089"
+    },
+    {
+      "file": "Saska_Hazelnoot_met_een_vleugje_karamel_12_0_5l.png",
+      "assetId": "image-f3df378260984eba839b11cb14587264272985ec-162x452-png",
+      "productId": "drafts.product-185-1764107997108"
+    },
+    {
+      "file": "Saska_Koffie_met_een_vleugje_brandy_12_0_5l___Alc._28_.png",
+      "assetId": "image-2be08419ed24209487cc20866f678e3d116108c9-303x824-png",
+      "productId": "drafts.product-186-1764108000139"
+    },
+    {
+      "file": "Soplica Aardbei 0,5l _ Alc 26_.png",
+      "assetId": "image-5846954160f90b89dc02982f52c88a90632d2ce0-195x405-png",
+      "productId": "drafts.product-187-1764108003168"
+    },
+    {
+      "file": "Soplica Abrikoos 24_0,2l _ Alc.26_.png",
+      "assetId": "image-6d7588997f493c7a87e348796af9545e26744e2b-265x405-png",
+      "productId": "drafts.product-188-1764108006195"
+    },
+    {
+      "file": "Soplica CHERRY- CITROEN 24_0,2l _ Alc.21_.png",
+      "assetId": "image-1a5c88c981c6241d94e40d71a1a0a0c93149ac9c-560x792-png",
+      "productId": "drafts.product-189-1764108011216"
+    },
+    {
+      "file": "Soplica CITROEN 24_0,2l _ Alc.26_.png",
+      "assetId": "image-fadb600f847cdeace738a879e3ed12a69fb0fb0d-474x730-png",
+      "productId": "drafts.product-190-1764108014607"
+    },
+    {
+      "file": "Soplica CITROEN-FRAMBOOS 24_0,2l _ Alc.25_.png",
+      "assetId": "image-607cbcb65f00220b29b78de991686b956a7fc876-600x600-png",
+      "productId": "drafts.product-191-1764108017619"
+    },
+    {
+      "file": "Soplica CITROEN-MUNT 24_0,2l _ Alc.25_.png",
+      "assetId": "image-ca995be984031778386b8c6904e550df1bdc8f1f-600x600-png",
+      "productId": "drafts.product-192-1764108021025"
+    },
+    {
+      "file": "Soplica Citroen-Munt 12x90ml _ Alc25_.png",
+      "assetId": "image-13ab68c7aa4880c84dadf988975a7de33bd25cb9-600x600-png",
+      "productId": "drafts.product-193-1764108024385"
+    },
+    {
+      "file": "Soplica E.Wedel Sliwka - Choco 0,5l _Alc 15_.png",
+      "assetId": "image-a972c196e31c330e73c64fa60f1c204182df9996-580x773-png",
+      "productId": "drafts.product-194-1764108028086"
+    },
+    {
+      "file": "Soplica Framboos 0,5l _ Alc 26_.png",
+      "assetId": "image-70f2df054c122dea960255f8c8f3bae86bdc8a8c-265x405-png",
+      "productId": "drafts.product-195-1764108031551"
+    },
+    {
+      "file": "Soplica Framboos-Rozen 0,5l_Alc.28_.png",
+      "assetId": "image-543e7cf932813d76350972d17e78b08ef2d2d02c-616x1908-png",
+      "productId": "drafts.product-196-1764108043762"
+    },
+    {
+      "file": "Soplica Hazelnoot 0,5l _ Alc 26_.png",
+      "assetId": "image-a00da87a4eb4cd6253b401bb3e94051a7025a43c-265x405-png",
+      "productId": "drafts.product-197-1764108047487"
+    },
+    {
+      "file": "Soplica KIWI - LIMOEN 24_0,2l _ Alc.21_.png",
+      "assetId": "image-b2334cde9eb70539f8e76c718263eee1d803bbf6-560x792-png",
+      "productId": "drafts.product-198-1764108050800"
+    },
+    {
+      "file": "Soplica Kersen 0,5l _ Alc 26_.png",
+      "assetId": "image-4e70152fbc4b9edaac08b517cd22f677f64afb23-265x405-png",
+      "productId": "drafts.product-199-1764108053828"
+    },
+    {
+      "file": "Soplica Kersen- Kweepeer 0,5l _ Alc.25_.png",
+      "assetId": "image-5a351b887b0dacf4025d5d25d15cfcd43dd9a4fc-260x554-png",
+      "productId": "drafts.product-200-1764108056851"
+    },
+    {
+      "file": "Soplica Kersen-Mirabel 0,5l _Alc.21_.png",
+      "assetId": "image-95e811615ec2dab8e8026b6ca507397314333e52-260x555-png",
+      "productId": "drafts.product-201-1764108060872"
+    },
+    {
+      "file": "Soplica Koffie 0,5l _ Alc 25_.png",
+      "assetId": "image-d2b88807780ca8b9d762fad1edc36f3293330ee4-474x730-png",
+      "productId": "drafts.product-202-1764108064342"
+    },
+    {
+      "file": "Soplica Kweepeer 0,5l _ Alc 26_.png",
+      "assetId": "image-2f508fc373b4db559ada4cb4733a2cc21997042b-265x405-png",
+      "productId": "drafts.product-203-1764108067342"
+    },
+    {
+      "file": "Soplica Pruim 0,5l _ Alc 26_.png",
+      "assetId": "image-b9cbea0773b6a04ec54bdc6fb408716e4591f737-265x405-png",
+      "productId": "drafts.product-204-1764108070404"
+    },
+    {
+      "file": "Soplica Smoczy Owoc -Melon 24_0,2l _ Alc.21_.png",
+      "assetId": "image-2cc35e722830ea5318224050fd2b9cade8d6d1dd-1350x1909-png",
+      "productId": "drafts.product-205-1764108073951"
+    },
+    {
+      "file": "Soplica Vodka 0,7l _ Alc.40_.png",
+      "assetId": "image-abdb1ad1b1e69857b19773c8ed2c088c001aa8a3-265x405-png",
+      "productId": "drafts.product-206-1764108076997"
+    },
+    {
+      "file": "Soplica Watermeloen-Mint 0,5l _ Alc.25_.png",
+      "assetId": "image-aac30239709dfb86b01c7526519e10194ca07f79-400x1125-png",
+      "productId": "drafts.product-207-1764108079999"
+    },
+    {
+      "file": "Soplica Zwarte Bes 0,5l _ Alc 26_.png",
+      "assetId": "image-be8923b442de9ce8e4c6b414683015a6354a46b1-265x405-png",
+      "productId": "drafts.product-208-1764108083034"
+    },
+    {
+      "file": "Soplica_ANANAS-SINAASAPPEL_24_0_2l___Alc.21_.png",
+      "assetId": "image-61fba331d6cdb07be4a5b454809c3ec8de1027ea-420x594-png",
+      "productId": "drafts.product-209-1764108086081"
+    },
+    {
+      "file": "Soplica_Aardbei_12x0_09l___Alc26_.png",
+      "assetId": "image-cca06ab1aef1068194c2435c3ea155512b477502-500x500-png",
+      "productId": "drafts.product-210-1764108089086"
+    },
+    {
+      "file": "Soplica_Aardbei_24_0_2l___Alc.26_.png",
+      "assetId": "image-2fb7402266d0c6209133d5dbb3100ea5981a297c-262x372-png",
+      "productId": "drafts.product-211-1764108092127"
+    },
+    {
+      "file": "Soplica_Abrikoos_0_5l___Alc_26_.png",
+      "assetId": "image-ca8b4acb2a711b81e7f16607ef9ec318a9e2d0da-328x400-png",
+      "productId": "drafts.product-212-1764108095140"
+    },
+    {
+      "file": "Soplica_Abrikoos_12x0_09l___Alc_26_.png",
+      "assetId": "image-88dab87f04626d0e91c7f9bb495524d026b73888-384x487-png",
+      "productId": "drafts.product-213-1764108098177"
+    },
+    {
+      "file": "Soplica_Appel-Sinaasappel-Kaneel_0_5l___Alc.23_.png",
+      "assetId": "image-8089bbe9c28e180afe366fe599d5b1c8e41f8ca0-420x594-png",
+      "productId": "drafts.product-214-1764108101194"
+    },
+    {
+      "file": "Soplica_CITROEN-KWEEPEER_24_0_2l___Alc.25_.png",
+      "assetId": "image-694a64b95df65e29b68d02f675c9a7683150e1d4-183x607-png",
+      "productId": "drafts.product-215-1764108104916"
+    },
+    {
+      "file": "Soplica_Cherry_-_Choco12x0_1l___Alc_25_.png",
+      "assetId": "image-4e5d2204a5f70a924113a5b2ee1f572a22844d15-500x500-png",
+      "productId": "drafts.product-216-1764108107921"
+    },
+    {
+      "file": "Soplica_Citroen-Framboos_0_5l___Alc25_.png",
+      "assetId": "image-12b601cb5078dec1fc8df83490ef6eb791729f7f-263x514-png",
+      "productId": "drafts.product-217-1764108110939"
+    },
+    {
+      "file": "Soplica_Citroen-Framboos_12x0_09l___Alc25_.png",
+      "assetId": "image-b02fcf2d15570b5ae7da68828caaf635cbdd2ac1-135x290-png",
+      "productId": "drafts.product-218-1764108113980"
+    },
+    {
+      "file": "Soplica_Citroen-Kweepeer_0_5l___Alc25_.png",
+      "assetId": "image-953e51c0051943a9d744c618a7c633d8c9e87094-273x534-png",
+      "productId": "drafts.product-219-1764108117014"
+    },
+    {
+      "file": "Soplica_Citroen-Kweepeer_12x0_09l___Alc25_.png",
+      "assetId": "image-573b311d8fcdad54990d895929089339a40e82e8-135x290-png",
+      "productId": "drafts.product-220-1764108120323"
+    },
+    {
+      "file": "Soplica_Citroen-Munt_0_5l___Alc28_.png",
+      "assetId": "image-66800ff030ddfd2cf8049c53ecc38340b9aa6782-291x579-png",
+      "productId": "drafts.product-221-1764108123373"
+    },
+    {
+      "file": "Soplica_Citroen_12x0_09l___Alc26_.png",
+      "assetId": "image-bb74654659f3911de6a17bef5c9ca16c583fe4eb-474x474-png",
+      "productId": "drafts.product-222-1764108126867"
+    },
+    {
+      "file": "Soplica_Citroen_met_honing_0_5l___Alc.28_.png",
+      "assetId": "image-a4d069e24ebf9db2f2a953aaef12c7a7943d91f9-363x688-png",
+      "productId": "drafts.product-223-1764108129866"
+    },
+    {
+      "file": "Soplica_Citroen_met_honing_24_0_2l___Alc.28_.png",
+      "assetId": "image-edaa39928085590932dcfdc80e0b5c415093e60b-383x651-png",
+      "productId": "drafts.product-224-1764108132963"
+    },
+    {
+      "file": "Soplica_E.Wedel_Almond_0_5l__Alc_15_.png",
+      "assetId": "image-546ecc05c6bc504c5eae6b158d304fbdf90f075d-433x577-png",
+      "productId": "drafts.product-225-1764108137141"
+    },
+    {
+      "file": "Soplica_E.Wedel_Cappucino_0_5l__Alc_15_.png",
+      "assetId": "image-04da8d6e87be1a432b7b6856dbef052e2c398d67-433x577-png",
+      "productId": "drafts.product-226-1764108140447"
+    },
+    {
+      "file": "Soplica_E.Wedel_Chocolate_0_5l__Alc_15_.png",
+      "assetId": "image-48787f51cebb7a5d033d25d580bf5d6469508446-433x577-png",
+      "productId": "drafts.product-227-1764108143470"
+    },
+    {
+      "file": "Soplica_E.Wedel_Coconut_0_5l__Alc_15_.png",
+      "assetId": "image-a2c50e38833a2b517c230f5c7f4145ed09a668a2-433x577-png",
+      "productId": "drafts.product-228-1764108146537"
+    },
+    {
+      "file": "Soplica_E.Wedel_Pistachio_0_5l__Alc_15_.png",
+      "assetId": "image-6a3f6f8f794bdc8eab9bb2fd2b2bbf8ad74a2dc6-433x577-png",
+      "productId": "drafts.product-229-1764108149538"
+    },
+    {
+      "file": "Soplica_E.Wedel_Salted_Caramel_0_5l__Alc_15_.png",
+      "assetId": "image-88a5293257b98fc10da638ee6bf55bf5654d1f77-433x577-png",
+      "productId": "drafts.product-230-1764108153556"
+    },
+    {
+      "file": "Soplica_Framboos_12x90ml___Alc26_.png",
+      "assetId": "image-6f459e77733157f31626e448a7b3c0943e6697d6-442x564-png",
+      "productId": "drafts.product-231-1764108156611"
+    },
+    {
+      "file": "Soplica_Framboos_24_0_2l___Alc.26_.png",
+      "assetId": "image-1e6da7b8ddfce6a7fd3ebe435596c132c0d88ca6-385x440-png",
+      "productId": "drafts.product-232-1764108159595"
+    },
+    {
+      "file": "Soplica_Gorzka_Tradycyjna_0_2l_Alc.32_.png",
+      "assetId": "image-0bfc64099e4c41db6405b5e2fddd269851613e60-277x901-png",
+      "productId": "drafts.product-233-1764108163627"
+    },
+    {
+      "file": "Soplica_Gorzka_z_Mieta_0_2l_Alc.28_.png",
+      "assetId": "image-ce58ee51908bc3bc4071860ef26e031803666b4a-259x962-png",
+      "productId": "drafts.product-234-1764108166661"
+    },
+    {
+      "file": "Soplica_Grapefruit_-_Sinaasappel_0_5l___Alc.25_.png",
+      "assetId": "image-22fd67f6177d39cd0cd9c1af98fb38fb0c94451c-300x300-png",
+      "productId": "drafts.product-235-1764108170694"
+    },
+    {
+      "file": "Soplica_Hazelnoot_12x0_09l___Alc26_.png",
+      "assetId": "image-1b897a4caa9a976474b51b44bd73d58e454dc556-442x565-png",
+      "productId": "drafts.product-236-1764108173728"
+    },
+    {
+      "file": "Soplica_Hazelnoot_24_0_2l___Alc28_.png",
+      "assetId": "image-619ca76fa9d07e3b1c05aac1e4f47e44ed2f50c5-419x595-png",
+      "productId": "drafts.product-237-1764108176736"
+    },
+    {
+      "file": "Soplica_KOFFIE_24_0_2l___Alc.25_.png",
+      "assetId": "image-4cf29fa34d0e53416443bfeabf4e34fda42b171f-278x898-png",
+      "productId": "drafts.product-238-1764108179759"
+    },
+    {
+      "file": "Soplica_Kaktus-Arbuz_0_5l___Alc.21_.png",
+      "assetId": "image-0939b5c7d75c3572e5cc48c029a884a0abc7641d-420x594-png",
+      "productId": "drafts.product-239-1764108182789"
+    },
+    {
+      "file": "Soplica_Kersen_12x90ml__Alc26_.png",
+      "assetId": "image-24ff0567b8aeb41207323cdefe62a73a0ef16aac-500x500-png",
+      "productId": "drafts.product-240-1764108185802"
+    },
+    {
+      "file": "Soplica_Kersen_24_0_2l___Alc26_.png",
+      "assetId": "image-2d9158597dea7a02223cb18301e115824c78b3fd-419x595-png",
+      "productId": "drafts.product-241-1764108188827"
+    },
+    {
+      "file": "Soplica_Koffie_12x0_09l___Alc_25_.png",
+      "assetId": "image-82a9a94ea5e7e8f54d72e509f0d0c39311b20daa-402x620-png",
+      "productId": "drafts.product-242-1764108191865"
+    },
+    {
+      "file": "Soplica_Kweepeer-framboos-kaneel0_5l___Alc25_.png",
+      "assetId": "image-e44c6899c436b4dbdab6e27708188ddbfc531586-180x240-png",
+      "productId": "drafts.product-243-1764108194870"
+    },
+    {
+      "file": "Soplica_Kweepeer_12x90ml__Alc26_.png",
+      "assetId": "image-361f97539bbdb257d22b86bcaf6d78088b9bac75-442x565-png",
+      "productId": "drafts.product-244-1764108198370"
+    },
+    {
+      "file": "Soplica_Kweepeer_24_0_2l___Alc26_.png",
+      "assetId": "image-a08f87fa60f296f0aaa2c05de63cf6a0201ac5ee-385x440-png",
+      "productId": "drafts.product-245-1764108204633"
+    },
+    {
+      "file": "Soplica_Mango_-_Kokos_0_5l___Alc.21_.png",
+      "assetId": "image-030c02c7115f50dcdeb05b949588a3d93e86b188-420x594-png",
+      "productId": "drafts.product-246-1764108207660"
+    },
+    {
+      "file": "Soplica_Pruim-Kruidnagel-Kaneel_0_5l___Alc.23_.png",
+      "assetId": "image-fe7a87f17719ef6baa2673e7f64594dfc08628eb-420x594-png",
+      "productId": "drafts.product-247-1764108210671"
+    },
+    {
+      "file": "Soplica_Pruim_12x0_09l___Alc26_.png",
+      "assetId": "image-6973c35a15bbb84e689bd3825189945c92348598-455x455-png",
+      "productId": "drafts.product-248-1764108213982"
+    },
+    {
+      "file": "Soplica_Pruim_24_0_2l___Alc26_.png",
+      "assetId": "image-2339a1f376079002bbcc157e33969ffda7cfd645-419x595-png",
+      "productId": "drafts.product-249-1764108217003"
+    },
+    {
+      "file": "Soplica_Sinaasappel-Appel-Kaneel_0_5l___Alc.28_.png",
+      "assetId": "image-1261726e5c4b9688aa6e0456013bc59848f8e8ec-111x400-png",
+      "productId": "drafts.product-250-1764108220036"
+    },
+    {
+      "file": "Soplica_Sinaasappel_kruidnagel_0_5l___Alc.28_.png",
+      "assetId": "image-c8535c50c330c4331af6fab5c97f4c189dd1460b-420x594-png",
+      "productId": "drafts.product-251-1764108224057"
+    },
+    {
+      "file": "Soplica_Smoczy_Owoc_-_Melon_0_5l___Alc.21_.png",
+      "assetId": "image-6b2474dd3883e51f6ce8eea7659a0719330a89e7-420x594-png",
+      "productId": "drafts.product-252-1764108228094"
+    },
+    {
+      "file": "Soplica_Vodka_0_2l___Alc40_.png",
+      "assetId": "image-a487bf6e861e79543affe57a761e382bbabca778-377x661-png",
+      "productId": "drafts.product-253-1764108231852"
+    },
+    {
+      "file": "Soplica_Vodka_0_5l___Alc_40_.png",
+      "assetId": "image-d695182651fa453428bd8e521abcebcb5e00a927-500x500-png",
+      "productId": "drafts.product-254-1764108234882"
+    },
+    {
+      "file": "Soplica_Vodka_100ml___Alc.40_.png",
+      "assetId": "image-1c738d2ed10d7b22912b3cadc29d2267f78d6a59-442x565-png",
+      "productId": "drafts.product-255-1764108238176"
+    },
+    {
+      "file": "Soplica_Vodka_Szlachetna_12_1l___Alc.40_.png",
+      "assetId": "image-138ccab482125b94c3c1951e40c02895a41e6e7f-500x500-png",
+      "productId": "drafts.product-256-1764108241211"
+    },
+    {
+      "file": "Spirytus _Duch Puszczy_ 24x0,2l _ Alk.95_.png",
+      "assetId": "image-c7e3f26de01515f47b0a8c4f6914545d67322d0b-200x600-png",
+      "productId": "drafts.product-257-1764108244228"
+    },
+    {
+      "file": "Stock_Prestige_0_5l___Alc_40_.png",
+      "assetId": "image-6e32a18d004d3ff658a2f0df253365645de037ba-467x534-png",
+      "productId": "drafts.product-258-1764108247237"
+    },
+    {
+      "file": "Stock_Prestige_1l___Alc._40_.png",
+      "assetId": "image-6e4a1bc439a0a3fd09da2f1cb5669884082f058a-500x500-png",
+      "productId": "drafts.product-259-1764108250243"
+    },
+    {
+      "file": "Sunny Garden Black Currant 0,75l _ Alc 13_.png",
+      "assetId": "image-901307d57218dd5836e6fe4f2fe710d6bf2f508e-170x400-png",
+      "productId": "drafts.product-260-1764108253280"
+    },
+    {
+      "file": "Sunny Garden Wild Strawberry 0,75l _ Alc 13_.png",
+      "assetId": "image-fc169879d6abefacae85654d1bab2710d6e11b0d-170x400-png",
+      "productId": "drafts.product-261-1764108256329"
+    },
+    {
+      "file": "Sunny_Garden_Cherry_0_75l___Alc_13_.png",
+      "assetId": "image-847d7a6e7cdf50e3c25bab1d2c3625aa6685e5bd-500x500-png",
+      "productId": "drafts.product-262-1764108259382"
+    },
+    {
+      "file": "Sunny_Garden_Forrest_Fruits_0_75l___Alc_13_.png",
+      "assetId": "image-d240bf51bf258008f5c74b0e06b37468c3994562-203x800-png",
+      "productId": "drafts.product-263-1764108262830"
+    },
+    {
+      "file": "Sunny_Garden_Raspberry_0_75l___Alc_13_.png",
+      "assetId": "image-7b26008b161a7d382d8b8cedfee05d4050e50347-117x400-png",
+      "productId": "drafts.product-264-1764108265840"
+    },
+    {
+      "file": "Totino Bianco1l _ Alc14,5_.png",
+      "assetId": "image-dd890bc121e13a463f1a5da8d02aa397a7f41589-450x450-png",
+      "productId": "drafts.product-265-1764108268896"
+    },
+    {
+      "file": "Totino Cherry 1l _ Alc 14,5_.png",
+      "assetId": "image-d790019d741c3f62272bc3a3749935fb86c0ec8b-150x450-png",
+      "productId": "drafts.product-266-1764108271908"
+    },
+    {
+      "file": "Totino Music Cuba Libre 1l _Alc 14_.png",
+      "assetId": "image-32350f47a0cdb65c49e3ea43a5d7f1f14f3ce8df-464x1651-png",
+      "productId": "drafts.product-267-1764108275474"
+    },
+    {
+      "file": "Totino Music Mojito 1l _Alc 14_.png",
+      "assetId": "image-adc94844da4a270016ff17c10ec8a885a7aacfab-170x400-png",
+      "productId": "drafts.product-268-1764108278486"
+    },
+    {
+      "file": "Totino Music Negroni 1l _Alc 14_.png",
+      "assetId": "image-4fcfd7bda848e9cc36320e770f31fdb36ed5eace-464x1651-png",
+      "productId": "drafts.product-269-1764108281989"
+    },
+    {
+      "file": "Totino Rosso 1l _ Alc 14,5_.png",
+      "assetId": "image-831258fe062ddb8094a2b23b33dd6d6aac9485cf-450x450-png",
+      "productId": "drafts.product-270-1764108285288"
+    },
+    {
+      "file": "Totino_Music_Cosmopolitan_1l_Alc_14_.png",
+      "assetId": "image-4ccd1d6c1a4fa4a92342b14a2298d90089034a82-300x832-png",
+      "productId": "drafts.product-271-1764108288598"
+    },
+    {
+      "file": "Totino_Music_Pinacolada_1l_Alc_12.5_.png",
+      "assetId": "image-615616a78bc572f558412a7cb4b74a342d4347d2-300x832-png",
+      "productId": "drafts.product-272-1764108291604"
+    },
+    {
+      "file": "Wódka_Army_1_2l___Alc_40_.png",
+      "assetId": "image-f2080ee59a17c8db34a9d22b089aafcb6db7a1ce-160x100-png",
+      "productId": "drafts.product-273-1764108294635"
+    },
+    {
+      "file": "Zoladkowa_CZYSTA_DE_LUXE_0_2l___Alc_40_.png",
+      "assetId": "image-26a2776e279522f8190c9915e8155874be396345-500x500-png",
+      "productId": "drafts.product-274-1764108297640"
+    },
+    {
+      "file": "Zoladkowa_CZYSTA_DE_LUXE_12_0_5l___Alc_40_.png",
+      "assetId": "image-be0bc3c79545c96e00cc43901a786d8a6d87fae7-224x800-png",
+      "productId": "drafts.product-275-1764108300660"
+    },
+    {
+      "file": "Zoladkowa_CZYSTA_DE_LUXE_1l___Alc40_.png",
+      "assetId": "image-bf13f592d96bfe963073047a2c4545c9669fb69c-500x500-png",
+      "productId": "drafts.product-276-1764108303684"
+    },
+    {
+      "file": "Zoladkowa_CZYSTA_DE_LUXE_6_0_7l___Alc_37.5_.png",
+      "assetId": "image-971ed04082ba792a59bb3bd0618289f9ea9aefa6-400x500-png",
+      "productId": "drafts.product-277-1764108306714"
+    },
+    {
+      "file": "Zoladkowa_CZYSTA_DE_LUXE_90ml__Alc_40_.png",
+      "assetId": "image-45ec592d45191b5e8b0eafa22c032f4e0db86167-467x534-png",
+      "productId": "drafts.product-278-1764108309726"
+    },
+    {
+      "file": "Zoladkowa_Gorzka_Black_Cherry_12_0_5l___Alc_28_.png",
+      "assetId": "image-7d4c2f2089c1a337cdb83c8269703a4c8b360a88-160x213-png",
+      "productId": "drafts.product-279-1764108312772"
+    },
+    {
+      "file": "Zoladkowa_Gorzka_Fig_0_5l___Alc_28_.png",
+      "assetId": "image-5872a9f0bb82bf4c5c06d4d6cab2242e25536b3f-467x534-png",
+      "productId": "drafts.product-280-1764108315773"
+    },
+    {
+      "file": "Zoladkowa_Gorzka_Lime_Mint_16x90ml___Alc_25_.png",
+      "assetId": "image-623c8ba9b5a4c9f9c75718c1c616f084dfd60df6-350x350-png",
+      "productId": "drafts.product-281-1764108318970"
+    },
+    {
+      "file": "Zoladkowa_Gorzka_Limoen_met_mint_0_5l___Alc_28_.png",
+      "assetId": "image-44c3b9ec4b7e50ba704cb3a2aa9692130203ad1c-451x553-png",
+      "productId": "drafts.product-282-1764108321934"
+    },
+    {
+      "file": "Zoladkowa_Gorzka_Mango_Melon_12_0_5l___Alk.28_.png",
+      "assetId": "image-06d152cdc08bb6f0374ab3002464daabac4e037c-248x879-png",
+      "productId": "drafts.product-283-1764108325313"
+    },
+    {
+      "file": "Zoladkowa_Gorzka_Mint_0_5l___Alc_28_.png",
+      "assetId": "image-b4bdb2264ae603f3075cab883d7f9b5aa8503745-160x160-png",
+      "productId": "drafts.product-284-1764108328326"
+    },
+    {
+      "file": "Zoladkowa_Gorzka_Mint_90ml___Alc_28_.png",
+      "assetId": "image-0a826a4d906dc906929708c885700e990a39ffd5-433x577-png",
+      "productId": "drafts.product-285-1764108331670"
+    },
+    {
+      "file": "Zoladkowa_Gorzka_Traditional_6_0_7l___Alc_34_.png",
+      "assetId": "image-27dc46b2806da64bed0ee649f8aee5b011733cd7-500x500-png",
+      "productId": "drafts.product-286-1764108335019"
+    },
+    {
+      "file": "Zoladkowa_Gorzka_Traditional_90ml___Alc_34_.png",
+      "assetId": "image-b2287adc68ec5ba69e45bcfaaa3c94ad008d0e20-210x240-png",
+      "productId": "drafts.product-287-1764108338048"
+    },
+    {
+      "file": "Zoladkowa_Gorzka_Tradycyjna_0_5l___Alc_34_.png",
+      "assetId": "image-4e0aa0f6680688c3555b57b33d704ae3b4e0023f-496x496-png",
+      "productId": "drafts.product-288-1764108341702"
+    },
+    {
+      "file": "Zoladkowa_Gorzka_Watermelon_Lime_12_0_5l___Alk.28_.png",
+      "assetId": "image-e32067a62c11fa206805d11975ab296fb5acdf91-75x260-png",
+      "productId": "drafts.product-289-1764108344731"
+    },
+    {
+      "file": "Zubrowka Bison Grass 0,2l _ Alc37,5_.png",
+      "assetId": "image-e1612b358237183c5038ddc29d552ac0bbe87eb3-217x405-png",
+      "productId": "drafts.product-290-1764108347747"
+    },
+    {
+      "file": "Zubrowka Bison grass 0,5l alc 37,5_.png",
+      "assetId": "image-e1612b358237183c5038ddc29d552ac0bbe87eb3-217x405-png",
+      "productId": "drafts.product-291-1764108350757"
+    },
+    {
+      "file": "Zubrowka Rzeski Rokitnik 15_0.5 alc 30_.png",
+      "assetId": "image-25adf064a9d3c1ec4ad6bf713a58a4273a290b64-474x730-png",
+      "productId": "drafts.product-292-1764108354193"
+    },
+    {
+      "file": "Zubrowka_Apple_Pie_15__0_5__Alc_30_.png",
+      "assetId": "image-ef29e0d0cee398ce446f88f78fb9be75a9f12c6d-286x800-png",
+      "productId": "drafts.product-293-1764108357222"
+    },
+    {
+      "file": "Zubrowka_Bison_grass_0_5l_alc_37_5_.png",
+      "assetId": "image-ffdf28f396daedcc947b8582f67866a4a59c0696-402x620-png",
+      "productId": "drafts.product-294-1764108360877"
+    },
+    {
+      "file": "Zubrowka_Cannabis_Watermelon-Lime_15__0_5__Alc_25_.png",
+      "assetId": "image-3212e6788a4fa31e6d5052a629c1ae0f64fa2cf6-134x375-png",
+      "productId": "drafts.product-295-1764108363969"
+    },
+    {
+      "file": "Zubrowka_Czarna_40__alc_500ml.png",
+      "assetId": "image-4dbb77fb3b4b9255caf984bb65e94396b70b06ac-155x600-png",
+      "productId": "drafts.product-296-1764108366963"
+    },
+    {
+      "file": "Zubrowka_Fresh_Kwasna_Cytryna_15_0.5_Alc._30_.png",
+      "assetId": "image-87818b66e8b1b3390725ea2ce4be3ca6955f2993-420x594-png",
+      "productId": "drafts.product-297-1764108370317"
+    },
+    {
+      "file": "Zubrowka_Fresh_Kwasne_Jablko_15_0.5_Alc._30_.png",
+      "assetId": "image-151713bfe471792e5bb24966b824165973921809-420x594-png",
+      "productId": "drafts.product-298-1764108373346"
+    },
+    {
+      "file": "Zubrowka_Fresh_Orzezwiajaca_Mieta_15_0.5_Alc._30_.png",
+      "assetId": "image-870c702f33f6f35fc2f82c3d20a8adf93fa2996e-128x468-png",
+      "productId": "drafts.product-299-1764108377375"
+    },
+    {
+      "file": "Zubrowka_Gin_Bialowieski_12_0_7l___Alc37.5_.png",
+      "assetId": "image-cdacf6bddaf067e82240ddfe9fe7a3c18d0dbfd0-370x258-png",
+      "productId": "drafts.product-300-1764108380724"
+    },
+    {
+      "file": "Zubrowka_Goud_0_5l_37_5_.png",
+      "assetId": "image-a974b59ff0044b0ff953a09532e363d7a9113cb8-447x559-png",
+      "productId": "drafts.product-301-1764108383770"
+    },
+    {
+      "file": "Zubrowka_Korzenna_Moc_0.5_15_alc.30_.png",
+      "assetId": "image-82690e796f271a1257a3eeec1cdaaca97c51b0e2-150x336-png",
+      "productId": "drafts.product-302-1764108386782"
+    },
+    {
+      "file": "Zubrowka_Rose_6_0_7l_Alc.32_.png",
+      "assetId": "image-8df1c606fe1dd0210cdaca9319ae707874f630fb-408x612-png",
+      "productId": "drafts.product-303-1764108389806"
+    },
+    {
+      "file": "Zubrowka_Vodka_Wit_12_0_7l___Alc40_.png",
+      "assetId": "image-acfa471aec64351c62a7b6c469801e546bfd70ee-379x659-png",
+      "productId": "drafts.product-304-1764108393120"
+    },
+    {
+      "file": "Zubrowka_Vodka_Wit_12_1l___Alc40_.png",
+      "assetId": "image-a9bd4917685eeeaf4ab1b1ecc1cfdbbbafb17130-364x605-png",
+      "productId": "drafts.product-305-1764108396146"
+    },
+    {
+      "file": "Zubrowka_Vodka_Wit_15_0_5l___Alc40_.png",
+      "assetId": "image-2cd569f3a4ead17a5b5af7db42ff4baaa942a7c2-180x448-png",
+      "productId": "drafts.product-306-1764108399162"
+    },
+    {
+      "file": "Zubrowka_Vodka_Wit_24_0_2l___Alc40_.png",
+      "assetId": "image-2b910fd7dc8235899d88f63a454e717c5987027f-500x500-png",
+      "productId": "drafts.product-307-1764108402195"
+    },
+    {
+      "file": "Zubrowka_Zwart_12__0_7l___Alc_40_.png",
+      "assetId": "image-d749f6915a177323ddcb27f8675df4c1573f8d9b-500x500-png",
+      "productId": "drafts.product-308-1764108405217"
+    }
+  ],
+  "failed": [
+    {
+      "file": "Soplica Citroen 0,5l _ Alc.26_.png",
+      "error": "An invalid response was received from the upstream server"
+    }
+  ]
+}

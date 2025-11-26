@@ -28,6 +28,7 @@ export default defineType({
       initialValue: 'Rakia',
       options: {
         list: [
+          {title: 'Gin', value: 'Gin'},
           {title: 'Likeur', value: 'Likeur'},
           {title: 'Ouzo', value: 'Ouzo'},
           {title: 'Rakia', value: 'Rakia'},
@@ -80,10 +81,14 @@ export default defineType({
       initialValue: '70cl',
       options: {
         list: [
+          {title: '10cl', value: '10cl'},
           {title: '20cl', value: '20cl'},
           {title: '50cl', value: '50cl'},
           {title: '70cl', value: '70cl'},
+          {title: '75cl', value: '75cl'},
+          {title: '90cl', value: '90cl'},
           {title: '100cl', value: '100cl'},
+          {title: '120cl', value: '120cl'},
           {title: '175cl', value: '175cl'},
           {title: '200cl', value: '200cl'},
         ],
@@ -98,9 +103,16 @@ export default defineType({
       initialValue: '40%',
       options: {
         list: [
+          {title: '10%', value: '10%'},
           {title: '12%', value: '12%'},
+          {title: '13%', value: '13%'},
+          {title: '14%', value: '14%'},
+          {title: '16%', value: '16%'},
+          {title: '20%', value: '20%'},
           {title: '25%', value: '25%'},
-          {title: '25%', value: '25%'},
+          {title: '28%', value: '28%'},
+          {title: '30%', value: '30%'},
+          {title: '32%', value: '32%'},
           {title: '35%', value: '35%'},
           {title: '36%', value: '36%'},
           {title: '37.5%', value: '37.5%'},
@@ -109,6 +121,7 @@ export default defineType({
           {title: '42.5%', value: '42.5%'},
           {title: '43%', value: '43%'},
           {title: '47%', value: '47%'},
+          {title: '95%', value: '95%'},
         ],
       },
     }),
