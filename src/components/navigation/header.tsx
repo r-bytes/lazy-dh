@@ -194,7 +194,7 @@ const Header = (props: Props) => {
               {session && status === "authenticated" && isAdminApproved && (
                 <AdminPage cn="text-text-primary hover:text-text-secondary" />
               )}
-              <ModeToggle cn="" />
+              <ModeToggle className="text-text-primary hover:text-text-secondary" />
               <ShoppingCart cn="text-text-primary hover:text-text-secondary" />
             </div>
           </div>
@@ -248,7 +248,7 @@ const Header = (props: Props) => {
 
               {/* Mode Toggle */}
               <div className="border-t border-border p-4">
-                <ModeToggle cn="w-full" />
+                <ModeToggle className="w-full" />
               </div>
             </div>
           </div>
