@@ -145,22 +145,22 @@ export function HeroSection({
   return (
     <section
       className={cn(
-        "relative min-h-[70vh] overflow-hidden sm:min-h-[80vh] lg:min-h-[92vh]",
+        "relative min-h-[60vh] overflow-hidden sm:min-h-[70vh] lg:min-h-[92vh]",
         className
       )}
     >
-      <div className="relative mx-auto max-w-7xl px-4 pt-6 pb-12 sm:px-6 sm:pt-8 sm:pb-16 lg:px-8 lg:py-section-lg">
-        <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-12">
+      <div className="relative mx-auto flex min-h-[60vh] max-w-7xl items-center px-4 py-8 sm:min-h-[70vh] sm:px-6 sm:py-12 lg:min-h-[92vh] lg:px-8 lg:py-section-lg">
+        <div className="grid w-full grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2 lg:gap-12">
           {/* Left Column: Content */}
           <motion.div
-            className="flex flex-col justify-center"
+            className="flex flex-col justify-center text-center lg:text-left"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
             {/* Badges */}
             <motion.div
-              className="mb-4 flex flex-wrap gap-2 sm:mb-6 sm:gap-3"
+              className="mb-3 flex flex-wrap justify-center gap-2 sm:mb-4 sm:justify-start sm:gap-3 lg:justify-start"
               variants={itemVariants}
             >
               {displayBadges.map((badge, index) => (
@@ -179,7 +179,7 @@ export function HeroSection({
 
             {/* Title */}
             <motion.h1
-              className="mb-4 text-3xl font-bold leading-tight text-text-primary sm:mb-6 sm:text-4xl lg:text-5xl xl:text-6xl"
+              className="mb-3 text-2xl font-bold leading-tight text-text-primary sm:mb-4 sm:text-3xl lg:mb-6 lg:text-4xl xl:text-5xl"
               variants={itemVariants}
             >
               {title.includes("Bulgarije") ? (
@@ -194,7 +194,7 @@ export function HeroSection({
 
             {/* Subtitle */}
             <motion.p
-              className="mb-6 max-w-xl text-base text-text-secondary sm:mb-8 sm:text-lg lg:text-xl"
+              className="mb-4 mx-auto max-w-xl text-sm text-text-secondary sm:mb-6 sm:text-base lg:mx-0 lg:mb-8 lg:text-lg"
               variants={itemVariants}
             >
               {subtitle}
@@ -202,7 +202,7 @@ export function HeroSection({
 
             {/* CTAs */}
             <motion.div
-              className="flex flex-col gap-3 sm:flex-row sm:gap-4"
+              className="flex flex-col gap-2 sm:flex-row sm:justify-center sm:gap-3 lg:justify-start"
               variants={itemVariants}
             >
               <Button

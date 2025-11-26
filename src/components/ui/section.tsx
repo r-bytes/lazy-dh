@@ -40,9 +40,9 @@ const VARIANT_CLASSES: Record<SectionVariant, string> = {
 };
 
 const SPACING_CLASSES: Record<SectionSpacing, string> = {
-  sm: "py-6 sm:py-8 lg:py-12",
-  md: "py-8 sm:py-12 lg:py-16",
-  lg: "py-12 sm:py-16 lg:py-24",
+  sm: "py-4 sm:py-6 lg:py-8",
+  md: "py-6 sm:py-8 lg:py-12",
+  lg: "py-8 sm:py-12 lg:py-16",
 };
 
 const CONTAINER_CLASSES: Record<NonNullable<SectionProps["container"]>, string> = {
@@ -79,7 +79,7 @@ export function Section({
   const variantClass = VARIANT_CLASSES[variant];
   const spacingClass = SPACING_CLASSES[spacing];
   const containerClass = CONTAINER_CLASSES[container];
-  const paddingClass = padded ? "px-4 sm:px-6 lg:px-8" : "";
+  const paddingClass = padded ? "px-4 sm:px-5 lg:px-8" : "";
 
   return (
     <section className={cn(variantClass, spacingClass, className)} {...props}>

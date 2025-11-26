@@ -48,10 +48,10 @@ export interface SectionHeaderProps {
 }
 
 const TITLE_SIZE_CLASSES = {
-  sm: "text-2xl sm:text-3xl",
-  md: "text-3xl sm:text-4xl",
-  lg: "text-4xl sm:text-5xl",
-  xl: "text-5xl sm:text-6xl",
+  sm: "text-xl sm:text-2xl lg:text-3xl",
+  md: "text-2xl sm:text-3xl lg:text-4xl",
+  lg: "text-2xl sm:text-3xl lg:text-4xl xl:text-5xl",
+  xl: "text-3xl sm:text-4xl lg:text-5xl xl:text-6xl",
 };
 
 const ALIGN_CLASSES = {
@@ -90,11 +90,11 @@ export function SectionHeader({
   const titleSizeClass = TITLE_SIZE_CLASSES[titleSize];
 
   return (
-    <div className={cn("mb-12 flex flex-col", alignClass, className)}>
+    <div className={cn("mb-6 flex flex-col sm:mb-8 lg:mb-12", alignClass, className)}>
       {/* Badge */}
       {badge && (
-        <div className="mb-4 inline-flex items-center justify-center">
-          <span className="inline-flex items-center gap-2 rounded-full bg-muted px-4 py-2 text-sm font-semibold text-muted-foreground">
+        <div className="mb-2 inline-flex items-center justify-center sm:mb-3">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-xs font-semibold text-muted-foreground sm:gap-2 sm:px-4 sm:py-2 sm:text-sm">
             {badgeIcon && <span className="flex-shrink-0">{badgeIcon}</span>}
             {badge}
           </span>
@@ -102,15 +102,15 @@ export function SectionHeader({
       )}
 
       {/* Title */}
-      <h2 className={cn("mb-4 font-bold text-foreground", titleSizeClass)}>{title}</h2>
+      <h2 className={cn("mb-2 font-bold text-foreground sm:mb-3", titleSizeClass)}>{title}</h2>
 
       {/* Description */}
       {description && (
-        <p className="w-full mx-auto max-w-xl text-lg text-text-secondary sm:text-xl">{description}</p>
+        <p className="w-full mx-auto max-w-xl text-sm text-text-secondary sm:text-base lg:text-lg">{description}</p>
       )}
 
       {/* Action */}
-      {action && <div className="mt-6">{action}</div>}
+      {action && <div className="mt-4 sm:mt-5 lg:mt-6">{action}</div>}
     </div>
   );
 }

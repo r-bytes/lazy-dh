@@ -1,7 +1,6 @@
 import AgeVerificationModal from "@/components/age-verification-modal";
 import CookieBanner from "@/components/navigation/cookie-banner";
 import Footer from "@/components/navigation/footer";
-import Header from "@/components/navigation/header";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
@@ -18,10 +17,15 @@ export const metadata: Metadata = {
   title: "Lazo Spirits Den Haag",
   description: "Welkom bij Lazo Spirits Den Haag",
   icons: {
-    apple: "/apple-touch-icon.png",
     icon: [
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
     other: [
       {

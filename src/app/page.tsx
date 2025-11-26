@@ -33,43 +33,44 @@ const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Eleme
       </div>
 
       {/* Features Section */}
-      <Section variant="light" spacing="md">
-        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3">
+      <Section variant="light" spacing="sm">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3">
           <div className="text-center">
-            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted sm:mb-4 sm:h-16 sm:w-16">
-              <Award className="h-6 w-6 text-muted-foreground sm:h-8 sm:w-8" />
+            <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-muted sm:mb-3 sm:h-12 sm:w-12">
+              <Award className="h-5 w-5 text-muted-foreground sm:h-6 sm:w-6" />
             </div>
-            <h3 className="mb-2 text-lg font-semibold sm:text-xl">Premium Kwaliteit</h3>
-            <p className="text-sm text-muted-foreground sm:text-base">Alleen de beste selectie van traditionele dranken</p>
+            <h3 className="mb-1 text-base font-semibold sm:text-lg">Premium Kwaliteit</h3>
+            <p className="text-xs text-muted-foreground sm:text-sm">Alleen de beste selectie van traditionele dranken</p>
           </div>
           <div className="text-center">
-            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted sm:mb-4 sm:h-16 sm:w-16">
-              <Star className="h-6 w-6 text-muted-foreground sm:h-8 sm:w-8" />
+            <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-muted sm:mb-3 sm:h-12 sm:w-12">
+              <Star className="h-5 w-5 text-muted-foreground sm:h-6 sm:w-6" />
             </div>
-            <h3 className="mb-2 text-lg font-semibold sm:text-xl">Authentieke Smaak</h3>
-            <p className="text-sm text-muted-foreground sm:text-base">Direct geïmporteerd voor de originele ervaring</p>
+            <h3 className="mb-1 text-base font-semibold sm:text-lg">Authentieke Smaak</h3>
+            <p className="text-xs text-muted-foreground sm:text-sm">Direct geïmporteerd voor de originele ervaring</p>
           </div>
           <div className="text-center">
-            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted sm:mb-4 sm:h-16 sm:w-16">
-              <Sparkles className="h-6 w-6 text-muted-foreground sm:h-8 sm:w-8" />
+            <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-muted sm:mb-3 sm:h-12 sm:w-12">
+              <Sparkles className="h-5 w-5 text-muted-foreground sm:h-6 sm:w-6" />
             </div>
-            <h3 className="mb-2 text-lg font-semibold sm:text-xl">Exclusieve Collectie</h3>
-            <p className="text-sm text-muted-foreground sm:text-base">Unieke producten die je nergens anders vindt</p>
+            <h3 className="mb-1 text-base font-semibold sm:text-lg">Exclusieve Collectie</h3>
+            <p className="text-xs text-muted-foreground sm:text-sm">Unieke producten die je nergens anders vindt</p>
           </div>
         </div>
       </Section>
 
       {/* Aanbiedingen Section */}
       {saleProducts.length > 0 && (
-        <Section variant="default" spacing="lg">
+        <Section variant="default" spacing="md">
           <SectionHeader
             badge="Beperkte Tijd"
             badgeIcon={<Sparkles className="h-4 w-4" />}
             title="Speciale Aanbiedingen"
             description="Mis deze geweldige deals niet! Beperkte voorraad beschikbaar."
+            align="center"
             action={
               <Button size="lg" className="bg-surface text-text-primary hover:bg-background-alt dark:bg-surface dark:text-text-primary">
-                <Link href="/promoties" className="flex items-center">
+                <Link href="/promoties" className="flex items-center justify-center">
                   Alle Aanbiedingen Bekijken
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
@@ -82,15 +83,16 @@ const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Eleme
 
       {/* Nieuwe Producten Section */}
       {newProducts.length > 0 && (
-        <Section variant="light" spacing="lg">
+        <Section variant="light" spacing="md">
           <SectionHeader
             badge="Nieuw"
             badgeIcon={<Star className="h-4 w-4" />}
             title="Nieuwe Toevoegingen"
             description="Ontdek onze nieuwste aanwinsten en laat je verrassen door nieuwe smaken."
+            align="center"
             action={
               <Button size="lg" variant="outline">
-                <Link href="/nieuwe-producten" className="flex items-center">
+                <Link href="/nieuwe-producten" className="flex items-center justify-center">
                   Alle Nieuwe Producten
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
@@ -102,12 +104,13 @@ const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Eleme
       )}
 
       {/* Categories Section */}
-      <Section variant="default" spacing="lg">
+      <Section variant="default" spacing="md">
         <SectionHeader
           badge="Ontdek"
           badgeIcon={<Sparkles className="h-4 w-4" />}
           title="Ontdek Per Categorie"
           description="Vind precies wat je zoekt door te bladeren in onze zorgvuldig samengestelde categorieën."
+          align="center"
         />
         <CategoryGrid
           categories={categories}
@@ -116,7 +119,7 @@ const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Eleme
           gap="md"
           limit={6}
         />
-        <div className="mt-8 text-center sm:mt-12">
+        <div className="mt-6 text-center sm:mt-8">
           <Button size="lg" variant="outline" className="w-full sm:w-auto">
             <Link href="/categorieen" className="flex items-center justify-center">
               Bekijk Alle Categorieën
@@ -127,44 +130,44 @@ const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Eleme
       </Section>
 
       {/* CTA Section */}
-      <Section variant="gradient" spacing="lg" container="md">
-        <div className="space-y-6 text-center sm:space-y-8">
-          <div className="space-y-3 sm:space-y-4">
-            <h2 className="text-2xl font-bold text-text-primary sm:text-3xl lg:text-4xl xl:text-5xl">Klaar om te Ontdekken?</h2>
-            <p className="mx-auto max-w-2xl text-base text-text-secondary sm:text-lg lg:text-xl">
+      <Section variant="gradient" spacing="md" container="md">
+        <div className="space-y-4 text-center sm:space-y-6">
+          <div className="space-y-2 sm:space-y-3">
+            <h2 className="text-xl font-bold text-text-primary sm:text-2xl lg:text-3xl xl:text-4xl">Klaar om te Ontdekken?</h2>
+            <p className="mx-auto max-w-2xl text-sm text-text-secondary sm:text-base lg:text-lg">
               Sluit je aan bij duizenden tevreden klanten die onze premium spirits ontdekken.
             </p>
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4">
-            <Button size="lg" className="w-full bg-surface px-6 py-3 text-sm text-text-primary hover:bg-background-alt sm:w-auto sm:px-8">
+          <div className="flex flex-col gap-2 sm:flex-row sm:justify-center sm:gap-3">
+            <Button size="lg" className="w-full bg-surface px-5 py-2.5 text-sm text-text-primary hover:bg-background-alt sm:w-auto sm:px-6">
               <Link href="/categorieen" className="flex items-center justify-center">
                 Start Winkelen
-                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="w-full border-border/20 bg-surface/5 px-6 py-3 text-sm text-text-primary backdrop-blur-sm hover:bg-surface/10 sm:w-auto sm:px-8">
+            <Button size="lg" variant="outline" className="w-full border-border/20 bg-surface/5 px-5 py-2.5 text-sm text-text-primary backdrop-blur-sm hover:bg-surface/10 sm:w-auto sm:px-6">
               <Link href="/contact" className="flex items-center justify-center">
-                <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                <Mail className="mr-2 h-4 w-4" />
                 Contact Opnemen
               </Link>
             </Button>
           </div>
 
           {/* Trust Indicators */}
-          <div className="border-t border-border pt-6 sm:pt-8">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
+          <div className="border-t border-border pt-4 sm:pt-6">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4">
               <div className="text-center">
-                <div className="text-xl font-bold text-text-primary sm:text-2xl">1000+</div>
-                <div className="text-xs text-text-secondary sm:text-sm">Tevreden Klanten</div>
+                <div className="text-lg font-bold text-text-primary sm:text-xl">1000+</div>
+                <div className="text-xs text-text-secondary">Tevreden Klanten</div>
               </div>
               <div className="text-center">
-                <div className="text-xl font-bold text-text-primary sm:text-2xl">300+</div>
-                <div className="text-xs text-text-secondary sm:text-sm">Premium Producten</div>
+                <div className="text-lg font-bold text-text-primary sm:text-xl">300+</div>
+                <div className="text-xs text-text-secondary">Premium Producten</div>
               </div>
               <div className="text-center">
-                <div className="text-xl font-bold text-text-primary sm:text-2xl">100%</div>
-                <div className="text-xs text-text-secondary sm:text-sm">Gegarandeerde Kwaliteit</div>
+                <div className="text-lg font-bold text-text-primary sm:text-xl">100%</div>
+                <div className="text-xs text-text-secondary">Gegarandeerde Kwaliteit</div>
               </div>
             </div>
           </div>
