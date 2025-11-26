@@ -151,7 +151,7 @@ const Header = (props: Props) => {
             <Link href={"/"} className="flex-shrink-0">
               {mounted && (
                 <Image
-                  className={cn("h-auto w-24 transition-opacity sm:w-28 lg:w-32", !isDarkMode && "opacity-80 brightness-110")}
+                  className={cn("h-auto w-24 sm:w-28 lg:w-32")}
                   src={logoSrc}
                   alt="Lazy Den Haag Logo"
                   width={128}
