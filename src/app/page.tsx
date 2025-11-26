@@ -6,12 +6,12 @@ import { CategoryGrid } from "@/components/ui/category/category-grid";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { fetchCategories } from "@/lib/sanity/fetchCategories";
-import { fetchProducts } from "@/lib/sanity/fetchProducts";
+import { fetchProductsNoStore } from "@/lib/sanity/fetchProductsNoStore";
 import { ArrowRight, Award, Mail, Sparkles, Star } from "lucide-react";
 import Link from "next/link";
 
 const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Element> => {
-  const [categories, products] = await Promise.all([fetchCategories(), fetchProducts()]);
+  const [categories, products] = await Promise.all([fetchCategories(), fetchProductsNoStore("")]);
 
   const saleProducts = products.filter((p) => p.inSale);
   const newProducts = products.filter((p) => p.isNew);
@@ -159,12 +159,12 @@ const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Eleme
                 <div className="text-xs text-text-secondary sm:text-sm">Tevreden Klanten</div>
               </div>
               <div className="text-center">
-                <div className="text-xl font-bold text-text-primary sm:text-2xl">100+</div>
+                <div className="text-xl font-bold text-text-primary sm:text-2xl">300+</div>
                 <div className="text-xs text-text-secondary sm:text-sm">Premium Producten</div>
               </div>
               <div className="text-center">
-                <div className="text-xl font-bold text-text-primary sm:text-2xl">Stand-by</div>
-                <div className="text-xs text-text-secondary sm:text-sm">Klantenservice</div>
+                <div className="text-xl font-bold text-text-primary sm:text-2xl">100%</div>
+                <div className="text-xs text-text-secondary sm:text-sm">Gegarandeerde Kwaliteit</div>
               </div>
             </div>
           </div>
