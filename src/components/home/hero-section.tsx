@@ -185,7 +185,7 @@ export function HeroSection({
               {title.includes("Bulgarije") ? (
                 <>
                   Authentieke Smaken uit
-                  <span className="md:block text-text-secondary pl-2 md:pl-0">Bulgarije</span>
+                  <span className="md:block text-text-secondary pl-2 md:pl-0">Bulgarije, Polen & Griekenland</span>
                 </>
               ) : (
                 title
