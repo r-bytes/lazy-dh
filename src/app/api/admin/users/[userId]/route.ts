@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
-import { userActivities, users } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { favoriteProducts, orderItems, orders, userActivities, users } from "@/lib/db/schema";
+import { eq, inArray } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -76,9 +76,28 @@ export async function DELETE(request: NextRequest, { params }: { params: { userI
       .from(users)
       .where(eq(users.id, userId));
 
-    if (!existingUser) {
+    if (!existingUser || existingUser.length === 0) {
       return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
     }
+
+    // Get all order IDs for this user
+    const userOrders = await db
+      .select({ id: orders.id })
+      .from(orders)
+      .where(eq(orders.userId, userId));
+
+    const orderIds = userOrders.map((order) => order.id);
+
+    // Delete order items for all orders of this user
+    if (orderIds.length > 0) {
+      await db.delete(orderItems).where(inArray(orderItems.orderId, orderIds)).execute();
+    }
+
+    // Delete orders for this user
+    await db.delete(orders).where(eq(orders.userId, userId)).execute();
+
+    // Delete favorite products for this user
+    await db.delete(favoriteProducts).where(eq(favoriteProducts.userId, userId)).execute();
 
     // Delete related records in user_activities
     await db.delete(userActivities).where(eq(userActivities.userId, userId)).execute();
@@ -91,7 +110,11 @@ export async function DELETE(request: NextRequest, { params }: { params: { userI
     return response;
   } catch (error) {
     console.error(error);
-    const errorResponse = NextResponse.json({ success: false, message: "Error deleting user" }, { status: 500 });
+    const errorResponse = NextResponse.json({ 
+      success: false, 
+      message: "Error deleting user",
+      error: error instanceof Error ? error.message : "Unknown error"
+    }, { status: 500 });
     errorResponse.headers.set("Cache-Control", "no-store, max-age=0");
     return errorResponse;
   }
