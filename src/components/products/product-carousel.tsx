@@ -138,6 +138,7 @@ export function ProductCarousel({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [responsiveSlidesToShow, setResponsiveSlidesToShow] = useState(slidesToShow);
+  const [isMobile, setIsMobile] = useState(false);
 
   const config = VARIANT_CONFIG[variant];
 
@@ -146,6 +147,7 @@ export function ProductCarousel({
     const getResponsiveSlidesToShow = () => {
       if (typeof window === "undefined") return slidesToShow;
       const width = window.innerWidth;
+      setIsMobile(width < 640);
       if (width < 640) return 1; // mobile
       if (width < 1024) return 2; // tablet
       if (width < 1280) return 3; // desktop
@@ -280,7 +282,7 @@ export function ProductCarousel({
       {/* Pagination Dots */}
       {showDots && products.length > actualSlidesToShow && (
         <div className="mt-6 flex justify-center gap-2 sm:mt-8">
-          {Array.from({ length: totalSlides }).map((_, index) => {
+          {Array.from({ length: isMobile ? Math.min(totalSlides, 5) : totalSlides }).map((_, index) => {
             const slideIndex = index;
             const isActive = Math.floor(currentIndex / actualSlidesToShow) === slideIndex;
 

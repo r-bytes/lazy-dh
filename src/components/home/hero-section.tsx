@@ -151,6 +151,74 @@ export function HeroSection({
     >
       <div className="relative mx-auto flex min-h-[60vh] max-w-7xl items-center px-4 py-8 sm:min-h-[70vh] sm:px-6 sm:py-12 lg:min-h-[92vh] lg:px-8 lg:py-section-lg">
         <div className="grid w-full grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2 lg:gap-12">
+          {/* Right Column: Product Image Collage - Mobile First */}
+          {displayProducts.length > 0 && (
+            <motion.div
+              className="relative order-first flex items-center justify-center sm:order-last sm:mt-6 lg:order-last lg:mt-0"
+              variants={imageVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <div className="relative h-[250px] w-full sm:h-[350px] lg:h-[600px]">
+                {displayProducts.slice(0, 3).map((product, index) => {
+                  const desktopPositions = [
+                    { top: "10%", left: "10%", rotate: -15 },
+                    { top: "20%", right: "10%", rotate: 10 },
+                    { bottom: "20%", left: "15%", rotate: -10 },
+                  ];
+                  const mobilePositions = [
+                    { top: "10%", left: "50%", rotate: -8 },
+                    { top: "50%", right: "5%", rotate: 8 },
+                    { bottom: "10%", left: "5%", rotate: -8 },
+                  ];
+
+                  const position = desktopPositions[index] || desktopPositions[0];
+                  const mobilePos = mobilePositions[index] || mobilePositions[0];
+
+                  return (
+                    <motion.div
+                      key={product._id}
+                      className="absolute [&:nth-child(1)]:top-[10%] [&:nth-child(1)]:left-[50%] [&:nth-child(1)]:-translate-x-1/2 lg:[&:nth-child(1)]:left-[10%] lg:[&:nth-child(1)]:translate-x-0 [&:nth-child(2)]:top-[50%] [&:nth-child(2)]:right-[5%] lg:[&:nth-child(2)]:top-[20%] lg:[&:nth-child(2)]:right-[10%] [&:nth-child(3)]:bottom-[10%] [&:nth-child(3)]:left-[5%] lg:[&:nth-child(3)]:bottom-[20%] lg:[&:nth-child(3)]:left-[15%]"
+                      style={{
+                        top: mobilePos.top,
+                        left: mobilePos.left,
+                        right: mobilePos.right,
+                        bottom: mobilePos.bottom,
+                      }}
+                      initial={{ opacity: 0, scale: 0.5, rotate: mobilePos.rotate }}
+                      animate={{ opacity: 1, scale: 1, rotate: mobilePos.rotate }}
+                      transition={{
+                        delay: 0.3 + index * 0.2,
+                        duration: 0.6,
+                        ease: [0.4, 0, 0.2, 1] as const,
+                      }}
+                      whileHover={{
+                        scale: 1.1,
+                        rotate: mobilePos.rotate + 5,
+                        zIndex: 10,
+                        transition: { duration: 0.3 },
+                      }}
+                    >
+                      <div className="relative h-32 w-20 sm:h-40 sm:w-24 lg:h-48 lg:w-32 xl:h-56 xl:w-40">
+                        <Image
+                          src={urlFor(product.image).url()}
+                          alt={product.name}
+                          fill
+                          className="object-contain drop-shadow-2xl"
+                          priority={index < 2}
+                          quality={85}
+                        />
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* Decorative glow effect */}
+              <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/20 via-transparent to-transparent blur-3xl" />
+            </motion.div>
+          )}
+
           {/* Left Column: Content */}
           <motion.div
             className="flex flex-col justify-center text-center lg:text-left"
@@ -166,7 +234,7 @@ export function HeroSection({
               {displayBadges.map((badge, index) => (
                 <motion.div
                   key={badge.slug || index}
-                  className="inline-flex items-center rounded-full bg-surface/10 dark:bg-surface/20 px-3 py-1.5 text-xs font-semibold text-text-primary backdrop-blur-sm transition-all hover:bg-surface/20 dark:hover:bg-surface/30 sm:px-4 sm:py-2 sm:text-sm"
+                  className="inline-flex items-center rounded-full bg-surface/30 dark:bg-surface/40 border border-border/30 px-3 py-1.5 text-xs font-semibold text-text-primary backdrop-blur-sm transition-all hover:bg-surface/40 dark:hover:bg-surface/50 sm:px-4 sm:py-2 sm:text-sm"
                   variants={itemVariants}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -207,7 +275,7 @@ export function HeroSection({
             >
               <Button
                 size="lg"
-                className="group w-full bg-surface text-text-primary transition-all hover:bg-background-alt hover:shadow-lg sm:w-auto"
+                className="group w-full bg-accent-yellow text-text-primary transition-all hover:bg-accent-yellow-dark hover:shadow-lg dark:text-black sm:w-auto"
                 asChild
               >
                 <Link href={primaryCtaLink} className="flex items-center justify-center">
@@ -215,80 +283,13 @@ export function HeroSection({
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full border-border/20 bg-surface/5 text-text-primary backdrop-blur-sm transition-all hover:bg-surface/10 hover:border-border/30 sm:w-auto"
-                asChild
-              >
+              <Button size="lg" variant="outline" className="border font-semibold hover:bg-black/10">
                 <Link href={secondaryCtaLink} className="flex items-center justify-center">
                   {secondaryCtaText}
                 </Link>
               </Button>
             </motion.div>
           </motion.div>
-
-          {/* Right Column: Product Image Collage */}
-          {displayProducts.length > 0 && (
-            <motion.div
-              className="relative hidden lg:flex lg:items-center lg:justify-center"
-              variants={imageVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <div className="relative h-[500px] w-full lg:h-[600px]">
-                {displayProducts.map((product, index) => {
-                  const positions = [
-                    { top: "10%", left: "10%", rotate: -15 },
-                    { top: "20%", right: "10%", rotate: 10 },
-                    { bottom: "20%", left: "15%", rotate: -10 },
-                    { bottom: "10%", right: "15%", rotate: 15 },
-                  ];
-                  const position = positions[index] || positions[0];
-
-                  return (
-                    <motion.div
-                      key={product._id}
-                      className="absolute"
-                      style={{
-                        top: position.top,
-                        left: position.left,
-                        right: position.right,
-                        bottom: position.bottom,
-                      }}
-                      initial={{ opacity: 0, scale: 0.5, rotate: position.rotate }}
-                      animate={{ opacity: 1, scale: 1, rotate: position.rotate }}
-                      transition={{
-                        delay: 0.3 + index * 0.2,
-                        duration: 0.6,
-                        ease: [0.4, 0, 0.2, 1] as const,
-                      }}
-                      whileHover={{
-                        scale: 1.1,
-                        rotate: position.rotate + 5,
-                        zIndex: 10,
-                        transition: { duration: 0.3 },
-                      }}
-                    >
-                      <div className="relative h-40 w-28 lg:h-48 lg:w-32 xl:h-56 xl:w-40">
-                        <Image
-                          src={urlFor(product.image).url()}
-                          alt={product.name}
-                          fill
-                          className="object-contain drop-shadow-2xl"
-                          priority={index < 2}
-                          quality={85}
-                        />
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-
-              {/* Decorative glow effect */}
-              <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/20 via-transparent to-transparent blur-3xl" />
-            </motion.div>
-          )}
         </div>
       </div>
     </section>

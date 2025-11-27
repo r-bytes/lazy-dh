@@ -144,7 +144,7 @@ export function ProductCard({
                 <Button
                   size="sm"
                   onClick={handleAddToCartClick}
-                  className="h-8 w-full rounded-full px-3 text-xs shadow-sm transition-all hover:scale-105 sm:h-9 sm:w-auto sm:px-4"
+                  className="h-8 w-full rounded-full bg-accent-yellow px-3 text-xs text-text-primary shadow-sm transition-all hover:scale-105 hover:bg-accent-yellow-dark dark:text-black sm:h-9 sm:w-auto sm:px-4"
                 >
                   <ShoppingCart className="mr-1.5 h-3.5 w-3.5 sm:mr-2 sm:h-4 sm:w-4" />
                   <span className="text-xs">Toevoegen</span>

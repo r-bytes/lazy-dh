@@ -94,7 +94,7 @@ export function SectionHeader({
       {/* Badge */}
       {badge && (
         <div className="mb-2 inline-flex items-center justify-center sm:mb-3">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-xs font-semibold text-muted-foreground sm:gap-2 sm:px-4 sm:py-2 sm:text-sm">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-surface/40 dark:bg-surface/50 border border-border/40 px-3 py-1.5 text-xs font-semibold text-text-primary sm:gap-2 sm:px-4 sm:py-2 sm:text-sm">
             {badgeIcon && <span className="flex-shrink-0">{badgeIcon}</span>}
             {badge}
           </span>

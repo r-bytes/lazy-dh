@@ -33,8 +33,8 @@ const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Eleme
       </div>
 
       {/* Features Section */}
-      <Section variant="light" spacing="sm">
-        <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3">
+      <Section variant="light" spacing="md">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3">
           <div className="text-center">
             <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-muted sm:mb-3 sm:h-12 sm:w-12">
               <Award className="h-5 w-5 text-muted-foreground sm:h-6 sm:w-6" />
@@ -140,13 +140,13 @@ const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Eleme
           </div>
 
           <div className="flex flex-col gap-2 sm:flex-row sm:justify-center sm:gap-3">
-            <Button size="lg" className="w-full bg-surface px-5 py-2.5 text-sm text-text-primary hover:bg-background-alt sm:w-auto sm:px-6">
+            <Button size="lg" className="w-full bg-accent-yellow px-5 py-2.5 text-sm text-text-primary hover:bg-accent-yellow-dark font-semibold dark:text-black sm:w-auto sm:px-6">
               <Link href="/categorieen" className="flex items-center justify-center">
                 Start Winkelen
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="w-full border-border/20 bg-surface/5 px-5 py-2.5 text-sm text-text-primary backdrop-blur-sm hover:bg-surface/10 sm:w-auto sm:px-6">
+            <Button size="lg" variant="secondary" className="border font-semibold hover:bg-black/10">
               <Link href="/contact" className="flex items-center justify-center">
                 <Mail className="mr-2 h-4 w-4" />
                 Contact Opnemen
