@@ -140,13 +140,13 @@ const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Eleme
           </div>
 
           <div className="flex flex-col gap-2 sm:flex-row sm:justify-center sm:gap-3">
-            <Button size="lg" className="w-full bg-accent-yellow px-5 py-2.5 text-sm text-text-primary hover:bg-accent-yellow-dark font-semibold dark:text-black sm:w-auto sm:px-6">
+            <Button size="lg" className="w-full bg-accent-yellow px-5 py-2.5 text-sm text-text-primary hover:bg-accent-yellow-dark dark:text-black sm:w-auto sm:px-6">
               <Link href="/categorieen" className="flex items-center justify-center">
                 Start Winkelen
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-            <Button size="lg" variant="secondary" className="border font-semibold hover:bg-black/10">
+            <Button size="lg" variant="secondary" className="border hover:bg-black/10">
               <Link href="/contact" className="flex items-center justify-center">
                 <Mail className="mr-2 h-4 w-4" />
                 Contact Opnemen
