@@ -4,7 +4,16 @@ import MaxWidthWrapper from "@/components/ui/max-width-wrapper";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { generateMetadata as generateSEOMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
 import { Building2 } from "lucide-react";
+
+export const metadata: Metadata = generateSEOMetadata({
+  title: "Over Ons",
+  description: "Leer meer over Lazo Spirits Den Haag. Onze bedrijfsgegevens, contactinformatie en missie om authentieke traditionele dranken naar Nederland te brengen.",
+  path: "/over-ons",
+  keywords: ["over ons", "bedrijfsgegevens", "contact", "Lazo Spirits", "Den Haag", "over het bedrijf"],
+});
 
 const companyInfo = {
   "Naam": process.env.COMPANY_NAME!,

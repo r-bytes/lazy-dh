@@ -1,8 +1,18 @@
 import Header from "@/components/navigation/header";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
+import { generateMetadata as generateSEOMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
 import { FileText } from "lucide-react";
 import React from "react";
+
+export const metadata: Metadata = generateSEOMetadata({
+  title: "Algemene Voorwaarden",
+  description: "Lees onze algemene voorwaarden voor het gebruik van onze website en het plaatsen van bestellingen. Informatie over producten, betaling, levering en retourbeleid.",
+  path: "/algemene-voorwaarden",
+  keywords: ["algemene voorwaarden", "voorwaarden", "terms", "leveringsvoorwaarden", "retourbeleid"],
+  noindex: true, // Terms pages typically shouldn't be indexed
+});
 
 const TermsAndConditionsPage = () => {
   const storeName = "Lazo Spirits Den Haag"

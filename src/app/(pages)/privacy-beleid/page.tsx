@@ -1,10 +1,20 @@
 import Header from "@/components/navigation/header";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
+import { generateMetadata as generateSEOMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
 import { Shield } from "lucide-react";
 import React from "react";
 
 type Props = {};
+
+export const metadata: Metadata = generateSEOMetadata({
+  title: "Privacybeleid",
+  description: "Lees ons privacybeleid en gebruiksvoorwaarden. Informatie over hoe we uw persoonlijke gegevens verzamelen, gebruiken en beschermen.",
+  path: "/privacy-beleid",
+  keywords: ["privacybeleid", "gebruiksvoorwaarden", "privacy", "gegevensbescherming", "AVG"],
+  noindex: true, // Privacy pages typically shouldn't be indexed
+});
 
 const PrivacyPage = (props: Props) => {
   const storeName = "Lazo Spirits Den Haag"

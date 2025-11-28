@@ -2,11 +2,20 @@ import { CategoryGrid } from "@/components/ui/category/category-grid";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import Header from "@/components/navigation/header";
+import { generateMetadata as generateSEOMetadata } from "@/lib/seo";
 import { fetchCategories } from "@/lib/sanity/fetchCategories";
 import { fetchProducts } from "@/lib/sanity/fetchProducts";
 import { Category } from "@/lib/types/category";
 import { Product } from "@/lib/types/product";
+import type { Metadata } from "next";
 import { Sparkles } from "lucide-react";
+
+export const metadata: Metadata = generateSEOMetadata({
+  title: "Categorieën",
+  description: "Vind precies wat je zoekt door te bladeren in onze zorgvuldig samengestelde categorieën. Ontdek wodka, ouzo, rakija en meer traditionele dranken.",
+  path: "/categorieen",
+  keywords: ["categorieën", "wodka", "ouzo", "rakija", "spirits", "alcoholische dranken", "producten"],
+});
 
 async function getData(): Promise<{ categories: Category[]; products: Product[] } | null> {
   try {

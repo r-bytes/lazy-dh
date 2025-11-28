@@ -84,7 +84,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
                       <Image
                         className="hidden h-24 w-24 object-contain md:block"
                         src={urlFor(item.image).url()}
-                        alt=""
+                        alt={item.name || "Categorie afbeelding"}
                         width={400}
                         height={400}
                         priority
@@ -111,7 +111,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ className, categorie
                       <Image
                         className="hidden h-24 w-24 object-contain sm:block"
                         src={urlFor(item.image).url()}
-                        alt=""
+                        alt={item.name || "Categorie afbeelding"}
                         width={400}
                         height={400}
                         priority

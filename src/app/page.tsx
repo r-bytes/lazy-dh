@@ -7,8 +7,17 @@ import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { fetchCategories } from "@/lib/sanity/fetchCategories";
 import { fetchProductsNoStore } from "@/lib/sanity/fetchProductsNoStore";
+import { generateMetadata as generateSEOMetadata } from "@/lib/seo";
 import { ArrowRight, Award, Mail, Sparkles, Star } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = generateSEOMetadata({
+  title: "Home",
+  description: "Ontdek onze exclusieve collectie van traditionele dranken uit Bulgarije, Polen en Griekenland. Premium kwaliteit, authentieke smaken, direct geïmporteerd voor de beste ervaring.",
+  path: "/",
+  keywords: ["spirits", "alcoholische dranken", "wodka", "ouzo", "rakija", "premium", "Den Haag", "Bulgarije", "Polen", "Griekenland"],
+});
 
 const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Element> => {
   const [categories, products] = await Promise.all([fetchCategories(), fetchProductsNoStore("")]);

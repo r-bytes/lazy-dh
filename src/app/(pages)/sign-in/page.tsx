@@ -2,12 +2,15 @@ import Header from "@/components/navigation/header";
 import { UserSignInForm } from "@/components/ui/sign-in/user-sign-in-form";
 import { Card } from "@/components/ui/card";
 import { Section } from "@/components/ui/section";
-import { Metadata } from "next";
+import { generateMetadata as generateSEOMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Authentication",
-  description: "Authentication forms built using the components.",
-};
+export const metadata: Metadata = generateSEOMetadata({
+  title: "Inloggen",
+  description: "Log in op je account om bestellingen te plaatsen, je favorieten te bekijken en je account te beheren.",
+  path: "/sign-in",
+  noindex: true, // Login pages shouldn't be indexed
+});
 
 export default function AuthenticationPage() {
   return (

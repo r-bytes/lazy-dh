@@ -7,7 +7,16 @@ import {
 } from "@/components/ui/accordion";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
+import { generateMetadata as generateSEOMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
 import { HelpCircle } from "lucide-react";
+
+export const metadata: Metadata = generateSEOMetadata({
+  title: "Veelgestelde Vragen",
+  description: "Vind antwoorden op de meest gestelde vragen over bestellingen, levering, minimale bestelhoeveelheden en meer bij Lazo Spirits Den Haag.",
+  path: "/veelgestelde-vragen",
+  keywords: ["FAQ", "veelgestelde vragen", "hulp", "bestelling", "levering", "vragen", "antwoorden"],
+});
 
 export default function Faq() {
   return (

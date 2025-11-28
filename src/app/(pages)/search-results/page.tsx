@@ -10,6 +10,8 @@ import { debounce } from "@/lib/utils";
 import { Search } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
+// Note: This is a client component, metadata should be handled via parent or dynamic metadata
+
 interface SearchResultsProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
