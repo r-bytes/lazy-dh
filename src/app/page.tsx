@@ -19,6 +19,7 @@ export const metadata: Metadata = generateSEOMetadata({
   keywords: ["spirits", "alcoholische dranken", "wodka", "ouzo", "rakija", "premium", "Den Haag", "Bulgarije", "Polen", "Griekenland"],
 });
 
+export const dynamic = 'force-dynamic';
 const Home = async ({ params }: { params: { user: string } }): Promise<JSX.Element> => {
   const [categories, products] = await Promise.all([fetchCategories(), fetchProductsNoStore("")]);
 

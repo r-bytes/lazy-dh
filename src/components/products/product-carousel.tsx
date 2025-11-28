@@ -282,7 +282,7 @@ export function ProductCarousel({
       {/* Pagination Dots */}
       {showDots && products.length > actualSlidesToShow && (
         <div className="mt-6 flex justify-center gap-2 sm:mt-8">
-          {Array.from({ length: isMobile ? Math.min(totalSlides, 5) : totalSlides }).map((_, index) => {
+          {Array.from({ length: Math.min(totalSlides, isMobile ? 5 : 7) }).map((_, index) => {
             const slideIndex = index;
             const isActive = Math.floor(currentIndex / actualSlidesToShow) === slideIndex;
 
