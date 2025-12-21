@@ -25,6 +25,7 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
   const [isSaving, setIsSaving] = useState<Record<string, boolean>>({});
   const [isDeleting, setIsDeleting] = useState<Record<string, boolean>>({});
   const [deleteUserId, setDeleteUserId] = useState<string | null>(null);
+  const [isResettingPassword, setIsResettingPassword] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     const initialStatus = allUsers.reduce<Record<string, boolean>>((acc, user) => {
@@ -96,6 +97,31 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
     } finally {
       setIsDeleting((prev) => ({ ...prev, [deleteUserId]: false })); // Reset deleting state for the specific user
       setDeleteUserId(null); // Reset the deleteUserId state
+    }
+  };
+
+  const sendPasswordReset = async (userId: string) => {
+    setIsResettingPassword((prev) => ({ ...prev, [userId]: true }));
+
+    try {
+      const res = await fetch(`/api/admin/users/${userId}/reset-password`, {
+        cache: "no-store",
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        toast.success(data.message || "Reset email is verstuurd");
+      } else {
+        toast.error(data.message || "Fout bij het versturen van reset email");
+      }
+    } catch (error) {
+      toast.error("Fout bij het versturen van reset email");
+      console.error("Error sending password reset:", error);
+    } finally {
+      setIsResettingPassword((prev) => ({ ...prev, [userId]: false }));
     }
   };
 
@@ -189,6 +215,18 @@ const UserManagement = ({ allUsers, userId }: UserManagementProps) => {
                           "Intrekken"
                         ) : (
                           "Goedkeuren"
+                        )}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="border-primary/70 hover:bg-primary/10"
+                        onClick={() => sendPasswordReset(user.id)}
+                        size="sm"
+                      >
+                        {isResettingPassword[user.id] ? (
+                          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                        ) : (
+                          "Reset wachtwoord"
                         )}
                       </Button>
                       <Button 

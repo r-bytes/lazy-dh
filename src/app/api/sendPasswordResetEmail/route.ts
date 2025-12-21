@@ -26,13 +26,13 @@ export async function POST(request: NextRequest) {
     });
 
     if (error) {
-      console.error("Email sending error:", error);
+      console.error("Email versturen fout:", error);
       return NextResponse.json({ error, success: false });
     }
 
-    return NextResponse.json({ message: "Email successfully sent!", data, success: true });
+    return NextResponse.json({ message: "Email succesvol verstuurd!", data, success: true });
   } catch (error) {
     console.error("Error in sending email:", error);
-    return NextResponse.json({ error: "Internal Server Error", success: false });
+    return NextResponse.json({ error: "Interne serverfout", success: false });
   }
 }

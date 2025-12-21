@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const AdminPage: React.FC = () => {
   return (
-    <MaxWidthWrapper className="mx-auto flex flex-col p-20">
+    <MaxWidthWrapper className="mx-auto flex flex-col p-8 md:p-12 lg:p-20">
       <Title name="Beheer pagina" />
       <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Link

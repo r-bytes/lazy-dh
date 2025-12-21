@@ -8,6 +8,7 @@ import { signInSchema } from "@/lib/types/signin";
 import { navigateTo } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -127,6 +128,14 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
                 </FormItem>
               )}
             />
+            <div className="text-right">
+              <Link 
+                href="/account/reset-password" 
+                className="text-sm text-text-secondary hover:text-text-primary underline"
+              >
+                Wachtwoord vergeten?
+              </Link>
+            </div>
           </CardContent>
           <CardFooter>
             <Button 
@@ -178,6 +187,14 @@ export function UserSignInForm({ fromCheckout }: { fromCheckout?: boolean }) {
             </FormItem>
           )}
         />
+        <div className="text-right mb-2">
+          <Link 
+            href="/account/reset-password" 
+            className="text-sm text-text-secondary hover:text-text-primary underline"
+          >
+            Wachtwoord vergeten?
+          </Link>
+        </div>
         <Button 
           type="submit" 
           disabled={isLoading}

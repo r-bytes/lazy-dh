@@ -1,7 +1,10 @@
 "use client";
 import { requestPasswordReset } from "@/actions/users/user.actions";
 import { Icons } from "@/components/icons";
+import { Button } from "@/components/ui/button";
+import { CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { resetPasswordRequestSchema } from "@/lib/types/resetPasswordRequest";
 import { navigateTo } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,10 +14,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
-import { Button } from "../../button";
-import { Input } from "../../input";
-import MaxWidthWrapper from "../../max-width-wrapper";
-import Title from "../../title";
 
 const ResetPasswordForm = () => {
   const [message, setMessage] = useState<string>("");
@@ -78,10 +77,15 @@ const ResetPasswordForm = () => {
   };
 
   return (
-    <MaxWidthWrapper className="flex flex-col mx-auto justify-center items-center h-full mt-24 sm:mt-12">
-      <Form {...form}>
-        <Title name="Password reset aanvragen" />
-        <form onSubmit={form.handleSubmit(onSubmit)} className="mt-24 sm:mt-12">
+    <Form {...form}>
+      <CardHeader>
+        <CardTitle className="text-left md:text-center text-text-primary">Wachtwoord reset aanvragen</CardTitle>
+        <CardDescription className="text-left md:text-center text-text-secondary">
+          Vul je emailadres in om een reset link te ontvangen
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="email"
@@ -94,13 +98,17 @@ const ResetPasswordForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={isLoading} className="w-full mt-4">
+          <Button 
+            type="submit" 
+            disabled={isLoading} 
+            className="w-full bg-accent-yellow text-text-primary hover:bg-accent-yellow-dark"
+          >
             {isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.logo className="mr-2 h-4 w-4" />}
-            Opslaan
+            Verstuur reset link
           </Button>
         </form>
-      </Form>
-    </MaxWidthWrapper>
+      </CardContent>
+    </Form>
   );
 };
 
