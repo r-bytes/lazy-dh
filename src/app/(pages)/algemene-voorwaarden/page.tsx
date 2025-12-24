@@ -37,49 +37,82 @@ const TermsAndConditionsPage = () => {
 
         <h2 className="mt-5 text-xl font-semibold">1. Producten en Diensten</h2>
         <p>
-          Wij bieden via onze website diverse alcoholische dranken aan. Alle producten zijn onderhevig aan beschikbaarheid en kunnen worden
-          gewijzigd.
+          Wij bieden via onze website diverse alcoholische dranken aan. Alle producten zijn onderhevig aan beschikbaarheid. Wij behouden ons het recht voor om producten te wijzigen of uit het assortiment te verwijderen zonder voorafgaande kennisgeving.
         </p>
 
         <h2 className="mt-5 text-xl font-semibold">2. Leeftijdsrestrictie</h2>
         <p>
-          Je moet minimaal 18 jaar oud zijn om alcoholische dranken bij ons te bestellen. Door een bestelling te plaatsen, bevestig je dat je aan
-          deze leeftijdseis voldoet.
+          Je moet minimaal 18 jaar oud zijn om alcoholische dranken bij ons te bestellen. Door een bestelling te plaatsen, bevestig je dat je aan deze leeftijdseis voldoet. Bij afhaling of levering kunnen wij om identificatie vragen om je leeftijd te verifiëren.
         </p>
 
         <h2 className="mt-5 text-xl font-semibold">3. Bestelproces en Minimale Bestelwaarde</h2>
         <p>
-          Na het plaatsen van je bestelling ontvang je een bevestiging per e-mail met de details van je bestelling. De bestelling kan vervolgens
-          opgehaald worden.
+          Na het plaatsen van je bestelling ontvang je een bevestiging per e-mail met de details van je bestelling. De bestelling kan vervolgens opgehaald worden.
         </p>
         <p className="mt-2">
           <strong>Minimale bestelwaarde:</strong> Wij leveren alleen bestellingen met een minimale waarde van <strong>€ 1.200,00 excl. BTW</strong>. 
-          Bestellingen onder dit bedrag worden niet geleverd. Bezorgkosten worden op de factuur berekend. Voor bestellingen onder € 1.200,00 excl. BTW 
-          zie de tabel voor de vrachtkosten. Bij toevoegingen aan bestaande orders worden geen vrachtkosten toegevoegd.
+          Bestellingen onder dit bedrag kunnen niet worden geplaatst.
         </p>
 
         <h2 className="mt-5 text-xl font-semibold">4. Prijzen en Betaling</h2>
-        <p>Alle prijzen op onze website zijn exclusief BTW. Betaling geschiedt veilig via de door ons aangeboden betaalmethoden op de website. Op dit moment alleen vooraf overmaken of bij het afhalen. </p>
-
-        <h2 className="mt-5 text-xl font-semibold">5. Annulering en Retourbeleid</h2>
         <p>
-          Je hebt het recht je bestelling tot 14 dagen na ontvangst te retourneren mits deze onaangebroken zijn.
+          Alle prijzen op onze website zijn exclusief BTW. Betaling geschiedt vooraf via overboeking of bij het afhalen. 
+          Wij behouden ons het recht voor om prijzen te wijzigen zonder voorafgaande kennisgeving, hoewel wijzigingen geen invloed hebben op reeds geplaatste bestellingen.
         </p>
 
-        <h2 className="mt-5 text-xl font-semibold">6. Aansprakelijkheid</h2>
-        <p>Wij zijn niet aansprakelijk voor schade die ontstaat door verkeerd gebruik van de gekochte producten.</p>
-
-        <h2 className="mt-5 text-xl font-semibold">7. Intellectueel Eigendom</h2>
+        <h2 className="mt-5 text-xl font-semibold">5. Herroepingsrecht en Retourbeleid</h2>
         <p>
-          De inhoud van onze website, inclusief teksten, grafieken, logos, en beeldmateriaal, is eigendom van {storeName} en is beschermd door
-          intellectueel eigendomsrecht.
+          Volgens de Nederlandse wetgeving heb je als consument het recht om een koop op afstand binnen 14 dagen na ontvangst van het product te herroepen (herroepingsrecht).
+        </p>
+        <p className="mt-2">
+          <strong>Uitzondering voor alcoholische dranken:</strong> Het herroepingsrecht geldt <strong>niet</strong> voor alcoholische dranken waarvan de verzegeling is verbroken of die zijn geopend. 
+          Ongeopende en verzegelde producten kunnen binnen 14 dagen na ontvangst worden geretourneerd, mits ze in originele staat en verpakking zijn.
+        </p>
+        <p className="mt-2">
+          Voor het uitoefenen van je herroepingsrecht, neem contact met ons op via {process.env.COMPANY_EMAIL}. 
+          De retourkosten zijn voor eigen rekening, tenzij het product beschadigd of verkeerd is geleverd.
         </p>
 
-        <h2 className="mt-5 text-xl font-semibold">8. Wijzigingen in de Voorwaarden</h2>
-        <p>Deze voorwaarden kunnen van tijd tot tijd worden aangepast. Wij raden je aan deze regelmatig te raadplegen.</p>
+        <h2 className="mt-5 text-xl font-semibold">6. Beschadigde of Verkeerde Leveringen</h2>
+        <p>
+          Als je een beschadigd of verkeerd product ontvangt, dien je dit binnen 48 uur na ontvangst te melden via {process.env.COMPANY_EMAIL}. 
+          Wij zullen het probleem zo spoedig mogelijk oplossen door middel van vervanging of volledige terugbetaling.
+        </p>
 
-        <h2 className="mt-5 text-xl font-semibold">9. Contact</h2>
-        <p>Voor vragen over deze voorwaarden kun je contact met ons opnemen via {process.env.COMPANY_EMAIL}.</p>
+        <h2 className="mt-5 text-xl font-semibold">7. Statiegeld</h2>
+        <p>
+          Op bepaalde verpakkingen (zoals plastic flessen en blikjes) kan statiegeld van toepassing zijn. 
+          Het statiegeld wordt op de factuur vermeld en kan worden terugbetaald bij het retourneren van de lege verpakkingen in goede staat.
+        </p>
+
+        <h2 className="mt-5 text-xl font-semibold">8. Aansprakelijkheid</h2>
+        <p>
+          Wij zijn aansprakelijk voor schade die direct het gevolg is van een tekortkoming in de nakoming van onze verplichtingen, voor zover deze schade redelijkerwijs voorzienbaar was. 
+          Wij zijn niet aansprakelijk voor schade die ontstaat door verkeerd gebruik van de gekochte producten of schade die het gevolg is van omstandigheden buiten onze redelijke controle.
+        </p>
+
+        <h2 className="mt-5 text-xl font-semibold">9. Intellectueel Eigendom</h2>
+        <p>
+          De inhoud van onze website, inclusief teksten, grafieken, logos, en beeldmateriaal, is eigendom van {storeName} en is beschermd door intellectueel eigendomsrecht. 
+          Zonder voorafgaande schriftelijke toestemming is het niet toegestaan om deze content te kopiëren, te reproduceren of te gebruiken.
+        </p>
+
+        <h2 className="mt-5 text-xl font-semibold">10. Wijzigingen in de Voorwaarden</h2>
+        <p>
+          Deze voorwaarden kunnen van tijd tot tijd worden aangepast. Wijzigingen treden in werking na publicatie op deze pagina. 
+          Wij raden je aan deze regelmatig te raadplegen. Bestellingen die zijn geplaatst vóór een wijziging vallen onder de voorwaarden die op dat moment van kracht waren.
+        </p>
+
+        <h2 className="mt-5 text-xl font-semibold">11. Toepasselijk Recht en Geschillen</h2>
+        <p>
+          Op deze voorwaarden en alle overeenkomsten tussen jou en {storeName} is Nederlands recht van toepassing. 
+          Geschillen zullen worden voorgelegd aan de bevoegde rechter in Nederland.
+        </p>
+
+        <h2 className="mt-5 text-xl font-semibold">12. Contact</h2>
+        <p>
+          Voor vragen over deze voorwaarden of klachten kun je contact met ons opnemen via {process.env.COMPANY_EMAIL}.
+        </p>
       </section>
         </div>
       </Section>
