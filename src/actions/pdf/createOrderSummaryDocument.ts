@@ -84,10 +84,14 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
   // Calculate total
   let totalExVAT = 0;
   orderItemsData.forEach((item: Product) => {
+    // If tray is true (Lavish products): price in DB is per tray, so price per doos = item.price (not multiplied)
     // If quantityInBox > 1: sell per DOOS, so price = (price per fles * quantityInBox) * quantity (dozen)
     // Otherwise: per box, so multiply by quantityInBox (or 1 if not set)
     let totalPrice: number;
-    if (item.quantityInBox > 1) {
+    if (item.tray) {
+      // Lavish: price per doos = item.price (already per tray), then multiply by quantity (dozen)
+      totalPrice = item.price * item.quantity;
+    } else if (item.quantityInBox > 1) {
       // Sell per doos: price per doos = item.price * item.quantityInBox, then multiply by quantity (dozen)
       const pricePerDoos = item.price * item.quantityInBox;
       totalPrice = pricePerDoos * item.quantity;
@@ -377,11 +381,16 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
       currentY = drawHeader(currentPage, pageNumber, totalPages);
     }
 
+    // If tray is true (Lavish products): price in DB is per tray, so price per doos = item.price (not multiplied)
     // If quantityInBox > 1: sell per DOOS, so price = (price per fles * quantityInBox) * quantity (dozen)
     // Otherwise: per box, so multiply by quantityInBox (or 1 if not set)
     let totalPrice: number;
     let pricePerPiece: number;
-    if (item.quantityInBox > 1) {
+    if (item.tray) {
+      // Lavish: price per doos = item.price (already per tray), then multiply by quantity (dozen)
+      totalPrice = item.price * item.quantity;
+      pricePerPiece = item.price; // Show price per tray/doos in PDF
+    } else if (item.quantityInBox > 1) {
       // Sell per doos: price per doos = item.price * item.quantityInBox, then multiply by quantity (dozen)
       const pricePerDoos = item.price * item.quantityInBox;
       totalPrice = pricePerDoos * item.quantity;

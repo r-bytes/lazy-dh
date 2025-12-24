@@ -18,9 +18,19 @@ const Checkout = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
+  // Calculate statiegeld (deposit) for tray products
+  const totalStatiegeld = cartItems.reduce((sum, item) => {
+    if (item.tray && item.statiegeld && item.quantityInBox) {
+      // Statiegeld per doos = statiegeld per stuk * quantityInBox
+      const statiegeldPerDoos = item.statiegeld * item.quantityInBox;
+      return sum + (statiegeldPerDoos * item.quantity);
+    }
+    return sum;
+  }, 0);
+
   // Calculate VAT at 21%
   const VAT = totalPrice * 0.21;
-  const totalPriceWithVAT = totalPrice + VAT;
+  const totalPriceWithVAT = totalPrice + VAT + totalStatiegeld;
 
   // Check if current user is admin
   const isAdmin = session?.user?.email && authorizedEmails.includes(session.user.email);
@@ -170,6 +180,12 @@ const Checkout = () => {
         <h3> BTW (21%): </h3>
         <h3 className="mr-2 tracking-wide"> € {formatNumberWithCommaDecimalSeparator(VAT)} </h3>
       </div>
+      {totalStatiegeld > 0 && (
+        <div className="mb-8 flex justify-between text-muted-foreground">
+          <h3> Statiegeld: </h3>
+          <h3 className="mr-2 tracking-wide"> € {formatNumberWithCommaDecimalSeparator(totalStatiegeld)} </h3>
+        </div>
+      )}
       <div className="flex justify-between text-muted-foreground">
         <h3> Totaalbedrag incl. BTW: </h3>
         <h3 className="mr-2 tracking-wide"> € {formatNumberWithCommaDecimalSeparator(totalPriceWithVAT)} </h3>

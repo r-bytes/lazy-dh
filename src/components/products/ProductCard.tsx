@@ -67,6 +67,7 @@ export function ProductCard({
   const titleSize = variant === "compact" ? "text-base sm:text-lg" : "text-lg sm:text-xl";
   const priceSize = variant === "compact" ? "text-lg sm:text-xl" : "text-xl sm:text-2xl";
 
+  console.log("------------------ prod", product);
   return (
     <>
       <Card
@@ -140,6 +141,16 @@ export function ProductCard({
                     </span>
                   </div>
                   {(() => {
+                    // If tray is true (Lavish products): show price per stuk (product.price / quantityInBox)
+                    if (product.tray && product.quantityInBox > 1 && product.volume) {
+                      const pricePerStuk = product.price / product.quantityInBox;
+                      return (
+                        <span className="text-[10px] font-normal text-muted-foreground sm:text-xs min-w-64 mt-3">
+                          € {formatNumberWithCommaDecimalSeparator(pricePerStuk)} per stuk ({product.quantityInBox} stuks × {product.volume})
+                        </span>
+                      );
+                    }
+                    
                     const isAndersProduct = product.land === "Anders" || !product.land;
                     if (isAndersProduct && product.volume) {
                       if (product.quantityInBox > 1) {

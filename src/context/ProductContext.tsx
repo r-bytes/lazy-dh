@@ -40,6 +40,16 @@ export const ProductProvider = ({ children, type }: { children: React.ReactNode;
       const fetchedCategories = await fetchCategories();
 
       if (fetchedProducts) {
+        // Log to verify fields are present
+        if (fetchedProducts.length > 0) {
+          console.log('ProductContext - Sample product:', {
+            _id: fetchedProducts[0]._id,
+            name: fetchedProducts[0].name,
+            tray: fetchedProducts[0].tray,
+            statiegeld: fetchedProducts[0].statiegeld,
+            fullProduct: fetchedProducts[0]
+          });
+        }
         setProductState(fetchedProducts);
       }
 

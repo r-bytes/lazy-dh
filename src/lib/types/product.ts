@@ -16,6 +16,8 @@ export interface Product extends SanityDocument {
   quantityInBox: number;
   quantity: number;
   productId: number;
+  statiegeld?: number;
+  tray?: boolean;
 }
 
 export interface Image {

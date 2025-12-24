@@ -78,9 +78,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     let recalculatedTotal = 0;
     let recalculatedQuantities = 0;
     cartItems.forEach((item) => {
-      // If quantityInBox > 1: sell per DOOS, so price = (price per fles * quantityInBox) * quantity (dozen)
-      // Otherwise: per piece, so multiply by quantityInBox if it exists
-      if (item.quantityInBox > 1) {
+      // If tray is true (Lavish products): price in DB is per tray, so price per doos = item.price (not multiplied)
+      if (item.tray) {
+        // Sell per doos: price per doos = item.price (already per tray), then multiply by quantity (dozen)
+        recalculatedTotal += item.price * item.quantity;
+      } else if (item.quantityInBox > 1) {
         // Sell per doos: price per doos = item.price * item.quantityInBox, then multiply by quantity (dozen)
         const pricePerDoos = item.price * item.quantityInBox;
         recalculatedTotal += pricePerDoos * item.quantity;

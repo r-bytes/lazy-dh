@@ -182,5 +182,18 @@ export default defineType({
       readOnly: true,
       hidden: true,
     }),
+    defineField({
+      name: 'statiegeld',
+      title: 'Statiegeld',
+      description: 'Statiegeld per item',
+      type: 'number',
+    }),
+    defineField({
+      name: 'tray',
+      title: 'Tray',
+      description: 'Tray indicator',
+      type: 'boolean',
+      hidden: true,
+    }),
   ],
 })

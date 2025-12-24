@@ -78,10 +78,14 @@ const ShoppingCart = () => {
 
                     <div className="flex w-full flex-col items-end justify-end space-y-2 sm:w-auto sm:px-2">
                       {(() => {
+                        // If tray is true (Lavish products): price in DB is per tray, so price per doos = item.price (not multiplied)
                         // If quantityInBox > 1: sell per DOOS, so price = (price per fles * quantityInBox) * quantity (dozen)
                         // Otherwise: per piece (quantityInBox is 1 or not set), so multiply by quantityInBox if it exists
                         let totalPrice: number;
-                        if (item.quantityInBox > 1) {
+                        if (item.tray) {
+                          // Lavish: price per doos = item.price (already per tray), then multiply by quantity (dozen)
+                          totalPrice = item.price * item.quantity;
+                        } else if (item.quantityInBox > 1) {
                           // Sell per doos: price per doos = item.price * item.quantityInBox, then multiply by quantity (dozen)
                           const pricePerDoos = item.price * item.quantityInBox;
                           totalPrice = pricePerDoos * item.quantity;
@@ -95,8 +99,11 @@ const ShoppingCart = () => {
                           <>
                             <h4 className="text-2xl font-semibold tracking-wide sm:text-3xl">
                               {(() => {
-                                // If quantityInBox > 1: show price per DOOS in large text
-                                if (item.quantityInBox > 1) {
+                                // If tray is true: show price per doos (item.price is already per tray)
+                                if (item.tray) {
+                                  return `€ ${formatNumberWithCommaDecimalSeparator(item.price)}`;
+                                } else if (item.quantityInBox > 1) {
+                                  // If quantityInBox > 1: show price per DOOS in large text
                                   const pricePerDoos = item.price * item.quantityInBox;
                                   return `€ ${formatNumberWithCommaDecimalSeparator(pricePerDoos)}`;
                                 } else {
@@ -106,8 +113,11 @@ const ShoppingCart = () => {
                             </h4>
                             <h4 className="text-right text-xs font-light text-text-secondary">
                               {(() => {
-                                // If quantityInBox exists (> 1): show price per fles in small text
-                                if (item.quantityInBox > 1) {
+                                // If tray is true (Lavish): show price per tray info
+                                if (item.tray) {
+                                  return `€ ${formatNumberWithCommaDecimalSeparator(item.price)} per tray`;
+                                } else if (item.quantityInBox > 1) {
+                                  // If quantityInBox exists (> 1): show price per fles in small text
                                   const pricePerFles = item.price; // item.price is already per fles
                                   return `€ ${formatNumberWithCommaDecimalSeparator(pricePerFles)} per fles`;
                                 } 

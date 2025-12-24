@@ -77,18 +77,30 @@ export function ProductDialog({ product, open, onOpenChange, onRemoveFavorite }:
           </span>
         </div>
         {(() => {
+          // If tray is true (Lavish products): show price per stuk (product.price / quantityInBox)
+          if (product.tray && product.quantityInBox > 1 && product.volume) {
+            const pricePerStuk = product.price / product.quantityInBox;
+            return (
+              <div className="flex justify-end pt-1">
+                <span className="text-xs font-normal text-muted-foreground">
+                  (€ {formatNumberWithCommaDecimalSeparator(pricePerStuk)} per stuk – {product.quantityInBox} stuks × {product.volume})
+                </span>
+              </div>
+            );
+          }
+          
           const isAndersProduct = product.land === "Anders" || !product.land;
-            if (isAndersProduct && product.volume) {
-              if (product.quantityInBox > 1) {
-                // quantityInBox > 1: show price per box and quantity info
-                return (
-                  <div className="flex justify-end pt-1">
-                    <span className="text-xs font-normal text-muted-foreground">
-                      (€ {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} per doos – {product.quantityInBox} stuks × {product.volume})
-                    </span>
-                  </div>
-                );
-              } else {
+          if (isAndersProduct && product.volume) {
+            if (product.quantityInBox > 1) {
+              // quantityInBox > 1: show price per box and quantity info
+              return (
+                <div className="flex justify-end pt-1">
+                  <span className="text-xs font-normal text-muted-foreground">
+                    (€ {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} per doos – {product.quantityInBox} stuks × {product.volume})
+                  </span>
+                </div>
+              );
+            } else {
               // quantityInBox === 1, calculate based on volume to show how many are in a box
               const calculatedQty = calculateQuantityInBoxFromVolume(product.volume);
               return (
