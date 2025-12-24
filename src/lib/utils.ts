@@ -85,6 +85,36 @@ export function debounce<T extends (...args: any[]) => void>(func: T, wait: numb
  * - 70cl-100cl -> 6 in doos
  * - 150cl-175cl -> 6 in doos (same as 70cl-100cl)
  */
+/**
+ * Convert volume string (e.g., "75cl", "0.7L") or number to liters (as number)
+ */
+export function parseVolumeToLiters(volume: string | number | undefined): number | undefined {
+  if (!volume) return undefined;
+  
+  // Handle string format (e.g., "75cl", "70cl", "0.7L")
+  if (typeof volume === 'string') {
+    // Extract number from volume string (e.g., "75cl" -> 75)
+    const match = volume.match(/(\d+(?:\.\d+)?)/);
+    if (!match) return undefined;
+    
+    const value = parseFloat(match[1]);
+    if (!Number.isFinite(value) || value <= 0) return undefined;
+    
+    // Check if it's in cl (centiliters) or L (liters)
+    if (volume.toLowerCase().includes('l') && !volume.toLowerCase().includes('cl')) {
+      // It's already in liters (e.g., "0.7L", "1.0L")
+      return value;
+    } else {
+      // Assume it's in cl (centiliters) and convert to liters
+      return value / 100;
+    }
+  } else {
+    // Already a number, assume it's in liters
+    if (!Number.isFinite(volume) || volume <= 0) return undefined;
+    return volume;
+  }
+}
+
 export function calculateQuantityInBoxFromVolume(volume: string | number | undefined): number {
   if (!volume) return 6; // Default fallback
   

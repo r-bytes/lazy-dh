@@ -120,11 +120,12 @@ async function publishDraft(draftId: string): Promise<PublishResult> {
         .commit()
     } else {
       // Create new published document
+      // Exclude _rev when creating a new document
+      const { _rev, ...draftWithoutRev } = draft
       const publishedDoc = {
-        ...draft,
+        ...draftWithoutRev,
         _id: publishedId,
       }
-      delete publishedDoc._rev
       await client.create(publishedDoc)
     }
 

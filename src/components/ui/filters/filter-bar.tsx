@@ -119,6 +119,22 @@ export function FilterBar({
   const volumeRange = useMemo(() => {
     const volumes = products
       .map((p) => p.volume)
+      .map((v) => {
+        if (typeof v === 'string') {
+          // Parse string volume (e.g., "75cl", "0.7L") to liters
+          const match = v.match(/(\d+(?:\.\d+)?)/);
+          if (!match) return undefined;
+          const value = parseFloat(match[1]);
+          if (!Number.isFinite(value) || value <= 0) return undefined;
+          // Check if it's in cl or L
+          if (v.toLowerCase().includes('l') && !v.toLowerCase().includes('cl')) {
+            return value; // Already in liters
+          } else {
+            return value / 100; // Convert cl to liters
+          }
+        }
+        return v; // Already a number (assumed to be in liters)
+      })
       .filter((v): v is number => v !== undefined);
     if (volumes.length === 0) return { min: 0, max: 1000 };
     return {
@@ -130,6 +146,17 @@ export function FilterBar({
   const percentageRange = useMemo(() => {
     const percentages = products
       .map((p) => p.percentage)
+      .map((p) => {
+        if (typeof p === 'string') {
+          // Parse string percentage (e.g., "40%", "12.5%") to number
+          const match = p.match(/(\d+(?:\.\d+)?)/);
+          if (!match) return undefined;
+          const value = parseFloat(match[1]);
+          if (!Number.isFinite(value) || value <= 0) return undefined;
+          return value;
+        }
+        return p; // Already a number
+      })
       .filter((p): p is number => p !== undefined);
     if (percentages.length === 0) return { min: 0, max: 100 };
     return {
@@ -167,7 +194,25 @@ export function FilterBar({
   const handleVolumeRangeChange = (range: PriceRange) => {
     // Convert volume range to volume array filter
     const volumes = products
-      .filter((p) => p.volume && p.volume >= range.min && p.volume <= range.max)
+      .filter((p) => {
+        if (!p.volume) return false;
+        // Parse volume string to liters for comparison
+        let volumeInLiters: number | undefined;
+        if (typeof p.volume === 'string') {
+          const match = p.volume.match(/(\d+(?:\.\d+)?)/);
+          if (!match) return false;
+          const value = parseFloat(match[1]);
+          if (!Number.isFinite(value) || value <= 0) return false;
+          if (p.volume.toLowerCase().includes('l') && !p.volume.toLowerCase().includes('cl')) {
+            volumeInLiters = value;
+          } else {
+            volumeInLiters = value / 100;
+          }
+        } else {
+          volumeInLiters = p.volume;
+        }
+        return volumeInLiters >= range.min && volumeInLiters <= range.max;
+      })
       .map((p) => String(p.volume!))
       .filter((v, i, arr) => arr.indexOf(v) === i);
     updateFilters({ volumes });
@@ -176,7 +221,21 @@ export function FilterBar({
   const handlePercentageRangeChange = (range: PriceRange) => {
     // Convert percentage range to percentage array filter
     const percentages = products
-      .filter((p) => p.percentage && p.percentage >= range.min && p.percentage <= range.max)
+      .filter((p) => {
+        if (!p.percentage) return false;
+        // Parse percentage string to number for comparison
+        let percentageValue: number | undefined;
+        if (typeof p.percentage === 'string') {
+          const match = p.percentage.match(/(\d+(?:\.\d+)?)/);
+          if (!match) return false;
+          const value = parseFloat(match[1]);
+          if (!Number.isFinite(value) || value <= 0) return false;
+          percentageValue = value;
+        } else {
+          percentageValue = p.percentage;
+        }
+        return percentageValue >= range.min && percentageValue <= range.max;
+      })
       .map((p) => String(p.percentage!))
       .filter((p, i, arr) => arr.indexOf(p) === i);
     updateFilters({ percentages });

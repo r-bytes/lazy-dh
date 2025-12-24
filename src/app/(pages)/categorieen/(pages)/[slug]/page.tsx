@@ -76,7 +76,7 @@ export default async function Page({ params: { slug } }: Props) {
     // Debug: log filtering results
     console.log(`[Category Page] Slug: ${slug}, Total products: ${products.length}, Filtered: ${initialProducts.length}`);
     if (initialProducts.length === 0 && products.length > 0) {
-      const categories = [...new Set(products.map(p => p.category).filter(Boolean))];
+      const categories = Array.from(new Set(products.map(p => p.category).filter(Boolean)));
       console.log(`[Category Page] Available categories: ${categories.join(', ')}`);
     }
   }
