@@ -78,23 +78,24 @@ const ShoppingCart = () => {
 
                     <div className="flex w-full flex-col items-end justify-end space-y-2 sm:w-auto sm:px-2">
                       {(() => {
+                        // If quantityInBox > 1: always per box, so multiply by quantityInBox
+                        // Otherwise: per piece (quantityInBox is 1 or not set)
+                        const priceMultiplier = item.quantityInBox > 1 ? item.quantityInBox : 1;
+                        const totalPrice = item.price * item.quantity * priceMultiplier;
+                        const isSoldPerBox = item.quantityInBox > 1;
                         const isAndersProduct = item.land === "Anders" || !item.land;
-                        // For Anders products with quantityInBox > 1: price in DB is per box, but we sell per piece
-                        // So price per piece = price per box / quantityInBox
-                        const pricePerUnit = isAndersProduct && item.quantityInBox > 1 
-                          ? item.price / item.quantityInBox 
-                          : item.price;
-                        const totalPrice = pricePerUnit * item.quantity;
                         
                         return (
                           <>
                             <h4 className="text-2xl font-semibold tracking-wide sm:text-3xl">€ {formatNumberWithCommaDecimalSeparator(totalPrice)}</h4>
                             <h4 className="text-right text-xs font-light text-text-secondary">
                               {(() => {
-                                if (isAndersProduct && item.quantityInBox > 1) {
-                                  return `€ ${formatNumberWithCommaDecimalSeparator(pricePerUnit)} per fles`;
-                                } else {
+                                if (isSoldPerBox) {
                                   return `€ ${formatNumberWithCommaDecimalSeparator(item.price * item.quantityInBox)} per doos`;
+                                } else if (isAndersProduct) {
+                                  return `€ ${formatNumberWithCommaDecimalSeparator(item.price)} per fles`;
+                                } else {
+                                  return `€ ${formatNumberWithCommaDecimalSeparator(item.price)} per doos`;
                                 }
                               })()}
                             </h4>

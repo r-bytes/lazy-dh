@@ -133,53 +133,41 @@ export function ProductCard({
             {session?.user ? (
               <>
                 <div className="flex flex-col max-w-28">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-xs font-semibold text-muted-foreground">€</span>
+                    <span className={cn("font-bold tracking-tight", priceSize)}>
+                      {formatNumberWithCommaDecimalSeparator(product.price)}
+                    </span>
+                  </div>
                   {(() => {
                     const isAndersProduct = product.land === "Anders" || !product.land;
-                    // For Anders products with quantityInBox > 1: price in DB is per box, but we sell per piece
-                    // So price per piece = price per box / quantityInBox
-                    const pricePerUnit = isAndersProduct && product.quantityInBox > 1 
-                      ? product.price / product.quantityInBox 
-                      : product.price;
-                    
-                    return (
-                      <>
-                        <div className="flex items-baseline gap-1">
-                          <span className="text-xs font-semibold text-muted-foreground">€</span>
-                          <span className={cn("font-bold tracking-tight", priceSize)}>
-                            {formatNumberWithCommaDecimalSeparator(pricePerUnit)}
+                    if (isAndersProduct && product.volume) {
+                      if (product.quantityInBox > 1) {
+                        // quantityInBox > 1: show price per box and quantity info
+                        return (
+                          <span className="text-[10px] font-normal text-muted-foreground sm:text-xs min-w-64 mt-3">
+                            € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} per doos ({product.quantityInBox} stuks × {product.volume})
                           </span>
-                        </div>
-                        {(() => {
-                          if (isAndersProduct && product.volume) {
-                            if (product.quantityInBox > 1) {
-                              // quantityInBox > 1: show price per box and quantity info
-                              return (
-                                <span className="text-[10px] font-normal text-muted-foreground sm:text-xs min-w-64 mt-3">
-                                  € {formatNumberWithCommaDecimalSeparator(product.price)} per doos ({product.quantityInBox} stuks × {product.volume})
-                                </span>
-                              );
-                            } else {
-                              // quantityInBox === 1, calculate based on volume to show how many are in a box
-                              const calculatedQty = calculateQuantityInBoxFromVolume(product.volume);
-                              return (
-                                <span className="text-[10px] font-normal text-muted-foreground sm:text-xs min-w-64 mt-3">
-                                  € {formatNumberWithCommaDecimalSeparator(product.price * calculatedQty)} per doos ({calculatedQty} stuks × {product.volume})
-                                </span>
-                              );
-                            }
-                          }
-                          // For other products (with specific land), price is per box if quantityInBox > 1
-                          if (product.quantityInBox > 1) {
-                            return (
-                              <span className="text-[10px] font-normal text-muted-foreground sm:text-xs min-w-64 mt-3">
-                                € {formatNumberWithCommaDecimalSeparator(product.price)} per doos ({product.quantityInBox} stuks × {product.volume})
-                              </span>
-                            );
-                          }
-                          return null;
-                        })()}
-                      </>
-                    );
+                        );
+                      } else {
+                        // quantityInBox === 1, calculate based on volume to show how many are in a box
+                        const calculatedQty = calculateQuantityInBoxFromVolume(product.volume);
+                        return (
+                          <span className="text-[10px] font-normal text-muted-foreground sm:text-xs min-w-64 mt-3">
+                            € {formatNumberWithCommaDecimalSeparator(product.price * calculatedQty)} per doos ({calculatedQty} stuks × {product.volume})
+                          </span>
+                        );
+                      }
+                    }
+                    // For other products (with specific land), price is per box if quantityInBox > 1
+                    if (product.quantityInBox > 1) {
+                      return (
+                        <span className="text-[10px] font-normal text-muted-foreground sm:text-xs min-w-64 mt-3">
+                          € {formatNumberWithCommaDecimalSeparator(product.price)} per doos ({product.quantityInBox} stuks × {product.volume})
+                        </span>
+                      );
+                    }
+                    return null;
                   })()}
                 </div>
                 <Button

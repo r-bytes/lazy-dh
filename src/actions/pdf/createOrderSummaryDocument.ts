@@ -84,21 +84,10 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
   // Calculate total
   let totalExVAT = 0;
   orderItemsData.forEach((item: Product) => {
-    const isAndersProduct = item.land === "Anders" || !item.land;
-    let totalPrice: number;
-    
-    if (isAndersProduct && item.quantityInBox > 1) {
-      // Price in DB is per box, but we sell per piece
-      const pricePerPiece = item.price / item.quantityInBox;
-      totalPrice = pricePerPiece * item.quantity;
-    } else if (isAndersProduct) {
-      // quantityInBox === 1, price is already per piece
-      totalPrice = item.price * item.quantity;
-    } else {
-      // Other products: price is per box
-      totalPrice = item.price * item.quantity * item.quantityInBox;
-    }
-    
+    // If quantityInBox > 1: always per box, so multiply by quantityInBox
+    // Otherwise: per piece (quantityInBox is 1 or not set)
+    const priceMultiplier = item.quantityInBox > 1 ? item.quantityInBox : 1;
+    const totalPrice = item.price * item.quantity * priceMultiplier;
     totalExVAT += totalPrice;
   });
 
@@ -381,23 +370,12 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
       currentY = drawHeader(currentPage, pageNumber, totalPages);
     }
 
-    const isAndersProduct = item.land === "Anders" || !item.land;
-    let pricePerPiece: number;
-    let totalPrice: number;
-    
-    if (isAndersProduct && item.quantityInBox > 1) {
-      // Price in DB is per box, but we sell per piece
-      pricePerPiece = item.price / item.quantityInBox;
-      totalPrice = pricePerPiece * item.quantity;
-    } else if (isAndersProduct) {
-      // quantityInBox === 1, price is already per piece
-      pricePerPiece = item.price;
-      totalPrice = pricePerPiece * item.quantity;
-    } else {
-      // Other products: price is per box
-      pricePerPiece = item.price * item.quantityInBox;
-      totalPrice = pricePerPiece * item.quantity;
-    }
+    // If quantityInBox > 1: always per box, so multiply by quantityInBox
+    // Otherwise: per piece (quantityInBox is 1 or not set)
+    const priceMultiplier = item.quantityInBox > 1 ? item.quantityInBox : 1;
+    const isSoldPerBox = item.quantityInBox > 1;
+    const pricePerPiece = isSoldPerBox ? item.price * item.quantityInBox : item.price;
+    const totalPrice = item.price * item.quantity * priceMultiplier;
 
     const rowData = [
       item.quantity.toString(),
