@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useCart } from "@/hooks/useCart";
 import { useFavorite } from "@/hooks/useFavorite";
 import { Product } from "@/lib/types/product";
-import { cn, formatNumberWithCommaDecimalSeparator } from "@/lib/utils";
+import { calculateQuantityInBoxFromVolume, cn, formatNumberWithCommaDecimalSeparator } from "@/lib/utils";
 import { Heart, ShoppingCart } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -53,6 +53,9 @@ export function ProductCard({
 
   const handleAddToCartClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    if (!product.inStock) {
+      return;
+    }
     if (session?.user) {
       addToCart(1);
     } else {
@@ -103,7 +106,8 @@ export function ProductCard({
           <Image
             className={cn(
               "h-full w-full object-contain transition-transform duration-500",
-              isHovered && "scale-110"
+              isHovered && "scale-110",
+              !product.inStock && "grayscale"
             )}
             src={productImage}
             alt={product.name}
@@ -135,19 +139,42 @@ export function ProductCard({
                       {formatNumberWithCommaDecimalSeparator(product.price)}
                     </span>
                   </div>
-                  {product.quantityInBox > 1 && (
-                    <span className="text-[10px] font-normal text-muted-foreground sm:text-xs min-w-64 mt-3">
-                      € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} per doos ({product.quantityInBox} stuks × {product.volume})
-                    </span>
-                  )}
+                  {(() => {
+                    const isAndersProduct = product.land === "Anders" || !product.land;
+                    // For "Anders" or empty land products: show calculated quantity based on volume
+                    if (isAndersProduct && product.volume) {
+                      const calculatedQty = calculateQuantityInBoxFromVolume(product.volume);
+                      // Always show, even if quantityInBox === 1 (shows how many are in a box)
+                      return (
+                        <span className="text-[10px] font-normal text-muted-foreground sm:text-xs min-w-64 mt-3">
+                          € {formatNumberWithCommaDecimalSeparator(product.price * calculatedQty)} per doos ({calculatedQty} stuks × {product.volume})
+                        </span>
+                      );
+                    }
+                    // For other products (with specific land), show if quantityInBox >= 1
+                    if (product.quantityInBox >= 1) {
+                      return (
+                        <span className="text-[10px] font-normal text-muted-foreground sm:text-xs min-w-64 mt-3">
+                          € {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} per doos ({product.quantityInBox} stuks × {product.volume})
+                        </span>
+                      );
+                    }
+                    return null;
+                  })()}
                 </div>
                 <Button
                   size="sm"
                   onClick={handleAddToCartClick}
-                  className="h-8 w-full rounded-full bg-accent-yellow px-3 text-xs text-text-primary shadow-sm transition-all hover:scale-105 hover:bg-accent-yellow-dark dark:text-black sm:h-9 sm:w-auto sm:px-4"
+                  disabled={!product.inStock}
+                  className={cn(
+                    "h-8 w-full rounded-full px-3 text-xs text-text-primary shadow-sm transition-all sm:h-9 sm:w-auto sm:px-4",
+                    product.inStock
+                      ? "bg-accent-yellow hover:scale-105 hover:bg-accent-yellow-dark dark:text-black"
+                      : "bg-gray-400 cursor-not-allowed opacity-50 dark:text-gray-300"
+                  )}
                 >
                   <ShoppingCart className="mr-1.5 h-3.5 w-3.5 sm:mr-2 sm:h-4 sm:w-4" />
-                  <span className="text-xs">Toevoegen</span>
+                  <span className="text-xs">{product.inStock ? "Toevoegen" : "Niet op voorraad"}</span>
                 </Button>
               </>
             ) : (

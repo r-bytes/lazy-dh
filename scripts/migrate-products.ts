@@ -52,7 +52,7 @@ const IMAGES_BASE_DIR = path.join(__dirname, '../scripts/nieuwe-producten-engine
 // Test mode: set to number to limit imports (e.g., 1 for testing)
 // Set via environment: TEST_MODE=1 tsx scripts/migrate-products.ts
 // Or uncomment and set directly:
-const TEST_MODE_LIMIT = process.env.TEST_MODE ? parseInt(process.env.TEST_MODE, 10) : 1 // Set to null for full migration
+const TEST_MODE_LIMIT = process.env.TEST_MODE ? parseInt(process.env.TEST_MODE, 10) : null // Set to null for full migration
 
 // Sanity configuration
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'rx2p8wni'
@@ -100,6 +100,7 @@ interface ProductData {
   percentage: string // e.g., "40%"
   price: number
   category: string
+  land: string
   description?: string
   inStock: boolean
   inSale: boolean
@@ -150,6 +151,28 @@ function convertVolume(volumeStr: string): string {
 }
 
 /**
+ * Calculate quantityInBox based on volume
+ * 0.20 -> 24, 0.35 -> 12, 0.5 -> 12, 0.7 -> 6, 1.0 -> 6
+ */
+function calculateQuantityInBox(volumeStr: string): number {
+  const volume = parseFloat(volumeStr)
+  if (!Number.isFinite(volume) || volume <= 0) {
+    throw new Error(`Invalid volume: ${volumeStr}`)
+  }
+  
+  if (volume === 0.20) {
+    return 24
+  } else if (volume === 0.35 || volume === 0.5) {
+    return 12
+  } else if (volume === 0.7 || volume === 1.0) {
+    return 6
+  } else {
+    // Default fallback
+    return 6
+  }
+}
+
+/**
  * Convert percentage from number (e.g., 40) to string format (e.g., "40%")
  */
 function convertPercentage(percentageStr: string): string {
@@ -193,12 +216,9 @@ function parseRow(row: CSVRow, index: number): ProductData {
   try {
     const volume = convertVolume(row.volume)
     const percentage = convertPercentage(row.percentage)
-    const quantityInBox = parseInt(row.quantityInBox, 10)
+    // Calculate quantityInBox based on volume instead of using CSV value
+    const quantityInBox = calculateQuantityInBox(row.volume)
     const price = parseFloat(row.price)
-    
-    if (!Number.isFinite(quantityInBox) || quantityInBox < 1) {
-      throw new Error(`Invalid quantityInBox: ${row.quantityInBox}`)
-    }
     
     if (!Number.isFinite(price) || price < 0) {
       throw new Error(`Invalid price: ${row.price}`)
@@ -212,6 +232,9 @@ function parseRow(row: CSVRow, index: number): ProductData {
     if (!VALID_CATEGORIES.includes(category)) {
       console.warn(`⚠️  Warning: Category "${category}" not in valid list. Using as-is.`)
     }
+    
+    // Always set land to "Anders" for new products
+    const land = 'Anders'
     
     // Parse booleans - if empty, default to true for inStock and isNew, false for inSale
     const inStockValue = row.inStock.trim()
@@ -250,6 +273,7 @@ function parseRow(row: CSVRow, index: number): ProductData {
       percentage,
       price,
       category,
+      land,
       description,
       inStock,
       inSale,
@@ -357,6 +381,7 @@ async function upsertProduct(
         },
       },
       category: data.category,
+      land: data.land,
       volume: data.volume,
       percentage: data.percentage,
       quantityInBox: data.quantityInBox,

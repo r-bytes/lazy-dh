@@ -174,7 +174,7 @@ const Checkout = () => {
         <h3> Totaalbedrag incl. BTW: </h3>
         <h3 className="mr-2 tracking-wide"> € {formatNumberWithCommaDecimalSeparator(totalPriceWithVAT)} </h3>
       </div>
-      <div className="mx-auto mt-16 flex w-full items-center justify-center space-x-4">
+      <div className="mx-auto mt-16 flex w-full items-center justify-center space-x-4 flex-wrap gap-4">
         {/* Admin only - only show for admins */}
         {isAdmin && (
           <>

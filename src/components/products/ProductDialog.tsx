@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "
 import { useCart } from "@/hooks/useCart";
 import { useFavorite } from "@/hooks/useFavorite";
 import { Product } from "@/lib/types/product";
-import { formatNumberWithCommaDecimalSeparator } from "@/lib/utils";
+import { calculateQuantityInBoxFromVolume, cn, formatNumberWithCommaDecimalSeparator } from "@/lib/utils";
 import { Heart, Minus, Plus } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -35,11 +35,17 @@ export function ProductDialog({ product, open, onOpenChange, onRemoveFavorite }:
   }, [product, setQuantity]);
 
   const handleBuyNow = () => {
+    if (!product.inStock) {
+      return;
+    }
     addToCart(quantity);
     onOpenChange(false);
   };
 
   const handleCheckout = () => {
+    if (!product.inStock) {
+      return;
+    }
     goToCheckout(quantity);
   };
 
@@ -70,13 +76,32 @@ export function ProductDialog({ product, open, onOpenChange, onRemoveFavorite }:
             {formatNumberWithCommaDecimalSeparator(product.price)}
           </span>
         </div>
-        {product.quantityInBox > 1 && (
-          <div className="flex justify-end pt-1">
-            <span className="text-xs font-normal text-muted-foreground">
-              (€ {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} per doos – {product.quantityInBox} stuks × {product.volume})
-            </span>
-          </div>
-        )}
+        {(() => {
+          const isAndersProduct = product.land === "Anders" || !product.land;
+          // For "Anders" or empty land products: show calculated quantity based on volume
+          if (isAndersProduct && product.volume) {
+            const calculatedQty = calculateQuantityInBoxFromVolume(product.volume);
+            // Always show, even if quantityInBox === 1 (shows how many are in a box)
+            return (
+              <div className="flex justify-end pt-1">
+                <span className="text-xs font-normal text-muted-foreground">
+                  (€ {formatNumberWithCommaDecimalSeparator(product.price * calculatedQty)} per doos – {calculatedQty} stuks × {product.volume})
+                </span>
+              </div>
+            );
+          }
+          // For other products (with specific land), show if quantityInBox >= 1
+          if (product.quantityInBox >= 1) {
+            return (
+              <div className="flex justify-end pt-1">
+                <span className="text-xs font-normal text-muted-foreground">
+                  (€ {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} per doos – {product.quantityInBox} stuks × {product.volume})
+                </span>
+              </div>
+            );
+          }
+          return null;
+        })()}
       </div>
     );
   };
@@ -123,7 +148,10 @@ export function ProductDialog({ product, open, onOpenChange, onRemoveFavorite }:
         {/* Product Image */}
         <div className="relative flex items-center justify-center bg-background-alt/50 p-8">
           <Image
-            className="h-72 w-full object-contain sm:h-96"
+            className={cn(
+              "h-72 w-full object-contain sm:h-96",
+              !product.inStock && "grayscale"
+            )}
             src={productImage}
             alt={product.name}
             width={400}
@@ -161,10 +189,10 @@ export function ProductDialog({ product, open, onOpenChange, onRemoveFavorite }:
         <DialogFooter className="flex h-auto flex-row justify-between gap-4 rounded-b-lg bg-zinc-400/10 px-6 py-4 dark:bg-zinc-800">
           {session?.user ? (
             <>
-              <Button type="button" className="flex-1" onClick={handleBuyNow}>
-                Voeg Toe
+              <Button type="button" className="flex-1" onClick={handleBuyNow} disabled={!product.inStock}>
+                {product.inStock ? "Voeg Toe" : "Niet op voorraad"}
               </Button>
-              <Button type="button" variant="outline" className="flex-1" onClick={handleCheckout}>
+              <Button type="button" variant="outline" className="flex-1" onClick={handleCheckout} disabled={!product.inStock}>
                 Check uit
               </Button>
             </>

@@ -76,3 +76,48 @@ export function debounce<T extends (...args: any[]) => void>(func: T, wait: numb
     timeout = setTimeout(() => func.apply(null, args), wait);
   };
 }
+
+/**
+ * Calculate quantity in box based on volume string (e.g., "75cl", "70cl", "20cl") or number
+ * Rules:
+ * - 20cl-25cl -> 24 in doos
+ * - 35cl-50cl -> 12 in doos
+ * - 70cl-100cl -> 6 in doos
+ * - 150cl-175cl -> 6 in doos (same as 70cl-100cl)
+ */
+export function calculateQuantityInBoxFromVolume(volume: string | number | undefined): number {
+  if (!volume) return 6; // Default fallback
+  
+  let liters: number;
+  
+  // Handle string format (e.g., "75cl", "70cl")
+  if (typeof volume === 'string') {
+    // Extract number from volume string (e.g., "75cl" -> 75)
+    const match = volume.match(/(\d+(?:\.\d+)?)/);
+    if (!match) return 6; // Default fallback
+    
+    const cl = parseFloat(match[1]);
+    if (!Number.isFinite(cl) || cl <= 0) return 6; // Default fallback
+    
+    // Convert to liters
+    liters = cl / 100;
+  } else {
+    // Handle number format (already in liters, e.g., 0.75)
+    liters = volume;
+    if (!Number.isFinite(liters) || liters <= 0) return 6; // Default fallback
+  }
+  
+  // Determine quantity in box based on volume ranges
+  if (liters >= 0.20 && liters <= 0.25) {
+    return 24;
+  } else if (liters >= 0.35 && liters <= 0.50) {
+    return 12;
+  } else if (liters >= 0.70 && liters <= 1.0) {
+    return 6;
+  } else if (liters >= 1.5 && liters <= 1.75) {
+    return 6; // Same as 70cl-100cl
+  } else {
+    // Default fallback for other volumes
+    return 6;
+  }
+}

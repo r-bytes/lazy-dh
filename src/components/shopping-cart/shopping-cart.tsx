@@ -30,14 +30,14 @@ const ShoppingCart = () => {
         </div>
       )}
 
-      <div className="product-container mt-4 space-y-6 overflow-auto px-2 sm:px-4 lg:px-5">
+      <div className="product-container mt-4 space-y-6 overflow-auto px-2 sm:px-4 lg:px-5 pb-10">
         {cartItems?.length >= 1 &&
           cartItems?.map((item) => (
             <React.Fragment key={item._id}>
               <div className="product mx-auto flex max-w-7xl flex-col gap-4 sm:flex-row sm:gap-6 lg:gap-8" key={item._id}>
                 <Card className="bg-transparent w-full py-8 px-0 sm:w-48 sm:py-12 lg:w-60 lg:py-16">
                   <div className="relative aspect-[3/4] w-full">
-                    <Image src={urlFor(item.image).url()} alt={item.name} className="object-contain" fill width={400} height={200} />
+                    <Image src={urlFor(item.image).url()} alt={item.name} className="object-contain" fill sizes="(max-width: 640px) 100px, 100px" />
                   </div>
                 </Card>
                 <div className="item-desc flex w-full flex-col justify-between gap-4 text-muted-foreground sm:m-4">
@@ -79,7 +79,16 @@ const ShoppingCart = () => {
                     <div className="flex w-full flex-col items-end justify-end space-y-2 sm:w-auto sm:px-2">
                       <h4 className="text-2xl font-semibold tracking-wide sm:text-3xl">€ {formatNumberWithCommaDecimalSeparator(item.price)}</h4>
                       <h4 className="text-right text-xs font-light text-text-secondary">
-                        € {formatNumberWithCommaDecimalSeparator(item.price * item.quantityInBox)} per doos
+                        {(() => {
+                          const isAndersProduct = item.land === "Anders" || !item.land;
+                          // If (Anders OR empty land) AND quantityInBox > 1, it's per bottle
+                          // If quantityInBox === 1 (even for Anders/empty land), it's per box (quantityInBox has priority)
+                          if (isAndersProduct && item.quantityInBox > 1) {
+                            return `€ ${formatNumberWithCommaDecimalSeparator(item.price)} per fles`;
+                          } else {
+                            return `€ ${formatNumberWithCommaDecimalSeparator(item.price * item.quantityInBox)} per doos`;
+                          }
+                        })()}
                       </h4>
                     </div>
                   </div>

@@ -1,7 +1,7 @@
 {
-  "total": 1,
-  "created": 1,
-  "updated": 0,
+  "total": 469,
+  "created": 457,
+  "updated": 12,
   "skipped": 0,
   "failed": 0,
   "results": [
@@ -9,8 +9,2816 @@
       "productId": "product-lavish-absinthe-fruit-punch-25cl-11pct",
       "name": "Lavish Absinthe Fruit Punch",
       "success": true,
+      "action": "updated"
+    },
+    {
+      "productId": "product-lavish-absinthe-grape-25cl-11pct",
+      "name": "Lavish Absinthe Grape",
+      "success": true,
+      "action": "updated"
+    },
+    {
+      "productId": "product-lavish-absinthe-green-apple-25cl-11pct",
+      "name": "Lavish Absinthe Green Apple",
+      "success": true,
+      "action": "updated"
+    },
+    {
+      "productId": "product-lavish-absinthe-blue-raspberry-25cl-11pct",
+      "name": "Lavish Absinthe Blue Raspberry",
+      "success": true,
+      "action": "updated"
+    },
+    {
+      "productId": "product-lavish-classic-25cl-10pct",
+      "name": "Lavish Classic",
+      "success": true,
+      "action": "updated"
+    },
+    {
+      "productId": "product-lavish-mangotini-25cl-12-5pct",
+      "name": "Lavish Mangotini",
+      "success": true,
+      "action": "updated"
+    },
+    {
+      "productId": "product-lavish-cosmopolitan-25cl-12-5pct",
+      "name": "Lavish Cosmopolitan",
+      "success": true,
+      "action": "updated"
+    },
+    {
+      "productId": "product-lavish-raspberry-guava-25cl-12-5pct",
+      "name": "Lavish Raspberry Guava",
+      "success": true,
+      "action": "updated"
+    },
+    {
+      "productId": "product-lavish-purple-grape-25cl-12-5pct",
+      "name": "Lavish Purple Grape",
+      "success": true,
+      "action": "updated"
+    },
+    {
+      "productId": "product-lavish-pineapple-colada-25cl-12-5pct",
+      "name": "Lavish Pineapple Colada",
+      "success": true,
+      "action": "updated"
+    },
+    {
+      "productId": "product-lavish-whiskey-cola-25cl-12-5pct",
+      "name": "Lavish Whiskey-Cola",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-lavish-gin-fizz-25cl-12-5pct",
+      "name": "Lavish Gin Fizz",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-lavish-rum-cola-25cl-12-5pct",
+      "name": "Lavish Rum-Cola",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-lavish-ultra-strong-25cl-17pct",
+      "name": "Lavish Ultra Strong",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-lavish-extreme-25cl-21pct",
+      "name": "Lavish Extreme",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-lavish-hemp-vodka-70cl-40pct",
+      "name": "Lavish Hemp Vodka",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-lavish-bubblegum-kush-70cl-40pct",
+      "name": "Lavish Bubblegum Kush",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-lavish-vodka-70cl-40pct",
+      "name": "Lavish Vodka",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-red-label-20cl-40pct",
+      "name": "Johnnie Walker Red Label",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-red-label-35cl-40pct",
+      "name": "Johnnie Walker Red Label",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-red-label-70cl-40pct",
+      "name": "Johnnie Walker Red Label",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-red-label-100cl-40pct",
+      "name": "Johnnie Walker Red Label",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-black-label-20cl-40pct",
+      "name": "Johnnie Walker Black Label",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-black-label-35cl-40pct",
+      "name": "Johnnie Walker Black Label",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-black-label-70cl-40pct",
+      "name": "Johnnie Walker Black Label",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-black-label-100cl-40pct",
+      "name": "Johnnie Walker Black Label",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-20cl-40pct",
+      "name": "Jack Daniels",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-35cl-40pct",
+      "name": "Jack Daniels",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-50cl-40pct",
+      "name": "Jack Daniels",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-70cl-40pct",
+      "name": "Jack Daniels",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-100cl-40pct",
+      "name": "Jack Daniels",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-honey-70cl-35pct",
+      "name": "Jack Daniels Honey",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-honey-100cl-35pct",
+      "name": "Jack Daniels Honey",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ballantines-finest-20cl-40pct",
+      "name": "Ballantines Finest",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ballantines-finest-35cl-40pct",
+      "name": "Ballantines Finest",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ballantines-finest-70cl-40pct",
+      "name": "Ballantines Finest",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ballantines-finest-100cl-40pct",
+      "name": "Ballantines Finest",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-double-black-70cl-40pct",
+      "name": "Johnnie Walker Double Black",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-double-black-100cl-40pct",
+      "name": "Johnnie Walker Double Black",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-grants-20cl-40pct",
+      "name": "Grants",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-grants-35cl-40pct",
+      "name": "Grants",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-grants-70cl-40pct",
+      "name": "Grants",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-grants-100cl-40pct",
+      "name": "Grants",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-chivas-regal-12-yrs-35cl-40pct",
+      "name": "Chivas Regal 12 yrs",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-chivas-regal-12-yrs-70cl-40pct",
+      "name": "Chivas Regal 12 yrs",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-chivas-regal-12-yrs-100cl-40pct",
+      "name": "Chivas Regal 12 yrs",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-glen-talloch-20cl-40pct",
+      "name": "Glen Talloch",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-glen-talloch-35cl-40pct",
+      "name": "Glen Talloch",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-glen-talloch-70cl-40pct",
+      "name": "Glen Talloch",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-glen-talloch-100cl-40pct",
+      "name": "Glen Talloch",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-glen-scanlan-20cl-40pct",
+      "name": "Glen Scanlan",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-glen-scanlan-35cl-40pct",
+      "name": "Glen Scanlan",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-glen-scanlan-70cl-40pct",
+      "name": "Glen Scanlan",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-glen-scanlan-100cl-40pct",
+      "name": "Glen Scanlan",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-justerini-brooks-20cl-40pct",
+      "name": "Justerini & Brooks",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-justerini-brooks-35cl-40pct",
+      "name": "Justerini & Brooks",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-justerini-brooks-70cl-40pct",
+      "name": "Justerini & Brooks",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-justerini-brooks-100cl-40pct",
+      "name": "Justerini & Brooks",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-william-lawsons-70cl-40pct",
+      "name": "William Lawsons",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-william-lawsons-100cl-40pct",
+      "name": "William Lawsons",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jameson-35cl-40pct",
+      "name": "Jameson",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jameson-70cl-40pct",
+      "name": "Jameson",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jameson-100cl-40pct",
+      "name": "Jameson",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-famous-grouse-20cl-40pct",
+      "name": "Famous Grouse",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-famous-grouse-35cl-40pct",
+      "name": "Famous Grouse",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-famous-grouse-70cl-40pct",
+      "name": "Famous Grouse",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-famous-grouse-100cl-40pct",
+      "name": "Famous Grouse",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-famous-grouse-sherry-cask-70cl-40pct",
+      "name": "Famous Grouse Sherry Cask",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-famous-grouse-sherry-cask-100cl-40pct",
+      "name": "Famous Grouse Sherry Cask",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-glen-mansion-20cl-40pct",
+      "name": "Glen Mansion",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-glen-mansion-70cl-40pct",
+      "name": "Glen Mansion",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-glen-mansion-100cl-40pct",
+      "name": "Glen Mansion",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-teachers-70cl-40pct",
+      "name": "Teachers",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-teachers-100cl-40pct",
+      "name": "Teachers",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jim-beam-20cl-40pct",
+      "name": "Jim Beam",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jim-beam-70cl-40pct",
+      "name": "Jim Beam",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jim-beam-100cl-40pct",
+      "name": "Jim Beam",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jim-beam-honey-70cl-32-5pct",
+      "name": "Jim Beam Honey",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jim-beam-honey-100cl-32-5pct",
+      "name": "Jim Beam Honey",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jim-beam-apple-70cl-32-5pct",
+      "name": "Jim Beam Apple",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jim-beam-apple-100cl-32-5pct",
+      "name": "Jim Beam Apple",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jim-beam-peach-70cl-32-5pct",
+      "name": "Jim Beam Peach",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jim-beam-double-oak-70cl-43pct",
+      "name": "Jim Beam Double OAK",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jim-beam-devils-cut-70cl-45pct",
+      "name": "Jim Beam Devils Cut",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jim-beam-black-cherry-70cl-32-5pct",
+      "name": "Jim Beam Black Cherry",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-gold-label-rese-70cl-40pct",
+      "name": "Johnnie Walker Gold Label Reserve",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-gold-label-rese-100cl-40pct",
+      "name": "Johnnie Walker Gold Label Reserve",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-15-years-green--70cl-43pct",
+      "name": "Johnnie Walker 15 Years Green Label",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-island-green-100cl-43pct",
+      "name": "Johnnie Walker Island Green",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-glen-talloch-150cl-40pct",
+      "name": "Glen Talloch",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-chivas-regal-18-yrs-70cl-40pct",
+      "name": "Chivas Regal 18 yrs",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-chivas-regal-18-yrs-100cl-40pct",
+      "name": "Chivas Regal 18 yrs",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-glen-scanlan-150cl-40pct",
+      "name": "Glen Scanlan",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-chivas-regal-13-yrs-irish-cask-100cl-40pct",
+      "name": "Chivas Regal 13 yrs Irish Cask",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-chivas-regal-13-yrs-sherry-cas-70cl-40pct",
+      "name": "Chivas Regal 13 yrs Sherry Cask",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-chivas-regal-xv-15-yrs-70cl-40pct",
+      "name": "Chivas Regal XV 15 yrs",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-glenfiddich-12-yrs-70cl-40pct",
+      "name": "Glenfiddich 12 yrs",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-glenfiddich-12-yrs-100cl-40pct",
+      "name": "Glenfiddich 12 yrs",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-glenfiddich-15-yrs-70cl-40pct",
+      "name": "Glenfiddich 15 yrs",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-cutty-sark-70cl-40pct",
+      "name": "Cutty Sark",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bushmills-original-70cl-40pct",
+      "name": "Bushmills Original",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bushmills-original-100cl-40pct",
+      "name": "Bushmills Original",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bushmills-10-yrs-70cl-40pct",
+      "name": "Bushmills 10 yrs",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-vat-69-70cl-40pct",
+      "name": "Vat 69",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-vat-69-100cl-40pct",
+      "name": "Vat 69",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-maltky-100cl-35pct",
+      "name": "Maltky",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-label-5-35cl-40pct",
+      "name": "Label 5",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-label-5-70cl-40pct",
+      "name": "Label 5",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-label-5-100cl-40pct",
+      "name": "Label 5",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-single-barrel-sel-35cl-45pct",
+      "name": "Jack Daniels Single Barrel Select",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-single-barrel-sel-70cl-45pct",
+      "name": "Jack Daniels Single Barrel Select",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-single-barrel-100-70cl-50pct",
+      "name": "Jack Daniels Single Barrel 100 proof",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-single-barrel-rye-70cl-45pct",
+      "name": "Jack Daniels Single Barrel Rye",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-fire-70cl-35pct",
+      "name": "Jack Daniels Fire",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-fire-100cl-35pct",
+      "name": "Jack Daniels Fire",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-gentleman-jack-70cl-40pct",
+      "name": "Jack Daniels Gentleman Jack",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-gentleman-jack-100cl-40pct",
+      "name": "Jack Daniels Gentleman Jack",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-dimple-15-yrs-100cl-43pct",
+      "name": "Dimple 15 yrs",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-dimple-golden-selection-70cl-40pct",
+      "name": "Dimple Golden Selection",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-dewars-white-label-100cl-40pct",
+      "name": "Dewars White Label",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-tullamore-dew-70cl-40pct",
+      "name": "Tullamore Dew",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-tullamore-dew-100cl-40pct",
+      "name": "Tullamore Dew",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-four-roses-70cl-40pct",
+      "name": "Four Roses",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-four-roses-100cl-40pct",
+      "name": "Four Roses",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-black-label-175cl-40pct",
+      "name": "Johnnie Walker Black Label",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-red-label-175cl-40pct",
+      "name": "Johnnie Walker Red Label",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-150cl-40pct",
+      "name": "Jack Daniels",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-300cl-40pct",
+      "name": "Jack Daniels",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-apple-70cl-35pct",
+      "name": "Jack Daniels apple",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-apple-100cl-35pct",
+      "name": "Jack Daniels apple",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jack-daniels-straight-rye-70cl-45pct",
+      "name": "jack daniels straight rye",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-blue-label-100cl-40pct",
+      "name": "Johnnie Walker Blue Label",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-johnnie-walker-blue-label-70cl-40pct",
+      "name": "Johnnie Walker Blue Label",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-esbjaerg-20cl-40pct",
+      "name": "Esbjaerg",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-esbjaerg-50cl-40pct",
+      "name": "Esbjaerg",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-esbjaerg-100cl-40pct",
+      "name": "Esbjaerg",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-smirnoff-red-20cl-37-5pct",
+      "name": "Smirnoff Red",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-smirnoff-red-35cl-37-5pct",
+      "name": "Smirnoff Red",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-smirnoff-red-50cl-37-5pct",
+      "name": "Smirnoff Red",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-smirnoff-red-70cl-37-5pct",
+      "name": "Smirnoff Red",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-smirnoff-red-100cl-37-5pct",
+      "name": "Smirnoff Red",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-smirnoff-blue-100cl-50pct",
+      "name": "Smirnoff Blue",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-smirnoff-raspberry-crush-70cl-25pct",
+      "name": "Smirnoff Raspberry Crush",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-smirnoff-mango-passionfruit-70cl-25pct",
+      "name": "Smirnoff Mango & Passionfruit",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-iganoff-20cl-37-5pct",
+      "name": "Iganoff",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-iganoff-35cl-37-5pct",
+      "name": "Iganoff",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-iganoff-70cl-37-5pct",
+      "name": "Iganoff",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-iganoff-100cl-37-5pct",
+      "name": "Iganoff",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-eristoff-vodka-70cl-37-5pct",
+      "name": "Eristoff Vodka",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-eristoff-vodka-100cl-37-5pct",
+      "name": "Eristoff Vodka",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-eristoff-red-70cl-18pct",
+      "name": "Eristoff Red",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-eristoff-red-100cl-18pct",
+      "name": "Eristoff Red",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-puschkin-vodka-70cl-37-5pct",
+      "name": "Puschkin Vodka",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-puschkin-vodka-100cl-37-5pct",
+      "name": "Puschkin Vodka",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-puschkin-red-70cl-17-5pct",
+      "name": "Puschkin Red",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-puschkin-red-100cl-17-5pct",
+      "name": "Puschkin Red",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-wyborowa-70cl-37-5pct",
+      "name": "Wyborowa",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-wyborowa-100cl-37-5pct",
+      "name": "Wyborowa",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-finlandia-70cl-40pct",
+      "name": "Finlandia",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-finlandia-100cl-40pct",
+      "name": "Finlandia",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-finlandia-mango-100cl-37-5pct",
+      "name": "Finlandia Mango",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-finlandia-redberry-100cl-37-5pct",
+      "name": "Finlandia Redberry",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-finlandia-blackcurrant-100cl-37-5pct",
+      "name": "Finlandia Blackcurrant",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-finlandia-grapefruit-100cl-37-5pct",
+      "name": "Finlandia Grapefruit",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-finlandia-lime-100cl-37-5pct",
+      "name": "Finlandia lime",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-pravda-70cl-40pct",
+      "name": "Pravda",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-pravda-175cl-40pct",
+      "name": "Pravda",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-pravda-coco-70cl-37-5pct",
+      "name": "Pravda Coco",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-pravda-cherry-70cl-37-5pct",
+      "name": "Pravda Cherry",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-pravda-pineapple-70cl-37-5pct",
+      "name": "Pravda Pineapple",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-pravda-caramel-70cl-37-5pct",
+      "name": "Pravda Caramel",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-pravda-citron-70cl-37-5pct",
+      "name": "Pravda Citron",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-pravda-raspberry-70cl-37-5pct",
+      "name": "Pravda Raspberry",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-sobieski-premium-70cl-40pct",
+      "name": "Sobieski Premium",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-sobieski-premium-100cl-40pct",
+      "name": "Sobieski Premium",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-puschkin-black-berries-70cl-17pct",
+      "name": "Puschkin Black Berries",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-puschkin-black-berries-100cl-17pct",
+      "name": "Puschkin Black Berries",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-puschkin-watermelon-70cl-17-5pct",
+      "name": "Puschkin Watermelon",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-trojka-pink-70cl-17pct",
+      "name": "Trojka Pink",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-trojka-orange-70cl-17pct",
+      "name": "Trojka Orange",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-vodka-20cl-40pct",
+      "name": "Absolut Vodka",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-vodka-35cl-40pct",
+      "name": "Absolut Vodka",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-vodka-50cl-40pct",
+      "name": "Absolut Vodka",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-vodka-70cl-40pct",
+      "name": "Absolut Vodka",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-vodka-100cl-40pct",
+      "name": "Absolut Vodka",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-citron-100cl-40pct",
+      "name": "Absolut Citron",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-grapefruit-100cl-40pct",
+      "name": "Absolut Grapefruit",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-lime-100cl-40pct",
+      "name": "Absolut Lime",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-vanilia-100cl-38pct",
+      "name": "Absolut Vanilia",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-raspberri-100cl-38pct",
+      "name": "Absolut Raspberri",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-apeach-100cl-38pct",
+      "name": "Absolut Apeach",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-mango-100cl-38pct",
+      "name": "Absolut Mango",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-passionfruit-100cl-38pct",
+      "name": "Absolut Passionfruit",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-pear-100cl-38pct",
+      "name": "Absolut Pear",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-citron-70cl-40pct",
+      "name": "Absolut Citron",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-mango-70cl-38pct",
+      "name": "Absolut Mango",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-pear-70cl-38pct",
+      "name": "Absolut Pear",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-vanille-70cl-38pct",
+      "name": "Absolut Vanille",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-grapefruit-70cl-40pct",
+      "name": "Absolut Grapefruit",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-raspberri-70cl-38pct",
+      "name": "Absolut Raspberri",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-peach-70cl-38pct",
+      "name": "Absolut Peach",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-watermelon-70cl-38pct",
+      "name": "Absolut Watermelon",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-passionfruit-70cl-38pct",
+      "name": "Absolut Passionfruit",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-absolut-lime-70cl-40pct",
+      "name": "Absolut Lime",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ursus-roter-70cl-21pct",
+      "name": "Ursus Roter",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-divine-100cl-37-5pct",
+      "name": "Divine",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hpnotiq-70cl-17pct",
+      "name": "HPNOTIQ",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-au-vodka-bubblegum-70cl-35pct",
+      "name": "Au Vodka Bubblegum",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-au-vodka-blue-raspberry-70cl-35pct",
+      "name": "Au Vodka Blue Raspberry",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-au-vodka-watermelon-70cl-35pct",
+      "name": "Au Vodka Watermelon",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-au-vodka-pineapple-crush-70cl-35pct",
+      "name": "Au Vodka Pineapple Crush",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-au-vodka-juicy-peach-70cl-35pct",
+      "name": "Au Vodka Juicy Peach",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-au-vodka-strawberry-burst-70cl-35pct",
+      "name": "Au Vodka Strawberry Burst",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-au-vodka-black-grape-70cl-35pct",
+      "name": "Au Vodka Black Grape",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-au-vodka-pink-lemonade-70cl-35pct",
+      "name": "Au Vodka Pink Lemonade",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-belvedere-20cl-40pct",
+      "name": "Belvedere",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-belvedere-70cl-40pct",
+      "name": "Belvedere",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-belvedere-100cl-40pct",
+      "name": "Belvedere",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-grey-goose-20cl-40pct",
+      "name": "Grey Goose",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-grey-goose-35cl-40pct",
+      "name": "Grey Goose",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-grey-goose-70cl-40pct",
+      "name": "Grey Goose",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-grey-goose-100cl-40pct",
+      "name": "Grey Goose",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-grey-goose-poire-70cl-40pct",
+      "name": "Grey Goose Poire",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-grey-goose-citron-70cl-40pct",
+      "name": "Grey Goose Citron",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ciroc-70cl-40pct",
+      "name": "Ciroc",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ciroc-100cl-40pct",
+      "name": "Ciroc",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ciroc-limonata-70cl-37-5pct",
+      "name": "Ciroc Limonata",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ciroc-red-berry-70cl-37-5pct",
+      "name": "Ciroc Red Berry",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ciroc-pineapple-70cl-37-5pct",
+      "name": "Ciroc Pineapple",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ciroc-mango-70cl-37-5pct",
+      "name": "Ciroc Mango",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ciroc-coconut-70cl-37-5pct",
+      "name": "Ciroc Coconut",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ciroc-apple-70cl-37-5pct",
+      "name": "Ciroc Apple",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ciroc-peach-70cl-37-5pct",
+      "name": "Ciroc Peach",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-crystal-head-aurora-70cl-40pct",
+      "name": "Crystal Head Aurora",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-crystal-head-70cl-40pct",
+      "name": "Crystal Head",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-crystal-head-onyx-blue-agave-70cl-40pct",
+      "name": "Crystal Head Onyx Blue Agave",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-skyy-70cl-40pct",
+      "name": "Skyy",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-skyy-100cl-40pct",
+      "name": "Skyy",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ketel-1-70cl-40pct",
+      "name": "Ketel 1",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ketel-1-100cl-40pct",
+      "name": "Ketel 1",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-nemiroff-original-100cl-40pct",
+      "name": "Nemiroff Original",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-nemiroff-delikat-100cl-40pct",
+      "name": "Nemiroff Delikat",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-nemiroff-honey-pepper-100cl-40pct",
+      "name": "Nemiroff Honey Pepper",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-nemiroff-de-luxe-100cl-40pct",
+      "name": "Nemiroff De Luxe",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-cannabis-sativa-70cl-37-5pct",
+      "name": "Cannabis Sativa",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-euphoria-cannabis-20cl-40pct",
+      "name": "Euphoria Cannabis",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-euphoria-cannabis-50cl-40pct",
+      "name": "Euphoria Cannabis",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-roberto-cavalli-black-edition-100cl-40pct",
+      "name": "Roberto Cavalli Black Edition",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-roberto-cavalli-gold-edition-100cl-40pct",
+      "name": "Roberto Cavalli Gold Edition",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-roberto-cavalli-mirror-100cl-40pct",
+      "name": "Roberto Cavalli Mirror",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-roberto-cavalli-70cl-40pct",
+      "name": "Roberto Cavalli",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-3-kilos-coconut-100cl-30pct",
+      "name": "3 Kilos Coconut",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-3-kilos-gold-100cl-40pct",
+      "name": "3 Kilos Gold",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bols-100cl-37-5pct",
+      "name": "Bols",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-belvedere-175cl-40pct",
+      "name": "Belvedere",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-belvedere-300cl-40pct",
+      "name": "Belvedere",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-belvedere-600cl-40pct",
+      "name": "Belvedere",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-20cl-37-5pct",
+      "name": "Bacardi",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-35cl-37-5pct",
+      "name": "Bacardi",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-70cl-37-5pct",
+      "name": "Bacardi",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-100cl-37-5pct",
+      "name": "Bacardi",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-limon-70cl-27pct",
+      "name": "Bacardi Limon",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-limon-100cl-27pct",
+      "name": "Bacardi Limon",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-razz-70cl-27pct",
+      "name": "Bacardi Razz",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-razz-100cl-27pct",
+      "name": "Bacardi Razz",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-tropical-70cl-27pct",
+      "name": "Bacardi Tropical",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-coconut-70cl-27pct",
+      "name": "Bacardi Coconut",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-spiced-70cl-35pct",
+      "name": "Bacardi Spiced",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-spiced-100cl-35pct",
+      "name": "Bacardi Spiced",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-mojito-70cl-14-9pct",
+      "name": "Bacardi Mojito",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-carta-negra-70cl-40pct",
+      "name": "Bacardi Carta Negra",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-carta-negra-100cl-40pct",
+      "name": "Bacardi Carta Negra",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-carta-oro-70cl-40pct",
+      "name": "Bacardi Carta Oro",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-carta-oro-100cl-40pct",
+      "name": "Bacardi Carta Oro",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-passionfruit-70cl-27pct",
+      "name": "Bacardi passionfruit",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bacardi-punch-70cl-14-9pct",
+      "name": "Bacardi Punch",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-brugal-extra-viejo-70cl-38pct",
+      "name": "Brugal Extra Viejo",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-captain-morgan-spiced-gold-20cl-35pct",
+      "name": "Captain Morgan Spiced Gold",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-captain-morgan-spiced-gold-70cl-35pct",
+      "name": "Captain Morgan Spiced Gold",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-captain-morgan-spiced-gold-100cl-35pct",
+      "name": "Captain Morgan Spiced Gold",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-captain-morgan-dark-70cl-40pct",
+      "name": "Captain Morgan Dark",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-captain-morgan-dark-100cl-40pct",
+      "name": "Captain Morgan Dark",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-captain-morgan-white-70cl-37-5pct",
+      "name": "Captain Morgan White",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-captain-morgan-white-100cl-37-5pct",
+      "name": "Captain Morgan White",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-captain-morgan-sliced-apple-70cl-25pct",
+      "name": "Captain Morgan Sliced Apple",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-captain-morgan-tiki-70cl-25pct",
+      "name": "Captain Morgan Tiki",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-havana-club-anejo-especial-70cl-37-5pct",
+      "name": "Havana Club Anejo Especial",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-havana-club-anejo-especial-100cl-37-5pct",
+      "name": "Havana Club Anejo Especial",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-havana-club-3-yrs-70cl-37-5pct",
+      "name": "Havana Club 3 yrs",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-havana-club-3-yrs-100cl-37-5pct",
+      "name": "Havana Club 3 yrs",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-havana-club-anejo-7-anos-70cl-40pct",
+      "name": "Havana Club Anejo 7 Anos",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-havana-club-anejo-7-anos-100cl-40pct",
+      "name": "Havana Club Anejo 7 Anos",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-old-captain-white-70cl-37-5pct",
+      "name": "Old Captain White",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-old-captain-white-100cl-37-5pct",
+      "name": "Old Captain White",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-old-captain-brown-70cl-37-5pct",
+      "name": "Old Captain Brown",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-old-captain-brown-100cl-37-5pct",
+      "name": "Old Captain Brown",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-marienburg-81-20cl-81pct",
+      "name": "Marienburg 81",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-marienburg-81-70cl-81pct",
+      "name": "Marienburg 81",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hanappier-70cl-38pct",
+      "name": "Hanappier",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hennessy-vs-20cl-40pct",
+      "name": "Hennessy VS",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hennessy-vs-35cl-40pct",
+      "name": "Hennessy VS",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hennessy-vs-70cl-40pct",
+      "name": "Hennessy VS",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hennessy-vs-100cl-40pct",
+      "name": "Hennessy VS",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hennessy-vs-150cl-40pct",
+      "name": "Hennessy VS",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hennessy-vsop-70cl-40pct",
+      "name": "Hennessy VSOP",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-remy-martin-vsop-70cl-40pct",
+      "name": "Remy Martin VSOP",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-remy-martin-vsop-100cl-40pct",
+      "name": "Remy Martin VSOP",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-joseph-guy-vs-20cl-40pct",
+      "name": "Joseph Guy VS",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-joseph-guy-vs-35cl-40pct",
+      "name": "Joseph Guy VS",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-joseph-guy-vs-70cl-40pct",
+      "name": "Joseph Guy VS",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-joseph-guy-vs-100cl-40pct",
+      "name": "Joseph Guy VS",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-metaxa-5-70cl-40pct",
+      "name": "Metaxa 5",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-metaxa-7-70cl-40pct",
+      "name": "Metaxa 7",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-martell-vs-70cl-40pct",
+      "name": "Martell VS",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-napoleon-colbert-vsop-70cl-36pct",
+      "name": "Napoleon Colbert VSOP",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-courvoisier-vs-70cl-40pct",
+      "name": "Courvoisier VS",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-courvoisier-vs-100cl-40pct",
+      "name": "Courvoisier VS",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-gordons-gin-20cl-37-5pct",
+      "name": "Gordons Gin",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-gordons-gin-35cl-37-5pct",
+      "name": "Gordons Gin",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-gordons-gin-70cl-37-5pct",
+      "name": "Gordons Gin",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-gordons-gin-100cl-37-5pct",
+      "name": "Gordons Gin",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-gordons-gin-lemon-70cl-37-5pct",
+      "name": "Gordons Gin Lemon",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-gordons-gin-pink-70cl-37-5pct",
+      "name": "Gordons Gin Pink",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-gordons-gin-pink-100cl-37-5pct",
+      "name": "Gordons Gin Pink",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-beefeater-gin-70cl-40pct",
+      "name": "Beefeater Gin",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bombay-sapphire-70cl-40pct",
+      "name": "Bombay Sapphire",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bombay-sapphire-100cl-40pct",
+      "name": "Bombay Sapphire",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hendricks-70cl-44pct",
+      "name": "Hendricks",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hendricks-100cl-44pct",
+      "name": "Hendricks",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-isolaballa-sambuca-35cl-40pct",
+      "name": "Isolaballa Sambuca",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-isolaballa-sambuca-70cl-40pct",
+      "name": "Isolaballa Sambuca",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-isolaballa-sambuca-100cl-40pct",
+      "name": "Isolaballa Sambuca",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-molinari-sambuca-70cl-40pct",
+      "name": "Molinari Sambuca",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-molinari-sambuca-100cl-40pct",
+      "name": "Molinari Sambuca",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-alize-blue-70cl-20pct",
+      "name": "Alize Blue",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-baileys-tiramisu-limited-editi-70cl-17pct",
+      "name": "Baileys Tiramisu Limited Edition",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-baileys-chocolate-50cl-15pct",
+      "name": "Baileys Chocolate",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-baileys-strawberry-cream-70cl-17pct",
+      "name": "Baileys Strawberry & Cream",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-baileys-salted-caramel-70cl-17pct",
+      "name": "Baileys Salted Caramel",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-baileys-original-35cl-17pct",
+      "name": "Baileys Original",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-baileys-original-70cl-17pct",
+      "name": "Baileys Original",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-baileys-original-100cl-17pct",
+      "name": "Baileys Original",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-baileys-colada-limited-edition-70cl-17pct",
+      "name": "Baileys Colada Limited Edition",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-baileys-birthday-cake-70cl-17pct",
+      "name": "Baileys Birthday Cake",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-baileys-espresso-cream-70cl-17pct",
+      "name": "Baileys Espresso Cream",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jagermeister-10cl-35pct",
+      "name": "Jagermeister",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jagermeister-20cl-35pct",
+      "name": "Jagermeister",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jagermeister-35cl-35pct",
+      "name": "Jagermeister",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jagermeister-50cl-35pct",
+      "name": "Jagermeister",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jagermeister-70cl-35pct",
+      "name": "Jagermeister",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jagermeister-100cl-35pct",
+      "name": "Jagermeister",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-disaronno-20cl-28pct",
+      "name": "Disaronno",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-disaronno-35cl-28pct",
+      "name": "Disaronno",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-disaronno-70cl-28pct",
+      "name": "Disaronno",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-disaronno-100cl-28pct",
+      "name": "Disaronno",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-disaronno-velvet-70cl-17pct",
+      "name": "Disaronno Velvet",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-malibu-35cl-18pct",
+      "name": "Malibu",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-malibu-70cl-18pct",
+      "name": "Malibu",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-malibu-100cl-18pct",
+      "name": "Malibu",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-malibu-strawberry-70cl-18pct",
+      "name": "Malibu Strawberry",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-grand-marnier-70cl-40pct",
+      "name": "Grand Marnier",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-grand-marnier-100cl-40pct",
+      "name": "Grand Marnier",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-flugel-doos-40-stuks-2cl-10pct",
+      "name": "Flugel Doos 40 stuks",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-licor-43-35cl-31pct",
+      "name": "Licor 43",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-licor-43-70cl-31pct",
+      "name": "Licor 43",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-licor-43-100cl-31pct",
+      "name": "Licor 43",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-licor-43-horchata-70cl-16pct",
+      "name": "Licor 43 Horchata",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-licor-43-chocolate-70cl-16pct",
+      "name": "Licor 43 Chocolate",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-green-tree-absinth-green-fairy-70cl-70pct",
+      "name": "Green Tree Absinth Green fairy",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-green-tree-absinth-red-devil-70cl-70pct",
+      "name": "Green Tree Absinth Red Devil",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-sheridans-50cl-15-5pct",
+      "name": "Sheridans",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-sheridans-70cl-15-5pct",
+      "name": "Sheridans",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-sheridans-100cl-15-5pct",
+      "name": "Sheridans",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-pisang-ambon-70cl-17pct",
+      "name": "Pisang Ambon",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-pisang-ambon-100cl-17pct",
+      "name": "Pisang Ambon",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-apfelkorn-70cl-18pct",
+      "name": "Apfelkorn",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-apfelkorn-100cl-18pct",
+      "name": "Apfelkorn",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-coebergh-classic-bessen-100cl-20pct",
+      "name": "Coebergh Classic Bessen",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-coebergh-kersen-100cl-20pct",
+      "name": "Coebergh Kersen",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-coebergh-red-fruit-100cl-14-5pct",
+      "name": "Coebergh Red Fruit",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-de-kuyper-dropshot-70cl-20pct",
+      "name": "De Kuyper Dropshot",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-de-kuyper-dropshot-100cl-20pct",
+      "name": "De Kuyper Dropshot",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-de-kuyper-hotshot-70cl-20pct",
+      "name": "De Kuyper Hotshot",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-southern-comfort-70cl-35pct",
+      "name": "Southern Comfort",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-southern-comfort-100cl-35pct",
+      "name": "Southern Comfort",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-de-kuyper-pina-colada-70cl-14-5pct",
+      "name": "De Kuyper Pina Colada",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-villa-massa-limoncello-70cl-30pct",
+      "name": "Villa Massa Limoncello",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-fireball-cinnamon-70cl-33pct",
+      "name": "Fireball Cinnamon",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-de-kuyper-dropshot-double-blac-70cl-24pct",
+      "name": "De Kuyper Dropshot double black",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-boswandeling-35cl-15pct",
+      "name": "Boswandeling",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-boswandeling-70cl-15pct",
+      "name": "Boswandeling",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-boswandeling-pink-70cl-15pct",
+      "name": "Boswandeling Pink",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-cointreau-70cl-40pct",
+      "name": "Cointreau",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-cointreau-100cl-40pct",
+      "name": "Cointreau",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-aperol-70cl-11pct",
+      "name": "Aperol",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-tia-maria-70cl-20pct",
+      "name": "Tia Maria",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-tia-maria-100cl-20pct",
+      "name": "Tia Maria",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-sonnema-berenburg-100cl-30pct",
+      "name": "Sonnema Berenburg",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-sourz-apple-70cl-15pct",
+      "name": "Sourz Apple",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-sourz-mango-70cl-15pct",
+      "name": "Sourz Mango",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-sourz-raspberry-70cl-15pct",
+      "name": "Sourz Raspberry",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-sourz-red-berry-70cl-15pct",
+      "name": "Sourz Red Berry",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bols-blue-curacao-70cl-21pct",
+      "name": "Bols Blue Curacao",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ponche-kuba-70cl-9pct",
+      "name": "Ponche Kuba",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ponche-caribe-pistachio-70cl-10pct",
+      "name": "Ponche Caribe Pistachio",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ponche-caribe-cream-70cl-10pct",
+      "name": "Ponche Caribe Cream",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-amarula-70cl-17pct",
+      "name": "Amarula",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-rocketshot-70cl-14pct",
+      "name": "Rocketshot",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-frangelico-70cl-20pct",
+      "name": "Frangelico",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-passoa-70cl-17pct",
+      "name": "Passoa",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-passoa-100cl-17pct",
+      "name": "Passoa",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-safari-70cl-20pct",
+      "name": "Safari",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-safari-100cl-20pct",
+      "name": "Safari",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ricard-100cl-45pct",
+      "name": "Ricard",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hoppe-vieux-20cl-35pct",
+      "name": "Hoppe Vieux",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hoppe-vieux-100cl-35pct",
+      "name": "Hoppe Vieux",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hoppe-jenever-20cl-35pct",
+      "name": "Hoppe Jenever",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hoppe-jenever-100cl-35pct",
+      "name": "Hoppe Jenever",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ketel-1-50cl-35pct",
+      "name": "Ketel 1",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-ketel-1-100cl-40pct",
+      "name": "Ketel 1",
+      "success": true,
+      "action": "updated"
+    },
+    {
+      "productId": "product-legner-100cl-30pct",
+      "name": "Legner",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bokma-50cl-35pct",
+      "name": "Bokma",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bokma-100cl-35pct",
+      "name": "Bokma",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hartevelt-50cl-35pct",
+      "name": "Hartevelt",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hartevelt-100cl-35pct",
+      "name": "Hartevelt",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-anker-zachte-borrel-100cl-28pct",
+      "name": "Anker Zachte Borrel",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-anker-jonge-jenever-100cl-35pct",
+      "name": "Anker Jonge Jenever",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-anker-vieux-100cl-35pct",
+      "name": "Anker Vieux",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hooghoudt-20cl-35pct",
+      "name": "Hooghoudt",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hooghoudt-100cl-35pct",
+      "name": "Hooghoudt",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bols-100cl-37-5pct",
+      "name": "Bols",
+      "success": true,
+      "action": "updated"
+    },
+    {
+      "productId": "product-bols-zeer-oude-jenever-50cl-35pct",
+      "name": "Bols Zeer Oude Jenever",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bols-zeer-oude-jenever-100cl-35pct",
+      "name": "Bols Zeer Oude Jenever",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bols-silverstrike-50cl-30pct",
+      "name": "Bols Silverstrike",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-bols-goldstrike-50cl-50pct",
+      "name": "Bols Goldstrike",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jose-cuervo-silver-70cl-35pct",
+      "name": "Jose cuervo Silver",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jose-cuervo-silver-100cl-35pct",
+      "name": "Jose cuervo Silver",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jose-cuervo-gold-70cl-35pct",
+      "name": "Jose cuervo Gold",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-jose-cuervo-gold-100cl-38pct",
+      "name": "Jose cuervo Gold",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-sierra-silver-35cl-38pct",
+      "name": "Sierra Silver",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-sierra-silver-70cl-38pct",
+      "name": "Sierra Silver",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-sierra-silver-100cl-38pct",
+      "name": "Sierra Silver",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-sierra-gold-70cl-38pct",
+      "name": "Sierra Gold",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-sierra-gold-100cl-38pct",
+      "name": "Sierra Gold",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hijos-de-villa-reposado-pistol-20cl-40pct",
+      "name": "Hijos De Villa Reposado Pistol",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-hijos-de-villa-blanco-pistol-20cl-40pct",
+      "name": "Hijos De Villa Blanco Pistol",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-1800-silver-tequila-70cl-38pct",
+      "name": "1800 Silver Tequila",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-1800-reposado-tequila-70cl-38pct",
+      "name": "1800 Reposado Tequila",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-tequila-rose-strawberry-cream-70cl-15pct",
+      "name": "Tequila Rose Strawberry Cream",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-olmeca-gold-70cl-35pct",
+      "name": "Olmeca Gold",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-olmeca-silver-70cl-35pct",
+      "name": "Olmeca Silver",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-don-julio-blanco-70cl-38pct",
+      "name": "Don Julio Blanco",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-don-julio-reposado-70cl-38pct",
+      "name": "Don Julio Reposado",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-patron-silver-70cl-40pct",
+      "name": "Patron Silver",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-patron-anejo-70cl-40pct",
+      "name": "Patron Anejo",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-patron-reposado-70cl-40pct",
+      "name": "Patron Reposado",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-martini-bianco-75cl-14-5pct",
+      "name": "Martini Bianco",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-martini-bianco-100cl-14-5pct",
+      "name": "Martini Bianco",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-martini-rosso-75cl-14-5pct",
+      "name": "Martini Rosso",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-martini-rosso-100cl-15pct",
+      "name": "Martini Rosso",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-martini-fiero-75cl-14-5pct",
+      "name": "Martini Fiero",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-martini-extra-dry-75cl-15pct",
+      "name": "Martini Extra Dry",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-martini-asti-150cl-7-5pct",
+      "name": "Martini Asti",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-martini-asti-75cl-7-5pct",
+      "name": "Martini Asti",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-martini-prosecco-20cl-11pct",
+      "name": "Martini Prosecco",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-martini-prosecco-75cl-11pct",
+      "name": "Martini Prosecco",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-martini-rossini-75cl-8pct",
+      "name": "Martini Rossini",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-martini-bellini-75cl-8pct",
+      "name": "Martini Bellini",
+      "success": true,
+      "action": "created"
+    },
+    {
+      "productId": "product-martini-mimosa-75cl-8pct",
+      "name": "Martini Mimosa",
+      "success": true,
       "action": "created"
     }
   ],
-  "timestamp": "2025-12-24T10:12:54.088Z"
+  "timestamp": "2025-12-24T11:14:36.475Z"
 }

@@ -7,8 +7,8 @@ export interface Product extends SanityDocument {
   category: string;
   description: string;
   price: number;
-  volume?: number;
-  percentage?: number;
+  volume?: string; // e.g., "75cl", "70cl"
+  percentage?: string; // e.g., "40%", "12.5%"
   land?: string;
   inStock: boolean;
   inSale: boolean;

@@ -68,8 +68,25 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   }, [cartItems, totalQuantities, totalPrice]);
 
   const onAdd = (product: Product, quantity: number) => {
+    if (!product.inStock) {
+      toast.error(`${product.name} is niet op voorraad`);
+      return;
+    }
+    
+    // Determine if product is sold per box or per bottle
+    // Logic: 
+    // - If (land === "Anders" OR land is empty): always per bottle (fles/flessen)
+    // - If land has specific value: per box (doos/dozen)
+    const isAndersProduct = product.land === "Anders" || !product.land;
+    const unit = isAndersProduct ? (quantity === 1 ? "fles" : "flessen") : (quantity === 1 ? "doos" : "dozen");
+    
     const checkProductInCart = cartItems.find((item) => item._id === product._id);
-    setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity * product.quantityInBox);
+    
+    // Calculate price: 
+    // - For "Anders" products: quantity is in bottles, so price is just product.price * quantity
+    // - For other products: quantity is in boxes, so multiply by quantityInBox
+    const priceMultiplier = isAndersProduct ? 1 : product.quantityInBox;
+    setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity * priceMultiplier);
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
 
     if (checkProductInCart) {
@@ -82,14 +99,16 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       setCartItems((prevCartItems) => [...prevCartItems, newProduct]);
     }
 
-    toast.success(`${quantity} ${quantity === 1 ? "doos" : "dozen"} van ${product.name} toegevoegd aan de winkelwagen`);
+    toast.success(`${quantity} ${unit} van ${product.name} toegevoegd aan de winkelwagen`);
   };
 
   const onRemove = (product: Product) => {
     const foundProduct = cartItems.find((item) => item._id === product._id);
     if (foundProduct) {
       const newCartItems = cartItems.filter((item) => item._id !== product._id);
-      setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price * foundProduct.quantity * foundProduct.quantityInBox);
+      const isAndersProduct = foundProduct.land === "Anders" || !foundProduct.land;
+      const priceMultiplier = isAndersProduct ? 1 : foundProduct.quantityInBox;
+      setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price * foundProduct.quantity * priceMultiplier);
       setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - foundProduct.quantity);
       setCartItems(newCartItems);
       toast.success(`${foundProduct.name} verwijderd uit winkelwagen`);
@@ -100,12 +119,14 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     const foundProduct = cartItems.find((item) => item._id === id);
     if (foundProduct) {
       const updatedQuantity = value === "inc" ? foundProduct.quantity + 1 : Math.max(foundProduct.quantity - 1, 0);
+      const isAndersProduct = foundProduct.land === "Anders" || !foundProduct.land;
+      const priceMultiplier = isAndersProduct ? 1 : foundProduct.quantityInBox;
 
       // If quantity becomes 0, remove the item from cart
       if (updatedQuantity === 0) {
-        const newCartItems = cartItems.filter((item) => item._id !== id);
+        const newCartItems = cartItems.filter((item) => item._id === id);
         setCartItems(newCartItems);
-        setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price * foundProduct.quantity * foundProduct.quantityInBox);
+        setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price * foundProduct.quantity * priceMultiplier);
         setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - foundProduct.quantity);
         toast.success(`${foundProduct.name} verwijderd uit winkelwagen`);
       } else {
@@ -115,7 +136,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
         // Calculate price difference based on quantity change
         const quantityDifference = updatedQuantity - foundProduct.quantity;
-        setTotalPrice((prevTotalPrice) => prevTotalPrice + quantityDifference * foundProduct.price * foundProduct.quantityInBox);
+        setTotalPrice((prevTotalPrice) => prevTotalPrice + quantityDifference * foundProduct.price * priceMultiplier);
         setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantityDifference);
       }
     }
