@@ -68,34 +68,50 @@ export function ProductDialog({ product, open, onOpenChange, onRemoveFavorite }:
       );
     }
 
+    const isAndersProduct = product.land === "Anders" || !product.land;
+    // For Anders products with quantityInBox > 1: price in DB is per box, but we sell per piece
+    // So price per piece = price per box / quantityInBox
+    const pricePerUnit = isAndersProduct && product.quantityInBox > 1 
+      ? product.price / product.quantityInBox 
+      : product.price;
+
     return (
       <div className="flex flex-1 flex-col text-right tracking-wide">
         <div className="mb-0">
           <span className="mr-1 text-xs font-semibold">€</span>
           <span className="text-3xl font-semibold tracking-wide sm:text-4xl">
-            {formatNumberWithCommaDecimalSeparator(product.price)}
+            {formatNumberWithCommaDecimalSeparator(pricePerUnit)}
           </span>
         </div>
         {(() => {
-          const isAndersProduct = product.land === "Anders" || !product.land;
-          // For "Anders" or empty land products: show calculated quantity based on volume
           if (isAndersProduct && product.volume) {
-            const calculatedQty = calculateQuantityInBoxFromVolume(product.volume);
-            // Always show, even if quantityInBox === 1 (shows how many are in a box)
-            return (
-              <div className="flex justify-end pt-1">
-                <span className="text-xs font-normal text-muted-foreground">
-                  (€ {formatNumberWithCommaDecimalSeparator(product.price * calculatedQty)} per doos – {calculatedQty} stuks × {product.volume})
-                </span>
-              </div>
-            );
+            if (product.quantityInBox > 1) {
+              // quantityInBox > 1: show price per box and quantity info
+              return (
+                <div className="flex justify-end pt-1">
+                  <span className="text-xs font-normal text-muted-foreground">
+                    (€ {formatNumberWithCommaDecimalSeparator(product.price)} per doos – {product.quantityInBox} stuks × {product.volume})
+                  </span>
+                </div>
+              );
+            } else {
+              // quantityInBox === 1, calculate based on volume to show how many are in a box
+              const calculatedQty = calculateQuantityInBoxFromVolume(product.volume);
+              return (
+                <div className="flex justify-end pt-1">
+                  <span className="text-xs font-normal text-muted-foreground">
+                    (€ {formatNumberWithCommaDecimalSeparator(product.price * calculatedQty)} per doos – {calculatedQty} stuks × {product.volume})
+                  </span>
+                </div>
+              );
+            }
           }
-          // For other products (with specific land), show if quantityInBox >= 1
-          if (product.quantityInBox >= 1) {
+          // For other products (with specific land), price is per box if quantityInBox > 1
+          if (product.quantityInBox > 1) {
             return (
               <div className="flex justify-end pt-1">
                 <span className="text-xs font-normal text-muted-foreground">
-                  (€ {formatNumberWithCommaDecimalSeparator(product.price * product.quantityInBox)} per doos – {product.quantityInBox} stuks × {product.volume})
+                  (€ {formatNumberWithCommaDecimalSeparator(product.price)} per doos – {product.quantityInBox} stuks × {product.volume})
                 </span>
               </div>
             );

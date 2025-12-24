@@ -83,10 +83,23 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     const checkProductInCart = cartItems.find((item) => item._id === product._id);
     
     // Calculate price: 
-    // - For "Anders" products: quantity is in bottles, so price is just product.price * quantity
+    // - For "Anders" products with quantityInBox > 1: price in DB is per box, but we sell per piece
+    //   So price per piece = product.price / product.quantityInBox, then multiply by quantity
+    // - For "Anders" products with quantityInBox === 1: price is already per piece
     // - For other products: quantity is in boxes, so multiply by quantityInBox
-    const priceMultiplier = isAndersProduct ? 1 : product.quantityInBox;
-    setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity * priceMultiplier);
+    let priceToAdd: number;
+    if (isAndersProduct && product.quantityInBox > 1) {
+      // Price per piece = price per box / quantityInBox
+      const pricePerPiece = product.price / product.quantityInBox;
+      priceToAdd = pricePerPiece * quantity;
+    } else if (isAndersProduct) {
+      // quantityInBox === 1, price is already per piece
+      priceToAdd = product.price * quantity;
+    } else {
+      // Other products: price is per box
+      priceToAdd = product.price * quantity * product.quantityInBox;
+    }
+    setTotalPrice((prevTotalPrice) => prevTotalPrice + priceToAdd);
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
 
     if (checkProductInCart) {
@@ -99,7 +112,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       setCartItems((prevCartItems) => [...prevCartItems, newProduct]);
     }
 
-    toast.success(`${quantity} ${unit} van ${product.name} toegevoegd aan de winkelwagen`);
+    toast.success(`${quantity} ${product.name} toegevoegd aan de winkelwagen`);
   };
 
   const onRemove = (product: Product) => {
@@ -107,8 +120,18 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     if (foundProduct) {
       const newCartItems = cartItems.filter((item) => item._id !== product._id);
       const isAndersProduct = foundProduct.land === "Anders" || !foundProduct.land;
-      const priceMultiplier = isAndersProduct ? 1 : foundProduct.quantityInBox;
-      setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price * foundProduct.quantity * priceMultiplier);
+      
+      let priceToRemove: number;
+      if (isAndersProduct && foundProduct.quantityInBox > 1) {
+        const pricePerPiece = foundProduct.price / foundProduct.quantityInBox;
+        priceToRemove = pricePerPiece * foundProduct.quantity;
+      } else if (isAndersProduct) {
+        priceToRemove = foundProduct.price * foundProduct.quantity;
+      } else {
+        priceToRemove = foundProduct.price * foundProduct.quantity * foundProduct.quantityInBox;
+      }
+      
+      setTotalPrice((prevTotalPrice) => prevTotalPrice - priceToRemove);
       setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - foundProduct.quantity);
       setCartItems(newCartItems);
       toast.success(`${foundProduct.name} verwijderd uit winkelwagen`);
@@ -120,13 +143,23 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     if (foundProduct) {
       const updatedQuantity = value === "inc" ? foundProduct.quantity + 1 : Math.max(foundProduct.quantity - 1, 0);
       const isAndersProduct = foundProduct.land === "Anders" || !foundProduct.land;
-      const priceMultiplier = isAndersProduct ? 1 : foundProduct.quantityInBox;
+
+      // Calculate price per unit
+      let pricePerUnit: number;
+      if (isAndersProduct && foundProduct.quantityInBox > 1) {
+        pricePerUnit = foundProduct.price / foundProduct.quantityInBox;
+      } else if (isAndersProduct) {
+        pricePerUnit = foundProduct.price;
+      } else {
+        pricePerUnit = foundProduct.price * foundProduct.quantityInBox;
+      }
 
       // If quantity becomes 0, remove the item from cart
       if (updatedQuantity === 0) {
         const newCartItems = cartItems.filter((item) => item._id === id);
         setCartItems(newCartItems);
-        setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price * foundProduct.quantity * priceMultiplier);
+        const priceToRemove = pricePerUnit * foundProduct.quantity;
+        setTotalPrice((prevTotalPrice) => prevTotalPrice - priceToRemove);
         setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - foundProduct.quantity);
         toast.success(`${foundProduct.name} verwijderd uit winkelwagen`);
       } else {
@@ -136,7 +169,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
         // Calculate price difference based on quantity change
         const quantityDifference = updatedQuantity - foundProduct.quantity;
-        setTotalPrice((prevTotalPrice) => prevTotalPrice + quantityDifference * foundProduct.price * priceMultiplier);
+        const priceDifference = pricePerUnit * quantityDifference;
+        setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
         setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantityDifference);
       }
     }

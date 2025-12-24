@@ -84,7 +84,21 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
   // Calculate total
   let totalExVAT = 0;
   orderItemsData.forEach((item: Product) => {
-    const totalPrice = item.price * item.quantity * item.quantityInBox;
+    const isAndersProduct = item.land === "Anders" || !item.land;
+    let totalPrice: number;
+    
+    if (isAndersProduct && item.quantityInBox > 1) {
+      // Price in DB is per box, but we sell per piece
+      const pricePerPiece = item.price / item.quantityInBox;
+      totalPrice = pricePerPiece * item.quantity;
+    } else if (isAndersProduct) {
+      // quantityInBox === 1, price is already per piece
+      totalPrice = item.price * item.quantity;
+    } else {
+      // Other products: price is per box
+      totalPrice = item.price * item.quantity * item.quantityInBox;
+    }
+    
     totalExVAT += totalPrice;
   });
 
@@ -367,8 +381,23 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
       currentY = drawHeader(currentPage, pageNumber, totalPages);
     }
 
-    const pricePerPiece = item.price;
-    const totalPrice = pricePerPiece * item.quantity * item.quantityInBox;
+    const isAndersProduct = item.land === "Anders" || !item.land;
+    let pricePerPiece: number;
+    let totalPrice: number;
+    
+    if (isAndersProduct && item.quantityInBox > 1) {
+      // Price in DB is per box, but we sell per piece
+      pricePerPiece = item.price / item.quantityInBox;
+      totalPrice = pricePerPiece * item.quantity;
+    } else if (isAndersProduct) {
+      // quantityInBox === 1, price is already per piece
+      pricePerPiece = item.price;
+      totalPrice = pricePerPiece * item.quantity;
+    } else {
+      // Other products: price is per box
+      pricePerPiece = item.price * item.quantityInBox;
+      totalPrice = pricePerPiece * item.quantity;
+    }
 
     const rowData = [
       item.quantity.toString(),

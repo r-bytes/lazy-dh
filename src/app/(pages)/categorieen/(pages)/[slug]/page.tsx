@@ -71,8 +71,14 @@ export default async function Page({ params: { slug } }: Props) {
     initialProducts = products.filter((p) => p.inSale);
   } else if (slug !== "alles") {
     initialProducts = products.filter(
-      (p) => p.category.toLowerCase() === slug.toLowerCase()
+      (p) => p.category && p.category.toLowerCase() === slug.toLowerCase()
     );
+    // Debug: log filtering results
+    console.log(`[Category Page] Slug: ${slug}, Total products: ${products.length}, Filtered: ${initialProducts.length}`);
+    if (initialProducts.length === 0 && products.length > 0) {
+      const categories = [...new Set(products.map(p => p.category).filter(Boolean))];
+      console.log(`[Category Page] Available categories: ${categories.join(', ')}`);
+    }
   }
 
   const isNew = slug === "nieuw";
