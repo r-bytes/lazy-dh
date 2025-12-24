@@ -10,12 +10,11 @@ export const fetchProducts = async (queryParam?: string) => {
   }
 
   try {
-    const response: Response = await fetch(url, {
-      next: {
-        revalidate: 0, // No cache for now
-      },
-      cache: 'no-store',
-    });
+          const response: Response = await fetch(url, {
+            next: {
+              revalidate: 3600,
+            },
+          });
 
     if (!response.ok) {
       console.error(`Failed to fetch products: ${response.status} ${response.statusText}`);
@@ -25,35 +24,8 @@ export const fetchProducts = async (queryParam?: string) => {
     const data = await response.json();
     const products = data.products as Product[];
     
-    // Ensure statiegeld and tray are always present, even if undefined from API
-    const productsWithDefaults = products.map(product => {
-      const result: any = { ...product };
-      // Explicitly set statiegeld and tray, handling undefined, null, or missing
-      if (!('statiegeld' in product) || product.statiegeld === undefined || product.statiegeld === null) {
-        result.statiegeld = null;
-      } else {
-        result.statiegeld = product.statiegeld;
-      }
-      if (!('tray' in product) || product.tray === undefined || product.tray === null) {
-        result.tray = false;
-      } else {
-        result.tray = product.tray;
-      }
-      return result;
-    });
-    
-    // Log to verify fields are present
-    if (productsWithDefaults.length > 0) {
-      console.log('fetchProducts - Sample product:', {
-        _id: productsWithDefaults[0]._id,
-        name: productsWithDefaults[0].name,
-        tray: productsWithDefaults[0].tray,
-        statiegeld: productsWithDefaults[0].statiegeld,
-        fullProduct: productsWithDefaults[0]
-      });
-    }
-    
-    return productsWithDefaults;
+    // coalesce in GROQ query ensures statiegeld and tray are always present
+    return products;
   } catch (error) {
     console.error("Error fetching products:", error);
     return [];
