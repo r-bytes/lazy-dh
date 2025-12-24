@@ -1,5 +1,5 @@
 import { useCartContext } from "@/context/CartContext";
-import { formatNumberWithCommaDecimalSeparator, calculateQuantityInBoxFromVolume } from "@/lib/utils";
+import { calculateQuantityInBoxFromVolume, formatNumberWithCommaDecimalSeparator } from "@/lib/utils";
 import { CircleX, Minus, Plus, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,6 +12,7 @@ import Checkout from "./check-out";
 
 const ShoppingCart = () => {
   const { cartItems, setShowCart, toggleCartItemQuantity, onRemove } = useCartContext();
+  console.log("------------------ cartItems", cartItems);
 
   const HorizontalRule = () => <hr className="my-6 border-border sm:my-8 lg:my-12" />;
 
@@ -78,60 +79,58 @@ const ShoppingCart = () => {
 
                     <div className="flex w-full flex-col items-end justify-end space-y-2 sm:w-auto sm:px-2">
                       {(() => {
-                        // If tray is true (Lavish products): price in DB is per tray, so price per doos = item.price (not multiplied)
-                        // If quantityInBox > 1: sell per DOOS, so price = (price per fles * quantityInBox) * quantity (dozen)
-                        // Otherwise: per piece (quantityInBox is 1 or not set), so multiply by quantityInBox if it exists
-                        let totalPrice: number;
+                        // Determine large price and small text based on product type
+                        // Logic: If quantityInBox > 1 AND tray is not true, we sell only per doos
+                        const isSoldOnlyPerDoos = item.quantityInBox > 1 && !item.tray;
+                        const isAndersProduct = item.land === "Anders" || !item.land;
+                        
+                        // Calculate large price
+                        let largePrice: number;
                         if (item.tray) {
-                          // Lavish: price per doos = item.price (already per tray), then multiply by quantity (dozen)
-                          totalPrice = item.price * item.quantity;
-                        } else if (item.quantityInBox > 1) {
-                          // Sell per doos: price per doos = item.price * item.quantityInBox, then multiply by quantity (dozen)
-                          const pricePerDoos = item.price * item.quantityInBox;
-                          totalPrice = pricePerDoos * item.quantity;
+                          // For tray products: large price is per doos (item.price)
+                          largePrice = item.price;
+                        } else if (isSoldOnlyPerDoos) {
+                          // For products with quantityInBox > 1 and tray not true: large price is per doos
+                          largePrice = item.price * item.quantityInBox;
                         } else {
-                          // Sell per box, multiply by quantityInBox (or 1 if not set)
-                          const priceMultiplier = item.quantityInBox || 1;
-                          totalPrice = item.price * item.quantity * priceMultiplier;
+                          // For products without quantityInBox or quantityInBox === 1: use item.price
+                          largePrice = item.price;
+                        }
+                        
+                        // Calculate small text
+                        let smallText = null;
+                        if (item.tray && item.quantityInBox && item.quantityInBox > 1) {
+                          // For tray products: show price per stuk
+                          const pricePerStuk = item.price / item.quantityInBox;
+                          if (item.volume) {
+                            smallText = `€ ${formatNumberWithCommaDecimalSeparator(pricePerStuk)} per stuk (${item.quantityInBox} stuks × ${item.volume})`;
+                          } else {
+                            smallText = `€ ${formatNumberWithCommaDecimalSeparator(pricePerStuk)} per stuk (${item.quantityInBox} stuks)`;
+                          }
+                        } else if (isSoldOnlyPerDoos) {
+                          // For products with quantityInBox > 1 and tray not true: show price per stuk
+                          // Large price is per doos, small text shows price per stuk
+                          if (item.volume) {
+                            smallText = `€ ${formatNumberWithCommaDecimalSeparator(item.price)} per stuk (${item.quantityInBox} stuks × ${item.volume})`;
+                          } else {
+                            smallText = `€ ${formatNumberWithCommaDecimalSeparator(item.price)} per stuk (${item.quantityInBox} stuks)`;
+                          }
+                        } else if (isAndersProduct && item.volume) {
+                          // For Anders products without quantityInBox > 1: calculate based on volume
+                          const calculatedQty = calculateQuantityInBoxFromVolume(item.volume);
+                          smallText = `€ ${formatNumberWithCommaDecimalSeparator(item.price * calculatedQty)} per doos (${calculatedQty} stuks × ${item.volume})`;
                         }
                         
                         return (
                           <>
                             <h4 className="text-2xl font-semibold tracking-wide sm:text-3xl">
-                              {(() => {
-                                // If tray is true: show price per doos (item.price is already per tray)
-                                if (item.tray) {
-                                  return `€ ${formatNumberWithCommaDecimalSeparator(item.price)}`;
-                                } else if (item.quantityInBox > 1) {
-                                  // If quantityInBox > 1: show price per DOOS in large text
-                                  const pricePerDoos = item.price * item.quantityInBox;
-                                  return `€ ${formatNumberWithCommaDecimalSeparator(pricePerDoos)}`;
-                                } else {
-                                  return `€ ${formatNumberWithCommaDecimalSeparator(totalPrice)}`;
-                                }
-                              })()}
+                              € {formatNumberWithCommaDecimalSeparator(largePrice)}
                             </h4>
-                            <h4 className="text-right text-xs font-light text-text-secondary">
-                              {(() => {
-                                // If tray is true (Lavish): show price per tray info
-                                if (item.tray) {
-                                  return `€ ${formatNumberWithCommaDecimalSeparator(item.price)} per tray`;
-                                } else if (item.quantityInBox > 1) {
-                                  // If quantityInBox exists (> 1): show price per fles in small text
-                                  const pricePerFles = item.price; // item.price is already per fles
-                                  return `€ ${formatNumberWithCommaDecimalSeparator(pricePerFles)} per fles`;
-                                } 
-                                // If quantityInBox doesn't exist or is 1: calculate and show price per doos based on volume
-                                else if (item.volume) {
-                                  const calculatedQty = calculateQuantityInBoxFromVolume(item.volume);
-                                  const pricePerDoos = item.price * calculatedQty;
-                                  return `€ ${formatNumberWithCommaDecimalSeparator(pricePerDoos)} per doos`;
-                                } else {
-                                  // Fallback: show price as is
-                                  return `€ ${formatNumberWithCommaDecimalSeparator(item.price)} per stuk`;
-                                }
-                              })()}
-                            </h4>
+                            {smallText && (
+                              <h4 className="text-right text-xs font-light text-text-secondary">
+                                {smallText}
+                              </h4>
+                            )}
                           </>
                         );
                       })()}

@@ -152,6 +152,9 @@ export function ProductCard({
                     }
                     
                     const isAndersProduct = product.land === "Anders" || !product.land;
+                    const countriesOnlyPerBox = ["Polen", "Bulgarije", "Griekenland"];
+                    const isCountryOnlyPerBox = product.land && countriesOnlyPerBox.includes(product.land) && product.quantityInBox && product.quantityInBox > 1;
+                    
                     if (isAndersProduct && product.volume) {
                       if (product.quantityInBox > 1) {
                         // quantityInBox > 1: show price per box and quantity info
@@ -170,6 +173,7 @@ export function ProductCard({
                         );
                       }
                     }
+                    // For products with Polen, Bulgarije, or Griekenland AND quantityInBox > 1: sell only per doos
                     // For other products (with specific land), price is per box if quantityInBox > 1
                     if (product.quantityInBox > 1) {
                       return (

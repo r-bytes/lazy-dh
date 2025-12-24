@@ -2,9 +2,8 @@ import Header from "@/components/navigation/header";
 import { Section } from "@/components/ui/section";
 import { SectionHeader } from "@/components/ui/section-header";
 import { generateMetadata as generateSEOMetadata } from "@/lib/seo";
-import type { Metadata } from "next";
 import { FileText } from "lucide-react";
-import React from "react";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = generateSEOMetadata({
   title: "Algemene Voorwaarden",
@@ -48,10 +47,15 @@ const TermsAndConditionsPage = () => {
           deze leeftijdseis voldoet.
         </p>
 
-        <h2 className="mt-5 text-xl font-semibold">3. Bestelproces</h2>
+        <h2 className="mt-5 text-xl font-semibold">3. Bestelproces en Minimale Bestelwaarde</h2>
         <p>
           Na het plaatsen van je bestelling ontvang je een bevestiging per e-mail met de details van je bestelling. De bestelling kan vervolgens
           opgehaald worden.
+        </p>
+        <p className="mt-2">
+          <strong>Minimale bestelwaarde:</strong> Wij leveren alleen bestellingen met een minimale waarde van <strong>€ 1.200,00 excl. BTW</strong>. 
+          Bestellingen onder dit bedrag worden niet geleverd. Bezorgkosten worden op de factuur berekend. Voor bestellingen onder € 1.200,00 excl. BTW 
+          zie de tabel voor de vrachtkosten. Bij toevoegingen aan bestaande orders worden geen vrachtkosten toegevoegd.
         </p>
 
         <h2 className="mt-5 text-xl font-semibold">4. Prijzen en Betaling</h2>

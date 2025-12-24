@@ -64,8 +64,18 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       let recalculatedTotal = 0;
       let recalculatedQuantities = 0;
       parsedData.cartItems.forEach((item: Product) => {
-        const priceMultiplier = item.quantityInBox > 1 ? 1 : (item.quantityInBox || 1);
-        recalculatedTotal += item.price * item.quantity * priceMultiplier;
+        // If tray is true (Lavish products): price in DB is per tray, so price per doos = item.price (not multiplied)
+        if (item.tray) {
+          // Sell per doos: price per doos = item.price (already per tray), then multiply by quantity (dozen)
+          recalculatedTotal += item.price * item.quantity;
+        } else if (item.quantityInBox > 1) {
+          // Sell per doos: price per doos = item.price * item.quantityInBox, then multiply by quantity (dozen)
+          const pricePerDoos = item.price * item.quantityInBox;
+          recalculatedTotal += pricePerDoos * item.quantity;
+        } else {
+          const priceMultiplier = item.quantityInBox || 1;
+          recalculatedTotal += item.price * item.quantity * priceMultiplier;
+        }
         recalculatedQuantities += item.quantity;
       });
       setTotalPrice(recalculatedTotal);
@@ -109,10 +119,13 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     // Determine if product is sold per box or per bottle
     // Logic: 
     // - If quantityInBox > 1: ALWAYS sell per DOOS (dozen)
+    // - If land is "Polen", "Bulgarije" or "Griekenland" AND quantityInBox exists: sell per DOOS (dozen)
     // - If quantityInBox === 1 or not set:
     //   - If (land === "Anders" OR land is empty): per bottle (fles/flessen)
     //   - Otherwise: per box (doos/dozen)
-    const isSoldPerBox = product.quantityInBox > 1 ? true : (product.land !== "Anders" && product.land);
+    const countriesOnlyPerBox = ["Polen", "Bulgarije", "Griekenland"];
+    const isCountryOnlyPerBox = product.land && countriesOnlyPerBox.includes(product.land) && product.quantityInBox && product.quantityInBox > 1;
+    const isSoldPerBox = product.quantityInBox > 1 ? true : (isCountryOnlyPerBox ? true : (product.land !== "Anders" && product.land));
     const unit = isSoldPerBox ? (quantity === 1 ? "doos" : "dozen") : (quantity === 1 ? "fles" : "flessen");
     
     const checkProductInCart = cartItems.find((item) => item._id === product._id);

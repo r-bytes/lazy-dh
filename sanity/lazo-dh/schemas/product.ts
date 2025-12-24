@@ -193,7 +193,7 @@ export default defineType({
       title: 'Tray',
       description: 'Tray indicator',
       type: 'boolean',
-      hidden: true,
+      hidden: false,
     }),
   ],
 })
