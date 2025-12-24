@@ -1,0 +1,17 @@
+{
+  "name": "nieuwe-producten-engine",
+  "type": "module",
+  "version": "1.0.0",
+  "main": "build-products.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csv-parse": "^6.1.0",
+    "csv-stringify": "^6.6.0"
+  },
+  "description": ""
+}

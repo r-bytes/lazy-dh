@@ -1,0 +1,470 @@
+productId,name,volume,quantityInBox,percentage,price,category,description,inStock,inSale,isNew,quantity,imageFile
+,Lavish Absinthe Fruit Punch,0.25,24,11,52.99,Lavish,,,,,,./images/Lavish Absinthe Fruit Punch 0.25-24-11.webp
+,Lavish Absinthe Grape,0.25,24,11,52.99,Lavish,,,,,,./images/Lavish Absinthe Grape 0.25-24-11.webp
+,Lavish Absinthe Green Apple,0.25,24,11,52.99,Lavish,,,,,,./images/Lavish Absinthe Green Apple 0.25-24-11.webp
+,Lavish Absinthe Blue Raspberry,0.25,24,11,52.99,Lavish,,,,,,./images/Lavish Absinthe Blue Raspberry 0.25-24-11.webp
+,Lavish Classic,0.25,24,10,52.99,Lavish,,,,,,./images/Lavish Classic 0.25-24-10.webp
+,Lavish Mangotini,0.25,24,12.5,58.99,Lavish,,,,,,./images/Lavish Mangotini 0.25-24-12.5.webp
+,Lavish Cosmopolitan,0.25,24,12.5,58.99,Lavish,,,,,,./images/Lavish Cosmopolitan 0.25-24-12.5.webp
+,Lavish Raspberry Guava,0.25,24,12.5,58.99,Lavish,,,,,,./images/Lavish Raspberry Guava 0.25-24-12.5.webp
+,Lavish Purple Grape,0.25,24,12.5,58.99,Lavish,,,,,,./images/Lavish Purple Grape 0.25-24-12.5.webp
+,Lavish Pineapple Colada,0.25,24,12.5,58.99,Lavish,,,,,,./images/Lavish Pineapple Colada 0.25-24-12.5.webp
+,Lavish Whiskey-Cola,0.25,24,12.5,58.99,Lavish,,,,,,./images/Lavish Whiskey-Cola 0.25-24-12.5.webp
+,Lavish Gin Fizz,0.25,24,12.5,58.99,Lavish,,,,,,./images/Lavish Gin Fizz 0.25-24-12.5.webp
+,Lavish Rum-Cola,0.25,24,12.5,58.99,Lavish,,,,,,./images/Lavish Rum-Cola 0.25-24-12.5.webp
+,Lavish Ultra Strong,0.25,24,17,66.99,Lavish,,,,,,./images/Lavish Ultra Strong 0.25-24-17.webp
+,Lavish Extreme,0.25,24,21,79.99,Lavish,,,,,,./images/Lavish Extreme 0.25-24-21.webp
+,Lavish Hemp Vodka,0.7,1,40,21.45,Lavish,,,,,,./images/Lavish Hemp Vodka 0.7-1-40.webp
+,Lavish Bubblegum Kush,0.7,1,40,21.45,Lavish,,,,,,./images/Lavish Bubblegum Kush 0.7-1-40.webp
+,Lavish Vodka,0.7,1,40,21.45,Lavish,,,,,,./images/Lavish Vodka 0.7-1-40.webp
+,Johnnie Walker Red Label,0.2,1,40,4.85,Whisky,,,,,,./images/Johnnie Walker Red Label 0.20-1-40.webp
+,Johnnie Walker Red Label,0.35,1,40,7.40,Whisky,,,,,,./images/Johnnie Walker Red Label 0.35-1-40.webp
+,Johnnie Walker Red Label,0.7,1,40,11.25,Whisky,,,,,,./images/Johnnie Walker Red Label 0.7-1-40.webp
+,Johnnie Walker Red Label,1,1,40,15.85,Whisky,,,,,,./images/Johnnie Walker Red Label 1-1-40.webp
+,Johnnie Walker Black Label,0.2,1,40,10.65,Whisky,,,,,,./images/Johnnie Walker Black label 0.20-1-40.webp
+,Johnnie Walker Black Label,0.35,1,40,13.15,Whisky,,,,,,./images/Johnnie Walker Black label 0.35-1-40.webp
+,Johnnie Walker Black Label,0.7,1,40,18.75,Whisky,,,,,,./images/Johnnie Walker Black label 0.7-1-40.webp
+,Johnnie Walker Black Label,1,1,40,24.95,Whisky,,,,,,./images/Johnnie Walker Black label 1-1-40.webp
+,Jack Daniels,0.2,1,40,7.55,Whisky,,,,,,./images/Jack Daniels 0.20-1-40.webp
+,Jack Daniels,0.35,1,40,11.20,Whisky,,,,,,./images/Jack Daniels 0.35-1-40.webp
+,Jack Daniels,0.5,1,40,14.30,Whisky,,,,,,./images/Jack Daniels 0.5-1-40.webp
+,Jack Daniels,0.7,1,40,16.50,Whisky,,,,,,./images/Jack Daniel's Straight Rye 0.7-1-45.webp
+,Jack Daniels,1,1,40,21.95,Whisky,,,,,,./images/Jack Daniels 1-1-40.webp
+,Jack Daniels Honey,0.7,1,35,17.10,Whisky,,,,,,./images/Jack Daniels Honey 0.7-1-35.webp
+,Jack Daniels Honey,1,1,35,22.50,Whisky,,,,,,./images/Jack Daniels Honey 1-1-35.webp
+,Ballantines Finest,0.2,1,40,5.70,Whisky,,,,,,./images/Ballantines Finest 0.2-1-40.webp
+,Ballantines Finest,0.35,1,40,9.85,Whisky,,,,,,./images/Ballantines Finest 0.35-1-40.webp
+,Ballantines Finest,0.7,1,40,13.45,Whisky,,,,,,./images/Ballantines Finest 0.7-1-40.webp
+,Ballantines Finest,1,1,40,17.05,Whisky,,,,,,./images/Ballantines Finest 1-1-40.webp
+,Johnnie Walker Double Black,0.7,1,40,24.60,Whisky,,,,,,./images/Johnnie Walker Double Black 0.7-1-40.webp
+,Johnnie Walker Double Black,1,1,40,32.80,Whisky,,,,,,./images/Johnnie Walker Double Black 1-1-40.webp
+,Grants,0.2,1,40,3.95,Whisky,,,,,,./images/Grants 0.2-1-40.webp
+,Grants,0.35,1,40,6.65,Whisky,,,,,,./images/Grants 0.35-1-40.webp
+,Grants,0.7,1,40,10.50,Whisky,,,,,,./images/Grants 0.7-1-40.webp
+,Grants,1,1,40,13.95,Whisky,,,,,,./images/Grants 1-1-40.webp
+,Chivas Regal 12 yrs,0.35,1,40,13.25,Whisky,,,,,,./images/Chivas Regal 12 yrs 0.35-1-40.webp
+,Chivas Regal 12 yrs,0.7,1,40,20.90,Whisky,,,,,,./images/Chivas Regal 12 yrs 0.7-1-40.webp
+,Chivas Regal 12 yrs,1,1,40,26.00,Whisky,,,,,,./images/Chivas Regal 12 yrs 1-1-40.webp
+,Glen Talloch,0.2,1,40,4.00,Whisky,,,,,,./images/Glen Talloch 0.2-1-40.webp
+,Glen Talloch,0.35,1,40,5.70,Whisky,,,,,,./images/Glen Talloch 0.35-1-40.webp
+,Glen Talloch,0.7,1,40,10.10,Whisky,,,,,,./images/Glen Talloch 0.7-1-40.webp
+,Glen Talloch,1,1,40,13.85,Whisky,,,,,,./images/Glen Talloch 1-1-40.webp
+,Glen Scanlan,0.2,1,40,3.55,Whisky,,,,,,./images/Glen Scanlan 0.2-1-40.webp
+,Glen Scanlan,0.35,1,40,5.65,Whisky,,,,,,./images/Glen Scanlan 0.35-1-40.webp
+,Glen Scanlan,0.7,1,40,9.40,Whisky,,,,,,./images/Glen Scanlan 0.7-1-40.webp
+,Glen Scanlan,1,1,40,12.35,Whisky,,,,,,./images/Glen Scanlan 1-1-40.webp
+,Justerini & Brooks,0.2,1,40,4.55,Whisky,,,,,,./images/Justerini & Brooks 0.2-1-40.webp
+,Justerini & Brooks,0.35,1,40,8.30,Whisky,,,,,,./images/Justerini & Brooks 0.35-1-40.webp
+,Justerini & Brooks,0.7,1,40,11.60,Whisky,,,,,,./images/Justerini & Brooks 0.7-1-40.webp
+,Justerini & Brooks,1,1,40,15.50,Whisky,,,,,,./images/Justerini & Brooks 1-1-40.webp
+,William Lawsons,0.7,1,40,10.40,Whisky,,,,,,./images/William Lawsons 0.7-1-40.webp
+,William Lawsons,1,1,40,13.80,Whisky,,,,,,./images/William Lawsons 1-1-40.webp
+,Jameson,0.35,1,40,10.80,Whisky,,,,,,./images/Jameson 0.35-1-40.webp
+,Jameson,0.7,1,40,16.00,Whisky,,,,,,./images/Jameson 0.7-1-40.webp
+,Jameson,1,1,40,20.35,Whisky,,,,,,./images/Jameson 1-1-40.webp
+,Famous Grouse,0.2,1,40,5.85,Whisky,,,,,,./images/Famous Grouse 0.2-1-40.webp
+,Famous Grouse,0.35,1,40,9.80,Whisky,,,,,,./images/Famous Grouse 0.35-1-40.webp
+,Famous Grouse,0.7,1,40,11.25,Whisky,,,,,,./images/Famous Grouse 0.7-1-40.webp
+,Famous Grouse,1,1,40,14.45,Whisky,,,,,,./images/Famous Grouse 1-1-40.webp
+,Famous Grouse Sherry Cask,0.7,1,40,15.60,Whisky,,,,,,./images/Famous Grouse Sherry Cask 0.7-1-40.webp
+,Famous Grouse Sherry Cask,1,1,40,20.45,Whisky,,,,,,./images/Famous Grouse Sherry Cask 1-1-40.webp
+,Glen Mansion,0.2,1,40,4.65,Whisky,,,,,,./images/Glen Mansion 0.2-1-40.webp
+,Glen Mansion,0.7,1,40,10.45,Whisky,,,,,,./images/Glen Mansion 0.7-1-40.webp
+,Glen Mansion,1,1,40,14.10,Whisky,,,,,,./images/Glen Mansion 1-1-40.webp
+,Teachers,0.7,1,40,10.40,Whisky,,,,,,./images/Teacher's 0.7-1-40.webp
+,Teachers,1,1,40,14.85,Whisky,,,,,,./images/Teacher's 1-1-40.webp
+,Jim Beam,0.2,1,40,5.99,Whisky,,,,,,./images/Jim Beam 0.20-1-40.webp
+,Jim Beam,0.7,1,40,12.40,Whisky,,,,,,./images/Jim Beam 0.7-1-40.webp
+,Jim Beam,1,1,40,16.00,Whisky,,,,,,./images/Jim Beam 1-1-40.webp
+,Jim Beam Honey,0.7,1,32.5,12.45,Whisky,,,,,,./images/Jim Beam Honey 0.7-1-32.5.webp
+,Jim Beam Honey,1,1,32.5,16.00,Whisky,,,,,,./images/Jim Beam Honey 1-1-32.5.webp
+,Jim Beam Apple,0.7,1,32.5,12.45,Whisky,,,,,,./images/Jim Beam Apple 0.7-1-32.5.webp
+,Jim Beam Apple,1,1,32.5,16.00,Whisky,,,,,,./images/Jim Beam Apple 1-1-32.5.webp
+,Jim Beam Peach,0.7,1,32.5,12.45,Whisky,,,,,,./images/Jim Beam Peach 0.7-1-32.5.webp
+,Jim Beam Double OAK,0.7,1,43,19.90,Whisky,,,,,,./images/Jim Beam Double Oak 0.7-1-43.webp
+,Jim Beam Devils Cut,0.7,1,45,17.45,Whisky,,,,,,./images/Jim Beam Devil's Cut 0.7-1-45.webp
+,Jim Beam Black Cherry,0.7,1,32.5,12.95,Whisky,,,,,,./images/Jim Beam Black Cherry 0.7-1-32.5.webp
+,Johnnie Walker Gold Label Reserve,0.7,1,40,33.30,Whisky,,,,,,./images/Johnnie Walker Gold Label Reserve 0.7-1-40.png
+,Johnnie Walker Gold Label Reserve,1,1,40,41.95,Whisky,,,,,,./images/Johnnie Walker Gold Label Reserve 1-1-40.webp
+,Johnnie Walker 15 Years Green Label,0.7,1,43,33.80,Whisky,,,,,,./images/Johnnie Walker 15 Years Green Label 0.7-1-43.webp
+,Johnnie Walker Island Green,1,1,43,45.65,Whisky,,,,,,./images/Johnnie Walker Island Green 1-1-43.webp
+,Glen Talloch,1.5,1,40,21.50,Whisky,,,,,,./images/Glen Talloch 1.5-1-40.webp
+,Chivas Regal 18 yrs,0.7,1,40,49.50,Whisky,,,,,,./images/Chivas Regal 18 yrs 0.7-1-40.webp
+,Chivas Regal 18 yrs,1,1,40,58.50,Whisky,,,,,,./images/Chivas Regal 18 yrs 1-1-40.webp
+,Glen Scanlan,1.5,1,40,18.90,Whisky,,,,,,./images/Glen Scanlan 1.5-1-40.webp
+,Chivas Regal 13 yrs Irish Cask,1,1,40,36.25,Whisky,,,,,,./images/Chivas Regal 13 yrs Irish Cask 1-1-40.webp
+,Chivas Regal 13 yrs Sherry Cask,0.7,1,40,32.20,Whisky,,,,,,./images/Chivas Regal 13 yrs Sherry Cask 0.7-1-40.webp
+,Chivas Regal XV 15 yrs,0.7,1,40,38.95,Whisky,,,,,,./images/Chivas Regal XV 15 yrs 0.7-1-40.webp
+,Glenfiddich 12 yrs,0.7,1,40,28.95,Whisky,,,,,,./images/Glenfiddich 12 yrs 0.7-1-40.webp
+,Glenfiddich 12 yrs,1,1,40,38.95,Whisky,,,,,,./images/Glenfiddich 12 yrs 1-1-40.webp
+,Glenfiddich 15 yrs,0.7,1,40,42.95,Whisky,,,,,,./images/Glenfiddich 15 yrs 0.7-1-40.webp
+,Cutty Sark,0.7,1,40,11.95,Whisky,,,,,,./images/Cutty Sark 0.7-1-40.webp
+,Bushmills Original,0.7,1,40,13.95,Whisky,,,,,,./images/Bushmills Original 0.7-1-40.webp
+,Bushmills Original,1,1,40,17.75,Whisky,,,,,,./images/Bushmills Original 1-1-40.webp
+,Bushmills 10 yrs,0.7,1,40,22.75,Whisky,,,,,,./images/Bushmills 10 yrs 0.7-1-40.webp
+,Vat 69,0.7,1,40,10.40,Whisky,,,,,,./images/Vat 69 0.7-1-40.webp
+,Vat 69,1,1,40,14.10,Whisky,,,,,,./images/Vat 69 1-1-40.webp
+,Maltky,1,1,35,12.50,Whisky,,,,,,./images/Maltky 1-1-35.webp
+,Label 5,0.35,1,40,7.50,Whisky,,,,,,./images/Label 5 0.35-1-40.webp
+,Label 5,0.7,1,40,10.00,Whisky,,,,,,./images/Label 5 0.7-1-40.webp
+,Label 5,1,1,40,13.65,Whisky,,,,,,./images/Label 5 1-1-40.webp
+,Jack Daniels Single Barrel Select,0.35,1,45,15.35,Whisky,,,,,,./images/Jack Daniels Single Barrel Select 0.35-1-45.webp
+,Jack Daniels Single Barrel Select,0.7,1,45,30.45,Whisky,,,,,,./images/Jack Daniels Single Barrel Select 0.7-1-45.webp
+,Jack Daniels Single Barrel 100 proof,0.7,1,50,37.55,Whisky,,,,,,./images/Jack Daniels Single Barrel 100 Proof 0.7-1-45.webp
+,Jack Daniels Single Barrel Rye,0.7,1,45,34.80,Whisky,,,,,,./images/Jack Daniels Single Barrel RYE 0.7-1-45.webp
+,Jack Daniels Fire,0.7,1,35,17.65,Whisky,,,,,,./images/Jack Daniels Fire 0.7-1-35.webp
+,Jack Daniels Fire,1,1,35,23.10,Whisky,,,,,,./images/Jack Daniels Fire 1-1-35.webp
+,Jack Daniels Gentleman Jack,0.7,1,40,21.85,Whisky,,,,,,./images/Jack Daniels Gentleman Jack 0.7-1-40.webp
+,Jack Daniels Gentleman Jack,1,1,40,28.45,Whisky,,,,,,./images/Jack Daniels Gentleman Jack 1-1-40.webp
+,Dimple 15 yrs,1,1,43,38.95,Whisky,,,,,,./images/Dimple 15 yrs 1-1-43.webp
+,Dimple Golden Selection,0.7,1,40,19.25,Whisky,,,,,,./images/Dimple Golden Selection 0.7-1-40.webp
+,Dewars White Label,1,1,40,17.40,Whisky,,,,,,./images/Dewar's White Label 1-1-40.webp
+,Tullamore Dew,0.7,1,40,14.20,Whisky,,,,,,./images/Tullamore Dew 0.7-1-40.webp
+,Tullamore Dew,1,1,40,18.70,Whisky,,,,,,./images/Tullamore Dew 1-1-40.webp
+,Four Roses,0.7,1,40,14.90,Whisky,,,,,,./images/Four Roses 0.7-1-40.webp
+,Four Roses,1,1,40,18.75,Whisky,,,,,,./images/Four Roses 1-1-40.webp
+,Johnnie Walker Black Label,1.75,1,40,61.50,Whisky,,,,,,./images/Johnnie Walker Black Label 1.75-1-40.webp
+,Johnnie Walker Red Label,1.75,1,40,33.75,Whisky,,,,,,./images/Johnnie Walker Red Label 1.75-1-40.webp
+,Jack Daniels,1.5,1,40,39.75,Whisky,,,,,,./images/Jack Daniels 1.5-1-40.webp
+,Jack Daniels,3,1,40,77.65,Whisky,,,,,,./images/Jack Daniels 3-1-40.webp
+,Jack Daniels apple,0.7,1,35,17.35,Whisky,,,,,,./images/Jack Daniels Apple 0.7-1-35.webp
+,Jack Daniels apple,1,1,35,23.35,Whisky,,,,,,./images/Jack Daniels Apple 1-1-35.webp
+,jack daniels straight rye,0.7,1,45,20.15,Whisky,,,,,,./images/Jack Daniel's Straight Rye 0.7-1-45.webp
+,Johnnie Walker Blue Label,1,1,40,155.95,Whisky,,,,,,./images/Johnnie Walker Blue Label 1-1-40.webp
+,Johnnie Walker Blue Label,0.7,1,40,144.95,Whisky,,,,,,./images/Johnnie Walker Blue Label 0.7-1-40.webp
+,Esbjaerg,0.2,1,40,3.65,Wodka,,,,,,./images/Esbjaerg 0.2-1-40.webp
+,Esbjaerg,0.5,1,40,6.75,Wodka,,,,,,./images/Esbjaerg 0.5-1-40.webp
+,Esbjaerg,1,1,40,12.25,Wodka,,,,,,./images/Esbjaerg 1-1-40.webp
+,Smirnoff Red,0.2,1,37.5,3.60,Wodka,,,,,,./images/Smirnoff Red 0.2-1-37.5.webp
+,Smirnoff Red,0.35,1,37.5,5.85,Wodka,,,,,,./images/Smirnoff Red 0.35-1-37.5.webp
+,Smirnoff Red,0.5,1,37.5,7.70,Wodka,,,,,,./images/Smirnoff Red 0.5-1-37.5.webp
+,Smirnoff Red,0.7,1,37.5,9.60,Wodka,,,,,,./images/Smirnoff Red 0.7-1-37.5.webp
+,Smirnoff Red,1,1,37.5,12.75,Wodka,,,,,,./images/Smirnoff Red 1-1-37.5.webp
+,Smirnoff Blue,1,1,50,17.25,Wodka,,,,,,./images/Smirnoff Blue 1-1-50.webp
+,Smirnoff Raspberry Crush,0.7,1,25,11.95,Wodka,,,,,,./images/Smirnoff Raspberry Crush 0.7-1-25.webp
+,Smirnoff Mango & Passionfruit,0.7,1,25,11.95,Wodka,,,,,,./images/Smirnoff Mango & Passionfruit 0.7-1-25.webp
+,Iganoff,0.2,1,37.5,3.40,Wodka,,,,,,./images/Iganoff 0.2-1-37.5.webp
+,Iganoff,0.35,1,37.5,4.90,Wodka,,,,,,./images/Iganoff 0.35-1-37.5.webp
+,Iganoff,0.7,1,37.5,8.10,Wodka,,,,,,./images/Iganoff 0.7-1-37.5.webp
+,Iganoff,1,1,37.5,10.40,Wodka,,,,,,./images/Iganoff 1-1-37.5.webp
+,Eristoff Vodka,0.7,1,37.5,10.05,Wodka,,,,,,./images/Eristoff Vodka 0.7-1-37.5.webp
+,Eristoff Vodka,1,1,37.5,13.35,Wodka,,,,,,./images/Eristoff Vodka 1-1-37.5.webp
+,Eristoff Red,0.7,1,18,9.25,Wodka,,,,,,./images/Eristoff Red 0.7-1-18.webp
+,Eristoff Red,1,1,18,12.30,Wodka,,,,,,./images/Eristoff Red 1-1-18.webp
+,Puschkin Vodka,0.7,1,37.5,8.25,Wodka,,,,,,./images/Puschkin Vodka 0.7-1-37.5.webp
+,Puschkin Vodka,1,1,37.5,11.70,Wodka,,,,,,./images/Puschkin Vodka 1-1-37.5.webp
+,Puschkin Red,0.7,1,17.5,6.45,Wodka,,,,,,./images/Puschkin Red 0.7-1-17.5.webp
+,Puschkin Red,1,1,17.5,7.65,Wodka,,,,,,./images/Puschkin Red 1-1-17.5.webp
+,Wyborowa,0.7,1,37.5,10.15,Wodka,,,,,,./images/Wyborowa 0.7-1-37.5.webp
+,Wyborowa,1,1,37.5,13.20,Wodka,,,,,,./images/Wyborowa 1-1-37.5.webp
+,Finlandia,0.7,1,40,10.95,Wodka,,,,,,./images/Finlandia 0.7-1-40.webp
+,Finlandia,1,1,40,14.25,Wodka,,,,,,./images/Finlandia 1-1-40.webp
+,Finlandia Mango,1,1,37.5,15.75,Wodka,,,,,,./images/Finlandia Mango 1-1-37.5.webp
+,Finlandia Redberry,1,1,37.5,15.75,Wodka,,,,,,./images/Finlandia Redberry 1-1-37.5.webp
+,Finlandia Blackcurrant,1,1,37.5,15.75,Wodka,,,,,,./images/Finlandia Blackcurrant 1-1-37.5.webp
+,Finlandia Grapefruit,1,1,37.5,15.75,Wodka,,,,,,./images/Finlandia Grapefruit 1-1-37.5.webp
+,Finlandia lime,1,1,37.5,15.75,Wodka,,,,,,./images/Finlandia Lime 1-1-37.5.webp
+,Pravda,0.7,1,40,14.15,Wodka,,,,,,./images/Pravda 0.7-1-40.webp
+,Pravda,1.75,1,40,31.85,Wodka,,,,,,./images/Pravda 1.75-1-40.webp
+,Pravda Coco,0.7,1,37.5,14.50,Wodka,,,,,,./images/Pravda Coco 0.7-1-37.5.webp
+,Pravda Cherry,0.7,1,37.5,14.50,Wodka,,,,,,./images/Pravda Cherry 0.7-1-37.5.webp
+,Pravda Pineapple,0.7,1,37.5,14.50,Wodka,,,,,,./images/Pravda Pineapple 0.7-1-37.5.webp
+,Pravda Caramel,0.7,1,37.5,14.50,Wodka,,,,,,./images/Pravda Caramel 0.7-1-37.5.webp
+,Pravda Citron,0.7,1,37.5,14.50,Wodka,,,,,,./images/Pravda Citron 0.7-1-37.5.webp
+,Pravda Raspberry,0.7,1,37.5,14.50,Wodka,,,,,,./images/Pravda Raspberry 0.7-1-37.5.webp
+,Sobieski Premium,0.7,1,40,8.80,Wodka,,,,,,./images/Sobieski Premium 0.7-1-40.webp
+,Sobieski Premium,1,1,40,11.95,Wodka,,,,,,./images/Sobieski Premium 1-1-40.webp
+,Puschkin Black Berries,0.7,1,17,6.10,Wodka,,,,,,./images/Puschkin Black Berries 0.7-1-17.png
+,Puschkin Black Berries,1,1,17,8.95,Wodka,,,,,,./images/Puschkin Black Berries 1-1-17.png
+,Puschkin Watermelon,0.7,1,17.5,6.95,Wodka,,,,,,./images/Puschkin Watermelon 0.7-1-17.5.png
+,Trojka Pink,0.7,1,17,9.70,Wodka,,,,,,./images/Trojka Pink 0.70-1-17.png
+,Trojka Orange,0.7,1,17,10.15,Wodka,,,,,,./images/Trojka Orange 0.7-1-17.png
+,Absolut Vodka,0.2,1,40,4.50,Wodka,,,,,,./images/Absolut Vodka 0.2-1-40.png
+,Absolut Vodka,0.35,1,40,7.35,Wodka,,,,,,./images/Absolut Vodka 0.35-1-40.png
+,Absolut Vodka,0.5,1,40,10.15,Wodka,,,,,,./images/Absolut Vodka 0.5-1-40.png
+,Absolut Vodka,0.7,1,40,12.95,Wodka,,,,,,./images/Absolut Vodka 0.7-1-40.png
+,Absolut Vodka,1,1,40,15.50,Wodka,,,,,,./images/Absolut Vodka 1-1-40.png
+,Absolut Citron,1,1,40,16.95,Wodka,,,,,,./images/Absolut Citron 1-1-40.png
+,Absolut Grapefruit,1,1,40,16.95,Wodka,,,,,,./images/Absolut Grapefruit 1-1-40.png
+,Absolut Lime,1,1,40,16.95,Wodka,,,,,,./images/Absolut Lime 1-1-40.png
+,Absolut Vanilia,1,1,38,16.95,Wodka,,,,,,./images/Absolut Vanilia 1-1-38.png
+,Absolut Raspberri,1,1,38,16.95,Wodka,,,,,,./images/Absolut Raspberri 1-1-38.png
+,Absolut Apeach,1,1,38,16.95,Wodka,,,,,,./images/Absolut Apeach 1-1-38.png
+,Absolut Mango,1,1,38,16.95,Wodka,,,,,,./images/Absolut Mango 1-1-38.png
+,Absolut Passionfruit,1,1,38,16.95,Wodka,,,,,,./images/Absolut Passionfruit 1-1-38.png
+,Absolut Pear,1,1,38,16.95,Wodka,,,,,,./images/Absolut Pear 1-1-38.png
+,Absolut Citron,0.7,1,40,13.95,Wodka,,,,,,./images/Absolut Citron 0.7-1-40.png
+,Absolut Mango,0.7,1,38,13.95,Wodka,,,,,,./images/Absolut Mango 0.7-1-38.png
+,Absolut Pear,0.7,1,38,13.95,Wodka,,,,,,./images/Absolut Pear 0.7-1-38.png
+,Absolut Vanille,0.7,1,38,13.95,Wodka,,,,,,./images/Absolut Vanille 0.7-1-38.png
+,Absolut Grapefruit,0.7,1,40,13.95,Wodka,,,,,,./images/Absolut Grapefruit 0.70-1-40.png
+,Absolut Raspberri,0.7,1,38,13.95,Wodka,,,,,,./images/Absolut Raspberri 0.7-1-38.png
+,Absolut Peach,0.7,1,38,13.95,Wodka,,,,,,./images/Absolut Peach 0.7-1-38.png
+,Absolut Watermelon,0.7,1,38,13.95,Wodka,,,,,,./images/Absolut Watermelon 0.7-1-38.png
+,Absolut Passionfruit,0.7,1,38,13.95,Wodka,,,,,,./images/Absolut Passionfruit 0.7-1-38.png
+,Absolut Lime,0.7,1,40,13.95,Wodka,,,,,,./images/Absolut Lime 0.7-1-40.png
+,Ursus Roter,0.7,1,21,9.35,Wodka,,,,,,./images/Ursus Roter 0.7-1-21.png
+,Divine,1,1,37.5,11.35,Wodka,,,,,,./images/Divine 1-1-37.5.png
+,HPNOTIQ,0.7,1,17,14.99,Wodka,,,,,,./images/Hpnotiq 0.70-1-17.png
+,Au Vodka Bubblegum,0.7,1,35,22.35,Wodka,,,,,,./images/Au Vodka Bubblegum 0.7-1-35.png
+,Au Vodka Blue Raspberry,0.7,1,35,22.35,Wodka,,,,,,./images/Au Vodka Blue Raspberry 0.7-1-35.png
+,Au Vodka Watermelon,0.7,1,35,22.35,Wodka,,,,,,./images/Au Vodka Watermelon 0.7-1-35.png
+,Au Vodka Pineapple Crush,0.7,1,35,22.35,Wodka,,,,,,./images/Au Vodka Pineapple Crush 0.7-1-35.webp
+,Au Vodka Juicy Peach,0.7,1,35,22.35,Wodka,,,,,,./images/Au Vodka Juicy Peach 0.70-1-35.webp
+,Au Vodka Strawberry Burst,0.7,1,35,22.35,Wodka,,,,,,./images/Au Vodka Strawberry Burst 0.7-1-35.webp
+,Au Vodka Black Grape,0.7,1,35,22.35,Wodka,,,,,,./images/Au Vodka Black Grape 0.7-1-35.webp
+,Au Vodka Pink Lemonade,0.7,1,35,22.35,Wodka,,,,,,./images/Au Vodka Pink Lemonade 0.7-1-35.webp
+,Belvedere,0.2,1,40,9.70,Wodka,,,,,,./images/Belvedere 0.2-1-40.webp
+,Belvedere,0.7,1,40,25.30,Wodka,,,,,,./images/Belvedere 0.7-1-40.webp
+,Belvedere,1,1,40,32.30,Wodka,,,,,,./images/Belvedere 1-1-40.webp
+,Grey Goose,0.2,1,40,9.90,Wodka,,,,,,./images/Grey Goose 0.2-1-40.webp
+,Grey Goose,0.35,1,40,15.95,Wodka,,,,,,./images/Grey Goose 0.35-1-40.webp
+,Grey Goose,0.7,1,40,26.95,Wodka,,,,,,./images/Grey Goose 0.7-1-40.webp
+,Grey Goose,1,1,40,34.15,Wodka,,,,,,./images/Grey Goose 1-1-40.webp
+,Grey Goose Poire,0.7,1,40,28.95,Wodka,,,,,,./images/Grey Goose Poire 0.7-1-40.webp
+,Grey Goose Citron,0.7,1,40,28.95,Wodka,,,,,,./images/Grey Goose Citron 0.7-1-40.webp
+,Ciroc,0.7,1,40,21.45,Wodka,,,,,,./images/Ciroc 0.7-1-40.png
+,Ciroc,1,1,40,31.60,Wodka,,,,,,./images/Ciroc 1-1-40.png
+,Ciroc Limonata,0.7,1,37.5,21.95,Wodka,,,,,,./images/Ciroc Limonata 0.7-1-37.5.png
+,Ciroc Red Berry,0.7,1,37.5,20.95,Wodka,,,,,,./images/Ciroc Red Berry 0.7-1-37.5.png
+,Ciroc Pineapple,0.7,1,37.5,20.95,Wodka,,,,,,./images/Ciroc Pineapple 0.7-1-37.5.png
+,Ciroc Mango,0.7,1,37.5,20.95,Wodka,,,,,,./images/Ciroc Mango 0.7-1-37.5.png
+,Ciroc Coconut,0.7,1,37.5,20.95,Wodka,,,,,,./images/Ciroc Coconut 0.7-1-37.5.png
+,Ciroc Apple,0.7,1,37.5,20.95,Wodka,,,,,,./images/Ciroc Apple 0.7-1-37.5.png
+,Ciroc Peach,0.7,1,37.5,20.95,Wodka,,,,,,./images/Ciroc Peach 0.7-1-37.5.png
+,Crystal Head Aurora,0.7,1,40,40.45,Wodka,,,,,,./images/Crystal Head Aurora 0.7-1-40.png
+,Crystal Head,0.7,1,40,31.95,Wodka,,,,,,./images/Crystal Head 0.7-1-40.png
+,Crystal Head Onyx Blue Agave,0.7,1,40,37.50,Wodka,,,,,,./images/Crystal Head Onyx Blue Agave 0.7-1-40.png
+,Skyy,0.7,1,40,11.40,Wodka,,,,,,./images/Skyy 0.7-1-40.png
+,Skyy,1,1,40,14.10,Wodka,,,,,,./images/Skyy 1-1-40.png
+,Ketel 1,0.7,1,40,16.85,Wodka,,,,,,./images/Ketel 1 0.7-1-40.png
+,Ketel 1,1,1,40,22.95,Wodka,,,,,,./images/Ketel 1 1-1-35.webp
+,Nemiroff Original,1,1,40,12.30,Wodka,,,,,,./images/Nemiroff Original 1-1-40.png
+,Nemiroff Delikat,1,1,40,12.95,Wodka,,,,,,./images/Nemiroff Delikat 1-1-40.png
+,Nemiroff Honey Pepper,1,1,40,14.55,Wodka,,,,,,./images/Nemiroff Honey Pepper 1-1-40.png
+,Nemiroff De Luxe,1,1,40,14.70,Wodka,,,,,,./images/Nemiroff De Luxe 1-1-40.png
+,Cannabis Sativa,0.7,1,37.5,19.80,Wodka,,,,,,./images/Cannabis Sativa 0.7-1-37.5.png
+,Euphoria Cannabis,0.2,1,40,10.85,Wodka,,,,,,./images/Euphoria Cannabis 0.20-1-40.png
+,Euphoria Cannabis,0.5,1,40,15.80,Wodka,,,,,,./images/Euphoria Cannabis 0.5-1-40.png
+,Roberto Cavalli Black Edition,1,1,40,33.50,Wodka,,,,,,./images/Roberto Cavalli Black Edition 1-1-40.png
+,Roberto Cavalli Gold Edition,1,1,40,31.70,Wodka,,,,,,./images/Roberto Cavalli Gold Edition 1-1-40.png
+,Roberto Cavalli Mirror,1,1,40,31.70,Wodka,,,,,,./images/Roberto Cavalli Mirror 1-1-40.png
+,Roberto Cavalli,0.7,1,40,25.35,Wodka,,,,,,./images/Roberto Cavalli 0.7-1-40.png
+,3 Kilos Coconut,1,1,30,31.00,Wodka,,,,,,./images/3 Kilos Coconut 1-1-30.png
+,3 Kilos Gold,1,1,40,35.45,Wodka,,,,,,./images/3 Kilos Gold 1-1-40.png
+,Bols,1,1,37.5,14.25,Wodka,,,,,,./images/Bols 1-1-37.5.png
+,Belvedere,1.75,1,40,81.50,Wodka,,,,,,./images/Belvedere 1.75-1-40.png
+,Belvedere,3,1,40,139.30,Wodka,,,,,,./images/Belvedere 3-1-40.webp
+,Belvedere,6,1,40,264.95,Wodka,,,,,,./images/Belvedere 6-1-40.webp
+,Bacardi,0.2,1,37.5,4.20,Rum,,,,,,./images/Bacardi 0.2-1-37.5.webp
+,Bacardi,0.35,1,37.5,6.45,Rum,,,,,,./images/Bacardi 0.35-1-37.5.webp
+,Bacardi,0.7,1,37.5,11.25,Rum,,,,,,./images/Bacardi 0.7-1-37.5.webp
+,Bacardi,1,1,37.5,15.10,Rum,,,,,,./images/Bacardi 1-1-37.5.webp
+,Bacardi Limon,0.7,1,27,10.40,Rum,,,,,,./images/Bacardi Limon 0.70-1-27.webp
+,Bacardi Limon,1,1,27,13.85,Rum,,,,,,./images/Bacardi Limon 1-1-27.webp
+,Bacardi Razz,0.7,1,27,10.40,Rum,,,,,,./images/Bacardi Razz 0.70-1-27.webp
+,Bacardi Razz,1,1,27,13.85,Rum,,,,,,./images/Bacardi Razz 1-1-27.webp
+,Bacardi Tropical,0.7,1,27,10.30,Rum,,,,,,./images/Bacardi Tropical 0.70-1-27.webp
+,Bacardi Coconut,0.7,1,27,10.50,Rum,,,,,,./images/Bacardi Coconut 0.70-1-27.webp
+,Bacardi Spiced,0.7,1,35,11.25,Rum,,,,,,./images/Bacardi Spiced 0.7-1-35.webp
+,Bacardi Spiced,1,1,35,15.20,Rum,,,,,,./images/Bacardi Spiced 1-1-35.webp
+,Bacardi Mojito,0.7,1,14.9,8.95,Rum,,,,,,./images/Bacardi Mojito 0.7-1-14.9.webp
+,Bacardi Carta Negra,0.7,1,40,11.85,Rum,,,,,,./images/Bacardi Carta Negra 0.7-1-40.webp
+,Bacardi Carta Negra,1,1,40,15.75,Rum,,,,,,./images/Bacardi Carta Negra 1-1-40.webp
+,Bacardi Carta Oro,0.7,1,40,12.20,Rum,,,,,,./images/Bacardi Carta Oro 0.7-1-40.webp
+,Bacardi Carta Oro,1,1,40,16.50,Rum,,,,,,./images/Bacardi Carta Oro 1-1-40.webp
+,Bacardi passionfruit,0.7,1,27,10.50,Rum,,,,,,./images/Bacardi Passionfruit 0.70-1-27.webp
+,Bacardi Punch,0.7,1,14.9,8.95,Rum,,,,,,./images/Bacardi Punch 0.7-1-14.9.webp
+,Brugal Extra Viejo,0.7,1,38,20.80,Rum,,,,,,./images/Brugal Extra Viejo 0.7-1-38.webp
+,Captain Morgan Spiced Gold,0.2,1,35,4.40,Rum,,,,,,./images/Captain Morgan Spiced Gold 0.2-1-35.webp
+,Captain Morgan Spiced Gold,0.7,1,35,10.25,Rum,,,,,,./images/Captain Morgan Spiced Gold 0.7-1-35.webp
+,Captain Morgan Spiced Gold,1,1,35,13.25,Rum,,,,,,./images/Captain Morgan Spiced Gold 1-1-35.webp
+,Captain Morgan Dark,0.7,1,40,11.25,Rum,,,,,,./images/Captain Morgan Dark 0.7-1-40.webp
+,Captain Morgan Dark,1,1,40,15.10,Rum,,,,,,./images/Captain Morgan Dark 1-1-40.webp
+,Captain Morgan White,0.7,1,37.5,10.70,Rum,,,,,,./images/Captain Morgan White 0.7-1-37.5.webp
+,Captain Morgan White,1,1,37.5,14.80,Rum,,,,,,./images/Captain Morgan White 1-1-37.5.webp
+,Captain Morgan Sliced Apple,0.7,1,25,12.50,Rum,,,,,,./images/Captain Morgan Sliced Apple 0.7-1-25.webp
+,Captain Morgan Tiki,0.7,1,25,12.50,Rum,,,,,,./images/Captain Morgan Tiki 0.7-1-25.webp
+,Havana Club Anejo Especial,0.7,1,37.5,13.75,Rum,,,,,,./images/Havana Club Anejo Especial 0.7-1-37.5.webp
+,Havana Club Anejo Especial,1,1,37.5,18.80,Rum,,,,,,./images/Havana Club Anejo Especial 1-1-37.5.webp
+,Havana Club 3 yrs,0.7,1,37.5,13.50,Rum,,,,,,./images/Havana Club 3 yrs 0.7-1-37.5.webp
+,Havana Club 3 yrs,1,1,37.5,18.45,Rum,,,,,,./images/Havana Club 3 yrs 1-1-37.5.webp
+,Havana Club Anejo 7 Anos,0.7,1,40,20.95,Rum,,,,,,./images/Havana Club Anejo 7 Anos 0.7-1-40.webp
+,Havana Club Anejo 7 Anos,1,1,40,25.80,Rum,,,,,,./images/Havana Club Anejo 7 Anos 1-1-40.webp
+,Old Captain White,0.7,1,37.5,8.65,Rum,,,,,,./images/Old Captain White 0.7-1-37.5.webp
+,Old Captain White,1,1,37.5,11.55,Rum,,,,,,./images/Old Captain White 1-1-37.5.webp
+,Old Captain Brown,0.7,1,37.5,8.65,Rum,,,,,,./images/Old Captain Brown 0.7-1-37.5.webp
+,Old Captain Brown,1,1,37.5,11.55,Rum,,,,,,./images/Old Captain Brown 1-1-37.5.webp
+,Marienburg 81,0.2,1,81,8.75,Rum,,,,,,./images/Marienburg 81 0.2-1-81.webp
+,Marienburg 81,0.7,1,81,21.90,Rum,,,,,,./images/Marienburg 81 0.7-1-81.webp
+,Hanappier,0.7,1,38,16.80,Rum,,,,,,./images/Hanappier 0.7-1-38.webp
+,Hennessy VS,0.2,1,40,9.25,Cognac,,,,,,./images/Hennessy VS 0.20-1-40.webp
+,Hennessy VS,0.35,1,40,16.30,Cognac,,,,,,./images/Hennessy VS 0.35-1-40.webp
+,Hennessy VS,0.7,1,40,27.70,Cognac,,,,,,./images/Hennessy VS 0.70-1-40.webp
+,Hennessy VS,1,1,40,41.95,Cognac,,,,,,./images/Hennessy VS 1-1-40.webp
+,Hennessy VS,1.5,1,40,70.95,Cognac,,,,,,./images/Hennessy VS 1.5-1-40.webp
+,Hennessy VSOP,0.7,1,40,42.95,Cognac,,,,,,./images/Hennessy VSOP 0.7-1-40.webp
+,Remy Martin VSOP,0.7,1,40,33.70,Cognac,,,,,,./images/Remy Martin VSOP 0.7-1-40.webp
+,Remy Martin VSOP,1,1,40,46.95,Cognac,,,,,,./images/Remy Martin VSOP 1-1-40.webp
+,Joseph Guy VS,0.2,1,40,7.70,Cognac,,,,,,./images/Joseph Guy VS 0.2-1-40.webp
+,Joseph Guy VS,0.35,1,40,12.20,Cognac,,,,,,./images/Joseph Guy VS 0.35-1-40.webp
+,Joseph Guy VS,0.7,1,40,22.50,Cognac,,,,,,./images/Joseph Guy VS 0.7-1-40.webp
+,Joseph Guy VS,1,1,40,29.00,Cognac,,,,,,./images/Joseph Guy VS 1-1-40.webp
+,Metaxa 5,0.7,1,40,11.60,Cognac,,,,,,./images/Metaxa 5 0.7-1-40.webp
+,Metaxa 7,0.7,1,40,14.10,Cognac,,,,,,./images/Metaxa 7 0.7-1-40.webp
+,Martell VS,0.7,1,40,25.95,Cognac,,,,,,./images/Martell VS 0.7-1-40.webp
+,Napoleon Colbert VSOP,0.7,1,36,8.90,Cognac,,,,,,./images/Napoleon Colbert VSOP 0.7-1-36.webp
+,Courvoisier VS,0.7,1,40,23.65,Cognac,,,,,,./images/Courvoisier VS 0.7-1-40.webp
+,Courvoisier VS,1,1,40,32.95,Cognac,,,,,,./images/Courvoisier VS 1-1-40.webp
+,Gordons Gin,0.2,1,37.5,4.05,Gin,,,,,,./images/Gordons Gin 0.2-1-37.5.webp
+,Gordons Gin,0.35,1,37.5,6.20,Gin,,,,,,./images/Gordons Gin 0.35-1-37.5.webp
+,Gordons Gin,0.7,1,37.5,10.50,Gin,,,,,,./images/Gordons Gin 0.7-1-37.5.webp
+,Gordons Gin,1,1,37.5,14.00,Gin,,,,,,./images/Gordons Gin 1-1-37.5.webp
+,Gordons Gin Lemon,0.7,1,37.5,11.80,Gin,,,,,,./images/Gordons Gin Lemon 0.7-1-37.5.webp
+,Gordons Gin Pink,0.7,1,37.5,11.75,Gin,,,,,,./images/Gordons Gin Pink 0.7-1-37.5.webp
+,Gordons Gin Pink,1,1,37.5,17.85,Gin,,,,,,./images/Gordons Gin Pink 1-1-37.5.webp
+,Beefeater Gin,0.7,1,40,14.20,Gin,,,,,,./images/Beefeater Gin 0.7-1-40.webp
+,Bombay Sapphire,0.7,1,40,15.55,Gin,,,,,,./images/Bombay Sapphire 0.7-1-40.webp
+,Bombay Sapphire,1,1,40,20.00,Gin,,,,,,./images/Bombay Sapphire 1-1-40.webp
+,Hendricks,0.7,1,44,24.75,Gin,,,,,,./images/Hendricks 0.7-1-44.webp
+,Hendricks,1,1,44,35.15,Gin,,,,,,./images/Hendricks 1-1-44.webp
+,Isolaballa Sambuca,0.35,1,40,8.85,Gin,,,,,,./images/Isolaballa Sambuca 0.35-1-40.webp
+,Isolaballa Sambuca,0.7,1,40,13.35,Gin,,,,,,./images/Isolaballa Sambuca 0.7-1-40.webp
+,Isolaballa Sambuca,1,1,40,18.40,Gin,,,,,,./images/Isolaballa Sambuca 1-1-40.webp
+,Molinari Sambuca,0.7,1,40,12.60,Gin,,,,,,./images/Molinari Sambuca 0.7-1-40.webp
+,Molinari Sambuca,1,1,40,16.70,Gin,,,,,,./images/Molinari Sambuca 1-1-40.webp
+,Alize Blue,0.7,1,20,12.95,Likeur,,,,,,./images/Alize Blue 0.7-1-20.webp
+,Baileys Tiramisu Limited Edition,0.7,1,17,16.10,Likeur,,,,,,./images/Baileys Tiramisu Limited Edition 0.7-1-17.webp
+,Baileys Chocolate,0.5,1,15,11.65,Likeur,,,,,,./images/Baileys Chocolate 0.50-1-15.webp
+,Baileys Strawberry & Cream,0.7,1,17,14.95,Likeur,,,,,,./images/Baileys Strawberry & Cream 0.7-1-17.webp
+,Baileys Salted Caramel,0.7,1,17,11.85,Likeur,,,,,,./images/Baileys Salted Caramel 0.7-1-17.webp
+,Baileys Original,0.35,1,17,7.05,Likeur,,,,,,./images/Baileys Original 0.35-1-17.webp
+,Baileys Original,0.7,1,17,10.95,Likeur,,,,,,./images/Baileys Original 0.7-1-17.webp
+,Baileys Original,1,1,17,13.75,Likeur,,,,,,./images/Baileys Original 1-1-17.webp
+,Baileys Colada Limited Edition,0.7,1,17,15.70,Likeur,,,,,,./images/Baileys Colada Limited Edition 0.7-1-17.webp
+,Baileys Birthday Cake,0.7,1,17,15.65,Likeur,,,,,,./images/Baileys Birthday Cake 0.7-1-17.webp
+,Baileys Espresso Cream,0.7,1,17,12.25,Likeur,,,,,,./images/Baileys Espresso Cream 0.7-1-17.webp
+,Jagermeister,0.1,1,35,2.75,Likeur,,,,,,./images/Jagermeister 0.1-1-35.webp
+,Jagermeister,0.2,1,35,4.60,Likeur,,,,,,./images/Jagermeister 0.2-1-35.webp
+,Jagermeister,0.35,1,35,7.10,Likeur,,,,,,./images/Jagermeister 0.35-1-35.webp
+,Jagermeister,0.5,1,35,9.30,Likeur,,,,,,./images/Jagermeister 0.5-1-35.webp
+,Jagermeister,0.7,1,35,11.40,Likeur,,,,,,./images/Jagermeister 0.7-1-35.webp
+,Jagermeister,1,1,35,15.35,Likeur,,,,,,./images/Jagermeister 0.1-1-35.webp
+,Disaronno,0.2,1,28,6.40,Likeur,,,,,,./images/Disaronno 0.2-1-28.webp
+,Disaronno,0.35,1,28,8.35,Likeur,,,,,,./images/Disaronno 0.35-1-28.webp
+,Disaronno,0.7,1,28,12.95,Likeur,,,,,,./images/Disaronno 0.7-1-28.webp
+,Disaronno,1,1,28,16.75,Likeur,,,,,,./images/Disaronno 1-1-28.webp
+,Disaronno Velvet,0.7,1,17,14.65,Likeur,,,,,,./images/Disaronno Velvet 0.7-1-17.webp
+,Malibu,0.35,1,18,7.80,Likeur,,,,,,./images/Malibu 0.35-1-18.webp
+,Malibu,0.7,1,18,11.40,Likeur,,,,,,./images/Malibu 0.7-1-18.webp
+,Malibu,1,1,18,12.95,Likeur,,,,,,./images/Malibu 1-1-18.webp
+,Malibu Strawberry,0.7,1,18,12.25,Likeur,,,,,,./images/Malibu Strawberry 0.7-1-18.webp
+,Grand Marnier,0.7,1,40,17.95,Likeur,,,,,,./images/Grand Marnier 0.7-1-40.webp
+,Grand Marnier,1,1,40,24.95,Likeur,,,,,,./images/Grand Marnier 1-1-40.webp
+,Flugel Doos 40 stuks,0.02,40,10,29.95,Likeur,,,,,,./images/Flugel Doos 40 stuks 0.02-40-10.webp
+,Licor 43,0.35,1,31,9.75,Likeur,,,,,,./images/Licor 43 0.35-1-31.webp
+,Licor 43,0.7,1,31,12.95,Likeur,,,,,,./images/Licor 43 0.7-1-31.webp
+,Licor 43,1,1,31,16.40,Likeur,,,,,,./images/Licor 43 1-1-31.webp
+,Licor 43 Horchata,0.7,1,16,14.70,Likeur,,,,,,./images/Licor 43 Horchata 0.7-1-16.webp
+,Licor 43 Chocolate,0.7,1,16,14.60,Likeur,,,,,,./images/Licor 43 Chocolate 0.7-1-16.webp
+,Green Tree Absinth Green fairy,0.7,1,70,14.30,Likeur,,,,,,./images/Green Tree Absinth Green Fairy 0.7-1-70.webp
+,Green Tree Absinth Red Devil,0.7,1,70,14.30,Likeur,,,,,,./images/Green Tree Absinth Red Devil 0.7-1-70.webp
+,Sheridans,0.5,1,15.5,10.50,Likeur,,,,,,./images/Sheridans 0.5-1-15.5.png
+,Sheridans,0.7,1,15.5,13.95,Likeur,,,,,,./images/Sheridans 0.7-1-15.5.png
+,Sheridans,1,1,15.5,17.75,Likeur,,,,,,./images/Sheridans 1-1-15.5.png
+,Pisang Ambon,0.7,1,17,9.90,Likeur,,,,,,./images/Pisang Ambon 0.7-1-17.png
+,Pisang Ambon,1,1,17,12.40,Likeur,,,,,,./images/Pisang Ambon 1-1-17.png
+,Apfelkorn,0.7,1,18,6.55,Likeur,,,,,,./images/Apfelkorn 0.7-1-18.webp
+,Apfelkorn,1,1,18,8.50,Likeur,,,,,,./images/Apfelkorn 1-1-18.webp
+,Coebergh Classic Bessen,1,1,20,10.50,Likeur,,,,,,./images/Coebergh Classic Bessen 1-1-20.png
+,Coebergh Kersen,1,1,20,10.50,Likeur,,,,,,./images/Coebergh Kersen 1-1-20.png
+,Coebergh Red Fruit,1,1,14.5,9.50,Likeur,,,,,,./images/Coebergh Red Fruit 1-1-14.5.png
+,De Kuyper Dropshot,0.7,1,20,8.75,Likeur,,,,,,./images/De Kuyper Dropshot 0.7-1-20.png
+,De Kuyper Dropshot,1,1,20,11.60,Likeur,,,,,,./images/De Kuyper Dropshot 1-1-20.png
+,De Kuyper Hotshot,0.7,1,20,8.99,Likeur,,,,,,./images/De Kuyper Hotshot 0.7-1-20.png
+,Southern Comfort,0.7,1,35,11.50,Likeur,,,,,,./images/Southern Comfort 0.7-1-35.png
+,Southern Comfort,1,1,35,13.75,Likeur,,,,,,./images/Southern Comfort 1-1-35.png
+,De Kuyper Pina Colada,0.7,1,14.5,6.99,Likeur,,,,,,./images/De Kuyper Pina Colada 0.7-1-14.5.png
+,Villa Massa Limoncello,0.7,1,30,13.55,Likeur,,,,,,./images/Villa Massa Limoncello 0.7-1-30.png
+,Fireball Cinnamon,0.7,1,33,11.95,Likeur,,,,,,./images/Fireball Cinnamon 0.7-1-33.png
+,De Kuyper Dropshot double black,0.7,1,24,9.75,Likeur,,,,,,./images/De Kuyper Dropshot Double Black 0.7-1-24.png
+,Boswandeling,0.35,1,15,7.45,Likeur,,,,,,./images/Boswandeling 0.35-1-15.png
+,Boswandeling,0.7,1,15,11.90,Likeur,,,,,,./images/Boswandeling 0.7-1-15.png
+,Boswandeling Pink,0.7,1,15,11.90,Likeur,,,,,,./images/Boswandeling Pink 0.7-1-15.png
+,Cointreau,0.7,1,40,14.25,Likeur,,,,,,./images/Cointreau 0.7-1-40.png
+,Cointreau,1,1,40,20.45,Likeur,,,,,,./images/Cointreau 1-1-40.png
+,Aperol,0.7,1,11,10.25,Likeur,,,,,,./images/Aperol 0.7-1-11.png
+,Tia Maria,0.7,1,20,11.40,Likeur,,,,,,./images/Tia Maria 0.7-1-20.png
+,Tia Maria,1,1,20,15.10,Likeur,,,,,,./images/Tia Maria 1-1-20.png
+,Sonnema Berenburg,1,1,30,13.10,Likeur,,,,,,./images/Sonnema Berenburg 1-1-30.png
+,Sourz Apple,0.7,1,15,7.25,Likeur,,,,,,./images/Sourz Apple 0.7-1-15.png
+,Sourz Mango,0.7,1,15,7.25,Likeur,,,,,,./images/Sourz Mango 0.7-1-15.png
+,Sourz Raspberry,0.7,1,15,7.25,Likeur,,,,,,./images/Sourz Raspberry 0.7-1-15.png
+,Sourz Red Berry,0.7,1,15,7.25,Likeur,,,,,,./images/Sourz Red Berry 0.7-1-15.png
+,Bols Blue Curacao,0.7,1,21,9.65,Likeur,,,,,,./images/Bols Blue Curacao 0.7-1-21.png
+,Ponche Kuba,0.7,1,9,9.85,Likeur,,,,,,./images/Ponche Kuba 0.7-1-9.png
+,Ponche Caribe Pistachio,0.7,1,10,11.35,Likeur,,,,,,./images/Ponche Caribe Pistachio 0.7-1-10.png
+,Ponche Caribe Cream,0.7,1,10,12.95,Likeur,,,,,,./images/Ponche Caribe Cream 0.7-1-10.png
+,Amarula,0.7,1,17,10.75,Likeur,,,,,,./images/Amarula 0.7-1-17.png
+,Rocketshot,0.7,1,14,9.60,Likeur,,,,,,./images/Rocketshot 0.7-1-14.png
+,Frangelico,0.7,1,20,12.70,Likeur,,,,,,./images/Frangelico 0.7-1-20.png
+,Passoa,0.7,1,17,9.20,Likeur,,,,,,./images/Passoa 0.7-1-17.webp
+,Passoa,1,1,17,11.95,Likeur,,,,,,./images/Passoa 1-1-17.webp
+,Safari,0.7,1,20,9.10,Likeur,,,,,,./images/Safari 0.7-1-20.webp
+,Safari,1,1,20,12.10,Likeur,,,,,,./images/Safari 1-1-20.webp
+,Ricard,1,1,45,19.10,Likeur,,,,,,./images/Ricard 1-1-45.webp
+,Hoppe Vieux,0.2,1,35,3.50,Jenever,,,,,,./images/Hoppe Vieux 0.2-1-35.webp
+,Hoppe Vieux,1,1,35,11.65,Jenever,,,,,,./images/Hoppe Vieux 1-1-35.webp
+,Hoppe Jenever,0.2,1,35,3.50,Jenever,,,,,,./images/Hoppe Jenever 0.2-1-35.webp
+,Hoppe Jenever,1,1,35,11.65,Jenever,,,,,,./images/Hoppe Jenever 1-1-35.webp
+,Ketel 1,0.5,1,35,7.20,Jenever,,,,,,./images/Ketel 1 0.5-1-35.webp
+,Ketel 1,1,1,40,12.45,Jenever,,,,,,./images/Ketel 1 1-1-35.webp
+,Legner,1,1,30,10.50,Jenever,,,,,,./images/Legner 1-1-30.webp
+,Bokma,0.5,1,35,7.50,Jenever,,,,,,./images/Bokma 0.5-1-35.webp
+,Bokma,1,1,35,11.70,Jenever,,,,,,./images/Bokma 1-1-35.webp
+,Hartevelt,0.5,1,35,6.90,Jenever,,,,,,./images/Hartevelt 0.5-1-35.webp
+,Hartevelt,1,1,35,10.70,Jenever,,,,,,./images/Hartevelt 1-1-35.webp
+,Anker Zachte Borrel,1,1,28,8.30,Jenever,,,,,,./images/Anker Zachte Borrel 1-1-28.webp
+,Anker Jonge Jenever,1,1,35,9.70,Jenever,,,,,,./images/Anker Jonge Jenever 1-1-35.webp
+,Anker Vieux,1,1,35,9.65,Jenever,,,,,,./images/Anker Vieux 1-1-35.webp
+,Hooghoudt,0.2,1,35,3.40,Jenever,,,,,,./images/Hooghoudt 0.2-1-35.webp
+,Hooghoudt,1,1,35,12.20,Jenever,,,,,,./images/Hooghoudt 1-1-35.webp
+,Bols,1,1,37.5,11.75,Jenever,,,,,,./images/Bols 1-1-37.5.png
+,Bols Zeer Oude Jenever,0.5,1,35,8.95,Jenever,,,,,,./images/Bols Zeer Oude Jenever 0.5-1-35.webp
+,Bols Zeer Oude Jenever,1,1,35,13.75,Jenever,,,,,,./images/Bols Zeer Oude Jenever 1-1-35.webp
+,Bols Silverstrike,0.5,1,30,9.50,Jenever,,,,,,./images/Bols Silverstrike 0.5-1-30.webp
+,Bols Goldstrike,0.5,1,50,11.70,Jenever,,,,,,./images/Bols Goldstrike 0.5-1-50.webp
+,Jose cuervo Silver,0.7,1,35,14.40,Tequila,,,,,,./images/Jose Cuervo Silver 0.70-1-35.png
+,Jose cuervo Silver,1,1,35,19.45,Tequila,,,,,,./images/Jose Cuervo Silver 1-1-35.png
+,Jose cuervo Gold,0.7,1,35,14.50,Tequila,,,,,,./images/Jose Cuervo Gold 0.70-1-35.webp
+,Jose cuervo Gold,1,1,38,20.10,Tequila,,,,,,./images/Jose Cuervo Gold 1-1-38.webp
+,Sierra Silver,0.35,1,38,8.00,Tequila,,,,,,./images/Sierra Silver 0.35-1-38.webp
+,Sierra Silver,0.7,1,38,11.30,Tequila,,,,,,./images/Sierra Silver 0.7-1-38.png
+,Sierra Silver,1,1,38,15.95,Tequila,,,,,,./images/Sierra Silver 1-1-38.webp
+,Sierra Gold,0.7,1,38,11.30,Tequila,,,,,,./images/Sierra Gold 0.7-1-38.png
+,Sierra Gold,1,1,38,15.95,Tequila,,,,,,./images/Sierra Gold 1-1-38.webp
+,Hijos De Villa Reposado Pistol,0.2,1,40,30.95,Tequila,,,,,,./images/Hijos De Villa Reposado Pistol 0.2-1-40.png
+,Hijos De Villa Blanco Pistol,0.2,1,40,30.95,Tequila,,,,,,./images/Hijos De Villa Blanco Pistol 0.2-1-40.webp
+,1800 Silver Tequila,0.7,1,38,22.45,Tequila,,,,,,./images/1800 Silver Tequila 0.7-1-38.webp
+,1800 Reposado Tequila,0.7,1,38,23.30,Tequila,,,,,,./images/1800 Reposado Tequila 0.7-1-38.webp
+,Tequila Rose Strawberry Cream,0.7,1,15,13.70,Tequila,,,,,,./images/Tequila Rose Strawberry Cream 0.7-1-15.webp
+,Olmeca Gold,0.7,1,35,17.99,Tequila,,,,,,./images/Olmeca Gold 0.70-1-35.webp
+,Olmeca Silver,0.7,1,35,17.99,Tequila,,,,,,./images/Olmeca Silver 0.7-1-35.webp
+,Don Julio Blanco,0.7,1,38,35.95,Tequila,,,,,,./images/Don Julio Blanco 0.7-1-38.webp
+,Don Julio Reposado,0.7,1,38,42.35,Tequila,,,,,,./images/Don Julio Reposado 0.7-1-38.webp
+,Patron Silver,0.7,1,40,34.95,Tequila,,,,,,./images/Patron Silver 0.7-1-40.webp
+,Patron Anejo,0.7,1,40,40.75,Tequila,,,,,,./images/Patron Anejo 0.7-1-40.webp
+,Patron Reposado,0.7,1,40,35.95,Tequila,,,,,,./images/Patron Reposado 0.7-1-40.webp
+,Martini Bianco,0.75,1,14.5,6.99,Tequila,,,,,,./images/Martini Bianco 0.75-1-14.5.webp
+,Martini Bianco,1,1,14.5,8.99,Tequila,,,,,,./images/Martini Bianco 1-1-14.5.webp
+,Martini Rosso,0.75,1,14.5,6.99,Tequila,,,,,,./images/Martini Rosso 0.75-1-14.5.webp
+,Martini Rosso,1,1,15,8.99,Tequila,,,,,,./images/Martini Rosso 1-1-15.webp
+,Martini Fiero,0.75,1,14.5,8.65,Tequila,,,,,,./images/Martini Fiero 0.75-1-14.5.webp
+,Martini Extra Dry,0.75,1,15,7.25,Tequila,,,,,,./images/Martini Extra Dry 0.75-1-15.webp
+,Martini Asti,1.5,1,7.5,14.40,Tequila,,,,,,./images/Martini Asti 1.5-1-7.5.webp
+,Martini Asti,0.75,1,7.5,6.99,Tequila,,,,,,./images/Martini Asti 0.75-1-7.5.webp
+,Martini Prosecco,0.2,1,11,2.65,Tequila,,,,,,./images/Martini Prosecco 0.20-1-11.webp
+,Martini Prosecco,0.75,1,11,6.99,Tequila,,,,,,./images/Martini Prosecco 0.75-1-11.webp
+,Martini Rossini,0.75,1,8,7.65,Tequila,,,,,,./images/Martini Rossini 0.75-1-8.webp
+,Martini Bellini,0.75,1,8,7.60,Tequila,,,,,,./images/Martini Bellini 0.75-1-8.webp
+,Martini Mimosa,0.75,1,8,7.60,Tequila,,,,,,./images/Martini Mimosa 0.75-1-8.webp
