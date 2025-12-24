@@ -59,9 +59,40 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
       setCartItems(parsedData.cartItems);
       setTotalQuantities(parsedData.totalQuantities);
-      setTotalPrice(parsedData.totalPrice);
+      
+      // Recalculate total price based on current items to ensure correctness
+      let recalculatedTotal = 0;
+      let recalculatedQuantities = 0;
+      parsedData.cartItems.forEach((item: Product) => {
+        const priceMultiplier = item.quantityInBox > 1 ? 1 : (item.quantityInBox || 1);
+        recalculatedTotal += item.price * item.quantity * priceMultiplier;
+        recalculatedQuantities += item.quantity;
+      });
+      setTotalPrice(recalculatedTotal);
+      setTotalQuantities(recalculatedQuantities);
     }
   }, []);
+
+  // Recalculate total price whenever cartItems change to ensure correctness
+  useEffect(() => {
+    let recalculatedTotal = 0;
+    let recalculatedQuantities = 0;
+    cartItems.forEach((item) => {
+      // If quantityInBox > 1: sell per DOOS, so price = (price per fles * quantityInBox) * quantity (dozen)
+      // Otherwise: per piece, so multiply by quantityInBox if it exists
+      if (item.quantityInBox > 1) {
+        // Sell per doos: price per doos = item.price * item.quantityInBox, then multiply by quantity (dozen)
+        const pricePerDoos = item.price * item.quantityInBox;
+        recalculatedTotal += pricePerDoos * item.quantity;
+      } else {
+        const priceMultiplier = item.quantityInBox || 1;
+        recalculatedTotal += item.price * item.quantity * priceMultiplier;
+      }
+      recalculatedQuantities += item.quantity;
+    });
+    setTotalPrice(recalculatedTotal);
+    setTotalQuantities(recalculatedQuantities);
+  }, [cartItems]);
 
   useEffect(() => {
     window.localStorage.setItem("spacejelly_cart", JSON.stringify({ cartItems, totalQuantities, totalPrice }));
@@ -75,25 +106,16 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     
     // Determine if product is sold per box or per bottle
     // Logic: 
-    // - If quantityInBox > 1: always per box (doos/dozen)
+    // - If quantityInBox > 1: ALWAYS sell per DOOS (dozen)
     // - If quantityInBox === 1 or not set:
     //   - If (land === "Anders" OR land is empty): per bottle (fles/flessen)
     //   - Otherwise: per box (doos/dozen)
-    const isSoldPerBox = product.quantityInBox > 1 || (product.land !== "Anders" && product.land);
+    const isSoldPerBox = product.quantityInBox > 1 ? true : (product.land !== "Anders" && product.land);
     const unit = isSoldPerBox ? (quantity === 1 ? "doos" : "dozen") : (quantity === 1 ? "fles" : "flessen");
     
     const checkProductInCart = cartItems.find((item) => item._id === product._id);
     
-    // Calculate price: 
-    // - If quantityInBox > 1: always per box, so multiply by quantityInBox
-    // - If quantityInBox === 1 or not set:
-    //   - If "Anders" or empty land: per bottle, so price is just product.price * quantity
-    //   - Otherwise: per box (but quantityInBox is 1, so price is just product.price * quantity)
-    const priceMultiplier = product.quantityInBox > 1 ? product.quantityInBox : 1;
-    const priceToAdd = product.price * quantity * priceMultiplier;
-    setTotalPrice((prevTotalPrice) => prevTotalPrice + priceToAdd);
-    setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
-
+    // Price calculation is now handled by useEffect when cartItems change
     if (checkProductInCart) {
       const updatedCartItems = cartItems.map((cartProduct) =>
         cartProduct._id === product._id ? { ...cartProduct, quantity: cartProduct.quantity + quantity } : cartProduct
@@ -111,14 +133,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     const foundProduct = cartItems.find((item) => item._id === product._id);
     if (foundProduct) {
       const newCartItems = cartItems.filter((item) => item._id !== product._id);
-      
-      // If quantityInBox > 1: always per box, so multiply by quantityInBox
-      // Otherwise: per piece (quantityInBox is 1 or not set)
-      const priceMultiplier = foundProduct.quantityInBox > 1 ? foundProduct.quantityInBox : 1;
-      const priceToRemove = foundProduct.price * foundProduct.quantity * priceMultiplier;
-      
-      setTotalPrice((prevTotalPrice) => Math.max(0, prevTotalPrice - priceToRemove));
-      setTotalQuantities((prevTotalQuantities) => Math.max(0, prevTotalQuantities - foundProduct.quantity));
+      // Price calculation is now handled by useEffect when cartItems change
       setCartItems(newCartItems);
       toast.success(`${foundProduct.name} verwijderd uit winkelwagen`);
     }
@@ -127,17 +142,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const toggleCartItemQuantity = (id: number | string, value: "inc" | "dec") => {
     const foundProduct = cartItems.find((item) => item._id === id);
     if (foundProduct) {
-      // If quantityInBox > 1: always per box, so multiply by quantityInBox
-      // Otherwise: per piece (quantityInBox is 1 or not set)
-      const priceMultiplier = foundProduct.quantityInBox > 1 ? foundProduct.quantityInBox : 1;
-
       // If decreasing and quantity is 1 or less, remove the item
       if (value === "dec" && foundProduct.quantity <= 1) {
         const newCartItems = cartItems.filter((item) => item._id !== id);
         setCartItems(newCartItems);
-        const priceToRemove = foundProduct.price * foundProduct.quantity * priceMultiplier;
-        setTotalPrice((prevTotalPrice) => Math.max(0, prevTotalPrice - priceToRemove));
-        setTotalQuantities((prevTotalQuantities) => Math.max(0, prevTotalQuantities - foundProduct.quantity));
+        // Price calculation is now handled by useEffect when cartItems change
         toast.success(`${foundProduct.name} verwijderd uit winkelwagen`);
         return;
       }
@@ -149,21 +158,13 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       if (updatedQuantity < 1) {
         const newCartItems = cartItems.filter((item) => item._id !== id);
         setCartItems(newCartItems);
-        const priceToRemove = foundProduct.price * foundProduct.quantity * priceMultiplier;
-        setTotalPrice((prevTotalPrice) => Math.max(0, prevTotalPrice - priceToRemove));
-        setTotalQuantities((prevTotalQuantities) => Math.max(0, prevTotalQuantities - foundProduct.quantity));
+        // Price calculation is now handled by useEffect when cartItems change
         return;
       }
 
-      // Update quantity and prices
+      // Update quantity - price calculation is now handled by useEffect when cartItems change
       const newCartItems = cartItems.map((item) => (item._id === id ? { ...item, quantity: updatedQuantity } : item));
       setCartItems(newCartItems);
-
-      // Calculate price difference based on quantity change
-      const quantityDifference = updatedQuantity - foundProduct.quantity;
-      const priceDifference = foundProduct.price * quantityDifference * priceMultiplier;
-      setTotalPrice((prevTotalPrice) => Math.max(0, prevTotalPrice + priceDifference));
-      setTotalQuantities((prevTotalQuantities) => Math.max(0, prevTotalQuantities + quantityDifference));
     }
   };
 

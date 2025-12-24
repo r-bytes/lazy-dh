@@ -84,10 +84,17 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
   // Calculate total
   let totalExVAT = 0;
   orderItemsData.forEach((item: Product) => {
-    // If quantityInBox > 1: always per box, so multiply by quantityInBox
-    // Otherwise: per piece (quantityInBox is 1 or not set)
-    const priceMultiplier = item.quantityInBox > 1 ? item.quantityInBox : 1;
-    const totalPrice = item.price * item.quantity * priceMultiplier;
+    // If quantityInBox > 1: sell per DOOS, so price = (price per fles * quantityInBox) * quantity (dozen)
+    // Otherwise: per box, so multiply by quantityInBox (or 1 if not set)
+    let totalPrice: number;
+    if (item.quantityInBox > 1) {
+      // Sell per doos: price per doos = item.price * item.quantityInBox, then multiply by quantity (dozen)
+      const pricePerDoos = item.price * item.quantityInBox;
+      totalPrice = pricePerDoos * item.quantity;
+    } else {
+      const priceMultiplier = item.quantityInBox || 1;
+      totalPrice = item.price * item.quantity * priceMultiplier;
+    }
     totalExVAT += totalPrice;
   });
 
@@ -370,12 +377,20 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
       currentY = drawHeader(currentPage, pageNumber, totalPages);
     }
 
-    // If quantityInBox > 1: always per box, so multiply by quantityInBox
-    // Otherwise: per piece (quantityInBox is 1 or not set)
-    const priceMultiplier = item.quantityInBox > 1 ? item.quantityInBox : 1;
-    const isSoldPerBox = item.quantityInBox > 1;
-    const pricePerPiece = isSoldPerBox ? item.price * item.quantityInBox : item.price;
-    const totalPrice = item.price * item.quantity * priceMultiplier;
+    // If quantityInBox > 1: sell per DOOS, so price = (price per fles * quantityInBox) * quantity (dozen)
+    // Otherwise: per box, so multiply by quantityInBox (or 1 if not set)
+    let totalPrice: number;
+    let pricePerPiece: number;
+    if (item.quantityInBox > 1) {
+      // Sell per doos: price per doos = item.price * item.quantityInBox, then multiply by quantity (dozen)
+      const pricePerDoos = item.price * item.quantityInBox;
+      totalPrice = pricePerDoos * item.quantity;
+      pricePerPiece = pricePerDoos; // Show price per doos in PDF
+    } else {
+      const priceMultiplier = item.quantityInBox || 1;
+      totalPrice = item.price * item.quantity * priceMultiplier;
+      pricePerPiece = item.quantityInBox ? item.price * item.quantityInBox : item.price;
+    }
 
     const rowData = [
       item.quantity.toString(),

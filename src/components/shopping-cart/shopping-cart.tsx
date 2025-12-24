@@ -1,5 +1,5 @@
 import { useCartContext } from "@/context/CartContext";
-import { formatNumberWithCommaDecimalSeparator } from "@/lib/utils";
+import { formatNumberWithCommaDecimalSeparator, calculateQuantityInBoxFromVolume } from "@/lib/utils";
 import { CircleX, Minus, Plus, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -78,24 +78,47 @@ const ShoppingCart = () => {
 
                     <div className="flex w-full flex-col items-end justify-end space-y-2 sm:w-auto sm:px-2">
                       {(() => {
-                        // If quantityInBox > 1: always per box, so multiply by quantityInBox
-                        // Otherwise: per piece (quantityInBox is 1 or not set)
-                        const priceMultiplier = item.quantityInBox > 1 ? item.quantityInBox : 1;
-                        const totalPrice = item.price * item.quantity * priceMultiplier;
-                        const isSoldPerBox = item.quantityInBox > 1;
-                        const isAndersProduct = item.land === "Anders" || !item.land;
+                        // If quantityInBox > 1: sell per DOOS, so price = (price per fles * quantityInBox) * quantity (dozen)
+                        // Otherwise: per piece (quantityInBox is 1 or not set), so multiply by quantityInBox if it exists
+                        let totalPrice: number;
+                        if (item.quantityInBox > 1) {
+                          // Sell per doos: price per doos = item.price * item.quantityInBox, then multiply by quantity (dozen)
+                          const pricePerDoos = item.price * item.quantityInBox;
+                          totalPrice = pricePerDoos * item.quantity;
+                        } else {
+                          // Sell per box, multiply by quantityInBox (or 1 if not set)
+                          const priceMultiplier = item.quantityInBox || 1;
+                          totalPrice = item.price * item.quantity * priceMultiplier;
+                        }
                         
                         return (
                           <>
-                            <h4 className="text-2xl font-semibold tracking-wide sm:text-3xl">€ {formatNumberWithCommaDecimalSeparator(totalPrice)}</h4>
+                            <h4 className="text-2xl font-semibold tracking-wide sm:text-3xl">
+                              {(() => {
+                                // If quantityInBox > 1: show price per DOOS in large text
+                                if (item.quantityInBox > 1) {
+                                  const pricePerDoos = item.price * item.quantityInBox;
+                                  return `€ ${formatNumberWithCommaDecimalSeparator(pricePerDoos)}`;
+                                } else {
+                                  return `€ ${formatNumberWithCommaDecimalSeparator(totalPrice)}`;
+                                }
+                              })()}
+                            </h4>
                             <h4 className="text-right text-xs font-light text-text-secondary">
                               {(() => {
-                                if (isSoldPerBox) {
-                                  return `€ ${formatNumberWithCommaDecimalSeparator(item.price * item.quantityInBox)} per doos`;
-                                } else if (isAndersProduct) {
-                                  return `€ ${formatNumberWithCommaDecimalSeparator(item.price)} per fles`;
+                                // If quantityInBox exists (> 1): show price per fles in small text
+                                if (item.quantityInBox > 1) {
+                                  const pricePerFles = item.price; // item.price is already per fles
+                                  return `€ ${formatNumberWithCommaDecimalSeparator(pricePerFles)} per fles`;
+                                } 
+                                // If quantityInBox doesn't exist or is 1: calculate and show price per doos based on volume
+                                else if (item.volume) {
+                                  const calculatedQty = calculateQuantityInBoxFromVolume(item.volume);
+                                  const pricePerDoos = item.price * calculatedQty;
+                                  return `€ ${formatNumberWithCommaDecimalSeparator(pricePerDoos)} per doos`;
                                 } else {
-                                  return `€ ${formatNumberWithCommaDecimalSeparator(item.price)} per doos`;
+                                  // Fallback: show price as is
+                                  return `€ ${formatNumberWithCommaDecimalSeparator(item.price)} per stuk`;
                                 }
                               })()}
                             </h4>
