@@ -102,6 +102,16 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
     totalExVAT += totalPrice;
   });
 
+  // Calculate statiegeld (deposit) for tray products
+  let totalStatiegeld = 0;
+  orderItemsData.forEach((item: Product) => {
+    if (item.tray && item.statiegeld && item.quantityInBox) {
+      // Statiegeld per doos = statiegeld per stuk * quantityInBox
+      const statiegeldPerDoos = item.statiegeld * item.quantityInBox;
+      totalStatiegeld += statiegeldPerDoos * item.quantity;
+    }
+  });
+
   // Function to draw header on a page
   const drawHeader = (page: PDFPage, pageNumber: number, totalPages: number) => {
     const logoX = 50;
@@ -154,13 +164,14 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
     ${invoiceDetails.invoiceCustomerCountry}`;
 
       const lazoDetails = `
-    Kaapseplein 76
-    2572NG Den Haag
-    info@lazodenhaagspirits.nl
-    070-380 4724 / 06-55 174 175
-    KvK: 71.114.041
-    Btw: NL002364298B87
-    Bank: NL 06 INGB0004 7737 67`;
+        Kaapseplein 76
+        2572NG Den Haag
+        info@lazodenhaagspirits.nl
+        070-380 4724 / 06-55 174 175
+        KvK: 71.114.041
+        Btw: NL002364298B87
+        Bank: NL 06 INGB0004 7737 67
+      `;
 
       page.drawText("Factuuradres:", {
         x: 50,
@@ -201,10 +212,10 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
       });
 
       const referenceInfoRight = `
-    Opdracht: ${invoiceDetails.orderNumber}
-    Factuur: ${invoiceDetails.invoiceNumber}
-    Factuurdatum: ${invoiceDetails.date}
-  `;
+        Opdracht: ${invoiceDetails.orderNumber}
+        Factuur: ${invoiceDetails.invoiceNumber}
+        Factuurdatum: ${invoiceDetails.date}
+      `;
 
       page.drawText(referenceInfoRight, {
         x: 405,
@@ -312,45 +323,69 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
 
     const vatAmount = totalExVAT * 0.21;
     const totalIncVAT = totalExVAT * 1.21;
+    const totalWithStatiegeld = totalIncVAT + totalStatiegeld;
+
+    let currentYPos = summaryY;
 
     // Draw price excluding VAT (Subtotal)
     page.drawText(`Subtotaal:`, {
       x: xOffset - 100,
-      y: summaryY,
+      y: currentYPos,
       size: 8,
       font: regularFont,
     });
     page.drawText(`€ ${totalExVAT.toFixed(2).replace(".", ",")}`, {
       x: xOffset,
-      y: summaryY,
+      y: currentYPos,
       size: 8,
       font: regularFont,
     });
 
+    currentYPos -= verticalSpacing;
+
     // Draw BTW (VAT) amount
     page.drawText(`BTW 21%:`, {
       x: xOffset - 100,
-      y: summaryY - verticalSpacing,
+      y: currentYPos,
       size: 8,
       font: regularFont,
     });
     page.drawText(`€ ${vatAmount.toFixed(2).replace(".", ",")}`, {
       x: xOffset,
-      y: summaryY - verticalSpacing,
+      y: currentYPos,
       size: 8,
       font: regularFont,
     });
 
-    // Draw total amount to be paid including VAT
+    currentYPos -= verticalSpacing;
+
+    // Draw statiegeld if applicable
+    if (totalStatiegeld > 0) {
+      page.drawText(`Statiegeld:`, {
+        x: xOffset - 100,
+        y: currentYPos,
+        size: 8,
+        font: regularFont,
+      });
+      page.drawText(`€ ${totalStatiegeld.toFixed(2).replace(".", ",")}`, {
+        x: xOffset,
+        y: currentYPos,
+        size: 8,
+        font: regularFont,
+      });
+      currentYPos -= verticalSpacing;
+    }
+
+    // Draw total amount to be paid including VAT and statiegeld
     page.drawText(`Totaal:`, {
       x: xOffset - 100,
-      y: summaryY - 2 * verticalSpacing,
+      y: currentYPos,
       size: 8,
       font: boldFont,
     });
-    page.drawText(`€ ${totalIncVAT.toFixed(2).replace(".", ",")}`, {
+    page.drawText(`€ ${totalWithStatiegeld.toFixed(2).replace(".", ",")}`, {
       x: xOffset,
-      y: summaryY - 2 * verticalSpacing,
+      y: currentYPos,
       size: 8,
       font: boldFont,
     });
@@ -389,16 +424,17 @@ export async function createOrderSummaryDocument(orderItemsData: Product[], invo
     if (item.tray) {
       // Lavish: price per doos = item.price (already per tray), then multiply by quantity (dozen)
       totalPrice = item.price * item.quantity;
-      pricePerPiece = item.price; // Show price per tray/doos in PDF
+      // Show price per item (per stuk), not per tray
+      pricePerPiece = item.quantityInBox > 1 ? item.price / item.quantityInBox : item.price;
     } else if (item.quantityInBox > 1) {
       // Sell per doos: price per doos = item.price * item.quantityInBox, then multiply by quantity (dozen)
       const pricePerDoos = item.price * item.quantityInBox;
       totalPrice = pricePerDoos * item.quantity;
-      pricePerPiece = pricePerDoos; // Show price per doos in PDF
+      pricePerPiece = item.price; // Always show price per piece (not per doos)
     } else {
       const priceMultiplier = item.quantityInBox || 1;
       totalPrice = item.price * item.quantity * priceMultiplier;
-      pricePerPiece = item.quantityInBox ? item.price * item.quantityInBox : item.price;
+      pricePerPiece = item.price; // Always show price per piece
     }
 
     const rowData = [
