@@ -209,9 +209,6 @@ const Checkout = () => {
                   Bestellingen onder <strong>€ 1.200,00 excl. BTW</strong> worden <strong>NIET</strong> geleverd. 
                   Uw bestelling bedraagt momenteel <strong>€ {formatNumberWithCommaDecimalSeparator(totalPrice)} excl. BTW</strong>.
                 </p>
-                <p className="mt-2">
-                  Voeg meer producten toe aan uw winkelwagen om de minimale bestelwaarde te bereiken.
-                </p>
               </div>
             </div>
           </div>
