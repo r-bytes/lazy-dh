@@ -239,7 +239,7 @@ const Checkout = () => {
           type="button" 
           className="btn" 
           onClick={handleCheckout} 
-          disabled={!session?.user?.email || isLoading || totalPrice < 1200}
+          disabled={!session?.user?.email || isLoading}
         >
           {isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.logo className="mr-2 h-4 w-4" />}
           Bestelling Plaatsen

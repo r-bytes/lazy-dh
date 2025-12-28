@@ -110,3 +110,4 @@ tsx scripts/migrate-products.ts
 5. **Image paths**: CSV heeft relatieve paths (`./images/...`), script converteert naar absolute paths.
 
 
+
