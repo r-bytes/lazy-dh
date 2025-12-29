@@ -47,6 +47,20 @@ export async function POST(request: NextRequest) {
       imgUrl: item.image.asset._ref,
     }));
     
+    // Create orderItemsDataForPdf with tray and statiegeld for PDF generation
+    const orderItemsDataForPdf = cartItems.map((item: Product) => ({
+      _id: item._id,
+      name: item.name,
+      quantity: item.quantity,
+      quantityInBox: item.quantityInBox,
+      percentage: item.percentage,
+      volume: item.volume,
+      price: item.price,
+      image: item.image,
+      tray: item.tray,
+      statiegeld: item.statiegeld,
+    }));
+    
     const currentUser = await db.query.users.findFirst({
       where: eq(users.email, email),
     });
@@ -77,8 +91,8 @@ export async function POST(request: NextRequest) {
     await db.insert(orderItems).values(orderItemsData);
 
 
-    // create pdf from the order
-    const outPutPdf = await createOrderSummaryDocument(orderItemsData, invoiceDetails!);
+    // create pdf from the order - use orderItemsDataForPdf which includes tray and statiegeld
+    const outPutPdf = await createOrderSummaryDocument(orderItemsDataForPdf, invoiceDetails!);
 
     // Send the PDF as an attachment
     const { data, error } = await resend.emails.send({
